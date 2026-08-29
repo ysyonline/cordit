@@ -1,0 +1,17 @@
+来源页面：https://github.com/TakWolf/fusion-pixel-font（2026-08-29 取用）
+
+取用件：fusion-pixel-font-12px-proportional-ttf-v2026.08.11.zip → fusion-pixel-12px-proportional-zh_hans.ttf（比例模式，简体中文字形档）
+
+【许可核实（README「许可证」节原文摘录）】
+分为「字体」和「构建程序」两个部分。
+字体：使用「SIL 开放字体许可证第 1.1 版」授权。
+构建程序：使用「MIT 许可证」授权（本项目未取用构建程序，不涉及）。
+
+上游字体（缝合来源，均 OFL-1.1 或兼容）：方舟像素字体（提供 10/12px 基础字形）、美咲フォント（8px 日语汉字，无类型许可但兼容 OFL-1.1）、美績点陣體（8px 简中）、精品點陣體 7×7/9×9（繁中）、俐方體11號 Cubic 11（12px 繁中补充）、Galmuri（朝鲜语）。
+
+【义务摘要】
+1. 随分发保留 OFL-1.1 许可全文（本项目存于 assets/licenses/OFL-1.1.txt）。
+2. 不得单独出售字体文件本体（作为游戏构建物一部分分发不触发）。
+3. 游戏内嵌入使用对 OFL 友好，无署名画面硬性要求，但致谢画面按 credits-template 列入以示尊重。
+
+【勘误记录】asset-intake-list.md 预登记为 CC-BY 4.0，2026-08-29 经仓库 README 与字体包内 OFL.txt 核实为 SIL OFL 1.1，按实际许可登记（OFL 非 SA/非 GPL，账本红线不受影响）。
