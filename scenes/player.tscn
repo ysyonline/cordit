@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_feet"]
+size = Vector2(12, 6)
+
+; ── 玩家角色装配（E1-S4，架构 A6）────────────────────────────────
+; 结构约定（全项目复用，改动须同步 player.gd 头注释）：
+;   根节点 (0,0) = 脚底触地点（y-sort 排序基准）
+;   ├── Body          Sprite2D          16x18 占位矩形载体，位置 (-8,-9)
+;                                       ——绘制范围 x∈[-8,8] y∈[-18,0]，脚踩原点。
+;                                         正式精灵（美术线 R2/R3）到位后仅替换本节点
+;                                         纹理，保持"脚底贴原点"约定不变。
+;   ├── Collision     CollisionShape2D  12x6 矩形，中心 (0,-3)：只框"脚"。
+;                                       俯视惯例——墙挡脚不挡头，头部可与墙缘重叠。
+;   ├── InteractRay   RayCast2D         交互射线：起点胸口 (0,-10)，E1-S6 消费；
+;                                       collision_mask = 1|2（墙体+交互层），排除
+;                                       遮挡层（第4值）——被遮挡≠不可交互（俯视惯例）。
+;   ├── OcclusionRay  RayCast2D         遮挡自检射线：起点脚底 (0,0) 向下 12px，
+;                                       collision_mask = 4（仅遮挡层），只做日志自证。
+;   └── Camera2D                        跟随相机（取舍依据见 player.gd 头注释）：
+;                                       smoothing 开(speed 8)；Godot 4.x 相机级
+;                                       无 snap 属性——A6 所指"snap 关"由 ADR-4 全局
+;                                       snap_2d_transforms_to_pixel 承担，此处无可调项。
+; 层位约定（2 的幂次可叠加，与 A6 地图分层配套）：
+;   1 = 世界墙体（墙/障碍，挡脚）  2 = 交互物（NPC/宝箱/触发区）
+;   4 = y-sort 遮挡物（可站立遮挡，不挡行走）
+; 运动模式：脚本 _ready 强制 MOTION_MODE_FLOATING（俯视必需，原因见脚本注释）。
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_player")
+
+[node name="Body" type="Sprite2D" parent="."]
+position = Vector2(-8, -9)
+
+[node name="BodyRect" type="ColorRect" parent="Body"]
+offset_right = 16.0
+offset_bottom = 18.0
+color = Color(0.9, 0.75, 0.3, 1)
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_feet")
+
+[node name="InteractRay" type="RayCast2D" parent="."]
+position = Vector2(0, -10)
+enabled = false
+collision_mask = 3
+
+[node name="OcclusionRay" type="RayCast2D" parent="."]
+target_position = Vector2(0, 12)
+enabled = false
+collision_mask = 4
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0

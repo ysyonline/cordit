@@ -128,6 +128,7 @@ func _ready() -> void:
 | 2026-08-29 | 游承峰（team-lead 代核） | SMK-05/06/07 静态部分 + SMK-12 源码预核 | PASS | 静态搜索/通读核对；证据见 evidence/smk-05~07.txt；SMK-07 的 user:// 动态复核与 SMK-12 挂 E1-S3 后全量重跑 |
 | 2026-08-29 | 游承峰（headless 自动化） | SMK-01~04 动态 + SMK-07/12 动态（user:// 核对） | PASS | Godot 4.7.2 headless 跑 tests/smoke/headless_smk.tscn，4/4 PASS 退出码 0；user:// 仅引擎 logs 零游戏文件；证据见 evidence/smk-01-04-headless.log；SMK-08~12 仍按计划 E1-S3 后全量重跑 |
 | 2026-08-29 | 游承峰（headless 自动化） | SMK-08~12（E1-S3 质量门）+ SMK-01~04 回归 | PASS | headless_smk_e1s3.tscn 5/5 PASS 退出码 0（SMK-08 含 A→B 切换+载荷暂存取回、SMK-09 三非法用例含缺字段/类型错区分、SMK-10 拒绝零副作用+后续合法正常、SMK-11 两轮切换 TestLabel 同实例、SMK-12 user:// 零落盘）；SMK-01~04 回归 4/4 PASS；证据见 evidence/smk-08-12-headless.log；"淡入淡出可见"为无头不可验的人眼项，挂 M1 试玩视频确认 |
+| 2026-08-29 | 游承峰（headless 自动化） | E1-S4 断言套件（3/3）+ SMK-08~12 回归（5/5） | PASS | E1-S4 无头复跑：脚底挂载(96,160)/1s 位移 72.0px=4.5tile/s/撞墙 x=266.0 无穿墙无漂移，证据 evidence/e1s4-headless.log；SMK-08~12 改动后回归 5/5（含玩家跨切换生命周期：map_b 无玩家、map_a 重挂正常）；E1-S4 人眼项（4.5tile/s 手感、subpixel 抖动、遮挡视觉）待用户 F5 终验 |
 | | | SMK-01~07 | | E1-S2 首跑（2026-08-29 两行合并即首跑全量，全绿） |
 | | | SMK-01~12 | | E1-S3 首跑全量：全绿（2026-08-29）；M1 收口再跑一轮 |
 

@@ -1,6 +1,29 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://tests/smoke/fixtures/map_whitebox.gd" id="1_whitebox"]
+[ext_resource type="Script" path="res://tests/smoke/fixtures/temp_player_mount.gd" id="2_mount"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="3_player"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(96, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_occluder"]
+size = Vector2(24, 16)
+
+; ── 白盒图 A（E1-S3 建，E1-S4 扩充为玩家移动/碰撞/遮挡测试场）────────
+; E1-S4 新增：
+;   YSorted 容器      y_sort 开——玩家与遮挡物同层排序演示环境
+;   Wall / Wall2      世界墙（collision_layer=1，挡脚）：横墙 + 斜对竖墙，可双向撞墙
+;   Occluder / 2      可站立遮挡物（StaticBody2D，layer=4 不挡行走——玩家
+;                     collision_mask=1 不与它碰撞，但遮挡射线 mask=4 能探到）：
+;                     Visual 矩形底边精确过节点原点（offsets 写法，勿用 position
+;                     混写）——节点原点 = 矩形底边 = y-sort 排序基准，
+;                     完整三条件见 scripts/player/player.gd 头注释。
+;   TempPlayerMount   临时玩家挂载器：运行时把 player.tscn 挂入 YSorted
+;                     （出生点 PlayerSpawn (96,160)）。EPIC-2 地图出生点系统
+;                     落地后整体删除本节点与 temp_player_mount.gd。
+; E1-S3 既有行为保持不变：Backdrop/MapLabel 自报 + map_ready 发射。
+; MapLabel 是 Control 不入 YSorted（z_index=10 常驻顶层显示地图名）。
 
 [node name="MapA" type="Node2D"]
 script = ExtResource("1_whitebox")
@@ -13,6 +36,7 @@ offset_bottom = 360.0
 color = Color(0.25, 0.45, 0.3, 1)
 
 [node name="MapLabel" type="Label" parent="."]
+z_index = 10
 offset_top = 40.0
 offset_right = 640.0
 offset_bottom = 80.0
@@ -20,3 +44,62 @@ theme_override_font_sizes/font_size = 32
 text = "白盒图 A"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Wall" type="StaticBody2D" parent="."]
+position = Vector2(320, 220)
+collision_layer = 1
+collision_mask = 0
+
+[node name="WallShape" type="CollisionShape2D" parent="Wall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="Wall2" type="StaticBody2D" parent="."]
+position = Vector2(480, 120)
+collision_layer = 1
+collision_mask = 0
+
+[node name="WallShape" type="CollisionShape2D" parent="Wall2"]
+shape = SubResource("RectangleShape2D_wall")
+rotation = 1.5707964
+
+[node name="YSorted" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Occluder" type="StaticBody2D" parent="YSorted"]
+position = Vector2(240, 260)
+collision_layer = 4
+collision_mask = 0
+
+[node name="OccluderShape" type="CollisionShape2D" parent="YSorted/Occluder"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_occluder")
+
+[node name="Visual" type="ColorRect" parent="YSorted/Occluder"]
+offset_left = -12.0
+offset_top = -16.0
+offset_right = 12.0
+offset_bottom = 0.0
+color = Color(0.55, 0.35, 0.2, 1)
+
+[node name="Occluder2" type="StaticBody2D" parent="YSorted"]
+position = Vector2(420, 320)
+collision_layer = 4
+collision_mask = 0
+
+[node name="OccluderShape" type="CollisionShape2D" parent="YSorted/Occluder2"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_occluder")
+
+[node name="Visual" type="ColorRect" parent="YSorted/Occluder2"]
+offset_left = -12.0
+offset_top = -16.0
+offset_right = 12.0
+offset_bottom = 0.0
+color = Color(0.55, 0.35, 0.2, 1)
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(96, 160)
+
+[node name="TempPlayerMount" type="Node" parent="."]
+script = ExtResource("2_mount")
+player_scene = ExtResource("3_player")

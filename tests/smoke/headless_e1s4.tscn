@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://tests/smoke/headless_e1s4_wrapper.gd" id="1_wrap"]
+[ext_resource type="PackedScene" path="res://scenes/main.tscn" id="2_main"]
+
+[node name="SmokeRoot" type="Node"]
+script = ExtResource("1_wrap")
