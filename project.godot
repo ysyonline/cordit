@@ -19,6 +19,16 @@ run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+; 全局单例（架构 A3：只建 4 个，不多建）。
+; 注册顺序即初始化顺序，按依赖方向排列：
+;   GameData（纯状态，无依赖）→ EventBus（纯信号）→ SceneRouter（切场景）→ SaveManager（读 GameData 快照）
+GameData="*res://autoload/game_data.gd"
+EventBus="*res://autoload/event_bus.gd"
+SceneRouter="*res://autoload/scene_router.gd"
+SaveManager="*res://autoload/save_manager.gd"
+
 [display]
 
 ; 视口分辨率：640×360（=16px tile 的 40×22.5 格，1080p 下 ×3 整数缩放）——ADR-4
