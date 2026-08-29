@@ -1,0 +1,25 @@
+# E1-S6 验收门：SMK-01~12 全量重跑（2026-08-29，quality-lead 严守真）
+# 动态：Godot 4.7.2 headless（headless_smk.tscn EXIT=0 + headless_smk_e1s3.tscn EXIT=0）
+[SMK-01] PASS: 四 Autoload 注册生效，root 单例 = ["GameData", "EventBus", "SceneRouter", "SaveManager"]
+[SMK-02] PASS: 六信号齐全且参数一致 -> ["enemy_touched", "dialogue_finished", "battle_finished", "story_phase_changed", "save_requested", "map_ready"]
+[SMK-03] PASS: 六信号全部 connect 成功
+[SMK-03] enemy_touched 收到: { "enemy_group_id": "slime_01", "return_map": "res://scenes/maps/road.tscn", "return_position": (64.0, 32.0), "defeat_enemy_uid": "enemy_road_01" }
+[SMK-03] dialogue_finished 收到: evt_test_01
+[SMK-03] battle_finished 收到: { "outcome": "VICTORY" }
+[SMK-03] story_phase_changed 收到: 1
+[SMK-03] save_requested 收到（无参）
+[SMK-03] map_ready 收到: town
+[SMK-04] PASS: 六信号参数原样送达（字典逐字段含 Vector2、int 1、无参回调均命中）
+[SMK] 汇总：4/4 PASS
+[SMK-08] PASS: 合法 payload 受理并完成切换 MapA→MapB，暂存载荷可取回
+[SMK-09] PASS: 三种非法 payload 全部拒绝（拒绝日志见上，含缺字段/类型错区分）
+[SMK-10] PASS: 非法调用零副作用（World 未被破坏），后续合法切换正常到 MapA
+[SMK-11] PASS: 两轮切换后 TestLabel 同实例存活（valid 且指针一致）
+[SMK-12] PASS: user:// 零存档/零游戏文件（仅引擎 logs），空壳无副作用
+[SMK-E1S3] 汇总：5/5 PASS
+# 静态（本机 grep 核验，口径=SMOKE-CHECKLIST 清单）：
+[SMK-05] PASS: EventBus 零 var/func（仅 extends + signal map_ready 声明，余为注释）
+[SMK-06] PASS: GameData 8 字段全带类型标注（party/inventory/gold/story_phase/flags/chests_opened/cleared_enemy_set/discovered_weakness_set）
+[SMK-07] PASS: game_data.gd 专项搜索 FileAccess/user:// 零命中（清单被测对象口径）；注：dialogue_runner.gd 新增 res:// JSON FileAccess 触点，属 A7 数据驱动设计内职责，非 A3 Autoload 边界范围
+[SMK-12 静态] PASS: 仅 SCHEMA_VERSION=1(L20) + SCHEMA 常量(L33)，ADR-3 口径
+# 汇总：SMK-01~12 全量 12/12 PASS（动态9+静态4口径，SMK-12 动静态各计1）—— E1-S6 验收门全量重跑通过

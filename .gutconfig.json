@@ -1,0 +1,6 @@
+{
+	"dirs": ["res://tests/gut"],
+	"include_subdirs": true,
+	"should_exit": true,
+	"hide_orphans": false
+}

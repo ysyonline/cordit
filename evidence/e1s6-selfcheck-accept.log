@@ -1,0 +1,25 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[MainController] 常驻根就绪：Main / World / UILayer(CanvasLayer) + FadeMask —— 架构 A4
+[SceneRouter] 受理切换 -> res://tests/smoke/fixtures/map_a.tscn
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[TempPlayerMount] 玩家已挂载 -> YSorted/Player @ (96.0, 160.0)（脚底）
+[WhiteBoxMap] 装载完成：map_a（显示色 (0.25, 0.45, 0.3, 1.0)）
+[SceneRouter] 装载完成 -> res://tests/smoke/fixtures/map_a.tscn
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[DialogueRunner] 开演：npc_04_guard（2 条目）
+[E1S6-A1] PASS: 按 Z 触发对话：PLAYING + 框显示 + 锁定态 1s 位移 0.00px
+[E1S6-A2] PASS: 逐字推进：0.5s 内 0 → 15 字（30字/s ±容差）
+[E1S6-A2b] PASS: 按键补完：visible(26) == 全文(26)
+[DialogueRunner] 对话结束：npc_04_guard → IDLE
+[E1S6-A3] PASS: 收束：IDLE=true 框关=true dialogue_finished(1次)="npc_04_guard"
+[E1S6-A3b] PASS: 解锁后移动恢复（0.5s 注入已离开原位，末帧位移 1.20px）
+[DialogueRunner] 开演：npc_04_guard（2 条目）
+[DialogueRunner] 对话结束：npc_04_guard → IDLE
+[DialogueRunner] 开演：npc_04_guard（2 条目）
+[DialogueRunner] 对话结束：npc_04_guard → IDLE
+[E1S6-A4] PASS: 数据驱动：JSON 改文后全文="哨兵文本：JSON 数据驱动验证 E1S6"；复原后="站住——哦，是今天刚…"
+[E1S6-R-A3] PASS: E1S5-A3 回归：12 锚点全对表
+[E1S6-R-NPC] PASS: NPC 实体 2/2 摆位与锚点重合（脚底原点）
+[E1S6-R-A1] PASS: E1S5-A1 回归：Door_Inn 进出往返正常
+[E1S6] 汇总：5/5 PASS

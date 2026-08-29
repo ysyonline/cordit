@@ -2,6 +2,7 @@
 
 > 编制：程基岩（engineering-lead）｜TASK-10｜服务对象：EPIC-1 至 EPIC-7（垂直切片 126h）
 > 结论先行：**手工冒烟清单为骨架，GUT 9.x 为自动化承载，GdUnit4 为备选**。框架两周内不强制落地，先把 E1-S2/S3 验收标准跑绿。
+> 【2026-08-29 Sprint 2 落地更新】GUT 9.7.1 已装（`addons/gut/`）并迁移 SMK-01~06；下文旧口径（9.3.x / 无 CLI / tests/unit/）已全部修订到与落地一致，现状见第 7 节。
 
 ---
 
@@ -17,35 +18,44 @@
 
 ## 2. 框架选型（自动化落地用）
 
-### 2.1 主推荐：GUT（Godot Unit Test）9.3.x
+### 2.1 主推荐：GUT（Godot Unit Test）9.7.1【已落地】
 
-- **4.x 分支现状**：GUT 9.x 主动支持 Godot 4，9.2.0+ 明确兼容 4.2/4.3；4.3 稳定版下社区广泛使用，无阻塞性 issue。项目不升 4.4 前不用碰任何兼容开关。
+- **版本依据**：GUT v9.5.0 起要求 Godot 4.5+，v9.7.0 起兼容 Godot 4.7（修复版 9.7.1，2026-07 发布）；本项目 Godot 4.7.2 实测 9/9 PASS。原计划选 9.3.x，装前核对 release 轨迹发现 9.3.x 是 4.2/4.3 时代产物、横跨四个大版本跑 4.7 属高风险组合，改按最新兼容版落地（裁决记录见 evidence 回传与 §2.4）。注意 9.7.0 有一处破坏性变更：Double 对声明返回类型的函数返回类型默认值而非 null（本项目尚未用 Double，暂无影响）。
+- **安装现状**：已从 GitHub release 源码包解压至 `res://addons/gut/`（134 文件，随仓库走），`project.godot` 已启用插件，仓库根已建 `.gutconfig.json`。新装/升级 GUT 后首次跑测前需执行一次 `godot --headless --path <项目根> --import` 建立 GUT class_name 全局类缓存，否则报 "Some GUT class_names have not been imported"。
 - **选择理由（按本项目优先级排序）**：
   1. **低仪式感**：测试脚本继承 `GutTest`，一个 `func test_xxx():` 就是一条用例，无装饰器、无嵌套 describe——对写惯 jest 的前端思维几乎没有迁移成本。
-  2. **安装可推迟**：GUT 安装方式是"从 AssetLib 或 GitHub release 解压到 `res://addons/gut/`+ 开插件"，纯项目内目录，不污染全局、不装任何系统依赖——正好匹配"框架两周内不落地"的排期。缺点是它要进 git（体积 ~几 MB，可接受）。
+  2. **安装零依赖**：纯项目内目录，不污染全局、不装任何系统依赖；代价是它要进 git（体积 ~2.9 MB，可接受）。
   3. **文档生态最厚**：Godot 单测问答 90% 指向 GUT，新手搜得到答案。
   4. 信号测试直接用 `watch_signals()` + `assert_signal_emitted_with_parameters()`，正好覆盖 EventBus 用例。
-- **局限（先记录，不回避）**：只支持 GDScript（本项目全 GDScript，无影响）；无独立 CLI（需带编辑器运行——单机项目可接受）；参数化测试语法不如 GdUnit4 简洁（本切片用不到参数化）。
+- **局限（修订后如实记录）**：只支持 GDScript（本项目全 GDScript，无影响）；无内嵌于编辑器的测试报告视图以外的独立 GUI runner（自动化跑测走 gut_cmdln.gd 无头 CLI，已验证可用，用法见 §2.4）；参数化测试语法不如 GdUnit4 简洁（本切片用不到参数化）。
 
-### 2.2 备选：GdUnit4 v5.x（不选它的唯一原因是重）
+### 2.2 备选：GdUnit4（不选它的唯一原因是重）
 
-- 4.3 兼容：明确支持，且自带独立 CLI runner（`runtest.sh`），CI 友好。
+- 引擎兼容：随 Godot 4.x 小版本持续推进，各版本具体要求以其 release notes 为准（与 GUT 同理，引擎大版本升级前后都要重验）；自带独立 CLI runner，CI 友好。
 - 适合它的情形：切片结束后上正式版、需要 GitHub Actions 持续集成时——届时测试资产可从 GUT 平移（断言 API 高度同构），不必现在为"未来的 CI"付学习成本。
 - **不推荐新手第 3 周就用的原因**：模板命令、CLI 安装、目录扫描约定都是额外概念；本项目切片内没有 CI 需求，选它属于超前建设。
 
 ### 2.3 明确排除：自写断言脚本 / Godot 4.5+ 内置测试框架
 
 - 自写 = 又造一个轮子还要自测它，违背 A1"为 90h 产能设计"。
-- Godot 官方测试框架随 4.5 起逐步可用（`scripting/test` 一族），但项目基线钉在 4.3，**不升引擎不追新 API**（引擎一致性铁律）。
+- Godot 官方测试框架随 4.5 起逐步可用（`scripting/test` 一族）；项目基线现为 4.7.2，官方框架仍在演进，切片内不追新 API（引擎一致性铁律），继续以 GUT 承载，待官方框架稳定后在里程碑间隙再评估。
 
-### 2.4 落地时点与安装命令（先备忘，到点执行）
+### 2.4 安装与跑测（已落地，以下为现行做法）
 
-- **何时装**：EPIC-2 开工前（W3），装完立刻把 SMOKE-CHECKLIST 里 SMK-01~06 搬成自动化。
-- **怎么装**：编辑器内 AssetLib 搜 "GUT" 安装（或 GitHub `bitwes/Gut` release 9.3+ 解压到 `res://addons/gut/`）→ 项目设置→插件→启用 → 编辑器底部出现 GUT 面板 → 创建 `.gutconfig.json`。
-- **怎么跑**：编辑器内 GUT 面板点 "Run All"；命令行 `godot --headless -s addons/gut/gut_cmdln.gd -gdir=res://tests/unit -ginclude_subdirs -gexit`。
+- **何时装**：原计划 EPIC-2 开工前；实际 Sprint 2 开工日（2026-08-29）已落地，SMK-01~06 同日完成迁移。
+- **怎么装**：GitHub `bitwes/Gut` release（当前 9.7.1）源码包解压到 `res://addons/gut/` → `project.godot` 启用插件 → 跑一次 `--headless --import` 建全局类缓存。编辑器内 AssetLib 安装亦可。
+- **怎么跑**：
+  - 编辑器内：底部 GUT 面板点 "Run All"（配置读仓库根 `.gutconfig.json`）。
+  - 命令行（headless，已验证，证据 evidence/s2-gut-smk-migration.log）：
+    ```
+    Godot_console.exe --headless --path <项目根> -s res://addons/gut/gut_cmdln.gd -gdir=res://tests/gut -ginclude_subdirs -gexit
+    ```
+    退出码 0 = 全 PASS。环境坑备注：
+    - **Git Bash**：必须加环境变量 `MSYS2_ARG_CONV_EXCL="*"` 再跑，否则 `res://` 会被 MSYS 路径改写机制改成 `res:/` 导致 GUT 加载失败；
+    - **PowerShell 5.1**：`*>` 重定向会把日志落成 UTF-16 编码文件（后续 grep/read 不便），重定向建议改用 bash 或 cmd。
 - **GUT 用例骨架（与冒烟清单条目对应）**：
   ```gdscript
-  # tests/unit/test_scene_router.gd
+  # tests/gut/test_scene_router.gd
   extends GutTest
   # 对应 SMOKE-CHECKLIST 的 SMK-07/08
   func test_reject_invalid_payload_and_log() -> void:
@@ -71,14 +81,15 @@
 ```
 tests/
 ├── README.md                 # 本文件
+├── gut/                      # GUT 自动化用例（Sprint 2 起）
+│   ├── test_sanity.gd        # GUT 落地自检（3 用例）
+│   └── test_smk_migration.gd # SMK-01~06 迁移（6 用例 53 断言）
 └── smoke/
-    └── SMOKE-CHECKLIST.md    # 首批冒烟用例（手工可执行，12 条内）
+    └── SMOKE-CHECKLIST.md    # 手工冒烟清单（SMK-07~12 仍走此通道 + 全量人工后备）
     └── evidence/             # 手工冒烟截图/控制台日志存档（每条 PASS 留一图）
-        └── (E1-S2 完成后放入 autoload_tree.png 等)
 
-# EPIC-2 起 GUT 落地后新增：
-# tests/unit/     # GutTest 脚本，从冒烟清单迁移 + core/ 纯函数单测
-# .gutconfig.json # 仓库根
+# 仓库根另有 .gutconfig.json（编辑器 GUT 面板配置）
+# 项目根 evidence/ 目录存 GUT 跑测 log（见第 7 节留档纪律）
 ```
 
 evidence/ 目录规则：文件名 = 用例 ID 小写（如 `smk-01.png`）；一张图或一段控制台粘贴即可，不写报告。
@@ -99,10 +110,20 @@ evidence/ 目录规则：文件名 = 用例 ID 小写（如 `smk-01.png`）；�
 1. **何时必须绿**：对应 Story 勾验收标准之前；以及 M1 里程碑门收口时（试玩视频 #1 录制前）全量重跑一遍——12 条手工用例约 15 分钟，是对抗"改 A 坏 B"的唯一廉价手段。
 2. **何时可欠账**：探索性 spike（学习教程时的临时脚本）允许不跑；但一旦代码合入 `autoload/` 或 `scripts/core/`，欠账清零。
 
-**向后衔接**：E1-S2/S3 的验收证据（evidence/ 截图）同时是 Story 四要素里"测试证据"的首次实例；EPIC-2 GUT 落地后，SMK-01~10 逐条转为 `tests/unit/` 自动化用例，原清单保留为"框架坏掉时的人工后备"。
+**向后衔接**：E1-S2/S3 的验收证据（evidence/ 截图）同时是 Story 四要素里"测试证据"的首次实例；SMK-01~06 已转为 `tests/gut/` 自动化用例（见第 7 节），原清单保留为"框架坏掉时的人工后备"。
 
 ## 6. 风险备忘
 
-- GUT 与 Godot **4.4+** 的兼容以 release notes 为准——若项目将来升 4.4，先跑一遍 GUT 全量用例再合入（升级本身是另一个 ADR 的事）。
+- GUT 与 Godot 新版本的兼容以 release notes 为准——若项目将来升引擎大版本，先跑一遍 GUT 全量用例再合入（升级本身是另一个 ADR 的事）。
 - 冒烟清单覆盖的是"架构合同"（A3/A4/A5），不覆盖战斗正确性——战斗合同由 EPIC-3 的 core/ 单测接手，勿在冒烟层加战斗用例。
 - 手工清单的风险是"忘跑"：靠第 5 节两条硬规矩 + 里程碑门收口全量重跑兜底，不引入额外工具。
+
+## 7. SMK 迁移现状与证据纪律（Sprint 2 起）
+
+- **已迁移（自动化）**：SMK-01~06 → `tests/gut/test_smk_migration.gd`，6 用例 53 断言，GUT 9.7.1 / Godot 4.7.2 headless 实测 9/9 PASS（含 3 条 sanity）。函数名含 `smk_0x` 字样保留编号可追溯，断言语义与原 SMK 一致未放宽。
+- **未迁移（手工通道保留）**：SMK-07~12 仍按 SMOKE-CHECKLIST 手工/headless 流程执行，迁移留待后续 Epic。
+- **跑测命令与环境坑**：见 §2.4。
+- **证据留档纪律**：
+  - GUT 跑测 log 落项目根 `evidence/`（如 `s2-gut-smk-migration.log`）；手工冒烟证据落 `tests/smoke/evidence/`。
+  - `.gitignore` 已配白名单放行（`*.log` 全局忽略，但 `!tests/smoke/evidence/*.log` 与 `!evidence/*.log` 例外）——测试证据是仓库资产，每次全量跑测必须留档，不写报告。
+  - 文件名规则：GUT 全量跑测用 `s{冲刺号}-gut-{主题}.log`；手工证据沿用"用例 ID 小写"（如 `smk-01.png`）。

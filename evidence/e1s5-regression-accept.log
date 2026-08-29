@@ -1,0 +1,8 @@
+# E1-S6 验收门：e1s5 回归 4/4（2026-08-29，quality-lead 严守真）
+# Godot 4.7.2 headless，headless_e1s5_wrapper.tscn，EXIT=0
+[E1S5-A3] PASS: 12 个 NPC 锚点全对表
+[E1S5-A2] PASS: 四边边框均挡住玩家
+[E1S5-A1] PASS: 4 门传送+limit 切换+防弹回全过
+[E1S5-A4] PASS: 环线走通，回到出生点±40px，纯走 76.1s（区间 56~78）
+[E1S5] 汇总：4/4 PASS
+# 汇总：4/4 PASS（A1 门传送 / A2 边框 / A3 12锚点 / A4 环线 76.1s∈[56,78]）
