@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[SMK-01] PASS: 四 Autoload 注册生效，root 单例 = ["GameData", "EventBus", "SceneRouter", "SaveManager"]
+[SMK-02] PASS: 六信号齐全且参数一致 -> ["enemy_touched", "dialogue_finished", "battle_finished", "story_phase_changed", "save_requested", "map_ready"]
+[SMK-03] PASS: 六信号全部 connect 成功
+[SMK-03] enemy_touched 收到: { "enemy_group_id": "slime_01", "return_map": "res://scenes/maps/road.tscn", "return_position": (64.0, 32.0), "defeat_enemy_uid": "enemy_road_01" }
+[SMK-03] dialogue_finished 收到: evt_test_01
+[SMK-03] battle_finished 收到: { "outcome": "VICTORY" }
+[SMK-03] story_phase_changed 收到: 1
+[SMK-03] save_requested 收到（无参）
+[SMK-03] map_ready 收到: town
+[SMK-04] PASS: 六信号参数原样送达（字典逐字段含 Vector2、int 1、无参回调均命中）
+[SMK] 汇总：4/4 PASS

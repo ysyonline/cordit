@@ -21,5 +21,7 @@ save.json
 
 # 系统与工具链噪声
 *.log
+# 例外：冒烟测试证据留档是仓库资产（SMOKE-CHECKLIST 纪律），不入此列
+!tests/smoke/evidence/*.log
 *.bak
 *~
