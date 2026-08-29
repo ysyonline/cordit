@@ -54,6 +54,10 @@ const MAIN_NODE_PATH: String = "Main"
 const WORLD_NODE_PATH: String = "World"
 const FADE_MASK_NODE_PATH: String = "UILayer/FadeMask"
 
+## 战斗场景路径（E2-S3 接线：enemy_touched 的固定路由目标；
+## 真实战斗系统落地后仍经此路由，届时仅换本常量）
+const BATTLE_SCENE_PATH: String = "res://scenes/battle/battle.tscn"
+
 # ------------------------------------------------------------------
 # 运行时簿记（路由元数据，非游戏状态——游戏状态只在 GameData，见 A3）
 # ------------------------------------------------------------------
@@ -68,6 +72,21 @@ var _staged_payload: Dictionary = {}
 
 ## 切换进行中标志（防重入：淡入淡出期间再调 change_scene 一律拒绝并打日志）
 var _switching: bool = false
+
+
+func _ready() -> void:
+	# E2-S3 接线：A5 数据闭环第一跳——地图侧 enemy_touched(BattlePayload)
+	# → 本 Router 校验闸门（change_scene 内 validate_payload，非法拒绝，
+	# SMK-09 同源）→ FadeMask 转场装入战斗场景。
+	# Router 是"地图↔战斗"唯一通路（零互相引用，A5）；若 Main 未运行
+	# （GUT 直跑等无 A4 结构环境），change_scene 会在结构检查处拒绝，
+	# 不炸不静默（日志可见）。
+	EventBus.enemy_touched.connect(_on_enemy_touched)
+
+
+## enemy_touched 消费：payload 即切换参数，四字段校验在 change_scene 内执行。
+func _on_enemy_touched(payload: Dictionary) -> void:
+	change_scene(BATTLE_SCENE_PATH, payload, true)
 
 
 # ------------------------------------------------------------------

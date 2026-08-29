@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle/battle_scene.gd" id="1_battlescn"]
+
+; ── 占位战斗场景（E2-S3，架构 A4/A5）────────────────────────────────
+; BattleScene（Node2D）——被 SceneRouter 装入 Main/World 的"当前场景"。
+; 控件树由 battle_scene.gd 在 _ready 组建：
+;   BattleBackdrop  ColorRect  纯色背景 640x360（C2 练习 4 占位口径）
+;   EnemyBlocks     Node2D     敌方彩色方块阵（group_id 哈希派生 3~9 格）
+;   PartyState      Label      我方 3 角色 HP/MP（直读 GameData.party）
+;   BtnVictory      Button     胜利 → EventBus.battle_finished(VICTORY)
+;   BtnDefeat       Button     失败 → EventBus.battle_finished(DEFEAT)
+; 载荷来源：SceneRouter.get_staged_payload()（唯一读取口，见脚本头注释）。
+; 本场景只读 GameData、只发结果——覆写与回图属 E2-S4。
+
+[node name="BattleScene" type="Node2D"]
+script = ExtResource("1_battlescn")
