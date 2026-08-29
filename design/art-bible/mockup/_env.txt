@@ -1,0 +1,1 @@
+﻿C:\Users\weixufeng\WorkBuddy\2026-08-29-05-48-48\design\art-bible\mockup\_src---PYTHON---python: C:\Users\weixufeng\.pyenv\pyenv-win\shims\python.bat---VER---version output: Python 3.14.0

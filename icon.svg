@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- 临时占位项目图标（TASK-13 工程骨架件）：纯几何图形，避免美术资产越权。
+       后续由美术总监替换为正式项目图标（assets/ 登记表同步登记）。 -->
+  <rect width="128" height="128" fill="#1d1d2b"/>
+  <rect x="16" y="16" width="96" height="96" fill="none" stroke="#7ecfff" stroke-width="4"/>
+  <rect x="52" y="52" width="24" height="24" fill="#7ecfff"/>
+</svg>

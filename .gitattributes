@@ -1,0 +1,9 @@
+# 行尾统一：Godot 全系文件一律 LF，避免 Windows 编辑器/工具混入 CRLF 造成 diff 噪声
+* text=auto
+*.gd text eol=lf
+*.tscn text eol=lf
+*.tres text eol=lf
+*.godot text eol=lf
+*.json text eol=lf
+*.svg text eol=lf
+*.md text eol=lf

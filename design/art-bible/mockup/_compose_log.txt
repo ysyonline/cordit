@@ -1,0 +1,11 @@
+﻿class grass: 1 tiles [(16, 480)]
+class path: 6 tiles [(160, 0), (192, 0), (160, 16), (192, 16), (224, 272), (432, 480)]
+class roof: 92 tiles [(256, 32), (368, 32), (256, 48), (256, 64), (256, 80), (336, 80)]
+class wall: 236 tiles [(288, 0), (304, 0), (448, 0), (464, 0), (272, 16), (288, 16)]
+class tree: 0 tiles []
+class stone: 112 tiles [(32, 0), (48, 0), (176, 0), (208, 0), (352, 0), (368, 0)]
+class water: 8 tiles [(400, 224), (416, 224), (288, 272), (304, 272), (272, 336), (288, 336)]
+picked grass=(16, 480) path=(160, 0) roof=(256, 32) wall=(288, 0) tree=None stone=(32, 0) door=(64, 432)
+charset (330, 400) keyed n=74866
+char frames picked: [(290, 198, 250), (67, 72, 234), (12, 180, 216)] (from 181 candidates)
+saved=c:\Users\weixufeng\WorkBuddy\2026-08-29-05-48-48\design\art-bible\mockup\town-street-mockup.png size=(640, 360)

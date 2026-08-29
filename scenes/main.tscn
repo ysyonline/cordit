@@ -1,0 +1,20 @@
+[gd_scene load_steps=1 format=3]
+
+; 临时占位主场景（E1-S1/S2 骨架验证用，TASK-13）
+; 结构已按架构 A4 预留：Main（常驻根）→ World（场景路由装载层）/ UILayer（跨场景常驻 UI 层）。
+; E1-S3 正式化：World 装载白盒地图、UILayer 挂对话框与过渡遮罩、Label 移除或转为存活验证件（SMK-11）。
+
+[node name="Main" type="Node"]
+
+[node name="World" type="Node" parent="."]
+
+[node name="UILayer" type="Node" parent="."]
+
+[node name="PlaceholderLabel" type="Label" parent="UILayer"]
+offset_left = 0.0
+offset_top = 160.0
+offset_right = 640.0
+offset_bottom = 200.0
+theme_override_font_sizes/font_size = 16
+text = "Sprint 1 骨架 OK —— Main / World / UILayer 已就位（E1-S3 正式化）"
+horizontal_alignment = 1

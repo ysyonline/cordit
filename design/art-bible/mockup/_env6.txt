@@ -1,0 +1,32 @@
+﻿== chars ==
+/sites/default/files/archive/sara-logo.png
+/sites/default/files/charsets_12_m-f_complete_by_antifarea.png
+/sites/default/files/charsets_12_m-f_complete_by_antifarea_0.png
+/sites/default/files/charsets_12_m-f_complete_by_antifarea_preview.png
+/sites/default/files/EvoRunnerLogo_3.png
+/sites/default/files/styles/medium/public/charsets_12_m-f_complete_by_antifarea_0.png
+/sites/default/files/styles/medium/public/charsets_12_m-f_complete_by_antifarea_preview.png
+== faces ==
+/sites/default/files/48x48_Faces_1st_Sheet_Update_CharlesGabriel_OGA.png
+/sites/default/files/48x48_Faces_1st_Sheet_Update_CharlesGabriel_OGA_0.png
+/sites/default/files/48x48_Faces_1st_Sheet_Update_CharlesGabriel_OGA_preview.png
+/sites/default/files/archive/sara-logo.png
+/sites/default/files/styles/medium/public/48x48_Faces_1st_Sheet_Update_CharlesGabriel_OGA.png
+/sites/default/files/styles/medium/public/48x48_Faces_1st_Sheet_Update_CharlesGabriel_OGA_preview.png
+== temple ==
+/sites/default/files/archive/sara-logo.png
+/sites/default/files/classical_temple_mockup.png
+/sites/default/files/classical_temple_tiles.png
+/sites/default/files/styles/medium/public/classical_temple_mockup.png
+== forest ==
+/sites/default/files/archive/sara-logo.png
+/sites/default/files/forest_tiles.png
+/sites/default/files/forest_tiles_preview.png
+/sites/default/files/styles/medium/public/forest_tiles_preview.png
+== castle ==
+/sites/default/files/16x16%20castle.png
+/sites/default/files/16x16%20castle_0.png
+/sites/default/files/archive/sara-logo.png
+/sites/default/files/styles/medium/public/16x16%20castle.png
+/sites/default/files/styles/medium/public/tiny-castle-example.png
+/sites/default/files/tiny-castle-example.png

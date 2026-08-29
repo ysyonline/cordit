@@ -1,0 +1,13 @@
+16oga.png | 160x80 | mode=RGBA
+48x48_Faces_1st_Sheet_Update_CharlesGabriel_OGA.png | 288x400 | mode=P
+castle_tiles.png | 1024x192 | mode=P
+castle_tiles2.png | 144x64 | mode=RGBA
+chars_preview.png | 49x72 | mode=P
+charsets_12_m-f_complete_by_antifarea.png | 330x400 | mode=P
+classical_temple_tiles.png | 1024x768 | mode=P
+faces_preview.png | 96x96 | mode=P
+forest_tiles.png | 240x160 | mode=P
+temple_mockup.png | 320x224 | mode=P
+town_preview.png | 100x100 | mode=P
+town_test.png | 512x256 | mode=RGBA
+town_tiles.png | 512x512 | mode=RGBA

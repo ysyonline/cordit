@@ -1,0 +1,25 @@
+# 本地工具目录（WorkBuddy 会话数据，绝不进仓库）
+.workbuddy/
+
+# Git 通用排除
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Godot 4 缓存与用户专属文件（首次用编辑器打开项目后生成）
+.godot/
+*.tmp
+
+# Godot 导出包与导出配置密钥
+export/
+export_presets.cfg
+*.translation
+
+# 存档类运行时文件不进仓库（user:// 映射到本机目录，防御性排除）
+save.json
+*.sav
+
+# 系统与工具链噪声
+*.log
+*.bak
+*~

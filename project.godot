@@ -1,0 +1,41 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+;
+; ⚠ ADR-4（docs/architecture/godot4-architecture-adr.md）：
+;   本文件渲染/缩放参数为"一套定死"的像素渲染基线，立项后不再调整。
+;   640×360 视口 + canvas_items/keep 整数缩放 + Nearest 过滤 + Compatibility 渲染器。
+
+config_version=5
+
+[application]
+
+config/name="轨迹残响"
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+config/icon="res://icon.svg"
+
+[display]
+
+; 视口分辨率：640×360（=16px tile 的 40×22.5 格，1080p 下 ×3 整数缩放）——ADR-4
+window/size/viewport_width=640
+window/size/viewport_height=360
+; 拉伸模式：canvas_items + aspect=keep（黑边，不接受非整数拉伸）——ADR-4
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+; 整数缩放（Display → Window → Stretch → Scale Mode）——ADR-4
+window/stretch/scale_mode="integer"
+
+[rendering]
+
+; 渲染器：Compatibility（GLES3），切片不需要 Forward+ 特性，低端机兼容更好——ADR-4
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+; 默认纹理过滤：Nearest（0）。16×16 素材模糊的最大元凶就是默认的 Linear——ADR-4
+textures/canvas_textures/default_texture_filter=0
+; 2D 变换吸附像素，防 subpixel 抖动——ADR-4
+2d/snap/snap_2d_transforms_to_pixel=true
