@@ -1,0 +1,21 @@
+SMK-06 静态检查证据 · GameData 字段声明齐全
+执行日期：2026-08-29　执行人：游承峰（team-lead，代核）
+被测文件：autoload/game_data.gd（对应提交 092e8a7）
+
+检查方式：源码通读，对照 SMOKE-CHECKLIST SMK-06 预期与架构 A3
+
+核对清单（清单要求 → 实际声明）：
+- 队伍结构        → var party: Array[Dictionary] = []（注释声明三人槽位序与每人字段表：
+                     id/name/job/level/hp/max_hp/mp/max_mp/atk/mag/def/spd/skills/inventory/equipment）
+- story_phase     → var story_phase: int = 0
+- flags           → var flags: Dictionary = {}
+- chests_opened   → var chests_opened: Array = []
+- cleared_enemy_set → var cleared_enemy_set: Array = []
+- discovered_weakness_set → var discovered_weakness_set: Array = []
+- 附加字段（A5 协议保留）→ inventory: Dictionary、gold: int（有裁决注释背书，不越界）
+
+类型标注：全部字段带显式类型标注，符合 ADR-1 渐进类型。
+零函数、零 IO、零信号（信号项另见 smk-07.txt）。
+
+结论：字段齐备 + 类型标注到位。
+PASS

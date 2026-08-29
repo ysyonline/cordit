@@ -125,7 +125,9 @@ func _ready() -> void:
 
 | 日期 | 执行人 | 范围 | 结果 | 备注 |
 |---|---|---|---|---|
-| | | SMK-01~07 | | E1-S2 首跑 |
+| 2026-08-29 | 游承峰（team-lead 代核） | SMK-05/06/07 静态部分 + SMK-12 源码预核 | PASS | 静态搜索/通读核对；证据见 evidence/smk-05~07.txt；SMK-07 的 user:// 动态复核与 SMK-12 挂 E1-S3 后全量重跑 |
+| 2026-08-29 | 游承峰（headless 自动化） | SMK-01~04 动态 + SMK-07/12 动态（user:// 核对） | PASS | Godot 4.7.2 headless 跑 tests/smoke/headless_smk.tscn，4/4 PASS 退出码 0；user:// 仅引擎 logs 零游戏文件；证据见 evidence/smk-01-04-headless.log；SMK-08~12 仍按计划 E1-S3 后全量重跑 |
+| | | SMK-01~07 | | E1-S2 首跑（上述两行合并即首跑全量，全绿） |
 | | | SMK-01~12 | | E1-S3 / M1 收口 |
 
 （每行对应一次全量执行；FAIL 时在备注写用例号与现象，修复合入后重跑整段范围。）

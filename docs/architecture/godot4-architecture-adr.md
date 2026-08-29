@@ -2,6 +2,7 @@
 
 > 作者：程基岩（engineering-lead）｜阶段：技术预研/架构｜服务范围：垂直切片 Must-have 109h
 > 引擎版本基线：**Godot 4.3+**（4.4 亦可，以下均兼容；文档涉及 TileMapLayer 多层 y-sort 需要 4.3+）
+> **勘误注记（2026-08-29，用户拍板）**：本机实际安装 Godot 4.7.x，本项目直接用 4.7（基线"4.3+"覆盖，切片内只用稳定 API 面；W3 装 GUT 时核实其 4.7 兼容版本）。
 > 汇编：游承峰（team-lead）。与战斗 GDD 的对齐裁决见 `design/gdd/phase2-3-alignment-review.md`
 
 ---

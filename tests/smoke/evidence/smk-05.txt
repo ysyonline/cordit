@@ -1,0 +1,13 @@
+SMK-05 静态检查证据 · EventBus 无状态越界（A3 边界）
+执行日期：2026-08-29　执行人：游承峰（team-lead，代核）
+被测文件：autoload/event_bus.gd（对应提交 092e8a7）
+
+检查方式：全文正则搜索 `^\s*(var|func|extends)|_ready`
+
+命中结果（共 3 行，全部合法）：
+1. extends Node —— 类声明，必需
+2. 注释行「只声明信号，不存状态、不写逻辑——零 var、零 func、零 _ready。」—— 文档注释，非代码
+3. signal map_ready(map: String) —— 信号声明，SMK-02 范围
+
+结论：除 extends + 六条 signal 声明外，零成员变量、零函数、零 _ready。
+PASS
