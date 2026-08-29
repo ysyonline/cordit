@@ -1,12 +1,16 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/main/main_controller.gd" id="1_mainctrl"]
+
+[ext_resource type="PackedScene" path="res://scenes/ui/debug_panel.tscn" id="2_dbgpanel"]
 
 ; ── E1-S3 正式常驻根（架构 A4）──────────────────────────────────
 ; Main（Node，常驻根，挂 main_controller.gd：结构自检 + 初始装载）
 ; ├── World      Node        ← 唯一"当前场景容器"，SceneRouter 只替换其子节点
 ; └── UILayer    CanvasLayer ← 跨场景常驻 UI 层（layer=10 盖在 World 之上）
 ;     ├── TestLabel  Label     ← SMK-11 验活用测试 Label（底部居中）
+;     ├── DebugPanel CanvasLayer ← E2-S1 M 键调试面板（默认隐藏；
+;     │                             纯 UILayer，不拦游戏输入、只读 GameData）
 ;     └── FadeMask   ColorRect ← 0.2s 淡入淡出过渡遮罩（SceneRouter 驱动；
 ;                                驻留期 visible=false + alpha=0，且 mouse_filter=2
 ;                                保证永不吞输入）
@@ -20,6 +24,8 @@ script = ExtResource("1_mainctrl")
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 layer = 10
+
+[node name="DebugPanel" parent="UILayer" instance=ExtResource("2_dbgpanel")]
 
 [node name="TestLabel" type="Label" parent="UILayer"]
 unique_name_in_owner = true

@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2e5s1debugpnl"]
+
+[ext_resource type="Script" path="res://scripts/ui/debug_panel.gd" id="1_dbgpanel"]
+
+; ── E2-S1 M 键调试面板 ──────────────────────────────────────────
+; DebugPanel（CanvasLayer）——纯 UILayer 层级节点，实例化挂载于
+; main.tscn 的 UILayer 之下；控件树由 debug_panel.gd 在 _ready 组建
+; （底板 ColorRect + 只读 RichTextLabel，全部 mouse_filter=IGNORE）。
+; M 键开/关；默认 visible=false，不影响首屏与游戏世界。
+
+[node name="DebugPanel" type="CanvasLayer"]
+layer = 10
+visible = false
+script = ExtResource("1_dbgpanel")
