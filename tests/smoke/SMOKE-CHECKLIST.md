@@ -131,5 +131,6 @@ func _ready() -> void:
 | 2026-08-29 | 游承峰（headless 自动化） | E1-S4 断言套件（3/3）+ SMK-08~12 回归（5/5） | PASS | E1-S4 无头复跑：脚底挂载(96,160)/1s 位移 72.0px=4.5tile/s/撞墙 x=266.0 无穿墙无漂移，证据 evidence/e1s4-headless.log；SMK-08~12 改动后回归 5/5（含玩家跨切换生命周期：map_b 无玩家、map_a 重挂正常）；E1-S4 人眼项（4.5tile/s 手感、subpixel 抖动、遮挡视觉）待用户 F5 终验 |
 | | | SMK-01~07 | | E1-S2 首跑（2026-08-29 两行合并即首跑全量，全绿） |
 | | | SMK-01~12 | | E1-S3 首跑全量：全绿（2026-08-29）；M1 收口再跑一轮 |
+| 2026-08-29 | 游承峰（headless + 窗口模式） | SMK-01~12 全量（M1 收口门） | PASS | Godot 4.7.2 headless：headless_smk.tscn 4/4 + headless_smk_e1s3.tscn 5/5 + 静态核验 3/3 = 12/12 PASS；证据 evidence/m1-smk-01-04.log + m1-smk-08-12.log；S5 人眼代验 PASS（visual_e1s5 截图 9 张 + 静态核验 108/108）；试玩视频 evidence/m1-gameplay.avi 33s@15fps |
 
 （每行对应一次全量执行；FAIL 时在备注写用例号与现象，修复合入后重跑整段范围。）
