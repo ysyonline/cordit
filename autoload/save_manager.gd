@@ -7,7 +7,7 @@ extends Node
 ##   EventBus.save_requested 触发。
 ##
 ## ⚠ E1-S2 空壳：本文件只有 schema 常量声明，零读写、零 IO、零函数。
-##   实际读写（FileAccess + JSON）属 EPIC-4 E4-S1 职责（SMK-12 验收点：
+##   实际的存读档实现属 EPIC-4 E4-S1 职责（SMK-12 验收点：
 ##   运行本项目不得在 user:// 产生任何文件）。
 ##
 ## 快照协议（ADR-3：JSON 手写字段序列化，不用 Resource 序列化）：

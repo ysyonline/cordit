@@ -1,9 +1,5 @@
 [gd_scene load_steps=1 format=3]
 
-; 临时占位主场景（E1-S1/S2 骨架验证用，TASK-13）
-; 结构已按架构 A4 预留：Main（常驻根）→ World（场景路由装载层）/ UILayer（跨场景常驻 UI 层）。
-; E1-S3 正式化：World 装载白盒地图、UILayer 挂对话框与过渡遮罩、Label 移除或转为存活验证件（SMK-11）。
-
 [node name="Main" type="Node"]
 
 [node name="World" type="Node" parent="."]
