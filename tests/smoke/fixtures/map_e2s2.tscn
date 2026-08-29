@@ -1,0 +1,113 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://tests/smoke/fixtures/map_whitebox.gd" id="1_whitebox"]
+[ext_resource type="Script" path="res://tests/smoke/fixtures/temp_player_mount.gd" id="2_mount"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="3_player"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/visible_enemy.tscn" id="4_enemy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(96, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_occluder"]
+size = Vector2(24, 16)
+
+; ── E2-S2 测试场（可见敌人巡逻/接触/碰撞矩阵）────────────────────────
+; 结构沿白盒图 A 骨架（map_id="map_e2s2"，map_ready 语义同 SMK 通道）。
+; 验证点布局：
+;   巡逻  —— Enemy_A 两点水平往返循环 (80,160)<->(208,160)，恒速 32px/s；
+;            巡逻路径远离墙与出生点，数学断言（位移/速度/循环）无干扰。
+;   接触  —— Enemy_B 短程巡逻于 (480,240) 附近 ±32px，东侧 32px 为竖墙：
+;            玩家自东向西撞上 → return_position 应为敌人东侧一格 (496,240)
+;            （自动化用例经 fixture 钉住敌人位置后做精确数学断言）。
+;   敌间互穿 —— Enemy_A 与 Enemy_B 巡逻带不同纵列不相交，层 8 不在彼此
+;            mask、可重叠通过（GDD 边缘情况 1；headless 自动断言层位，
+;            重叠视觉人眼复验）。
+;   挡墙  —— 沿用 map_a 的 Wall/East/WSouth 三墙（layer=1），玩家与敌人
+;            mask 均含 1，move_and_slide 实撞验证（人眼 + Player 碰撞日志）。
+; 出生点 (96,320)：西南角，距 Enemy_A 巡逻带 160px、Enemy_B 400px——
+; 装载即安全（探索 GDD §3.4"spawn 点周围无敌人初始位"精神）。
+; TempPlayerMount：E1-S3 临时挂载器惯例（正式出生点系统 EPIC-2 后续落地）。
+
+[node name="MapE2S2" type="Node2D"]
+script = ExtResource("1_whitebox")
+map_id = "map_e2s2"
+display_color = Color(0.3, 0.25, 0.4, 1)
+
+[node name="Backdrop" type="ColorRect" parent="."]
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0.3, 0.25, 0.4, 1)
+
+[node name="MapLabel" type="Label" parent="."]
+z_index = 10
+offset_top = 40.0
+offset_right = 640.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 32
+text = "E2-S2 遇敌测试场"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Wall" type="StaticBody2D" parent="."]
+position = Vector2(320, 220)
+collision_layer = 1
+collision_mask = 0
+
+[node name="WallShape" type="CollisionShape2D" parent="Wall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallEast" type="StaticBody2D" parent="."]
+position = Vector2(512, 120)
+collision_layer = 1
+collision_mask = 0
+
+[node name="WallShape" type="CollisionShape2D" parent="WallEast"]
+shape = SubResource("RectangleShape2D_wall")
+rotation = 1.5707964
+
+[node name="WallSouth" type="StaticBody2D" parent="."]
+position = Vector2(160, 120)
+collision_layer = 1
+collision_mask = 0
+
+[node name="WallShape" type="CollisionShape2D" parent="WallSouth"]
+shape = SubResource("RectangleShape2D_wall")
+rotation = 1.5707964
+
+[node name="YSorted" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Occluder" type="StaticBody2D" parent="YSorted"]
+position = Vector2(240, 260)
+collision_layer = 4
+collision_mask = 0
+
+[node name="OccluderShape" type="CollisionShape2D" parent="YSorted/Occluder"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_occluder")
+
+[node name="Visual" type="ColorRect" parent="YSorted/Occluder"]
+offset_left = -12.0
+offset_top = -16.0
+offset_right = 12.0
+offset_bottom = 0.0
+color = Color(0.55, 0.35, 0.2, 1)
+
+[node name="Enemy_A" parent="YSorted" instance=ExtResource("4_enemy")]
+position = Vector2(80, 160)
+enemy_uid = "enemy_e2s2_a"
+group_id = "slime_01"
+waypoints = Array[Vector2]([Vector2(128, 0)])
+
+[node name="Enemy_B" parent="YSorted" instance=ExtResource("4_enemy")]
+position = Vector2(480, 240)
+enemy_uid = "enemy_e2s2_b"
+group_id = "slime_02"
+waypoints = Array[Vector2]([Vector2(32, 0), Vector2(-32, 0)])
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(96, 320)
+
+[node name="TempPlayerMount" type="Node" parent="."]
+script = ExtResource("2_mount")
+player_scene = ExtResource("3_player")

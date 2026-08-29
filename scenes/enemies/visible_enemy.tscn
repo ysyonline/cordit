@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/visible_enemy.gd" id="1_enemygd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_feet"]
+size = Vector2(12, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_touch"]
+size = Vector2(16, 14)
+
+; ── 可见敌人实体装配（E2-S2，架构 A5 + 探索 GDD §3.2）────────────────
+; 根节点 (0,0) = 脚底触地点（y-sort 排序基准，规则同 player.tscn 头注释）。
+;   根节点（CharacterBody2D）layer=8/mask=17：
+;     layer 8（敌人实体）——敌人间 mask 互不含 8 → 互相无碰撞可重叠
+;     （GDD 边缘情况 1）；mask 17 = 层1墙体|层16玩家 → 被墙/NPC 挡、与玩家
+;     互挡（"接触前先被实体挡半步"，探索 GDD §3.2 接触判定的前置半步）。
+;   ├── BodyRect   Sprite2D 载体     位置 (-8,-9)，绘制 x∈[-8,8] y∈[-18,0]，
+;                                   暗红占位矩形（色板风格区分：玩家金黄/
+;                                   NPC 青灰/敌人暗红）。D3 敌人包 Ars Notoria
+;                                   入库后仅替换纹理。
+;   ├── Collision  CollisionShape2D 12x6 @ (0,-3)，只框"脚"（俯视惯例）。
+;   └── TouchArea  Area2D           16x14 @ (0,-7) mask=16（仅玩家实体层）：
+;                                   接触判定区——玩家实体进入即组装 A5 载荷发
+;                                   EventBus.enemy_touched；墙/NPC/其他敌人
+;                                   进入不触发。
+; 层位约定（全项目扩展，沿 player.tscn 头注释）：
+;   1=世界墙体(含NPC脚)  2=交互物  4=y-sort遮挡物  8=敌人实体  16=玩家实体
+; 导出量：enemy_uid / group_id / return_map / waypoints（说明见脚本头注释）。
+
+[node name="VisibleEnemy" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 17
+script = ExtResource("1_enemygd")
+
+[node name="BodyRect" type="Sprite2D" parent="."]
+position = Vector2(-8, -9)
+
+[node name="BodyColor" type="ColorRect" parent="BodyRect"]
+offset_right = 16.0
+offset_bottom = 18.0
+color = Color(0.62, 0.2, 0.2, 1)
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_feet")
+
+[node name="TouchArea" type="Area2D" parent="."]
+position = Vector2(0, -7)
+collision_layer = 0
+collision_mask = 16
+
+[node name="TouchShape" type="CollisionShape2D" parent="TouchArea"]
+shape = SubResource("RectangleShape2D_touch")
