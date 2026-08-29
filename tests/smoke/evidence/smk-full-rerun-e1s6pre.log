@@ -1,0 +1,17 @@
+# E1-S6 开工前质量门：SMK-01~12 全量重跑（2026-08-29 18:31）
+# 动态：Godot 4.7.2 headless
+[SMK-01] PASS: 四 Autoload 注册生效（GameData/EventBus/SceneRouter/SaveManager）
+[SMK-02] PASS: 六信号齐全且参数一致
+[SMK-03] PASS: 六信号全部 connect 成功
+[SMK-04] PASS: 六信号参数原样送达
+[SMK-08] PASS: 合法 payload 受理 MapA→MapB + 暂存载荷取回
+[SMK-09] PASS: 三种非法 payload 全部拒绝
+[SMK-10] PASS: 非法调用零副作用
+[SMK-11] PASS: 两轮切换 TestLabel 同实例
+[SMK-12] PASS: user:// 零落盘（动态）
+# 静态：
+[SMK-05] PASS: EventBus 零 var/func（纯信号）
+[SMK-06] PASS: GameData 字段带类型标注（8 组）
+[SMK-07] PASS: FileAccess/user:// 仅 save_manager.gd SCHEMA 声明一处
+[SMK-12 静态] PASS: 仅 SCHEMA_VERSION=1 + SCHEMA 常量（ADR-3 口径）
+# 汇总：SMK-01~12 全量 12/12 PASS，EXIT=0 ×2 —— E1-S6 开工质量门通过

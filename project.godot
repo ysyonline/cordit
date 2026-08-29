@@ -5,10 +5,6 @@
 ; Format:
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
-;
-; ⚠ ADR-4（docs/architecture/godot4-architecture-adr.md）：
-;   本文件渲染/缩放参数为"一套定死"的像素渲染基线，立项后不再调整。
-;   640×360 视口 + canvas_items/keep 整数缩放 + Nearest 过滤 + Compatibility 渲染器。
 
 config_version=5
 
@@ -16,15 +12,25 @@ config_version=5
 
 config/name="轨迹残响"
 run/main_scene="res://scenes/main.tscn"
-; 引擎版本基线：本机 Godot 4.7（2026-08-29 用户裁决选 A；原基线 4.3+ 的勘误由主理人回写冻结文档）
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameData="*res://autoload/game_data.gd"
+EventBus="*res://autoload/event_bus.gd"
+SceneRouter="*res://autoload/scene_router.gd"
+SaveManager="*res://autoload/save_manager.gd"
+
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=360
+window/stretch/mode="canvas_items"
+window/stretch/scale_mode="integer"
+
 [input]
 
-; 玩家输入动作（E1-S4 新增；动作名与 player.gd Input.get_vector 一一对应）。
-; 方案 A：WASD（E1-S4 拍板）——不与方向键菜单/系统快捷键打架；
-; Z/E 交互键已同步注册（E1-S6 消费），均为物理键位（美式布局映射）。
 move_left={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":65,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
@@ -52,33 +58,9 @@ interact={
 ]
 }
 
-[autoload]
-
-; 全局单例（架构 A3：只建 4 个，不多建）。
-; 注册顺序即初始化顺序，按依赖方向排列：
-;   GameData（纯状态，无依赖）→ EventBus（纯信号）→ SceneRouter（切场景）→ SaveManager（读 GameData 快照）
-GameData="*res://autoload/game_data.gd"
-EventBus="*res://autoload/event_bus.gd"
-SceneRouter="*res://autoload/scene_router.gd"
-SaveManager="*res://autoload/save_manager.gd"
-
-[display]
-
-; 视口分辨率：640×360（=16px tile 的 40×22.5 格，1080p 下 ×3 整数缩放）——ADR-4
-window/size/viewport_width=640
-window/size/viewport_height=360
-; 拉伸模式：canvas_items + aspect=keep（黑边，不接受非整数拉伸）——ADR-4
-window/stretch/mode="canvas_items"
-window/stretch/aspect="keep"
-; 整数缩放（Display → Window → Stretch → Scale Mode）——ADR-4
-window/stretch/scale_mode="integer"
-
 [rendering]
 
-; 渲染器：Compatibility（GLES3），切片不需要 Forward+ 特性，低端机兼容更好——ADR-4
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-; 默认纹理过滤：Nearest（0）。16×16 素材模糊的最大元凶就是默认的 Linear——ADR-4
-textures/canvas_textures/default_texture_filter=0
-; 2D 变换吸附像素，防 subpixel 抖动——ADR-4
 2d/snap/snap_2d_transforms_to_pixel=true

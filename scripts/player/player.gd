@@ -70,6 +70,11 @@ var _last_frame_displacement: Vector2 = Vector2.ZERO
 ## 测试注入口：非 ZERO 时优先于真实键盘（无头自验用；运行时保持 ZERO）
 var _input_override: Vector2 = Vector2.ZERO
 
+## 输入锁：true 时真实键盘与测试注入一并失效（移动向量强制 ZERO）。
+## E1-S6 新增：对话期间移动锁定（A7）由 DialogueRunner 持有开关权。
+## 默认 false——E1-S4/E1-S5 全部断言在解锁态下运行，行为零变化。
+var is_input_locked: bool = false
+
 ## 遮挡自检最近一次命中结果（SMK 观察用）
 var _occluded_by: Node = null
 
@@ -84,7 +89,7 @@ func _ready() -> void:
 	var cam: Camera2D = get_node_or_null("Camera2D") as Camera2D
 	if cam != null:
 		cam.make_current()
-	print("[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式")
+	print("[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位")
 
 
 func _physics_process(delta: float) -> void:
@@ -102,7 +107,10 @@ func _physics_process(delta: float) -> void:
 
 ## 取移动向量：测试注入优先，否则读输入动作 move_*（project.godot [input]）。
 ## Input.get_vector 已做斜向归一（长度≤1，斜走不超速）与死区处理。
+## 输入锁开启时（对话期间，A7）一律返回 ZERO——锁优先级最高。
 func _get_move_vector() -> Vector2:
+	if is_input_locked:
+		return Vector2.ZERO
 	if _input_override != Vector2.ZERO:
 		return _input_override.normalized()
 	var v: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -162,6 +170,8 @@ func is_moving() -> bool:
 ## 面前交互目标（E1-S6 消费；无命中返回 null）。
 ## 射线排除遮挡物层（第 3 层，mask=4）：站在宝箱/敌人【后面】也能交互
 ## （俯视游戏惯例：按 y-sort 被遮挡 ≠ 不可交互）。
+## 注意：命中任意物体即返回（含层 1 墙体）——"面前 1 格是墙不是 NPC"时
+## 由调用方（interaction_controller）按目标协议过滤，player 不理解目标类型。
 func get_interact_target() -> Object:
 	var ray: RayCast2D = get_node_or_null("InteractRay") as RayCast2D
 	if ray == null:
@@ -174,6 +184,13 @@ func get_interact_target() -> Object:
 ## 测试注入：设置后忽略真实键盘（Vector2.ZERO 恢复正常输入）
 func set_input_override(v: Vector2) -> void:
 	_input_override = v.normalized() if v != Vector2.ZERO else Vector2.ZERO
+
+
+## 输入锁开关（E1-S6）：对话系统持有；锁定时 set_input_override 注入同样失效。
+func set_input_locked(locked: bool) -> void:
+	is_input_locked = locked
+	if locked:
+		velocity = Vector2.ZERO
 
 
 ## 上一帧实际位移（px/物理帧，测试断言与调参观察用）

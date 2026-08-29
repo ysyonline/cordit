@@ -2,6 +2,12 @@ extends Node2D
 ## town_map.gd —— E1-S5 小镇地图根脚本：简版门传送（切位置 + 切相机限区）
 ## 施工依据：design/gdd/e1-s5-town-build-sheet.md 第 4/5 节
 ##
+## 【E1-S6 增量】对话系统装配（交互 + 对话框 + 触发器，架构 A7）：
+##   本脚本 _ready 时装配 DialogueRunner（挂 UILayer 跨场景常驻，A4）+
+##   InteractionController（挂本地图，随图生灭），并把锚点 NPCs 实例化为
+##   npc.tscn 实体。装配代码全部集中在 _assemble_dialogue_system()，
+##   其余 E1-S5 已验收行为零触碰。
+##
 ## TODO(E4-S6) 正式时序衔接（三条，重做本脚本时逐条落实）：
 ## 1. 简版 teleport 无转场、无 map_ready、无自动存档——正式时序按探索 GDD §3.4：
 ##    teleport 动作 → 载图/落位 → 地图广播 map_ready → SaveManager.save()
@@ -25,6 +31,22 @@ extends Node2D
 
 var _routes := {}  # trigger 节点名 → { "target": Vector2, "limits": Rect2i }
 
+## 对话运行器实例（E1-S6 装配产物；公开供测试树定位/断言）
+var dialogue_runner: Node = null
+
+## 交互轮询器实例（E1-S6 装配产物；公开供测试注入）
+var interaction_controller: Node = null
+
+## E1-S6 预载：对话系统三件套（runner / controller / 对话框场景 / NPC 场景）
+const DialogueRunnerScript := preload("res://scripts/dialogue/dialogue_runner.gd")
+const InteractionControllerScript := preload("res://scripts/events/interaction_controller.gd")
+const DialogueBoxScene := preload("res://scenes/ui/dialogue_box.tscn")
+const NpcScene := preload("res://scenes/npc/npc.tscn")
+
+## 本 Story 实体化的 NPC 锚点名（最小版：摆 2 个验证，其余 M1 前补——
+## 命名 = E1-S5 验收锚点名，锚点 Marker2D 原样保留不删）。
+const SPAWN_NPC_IDS: Array[String] = ["npc_01_innkeeper", "npc_04_guard"]
+
 
 func _ready() -> void:
 	_routes = {
@@ -38,10 +60,55 @@ func _ready() -> void:
 	for area in $Triggers.get_children():
 		if area is Area2D:
 			area.body_entered.connect(_on_trigger_body_entered.bind(String(area.name)))
+	# E1-S6：对话系统装配（锚点实体化 + runner/controller + 对话框入 UILayer）
+	_assemble_dialogue_system(player)
+
+
+## E1-S6：对话系统装配（全部增量集中于此，E1-S5 已验收行为零触碰）。
+## 层位归属：runner + 对话框挂 Main/UILayer（跨场景常驻，A4——对话可跨
+## 剧情阶段连续存在）；无 Main 结构（测试直挂）时兜底挂本地图，由测试侧
+## 负责释放。InteractionController 挂本地图（随图生灭，无全局状态）。
+func _assemble_dialogue_system(player: CharacterBody2D) -> void:
+	# ① 锚点实体化：E1-S5 的 Marker2D 锚点原样保留，NPC 实体摆到锚点脚底位
+	var anchors: Node = get_node_or_null("YSorted/NPC_Anchors")
+	if anchors != null:
+		for anchor in anchors.get_children():
+			var anchor_name := String(anchor.name)
+			if anchor_name in SPAWN_NPC_IDS:
+				var npc: StaticBody2D = NpcScene.instantiate()
+				npc.name = anchor_name + "_entity"
+				npc.npc_id = anchor_name
+				npc.position = anchor.position
+				get_node("YSorted").add_child(npc)
+	# ② 对话框（UILayer 常驻层；无 Main 时兜底挂本地图根）
+	var box: Control = DialogueBoxScene.instantiate()
+	var ui_host: Node = get_tree().root.get_node_or_null("Main/UILayer")
+	var box_is_temp: bool = false
+	if ui_host == null:
+		ui_host = self
+		box_is_temp = true
+	ui_host.add_child(box)
+	if box_is_temp:
+		box.set_meta("temp_dialogue_box", true)  # 标记：测试树释放时随图销毁
+	# ③ DialogueRunner（与对话框同宿主；runner 引用同图玩家与框）
+	dialogue_runner = Node.new()
+	dialogue_runner.name = "DialogueRunner"
+	dialogue_runner.set_script(DialogueRunnerScript)
+	ui_host.add_child(dialogue_runner)
+	dialogue_runner.setup(box, player)
+	# ④ 交互轮询器（挂本地图）
+	interaction_controller = Node.new()
+	interaction_controller.name = "InteractionController"
+	interaction_controller.set_script(InteractionControllerScript)
+	add_child(interaction_controller)
+	interaction_controller.setup(player, dialogue_runner)
 
 
 func _on_trigger_body_entered(body: Node2D, trigger_name: String) -> void:
 	if not (body is CharacterBody2D) or not _routes.has(trigger_name):
+		return
+	# 对话期间触发器不响应（对话 GDD §4；边缘情况 2 同规则前瞻）
+	if dialogue_runner != null and not dialogue_runner.is_idle():
 		return
 	var route: Dictionary = _routes[trigger_name]
 	body.global_position = route["target"]
