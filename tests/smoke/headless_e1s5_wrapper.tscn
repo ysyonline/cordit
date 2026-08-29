@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tests/smoke/headless_e1s5_wrapper.gd" id="1_wrap"]
+
+[node name="HeadlessE1S5Wrapper" type="Node"]
+script = ExtResource("1_wrap")
