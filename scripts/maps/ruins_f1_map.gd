@@ -20,10 +20,16 @@ extends Node2D
 var dialogue_runner: Node = null
 var interaction_controller: Node = null
 
+## E4-S5 内容点位装配产物（{"chests": Array, "investigates": Array}，测试对表用）
+var content_points: Dictionary = {}
+
 
 func _ready() -> void:
 	var player: CharacterBody2D = $YSorted/Player
 	_apply_limits(player.get_node("Camera2D"), limits_main)
+	# E4-S5：内容点位装配（3 宝箱 + 4 调查点，数据/装配见 scripts/events/）
+	const MapEvents := preload("res://scripts/events/map_events.gd")
+	content_points = MapEvents.assemble(self, "ruins_f1")
 	# TODO(E4-S6)：此处广播 EventBus.map_ready 并触发自动存档（§3.4 精确时序）
 
 

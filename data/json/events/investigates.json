@@ -1,0 +1,22 @@
+{
+  "investigates": [
+    {"id": "inv_town_01", "map": "town", "tile": [25, 26], "tone": "F"},
+    {"id": "inv_town_02", "map": "town", "tile": [30, 10], "tone": "A"},
+    {"id": "inv_town_03", "map": "town", "tile": [20, 33], "tone": "F"},
+    {"id": "inv_town_04", "map": "town", "tile": [39, 16], "tone": "A"},
+    {"id": "inv_town_05", "map": "town", "tile": [44, 30], "tone": "F"},
+    {"id": "inv_town_06", "map": "town", "tile": [16, 22], "tone": "F"},
+    {"id": "inv_road_01", "map": "road", "tile": [38, 10], "tone": "F"},
+    {"id": "inv_road_02", "map": "road", "tile": [34, 28], "tone": "F"},
+    {"id": "inv_road_03", "map": "road", "tile": [24, 38], "tone": "A"},
+    {"id": "inv_f1_01", "map": "ruins_f1", "tile": [32, 2], "tone": "A"},
+    {"id": "inv_f1_02", "map": "ruins_f1", "tile": [30, 11], "tone": "A"},
+    {"id": "inv_f1_03", "map": "ruins_f1", "tile": [28, 23], "tone": "F"},
+    {"id": "inv_f1_04", "map": "ruins_f1", "tile": [18, 37], "tone": "F"},
+    {"id": "inv_f2_01", "map": "ruins_f2", "tile": [21, 2], "tone": "A"},
+    {"id": "inv_f2_02", "map": "ruins_f2", "tile": [38, 10], "tone": "A"},
+    {"id": "inv_f2_03", "map": "ruins_f2", "tile": [14, 41], "tone": "F"},
+    {"id": "inv_f3_01", "map": "ruins_f3", "tile": [18, 35], "tone": "A"},
+    {"id": "inv_f3_02", "map": "ruins_f3", "tile": [12, 16], "tone": "A"}
+  ]
+}

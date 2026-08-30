@@ -1,0 +1,22 @@
+{
+  "chests": [
+    { "event_id": "chest_town_01", "map": "town", "tile": [59, 22], "item_id": "potion_m", "count": 1,
+      "dialogue_id": "dlg_chest_town_01", "sfx": "res://assets/audio/sfx/chest_open.ogg" },
+    { "event_id": "chest_road_01", "map": "road", "tile": [9, 16], "item_id": "potion_s", "count": 2,
+      "dialogue_id": "dlg_chest_road_01", "sfx": "res://assets/audio/sfx/chest_open.ogg" },
+    { "event_id": "chest_road_02", "map": "road", "tile": [36, 62], "item_id": "antidote", "count": 1,
+      "dialogue_id": "dlg_chest_road_02", "sfx": "res://assets/audio/sfx/chest_open.ogg" },
+    { "event_id": "chest_f1_01", "map": "ruins_f1", "tile": [4, 20], "item_id": "ether_s", "count": 1,
+      "dialogue_id": "dlg_chest_f1_01", "sfx": "res://assets/audio/sfx/chest_open.ogg" },
+    { "event_id": "chest_f1_02", "map": "ruins_f1", "tile": [50, 9], "item_id": "potion_m", "count": 1,
+      "dialogue_id": "dlg_chest_f1_02", "sfx": "res://assets/audio/sfx/chest_open.ogg" },
+    { "event_id": "chest_f1_03", "map": "ruins_f1", "tile": [24, 39], "item_id": "potion_s", "count": 1,
+      "dialogue_id": "dlg_chest_f1_03", "sfx": "res://assets/audio/sfx/chest_open.ogg" },
+    { "event_id": "chest_f2_01", "map": "ruins_f2", "tile": [8, 20], "item_id": "potion_l", "count": 1,
+      "dialogue_id": "dlg_chest_f2_01", "sfx": "res://assets/audio/sfx/chest_open.ogg" },
+    { "event_id": "chest_f2_02", "map": "ruins_f2", "tile": [38, 27], "item_id": "potion_m", "count": 1,
+      "dialogue_id": "dlg_chest_f2_02", "sfx": "res://assets/audio/sfx/chest_open.ogg" },
+    { "event_id": "chest_f3_01", "map": "ruins_f3", "tile": [21, 35], "item_id": "potion_l", "count": 1,
+      "dialogue_id": "dlg_chest_f3_01", "sfx": "res://assets/audio/sfx/chest_open.ogg" }
+  ]
+}

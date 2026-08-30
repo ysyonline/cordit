@@ -37,6 +37,9 @@ var dialogue_runner: Node = null
 ## 交互轮询器实例（E1-S6 装配产物；公开供测试注入）
 var interaction_controller: Node = null
 
+## E4-S5 内容点位装配产物（{"chests": Array, "investigates": Array}，测试对表用）
+var content_points: Dictionary = {}
+
 ## E1-S6 预载：对话系统三件套（runner / controller / 对话框场景 / NPC 场景）
 const DialogueRunnerScript := preload("res://scripts/dialogue/dialogue_runner.gd")
 const InteractionControllerScript := preload("res://scripts/events/interaction_controller.gd")
@@ -62,6 +65,13 @@ func _ready() -> void:
 			area.body_entered.connect(_on_trigger_body_entered.bind(String(area.name)))
 	# E1-S6：对话系统装配（锚点实体化 + runner/controller + 对话框入 UILayer）
 	_assemble_dialogue_system(player)
+	# E4-S5：内容点位装配（1 宝箱 + 6 调查点，数据/装配见 scripts/events/）
+	_assemble_content_points()
+
+
+func _assemble_content_points() -> void:
+	const MapEvents := preload("res://scripts/events/map_events.gd")
+	content_points = MapEvents.assemble(self, "town")
 
 
 ## E1-S6：对话系统装配（全部增量集中于此，E1-S5 已验收行为零触碰）。
