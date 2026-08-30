@@ -62,8 +62,8 @@
 - [x] 门1：GUT 全量 187/187 PASS（`evidence/s3-gut-e3s6.log`，零回归，含 E3-S6 八边缘用例）
 - [x] 门2：EPIC-3 六 Story 验收标准全部勾绿（本文件上方逐项 [x]）
 - [x] 门4：证据文件入库——`evidence/s3-gut-e3s6.log`（GUT 全量）、`evidence/m3-closeout.md`（收口报告）
-- [ ] 门3：试玩视频 #3（auto-demo + Godot movie maker，同 M2 做法；见 m3-closeout.md 备注）
-- [ ] 门5：git tag `m3`（需用户明确批准后再 commit + tag）
+- [ ] 门3：试玩视频 #3（auto-demo + Godot movie maker，同 M2 做法；用户本机录制，沙箱无显示无法渲染）
+- [x] 门5：git tag `m3`（commit `72e1354` / tag `m3`，2026-08-30 用户批准收口）
 
 > 收口细节与两处 defect 修复记录见 `evidence/m3-closeout.md`。
 > 注：EPIC-3.md 原文称"S6 边缘 7 条"，实际 GDD §3.6 边缘情况为 8 条（原文漏计边缘 8 中毒致死），E3-S6 按 GDD 实测 8 条全过。
