@@ -1,0 +1,21 @@
+; 凯尔 · 剑士（物理输出）── 战斗 GDD §3.6 属性量级表 Lv1 列
+; per_level 取 §3.6 正文"每级 +X"：HP+40 / MP+3 / ATK+3 / MAG+0 / DEF+2 / SPD+0
+; 技能习得：重斩 Lv1（§3.6"Lv1 各已有 1 基础技能"裁决，原为 Lv2）、横扫 Lv2、掩护 Lv3（v1.1 重排：原 Lv3/Lv5）
+
+[gd_resource type="Resource" script_class="CharacterData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/character_data.gd" id="1_cgd"]
+
+[resource]
+script = ExtResource("1_cgd")
+id = "kyle"
+name = "凯尔"
+job = "swordsman"
+base_hp = 120
+base_mp = 10
+base_atk = 14
+base_mag = 4
+base_def = 10
+spd = 12
+per_level = {"atk": 3, "def": 2, "hp": 40, "mag": 0, "mp": 3, "spd": 0}
+skills_by_level = {1: ["heavy_slash"], 2: ["wide_sweep"], 3: ["cover"]}

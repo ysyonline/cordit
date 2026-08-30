@@ -1,0 +1,19 @@
+; 重斩 ── 凯尔 Lv1（原 §3.6 为 Lv2，按"Lv1 各已有 1 基础技能"裁决下调）
+; §3.4：凯尔 / MP 6 / 敌单体 / 物理 / 倍率 ×1.8
+
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_sgd"]
+
+[resource]
+script = ExtResource("1_sgd")
+id = "heavy_slash"
+name = "重斩"
+kind = "physical"
+element = "none"
+power = 1.8
+target = "enemy_single"
+mp_cost = 6
+effect_tag = "none"
+learn_level = 1
+description = "蓄力一击，对单体敌人造成高额物理伤害。"

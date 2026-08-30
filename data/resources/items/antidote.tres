@@ -1,0 +1,16 @@
+; 解毒草 ── 解毒（规则型效果，value 恒 0），地图/战斗皆可
+; 中毒仅存在于 B4/B5（GDD §1.3）；本道具挂在 B3 冰晶掉落上，
+; 让 B4 开打前玩家手里已有解药通道（掉落表 drop_crystal）
+
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/item_data.gd" id="1_igd"]
+
+[resource]
+script = ExtResource("1_igd")
+id = "antidote"
+name = "解毒草"
+kind = "detox"
+value = 0
+usable_phase = "both"
+description = "解除我方单体的中毒状态。"

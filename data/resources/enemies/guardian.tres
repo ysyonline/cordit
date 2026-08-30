@@ -1,0 +1,30 @@
+; 遗像守卫（精英）── B4 一只（GDD §7）
+; §7 给定：HP 240、ATK 16、弱雷、AI 攻60/毒击25/群击15。DEF 10 / SPD 9 为工程初值。
+; DEF 10 依据：凯尔 Lv3 重斩 = (20×2 − 15) × 1.8 = 45；莉娜 Lv3 雷爆
+;   = (18×2.2 − 12) × 1.0 × 1.5（弱雷）= 41.4 → 两人合计约 86/回合，
+;   240 HP 约 3 轮纯输出；但群击逼莫娜治疗、毒击逼净化，实战 4~5 轮——
+;   落在 §3.6"战斗在 5-8 回合内分胜负"的下沿，留调校空间（先调 HP ±20%）。
+; SPD 9 依据：低于全队，玩家总有先手决定"这回合奶谁/挡谁"。
+; ATK 16 校验（§3.6 8%~15%）：对莉娜 Lv3（HP 146 / DEF 12）= 32 − 18 = 14 → 9.6% ✓
+; 逃跑：非 Boss → 可用（§3.5 仅 Boss 战禁用）。
+
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/enemy_data.gd" id="1_egd"]
+
+[resource]
+script = ExtResource("1_egd")
+id = "guardian"
+name = "遗像守卫"
+sprite_id = "enemy_guardian"
+hp = 240
+atk = 16
+def = 10
+spd = 9
+weakness = "thunder"
+resist = ""
+exp = 140
+drop_id = "drop_guardian"
+ai_pattern = "elite"
+ai_weights = {"attack": 60, "poison_strike": 25, "sweep": 15}
+notes = "B4 三问主考场：群击逼治疗、毒击逼净化/道具、威胁逼'谁吃这一下'的取舍；掩护技能的正式登场。毒击附加中毒（每回合扣最大HP×5%，持续 3 回合）。"

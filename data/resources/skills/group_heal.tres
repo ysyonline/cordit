@@ -1,0 +1,19 @@
+; 群愈 ── 莫娜 Lv2（v1.1 重排：原 Lv4）
+; §3.4：莫娜 / MP 9 / 我方全体 / 回复 MAG×1.8 HP
+
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_sgd"]
+
+[resource]
+script = ExtResource("1_sgd")
+id = "group_heal"
+name = "群愈"
+kind = "heal"
+element = "none"
+power = 1.8
+target = "ally_all"
+mp_cost = 9
+effect_tag = "none"
+learn_level = 2
+description = "回复我方全体 HP，回复量为施术者魔力的一点八倍。"

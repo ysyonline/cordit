@@ -31,6 +31,28 @@
 
 ## 4. 状态
 
-- [ ] 主理人过目
-- [ ] 用户拍板
-- [ ] 按裁决执行（移动/归档/删除由人工操作）
+- [x] 主理人过目（2026-08-30，游承峰：裁决表成立，同意按建议执行）
+- [x] 用户拍板（2026-08-30，随 Sprint 2 基建收口一并确认）
+- [x] 按裁决执行（**移动/归档已完成**，commit `1e0295f`）
+
+**执行结果核对（2026-08-30 主理人复查）**：
+
+| # | 对象 | 裁决 | 实际落点 | 核对 |
+|---|---|---|---|---|
+| 1 | `analyze_tiles.py` | 保留入库 | `tools/tile-inspect/analyze_tiles.py` | 已到位 |
+| 2 | `tile_ascii.py` | 保留入库 | `tools/tile-inspect/tile_ascii.py` | 已到位 |
+| 3 | `town_tiles.rgba` | 保留入库 | `tools/tile-inspect/town_tiles.rgba` | 已到位 |
+| 4 | `forest_tiles.rgba` | 保留入库 | `tools/tile-inspect/forest_tiles.rgba` | 已到位 |
+| 5 | `gen_town.py` | 保留入库 | `tools/gen_town.py` | 已到位，头部注释已改写 |
+| 6 | `verify_town.py` | 保留入库 | `tools/verify_town.py` | 已到位 |
+| 7 | `tile_analysis.txt` | 归档 | `production/archive/tile_analysis.txt` | 已到位 |
+
+## 5. 遗留缺陷（§3 注意事项 1 未执行）
+
+**§3 第 1 条"硬编码绝对路径改为相对路径"没有做。** 2026-08-30 主理人复查确认：4 个脚本共 7 处硬编码 `D:\code\cordit\...`，其中 `tile-inspect/` 两脚本指向的 `.rgba` 已随本次裁决迁走，**路径失效、脚本当前跑不起来**。
+
+- 影响面：不影响游戏本体（工具非运行时依赖）；阻塞点是 **EPIC-4 遗迹施工需要克隆这套工具**。
+- 修复量：约十行（改为仓库相对路径或加 argparse 参数）。
+- 状态：**待办**，已同步记入 `tools/README.md` 的"已知缺陷"一节。建议在 EPIC-4 动工前，作为一条独立小任务派给工程侧处理。
+
+> 教训：裁决表的"注意事项"段与"状态"段分离，导致执行时只做了裁决动作、漏了附带整改。后续同类裁决应把注意事项一并列入可勾选清单。

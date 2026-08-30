@@ -1,0 +1,17 @@
+; B5 Boss·遗迹核心 ── GDD §7：核心(HP 480, 弱火, ATK 18, AI: 攻50/重击30/蓄力20)
+; 位置：遗迹三层 | 教学意图：毕业考 | 预期等级 Lv4
+; is_boss = true → 逃跑指令禁用并置灰（§3.5）
+
+[gd_resource type="Resource" script_class="EncounterGroup" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/encounter_group.gd" id="1_ggd"]
+
+[resource]
+script = ExtResource("1_ggd")
+id = "b5_core"
+name = "遗迹核心"
+members = [{"count": 1, "enemy_id": "core"}]
+is_boss = true
+location = "ruin_f3"
+teaching_intent = "毕业考：蓄力 telegraph → 防御应对的完整循环；Boss 弱点为火但 HP 厚，单靠火球刷不动，仍需全队轮转"
+expected_level = "Lv4"

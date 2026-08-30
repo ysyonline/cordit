@@ -1,0 +1,16 @@
+; 队伍升级经验曲线（补充表，见 scripts/data/growth_curve.gd 头注释）
+; 阈值为【累计】经验：下标 0 = 升到 Lv2 的门槛。
+; 与 §7 五场战斗累计经验的对照（敌人 exp 之和）：
+;   Lv2=15   B1 飞蛾×1  = 15  → 累计 15  → Lv2  ✓（B2 预期 Lv1-2）
+;   Lv3=60   B2 甲虫×2  = 36  → 累计 51  → Lv2  ✓（B3 预期 Lv2）
+;   Lv4=150  B3 混编    = 82  → 累计 133 → Lv3  ✓（B4 预期 Lv3）
+;   Lv5=300  B4 守卫    = 140 → 累计 273 → Lv4  ✓（B5 预期 Lv4）
+;            B5 核心    = 260 → 累计 533 → Lv5  ✓（§3.6"切片内预计升 4 级"）
+
+[gd_resource type="Resource" script_class="GrowthCurve" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/growth_curve.gd" id="1_gcd"]
+
+[resource]
+script = ExtResource("1_gcd")
+exp_thresholds = [15, 60, 150, 300]

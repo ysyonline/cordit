@@ -1,0 +1,17 @@
+; B4 遗像守卫（精英）── GDD §7：守卫×1（HP 240, 弱雷, ATK 16, AI: 攻60/毒击25/群击15）
+; 位置：遗迹二层 | 教学意图：三问主考场 | 预期等级 Lv3
+; is_boss = false（精英非 Boss）→ 逃跑指令可用（§3.5 仅 Boss 战禁用）
+
+[gd_resource type="Resource" script_class="EncounterGroup" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/encounter_group.gd" id="1_ggd"]
+
+[resource]
+script = ExtResource("1_ggd")
+id = "b4_guardian"
+name = "遗像守卫"
+members = [{"count": 1, "enemy_id": "guardian"}]
+is_boss = false
+location = "ruin_f2"
+teaching_intent = "三问主考场：群击逼治疗、毒击逼净化/道具、威胁逼'谁吃这一下'的取舍；掩护技能的正式登场"
+expected_level = "Lv3"

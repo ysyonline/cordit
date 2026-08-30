@@ -1,0 +1,12 @@
+; 遗像守卫（B4 精英）掉落 ── 中药瓶 ×1，100%
+; 精英战奖励：回 100 HP，约为莫娜 Lv3 治疗量（MAG20×3=60）的 1.7 倍
+
+[gd_resource type="Resource" script_class="DropData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/drop_data.gd" id="1_dgd"]
+
+[resource]
+script = ExtResource("1_dgd")
+id = "drop_guardian"
+items = [{"count": 1, "item_id": "potion_m", "probability": 1.0}]
+pity_rule = "无"

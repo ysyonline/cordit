@@ -1,0 +1,17 @@
+; B1 道路飞蛾 ── GDD §7：飞蛾×1（HP 50 v1.1 裁定, 无相性, ATK 8, 技能锁定）
+; 位置：道路 | 教学意图：纯教学：攻击/道具，无压力 | 预期等级 Lv1
+
+[gd_resource type="Resource" script_class="EncounterGroup" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/encounter_group.gd" id="1_ggd"]
+
+[resource]
+script = ExtResource("1_ggd")
+id = "b1_moth"
+name = "道路飞蛾"
+members = [{"count": 1, "enemy_id": "moth"}]
+is_boss = false
+location = "road"
+teaching_intent = "纯教学：攻击/道具，无压力（技能锁定，逼玩家只用攻击/道具）"
+expected_level = "Lv1"
+skills_locked = true

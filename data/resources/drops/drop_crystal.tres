@@ -1,0 +1,13 @@
+; 冰晶掉落 ── 解毒草 ×1，100%
+; 设计意图：B4（遗迹二层）才出现中毒，B3（遗迹一层）先给解药，
+; 让玩家进 B4 前手里已有主动容错通道（§7 顺序：B3 在 B4 之前）
+
+[gd_resource type="Resource" script_class="DropData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/drop_data.gd" id="1_dgd"]
+
+[resource]
+script = ExtResource("1_dgd")
+id = "drop_crystal"
+items = [{"count": 1, "item_id": "antidote", "probability": 1.0}]
+pity_rule = "无"

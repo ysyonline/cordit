@@ -1,0 +1,23 @@
+; 莉娜 · 术士（法术输出 / 弱点工具箱）── 战斗 GDD §3.6 属性量级表 Lv1 列
+; per_level 取 §3.6 正文：HP+33 / MP+8 / ATK+0 / MAG+3 / DEF+2 / SPD+0
+; 技能习得：火球 Lv1（§3.6"Lv1 各已有 1 基础技能"裁决，原为 Lv2）、冰锥 Lv2、雷爆 Lv2（v1.1 重排：原 Lv4）
+; 火球下调至 Lv1 的关键理由：§7 定 B2 教学意图为"火球首杀触发弱点！+击退"，
+; 而 B2 预期等级 Lv1-2——火球若 Lv2 才习得，Lv1 打 B2 时教学意图落空。
+
+[gd_resource type="Resource" script_class="CharacterData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/character_data.gd" id="1_cgd"]
+
+[resource]
+script = ExtResource("1_cgd")
+id = "lina"
+name = "莉娜"
+job = "sorcerer"
+base_hp = 80
+base_mp = 30
+base_atk = 5
+base_mag = 12
+base_def = 6
+spd = 10
+per_level = {"atk": 0, "def": 2, "hp": 33, "mag": 3, "mp": 8, "spd": 0}
+skills_by_level = {1: ["fireball"], 2: ["ice_shard", "thunder_burst"]}

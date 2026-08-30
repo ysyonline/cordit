@@ -1,0 +1,628 @@
+﻿Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+Godot_v4.7.2-stable_win64_console.exe : WARNING: res://addons/gut/GutScene.tscn
+:3 - ext_resource, invalid UID: uid://bw7tukh738kw1 - using text path instead: 
+res://addons/gut/GutScene.gd
+所在位置 行:447 字符: 1
++ & "C:\Users\weixufeng\AppData\Local\Microsoft\WinGet\Packages\GodotEn ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (WARNING: res://...gut/GutScene.gd 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/GutScene.tscn:4 - ext_resource, invalid UID: uid://du
+xblir3vu8x7 - using text path instead: res://addons/gut/gui/NormalGui.tscn
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/NormalGui.tscn:3 - ext_resource, invalid UID: uid
+://cstkhwkpajvqu - using text path instead: res://addons/gut/gui/GutSceneTheme.
+tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/GutSceneTheme.tres:3 - ext_resource, invalid UID:
+ uid://c6c7gnx36opr0 - using text path instead: res://addons/gut/fonts/Anonymou
+sPro-Regular.ttf
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/NormalGui.tscn:4 - ext_resource, invalid UID: uid
+://blvhsbnsvfyow - using text path instead: res://addons/gut/gui/gut_gui.gd
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/NormalGui.tscn:5 - ext_resource, invalid UID: uid
+://bnh0lslf4yh87 - using text path instead: res://addons/gut/fonts/CourierPrime
+-Regular.ttf
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: Cannot open file 'res://.godot/imported/CourierPrime-Regular.ttf-3babe7e
+4a7a588dfc9a84c14b4f1fe23.fontdata'.
+   at: load (core/io/resource_format_binary.cpp:1156)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: Failed loading resource: res://.godot/imported/CourierPrime-Regular.ttf-
+3babe7e4a7a588dfc9a84c14b4f1fe23.fontdata.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: Failed loading resource: res://addons/gut/fonts/CourierPrime-Regular.ttf
+.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/NormalGui.tscn:6 - ext_resource, invalid UID: uid
+://bvrqqgjpyouse - using text path instead: res://addons/gut/gui/ResizeHandle.t
+scn
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/ResizeHandle.tscn:3 - ext_resource, invalid UID: 
+uid://duf6rfdqr6yoc - using text path instead: res://addons/gut/gui/ResizeHandl
+e.gd
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: res://addons/gut/gui/NormalGui.tscn:140 - Parse Error: [ext_resource] re
+ferenced non-existent resource at: res://addons/gut/fonts/CourierPrime-Regular.
+ttf.
+   at: _printerr (scene/resources/resource_format_text.cpp:41)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: res://addons/gut/gui/NormalGui.tscn:156 - Parse Error: [ext_resource] re
+ferenced non-existent resource at: res://addons/gut/fonts/CourierPrime-Regular.
+ttf.
+   at: _printerr (scene/resources/resource_format_text.cpp:41)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/GutScene.tscn:5 - ext_resource, invalid UID: uid://cn
+qqdfsn80ise - using text path instead: res://addons/gut/gui/MinGui.tscn
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/MinGui.tscn:3 - ext_resource, invalid UID: uid://
+cstkhwkpajvqu - using text path instead: res://addons/gut/gui/GutSceneTheme.tre
+s
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/MinGui.tscn:4 - ext_resource, invalid UID: uid://
+bnh0lslf4yh87 - using text path instead: res://addons/gut/fonts/CourierPrime-Re
+gular.ttf
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: Cannot open file 'res://.godot/imported/CourierPrime-Regular.ttf-3babe7e
+4a7a588dfc9a84c14b4f1fe23.fontdata'.
+   at: load (core/io/resource_format_binary.cpp:1156)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: Failed loading resource: res://.godot/imported/CourierPrime-Regular.ttf-
+3babe7e4a7a588dfc9a84c14b4f1fe23.fontdata.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: Failed loading resource: res://addons/gut/fonts/CourierPrime-Regular.ttf
+.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/MinGui.tscn:5 - ext_resource, invalid UID: uid://
+blvhsbnsvfyow - using text path instead: res://addons/gut/gui/gut_gui.gd
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/MinGui.tscn:6 - ext_resource, invalid UID: uid://
+bvrqqgjpyouse - using text path instead: res://addons/gut/gui/ResizeHandle.tscn
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: res://addons/gut/gui/MinGui.tscn:106 - Parse Error: [ext_resource] refer
+enced non-existent resource at: res://addons/gut/fonts/CourierPrime-Regular.ttf
+.
+   at: _printerr (scene/resources/resource_format_text.cpp:41)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: res://addons/gut/gui/MinGui.tscn:123 - Parse Error: [ext_resource] refer
+enced non-existent resource at: res://addons/gut/fonts/CourierPrime-Regular.ttf
+.
+   at: _printerr (scene/resources/resource_format_text.cpp:41)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/RunExternally.tscn:3 - ext_resource, invalid UID:
+ uid://bi8pg352un4om - using text path instead: res://addons/gut/gui/RunExterna
+lly.gd
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:60)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/GutRunner.tscn:3 - ext_resource, invalid UID: uid
+://eg8k46gd42a4 - using text path instead: res://addons/gut/gui/GutRunner.gd
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @implicit_new (res://addons/gut/cli/gut_cli.gd:5)
+       [1] _init (res://addons/gut/gut_cmdln.gd:36)
+WARNING: res://addons/gut/gui/GutRunner.tscn:4 - ext_resource, invalid UID: uid
+://m28heqtswbuq - using text path instead: res://addons/gut/GutScene.tscn
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @implicit_new (res://addons/gut/cli/gut_cli.gd:5)
+       [1] _init (res://addons/gut/gut_cmdln.gd:36)
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/weixufeng/AppData/Roaming/Godot/app_userdata/杞ㄨ抗娈嬪搷] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+[4m
+
+res://tests/gut/test_e2s1.gd
+[0m* test_闃熶紞鎭板ソ涓夊悕瑙掕壊
+* test_瑙掕壊瀛楁榻愬叏涓旂被鍨嬫纭?
+* test_瑙掕壊鍒濆鏁板€间笌鎴樻枟GDD涓€鑷?
+* test_鑱屼笟鏋勬垚鍓戝＋鏈＋杈呭姪鍚勪竴
+* test_瑙掕壊璁板綍鏄疪esource瀛愮被鑰岄潪瑁窪ictionary
+* test_GameData_婧愮爜闆禝O鍑芥暟
+* test_GameData_鏂伴槦浼嶅瓧娈典粛鏈夌被鍨嬫爣娉?
+* test_闈㈡澘鍦烘櫙鍙疄渚嬪寲涓旀牴鑺傜偣鏄疌anvasLayer
+* test_闈㈡澘鎺т欢鏍戜笉鎷︽埅榧犳爣杈撳叆
+* test_闈㈡澘鎸傝浇浜嶶ILayer瀛愭爲鑰岄潪World
+* test_闈㈡澘鍒锋柊涓嶉噸寤烘帶浠舵爲
+* test_toggle_寮€_鍏冲線杩?
+* test_M閿寜涓嬩簨浠惰鍒ゅ畾涓簍oggle
+* test_M閿簨浠堕┍鍔╰oggle_闈瀇M_浜嬩欢闈㈡澘涓嶅姩
+[1m14/14 passed.
+[0m[4m
+
+res://tests/gut/test_e2s2.gd
+[0m* test_宸￠€绘亽閫熸瘡甯т綅绉讳笌寰幆鍥炲嵎
+[VisibleEnemy] 灏辩华锛歟1锛堢紪缁?g1锛夊贰閫荤偣 2 涓?
+* test_鍗曠偣宸￠€昏嚜鍔ㄨˉ鍏ㄤ负涓ょ偣寰€杩?
+[VisibleEnemy] 灏辩华锛歟_single锛堢紪缁?g1锛夊贰閫荤偣 2 涓?
+* test_宸￠€诲埌鐐瑰惛闄勬棤杩囧啿
+[VisibleEnemy] 灏辩华锛歟2锛堢紪缁?g1锛夊贰閫荤偣 2 涓?
+* test_绌哄贰閫荤偣椹诲畧闆剁Щ鍔?
+[VisibleEnemy] 灏辩华锛歟3锛堢紪缁?g1锛夊贰閫荤偣 0 涓?
+* test_鎺ヨЕ杞借嵎鍥涘瓧娈靛叏閮ㄦ纭?
+[VisibleEnemy] 灏辩华锛歟nemy_x_01锛堢紪缁?slime_01锛夊贰閫荤偣 0 涓?
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[VisibleEnemy] enemy_x_01 鎺ヨЕ閬囨晫 -> slime_01锛堝洖缃偣 (200.0, 216.0)锛?
+* test_鍥炵疆鐐逛富瀵艰酱鍥涘悜鍒ゅ畾
+[VisibleEnemy] 灏辩华锛歟_axis锛堢紪缁?g1锛夊贰閫荤偣 0 涓?
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[VisibleEnemy] e_axis 鎺ヨЕ閬囨晫 -> g1锛堝洖缃偣 (216.0, 200.0)锛?
+[VisibleEnemy] 灏辩华锛歟_axis锛堢紪缁?g1锛夊贰閫荤偣 0 涓?
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[VisibleEnemy] e_axis 鎺ヨЕ閬囨晫 -> g1锛堝洖缃偣 (184.0, 200.0)锛?
+[VisibleEnemy] 灏辩华锛歟_axis锛堢紪缁?g1锛夊贰閫荤偣 0 涓?
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[VisibleEnemy] e_axis 鎺ヨЕ閬囨晫 -> g1锛堝洖缃偣 (200.0, 216.0)锛?
+[VisibleEnemy] 灏辩华锛歟_axis锛堢紪缁?g1锛夊贰閫荤偣 0 涓?
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[VisibleEnemy] e_axis 鎺ヨЕ閬囨晫 -> g1锛堝洖缃偣 (200.0, 184.0)锛?
+* test_閲嶅鎺ヨЕ闃查噸_绂诲紑鍚庡浣?
+[VisibleEnemy] 灏辩华锛歟_dup锛堢紪缁?g1锛夊贰閫荤偣 0 涓?
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[VisibleEnemy] e_dup 鎺ヨЕ閬囨晫 -> g1锛堝洖缃偣 (300.0, 316.0)锛?
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[VisibleEnemy] e_dup 鎺ヨЕ閬囨晫 -> g1锛堝洖缃偣 (300.0, 316.0)锛?
+* test_杩斿洖鍥惧洖閫€閾綺瀵煎嚭鍊间紭鍏坃璺敱绨胯鍏滃簳
+[VisibleEnemy] 灏辩华锛歟_fb锛堢紪缁?g1锛夊贰閫荤偣 0 涓?
+WARNING: [VisibleEnemy] e_fb锛歳eturn_map 涓虹┖锛堝鍑哄€间笌 Router 绨胯鐨嗙┖锛夛紝杞借嵎灏嗚 Rout
+er 鎷掔粷
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _build_payload (res://scripts/enemies/visible_enemy.gd:188)
+       [1] _handle_player_contact (res://scripts/enemies/visible_enemy.gd:165)
+       [2] test_杩斿洖鍥惧洖閫€閾綺瀵煎嚭鍊间紭鍏坃璺敱绨胯鍏滃簳 (res://tests/gut/test_e2s2.gd:213)
+       [3] _run_test (res://addons/gut/gut.gd:622)
+       [4] _test_the_scripts (res://addons/gut/gut.gd:835)
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[VisibleEnemy] e_fb 鎺ヨЕ閬囨晫 -> g1锛堝洖缃偣 (100.0, 116.0)锛?
+* test_鏁屼汉鑺傜偣甯﹀叏閮ㄥ鍑洪噺涓庤Е鎽稿尯
+[VisibleEnemy] 灏辩华锛歟_struct锛堢紪缁?g2锛夊贰閫荤偣 0 涓?
+* test_鎺ヨЕ杩囨护_鍙CharacterBody2D
+[VisibleEnemy] 灏辩华锛歟_filter锛堢紪缁?g1锛夊贰閫荤偣 0 涓?
+* test_鐪熷疄鐜╁瀹炰緥瑙﹀彂鎺ヨЕ鍖哄洖璋?
+[VisibleEnemy] 灏辩华锛歟_real锛堢紪缁?g1锛夊贰閫荤偣 0 涓?
+[Player] 灏辩华锛氳剼搴曞師鐐?/ 72px/s / 0.15s 杞悜缂撳啿 / FLOATING 杩愬姩妯″紡 / 杈撳叆閿佸氨浣?
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[VisibleEnemy] e_real 鎺ヨЕ閬囨晫 -> g1锛堝洖缃偣 (416.0, 240.0)锛?
+* test_纰版挒鐭╅樀_鏁岄棿鏃犵鎾瀇鏁屼笌鐜╁鍦板舰鏈夌鎾?
+[VisibleEnemy] 灏辩华锛歟_layer锛堢紪缁?g1锛夊贰閫荤偣 0 涓?
+* test_娴嬭瘯鍦篺ixture鍚袱鍚嶆晫浜轰笌鐜╁鎸傝浇
+* test_waypoints_瀵煎嚭鏁扮粍涓庤妭鐐瑰簭鍒楀悎骞?
+[VisibleEnemy] 灏辩华锛歏isibleEnemy锛堢紪缁?锛夊贰閫荤偣 4 涓?
+[1m14/14 passed.
+[0m[4m
+
+res://tests/gut/test_e2s3.gd
+[0m* test_Router_鍚堟硶杞借嵎鍙楃悊
+* test_Router_缂哄瓧娈垫嫆缁濆苟閫愭潯鎶ュ洜
+[SceneRouter] payload 鏍￠獙澶辫触锛氱己瀛楁 "enemy_group_id"
+[SceneRouter] payload 鏍￠獙澶辫触锛氱己瀛楁 "return_map"
+[SceneRouter] payload 鏍￠獙澶辫触锛氱己瀛楁 "return_position"
+[SceneRouter] payload 鏍￠獙澶辫触锛氱己瀛楁 "defeat_enemy_uid"
+* test_Router_Vector2i鍐掑厖Vector2琚嫆
+[SceneRouter] payload 鏍￠獙澶辫触锛氱被鍨嬮敊 "return_position"锛氬簲涓?Vector2锛屽疄涓?Vector2i
+* test_Router_澶氫綑瀛楁鏀捐涓嶆嫆缁?
+[SceneRouter] 璀﹀憡锛歱ayload 鍚崗璁瀛楁 "extra_note"锛堟斁琛屼笉鎷掔粷锛?
+* test_鎺ョ嚎_鍚堟硶杞借嵎缁忎俊鍙疯鍏ユ垬鏂楀満鏅?
+[BattleScene] 灏辩华锛氱紪缁?slime_01 鍥炲浘=res://tests/smoke/fixtures/map_e2s2.tscn 闃熶紞=3 浜?
+[SceneRouter] 瑁呰浇瀹屾垚 -> res://scenes/battle/battle.tscn
+[SceneRouter] 鍙楃悊鍒囨崲 -> res://scenes/battle/battle.tscn
+* test_鎺ョ嚎_闈炴硶杞借嵎琚嫆_涓栫晫涓嶅姩
+[SceneRouter] payload 鏍￠獙澶辫触锛氱被鍨嬮敊 "return_position"锛氬簲涓?Vector2锛屽疄涓?Vector2i
+[SceneRouter] 鎷掔粷鍒囨崲鍒?"res://scenes/battle/battle.tscn"锛欱attlePayload 涓嶅悎娉曪紙鏄庣粏瑙佷笂涓€琛岋級
+* test_鎴樻枟鍦烘櫙鍙疄渚嬪寲_绌鸿浇鑽烽槻寰℃€?
+[BattleScene] 灏辩华锛氱紪缁?<绌? 鍥炲浘=<绌? 闃熶紞=3 浜?
+* test_鏂瑰潡闃礯鍚岀紪缁勬亽鍚岄樀_鏁伴噺鍦ㄧ晫鍐?
+[BattleScene] 灏辩华锛氱紪缁?slime_01 鍥炲浘=res://tests/smoke/fixtures/map_e2s2.tscn 闃熶紞=3 浜?
+[BattleScene] 灏辩华锛氱紪缁?slime_01 鍥炲浘=res://tests/smoke/fixtures/map_e2s2.tscn 闃熶紞=3 浜?
+* test_鎴樻枟鍦烘櫙鐩磋GameData闃熶紞鍒濆鎬?
+[BattleScene] 灏辩华锛氱紪缁?slime_01 鍥炲浘=res://tests/smoke/fixtures/map_e2s2.tscn 闃熶紞=3 浜?
+* test_鑳滃埄鎸夐挳鍙態attleResult_VICTORY甯﹂槦浼嶅揩鐓?
+[BattleScene] 灏辩华锛氱紪缁?slime_01 鍥炲浘=res://tests/smoke/fixtures/map_e2s2.tscn 闃熶紞=3 浜?
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[BattleResultHandler] VICTORY 缁撶畻瀹屾垚 -> 鍥炲浘 res://tests/smoke/fixtures/map_e2s2.tscn锛堝洖缃?(64.0, 32.0)锛?
+[BattleScene] 缁撳眬妯℃嫙 -> VICTORY锛坧arty_state 鍗犱綅 3 鏉★級
+* test_澶辫触鎸夐挳鍙態attleResult_DEFEAT
+[BattleScene] 灏辩华锛氱紪缁?slime_01 鍥炲浘=res://tests/smoke/fixtures/map_e2s2.tscn 闃熶紞=3 浜?
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[BattleResultHandler] DEFEAT 缁撶畻瀹屾垚 -> 鍥炲浘 res://tests/smoke/fixtures/map_e2s2.tscn锛堝洖缃?(64.0, 32.0)锛?
+[BattleScene] 缁撳眬妯℃嫙 -> DEFEAT锛坧arty_state 鍗犱綅 3 鏉★級
+* test_鎸夐挳瑙﹀彂鍚嶨ameData闆跺彉鍖?
+[BattleScene] 灏辩华锛氱紪缁?slime_01 鍥炲浘=res://tests/smoke/fixtures/map_e2s2.tscn 闃熶紞=3 浜?
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[BattleResultHandler] VICTORY 缁撶畻瀹屾垚 -> 鍥炲浘 res://tests/smoke/fixtures/map_e2s2.tscn锛堝洖缃?(64.0, 32.0)锛?
+[BattleScene] 缁撳眬妯℃嫙 -> VICTORY锛坧arty_state 鍗犱綅 3 鏉★級
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[BattleResultHandler] DEFEAT 缁撶畻瀹屾垚 -> 鍥炲浘 res://tests/smoke/fixtures/map_e2s2.tscn锛堝洖缃?(64.0, 32.0)锛?
+[BattleScene] 缁撳眬妯℃嫙 -> DEFEAT锛坧arty_state 鍗犱綅 3 鏉★級
+[1m12/12 passed.
+[0m[4m
+
+res://tests/gut/test_e2s4.gd
+[0m* test_party_state蹇収閫愬瓧娈佃鍐?
+* test_party_state鍚槦浼嶅id璺宠繃涓嶇偢
+WARNING: [BattleResultHandler] party_state 鍚槦浼嶅 id "ghost_xx"锛岃烦杩?
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _apply_party_state (res://scripts/battle/battle_result_handler.gd:10
+7)
+       [1] test_party_state鍚槦浼嶅id璺宠繃涓嶇偢 (res://tests/gut/test_e2s4.gd:167)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+* test_VICTORY鍑荤牬鍑嵁鍐欏叆cleared闆嗗悎涓旀煡閲?
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[BattleResultHandler] VICTORY 缁撶畻瀹屾垚 -> 鍥炲浘 res://tests/smoke/fixtures/map_e2s2.tscn锛堝洖缃?(100.0, 200.0)锛?
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[BattleResultHandler] VICTORY 缁撶畻瀹屾垚 -> 鍥炲浘 res://tests/smoke/fixtures/map_e2s2.tscn锛堝洖缃?(100.0, 200.0)锛?
+* test_鏁版嵁椹卞姩闃插娲籣鍛戒腑闆嗗悎鐨勬晫浜鸿杞藉嵆鑷垹
+[VisibleEnemy] enemy_e2s2_a 宸插湪鍑荤牬闆嗗悎锛岃杞藉嵆绉婚櫎锛堜笉澶嶆椿锛?
+[VisibleEnemy] 灏辩华锛歟nemy_alive锛堢紪缁?锛夊贰閫荤偣 0 涓?
+* test_VICTORY鍥炲浘骞跺洖缃甠绨胯娓呯┖
+[VisibleEnemy] enemy_e2s2_a 宸插湪鍑荤牬闆嗗悎锛岃杞藉嵆绉婚櫎锛堜笉澶嶆椿锛?
+[VisibleEnemy] 灏辩华锛歟nemy_e2s2_b锛堢紪缁?slime_02锛夊贰閫荤偣 2 涓?
+[Player] 灏辩华锛氳剼搴曞師鐐?/ 72px/s / 0.15s 杞悜缂撳啿 / FLOATING 杩愬姩妯″紡 / 杈撳叆閿佸氨浣?
+[TempPlayerMount] 鐜╁宸叉寕杞?-> YSorted/Player @ (96.0, 320.0)锛堣剼搴曪級
+[WhiteBoxMap] 瑁呰浇瀹屾垚锛歮ap_e2s2锛堟樉绀鸿壊 (0.3, 0.25, 0.4, 1.0)锛?
+[SceneRouter] 瑁呰浇瀹屾垚 -> res://tests/smoke/fixtures/map_e2s2.tscn
+[SceneRouter] 鍙楃悊鍒囨崲 -> res://tests/smoke/fixtures/map_e2s2.tscn
+[BattleResultHandler] VICTORY 缁撶畻瀹屾垚 -> 鍥炲浘 res://tests/smoke/fixtures/map_e2s2.tscn锛堝洖缃?(100.0, 200.0)锛?
+[BattleResultHandler] 鐜╁鍥炵疆 -> (100.0, 200.0)锛屽厤鐤?0.5s 鍚姩
+* test_VICTORY缂哄嚮鐮村嚟鎹粎鍛婅涓嶇偢
+WARNING: [BattleResultHandler] VICTORY 浣嗗嚮鐮村嚟鎹负绌猴紙result 涓庢殏瀛樿浇鑽峰潎鏃?defeat_ene
+my_uid锛夛紝鏁屼汉灏嗕繚鐣?
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _on_battle_finished (res://scripts/battle/battle_result_handler.gd:6
+4)
+       [1] test_VICTORY缂哄嚮鐮村嚟鎹粎鍛婅涓嶇偢 (res://tests/gut/test_e2s4.gd:228)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+[VisibleEnemy] 灏辩华锛歟nemy_e2s2_a锛堢紪缁?slime_01锛夊贰閫荤偣 2 涓?
+[VisibleEnemy] 灏辩华锛歟nemy_e2s2_b锛堢紪缁?slime_02锛夊贰閫荤偣 2 涓?
+[Player] 灏辩华锛氳剼搴曞師鐐?/ 72px/s / 0.15s 杞悜缂撳啿 / FLOATING 杩愬姩妯″紡 / 杈撳叆閿佸氨浣?
+[TempPlayerMount] 鐜╁宸叉寕杞?-> YSorted/Player @ (96.0, 320.0)锛堣剼搴曪級
+[WhiteBoxMap] 瑁呰浇瀹屾垚锛歮ap_e2s2锛堟樉绀鸿壊 (0.3, 0.25, 0.4, 1.0)锛?
+[SceneRouter] 瑁呰浇瀹屾垚 -> res://tests/smoke/fixtures/map_e2s2.tscn
+[SceneRouter] 鍙楃悊鍒囨崲 -> res://tests/smoke/fixtures/map_e2s2.tscn
+[BattleResultHandler] VICTORY 缁撶畻瀹屾垚 -> 鍥炲浘 res://tests/smoke/fixtures/map_e2s2.tscn锛堝洖缃?(100.0, 200.0)锛?
+* test_DEFEAT缁忔殏瀛樺厹搴曞洖鍥?
+[VisibleEnemy] 灏辩华锛歟nemy_e2s2_a锛堢紪缁?slime_01锛夊贰閫荤偣 2 涓?
+[VisibleEnemy] 灏辩华锛歟nemy_e2s2_b锛堢紪缁?slime_02锛夊贰閫荤偣 2 涓?
+[Player] 灏辩华锛氳剼搴曞師鐐?/ 72px/s / 0.15s 杞悜缂撳啿 / FLOATING 杩愬姩妯″紡 / 杈撳叆閿佸氨浣?
+[TempPlayerMount] 鐜╁宸叉寕杞?-> YSorted/Player @ (96.0, 320.0)锛堣剼搴曪級
+[WhiteBoxMap] 瑁呰浇瀹屾垚锛歮ap_e2s2锛堟樉绀鸿壊 (0.3, 0.25, 0.4, 1.0)锛?
+[SceneRouter] 瑁呰浇瀹屾垚 -> res://tests/smoke/fixtures/map_e2s2.tscn
+[SceneRouter] 鍙楃悊鍒囨崲 -> res://tests/smoke/fixtures/map_e2s2.tscn
+[BattleResultHandler] DEFEAT 缁撶畻瀹屾垚 -> 鍥炲浘 res://tests/smoke/fixtures/map_e2s2.tscn锛堝洖缃?(48.0, 60.0)锛?
+[BattleResultHandler] 鐜╁鍥炵疆 -> (48.0, 60.0)锛屽厤鐤?0.5s 鍚姩
+* test_result鑷甫瀛楁浼樺厛浜庢殏瀛?
+[VisibleEnemy] enemy_e2s2_a 宸插湪鍑荤牬闆嗗悎锛岃杞藉嵆绉婚櫎锛堜笉澶嶆椿锛?
+[VisibleEnemy] 灏辩华锛歟nemy_e2s2_b锛堢紪缁?slime_02锛夊贰閫荤偣 2 涓?
+[Player] 灏辩华锛氳剼搴曞師鐐?/ 72px/s / 0.15s 杞悜缂撳啿 / FLOATING 杩愬姩妯″紡 / 杈撳叆閿佸氨浣?
+[TempPlayerMount] 鐜╁宸叉寕杞?-> YSorted/Player @ (96.0, 320.0)锛堣剼搴曪級
+[WhiteBoxMap] 瑁呰浇瀹屾垚锛歮ap_e2s2锛堟樉绀鸿壊 (0.3, 0.25, 0.4, 1.0)锛?
+[SceneRouter] 瑁呰浇瀹屾垚 -> res://tests/smoke/fixtures/map_e2s2.tscn
+[SceneRouter] 鍙楃悊鍒囨崲 -> res://tests/smoke/fixtures/map_e2s2.tscn
+[BattleResultHandler] VICTORY 缁撶畻瀹屾垚 -> 鍥炲浘 res://tests/smoke/fixtures/map_e2s2.tscn锛堝洖缃?(100.0, 200.0)锛?
+WARNING: [BattleResultHandler] 鍥炵疆澶辫触锛歁ain/World 鏃犲綋鍓嶅満鏅紙GUT/鏃?Main 鐜锛?
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _pos_return_immediate (res://scripts/battle/battle_result_handler.gd
+:143)
+       [1] _do_return (res://scripts/battle/battle_result_handler.gd:126)
+* test_鏃犲洖鍥剧洰鏍囦粎鍛婅鍋滅暀鍘熷湴
+WARNING: [BattleResultHandler] 鏃犲洖鍥剧洰鏍囷紙result/staged 鍧囩己 return_map锛夛紝鍋滅暀褰撳墠鍦烘
+櫙
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _on_battle_finished (res://scripts/battle/battle_result_handler.gd:7
+4)
+       [1] test_鏃犲洖鍥剧洰鏍囦粎鍛婅鍋滅暀鍘熷湴 (res://tests/gut/test_e2s4.gd:276)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+* test_鍏嶇柅鍚姩涓庡€掕鏃舵竻闆?
+[Player] 灏辩华锛氳剼搴曞師鐐?/ 72px/s / 0.15s 杞悜缂撳啿 / FLOATING 杩愬姩妯″紡 / 杈撳叆閿佸氨浣?
+* test_鍏嶇柅鏈熷唴鏁屼汉鎺ヨЕ涓嶅彂灏刜杩囨湡鍚庢仮澶?
+[VisibleEnemy] 灏辩华锛歏isibleEnemy锛堢紪缁?锛夊贰閫荤偣 0 涓?
+[Player] 灏辩华锛氳剼搴曞師鐐?/ 72px/s / 0.15s 杞悜缂撳啿 / FLOATING 杩愬姩妯″紡 / 杈撳叆閿佸氨浣?
+[VisibleEnemy] VisibleEnemy锛氱帺瀹跺厤鐤腑锛屾帴瑙︽斁琛?
+WARNING: [VisibleEnemy] VisibleEnemy锛歳eturn_map 涓虹┖锛堝鍑哄€间笌 Router 绨胯鐨嗙┖锛夛紝杞借嵎
+灏嗚 Router 鎷掔粷
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _build_payload (res://scripts/enemies/visible_enemy.gd:188)
+       [1] _handle_player_contact (res://scripts/enemies/visible_enemy.gd:165)
+       [2] test_鍏嶇柅鏈熷唴鏁屼汉鎺ヨЕ涓嶅彂灏刜杩囨湡鍚庢仮澶?(res://tests/gut/test_e2s4.gd:321)
+       [3] _run_test (res://addons/gut/gut.gd:622)
+       [4] _test_the_scripts (res://addons/gut/gut.gd:835)
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[VisibleEnemy] VisibleEnemy 鎺ヨЕ閬囨晫 -> 锛堝洖缃偣 (400.0, 224.0)锛?
+* test_鍏嶇柅閲嶅鍚姩鍙栧ぇ涓嶇缉鐭?
+[Player] 灏辩华锛氳剼搴曞師鐐?/ 72px/s / 0.15s 杞悜缂撳啿 / FLOATING 杩愬姩妯″紡 / 杈撳叆閿佸氨浣?
+* test_鍏嶇柅鏌ヨ涓嶄緷璧栨柟娉曞瓨鍦ㄦ€鏅€氳妭鐐瑰畨鍏?
+[VisibleEnemy] 灏辩华锛歏isibleEnemy锛堢紪缁?锛夊贰閫荤偣 0 涓?
+WARNING: [VisibleEnemy] VisibleEnemy锛歳eturn_map 涓虹┖锛堝鍑哄€间笌 Router 绨胯鐨嗙┖锛夛紝杞借嵎
+灏嗚 Router 鎷掔粷
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _build_payload (res://scripts/enemies/visible_enemy.gd:188)
+       [1] _handle_player_contact (res://scripts/enemies/visible_enemy.gd:165)
+       [2] test_鍏嶇柅鏌ヨ涓嶄緷璧栨柟娉曞瓨鍦ㄦ€鏅€氳妭鐐瑰畨鍏?(res://tests/gut/test_e2s4.gd:357)
+       [3] _run_test (res://addons/gut/gut.gd:622)
+       [4] _test_the_scripts (res://addons/gut/gut.gd:835)
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+[VisibleEnemy] VisibleEnemy 鎺ヨЕ閬囨晫 -> 锛堝洖缃偣 (26.0, 10.0)锛?
+[1m13/13 passed.
+[0m[4m
+
+res://tests/gut/test_e3s1.gd
+[0m* test_浜旇〃琛屾暟绗﹀悎寤哄崱瑕佹眰
+* test_鍏ㄨ〃validate闆堕棶棰?
+* test_璺ㄨ〃寮曠敤闆舵偓绌?
+* test_琛宨d涓庢枃浠跺悕涓€鑷?
+* test_姣忚閮芥寕杞戒簡Resource鑴氭湰
+* test_瑙掕壊琛↙v1鍒濆€煎榻怗DD_3_6
+* test_瑙掕壊琛╬er_level瀵归綈GDD_3_6姝ｆ枃
+* test_瑙掕壊琛⊿PD鎭掍负闈欐€佸€间笉闅忕瓑绾ф垚闀?
+* test_瑙掕壊琛ㄥ瓧娈垫竻鍗曡鐩朑DD_5
+* test_9鎶€鑳藉叏閮ㄥ缓鍗′笖褰掑睘姝ｇ‘
+* test_effect_tag鍚帺鎶や笌瑙ｆ瘨
+* test_鎶€鑳藉瓧娈靛榻怗DD_3_4
+* test_鏈＋涓夌郴榻愬叏涓斿悆鍏嬪埗_鍏朵綑鎶€鑳戒笉甯﹀厓绱?
+* test_Lv1鏃朵笁浜哄悇鏈?涓熀纭€鎶€鑳?
+* test_鏁屼汉琛℅DD_7缁欏畾鍊煎榻?
+* test_姣忎釜鏁屼汉鑷冲1寮辩偣鑷冲1鎶楁€т笖涓嶅悓婧?
+* test_鏁屼汉AI鏉冮噸鍜屾亽涓?00
+* test_Boss钃勫姏涓簍elegraph鎶€
+* test_鏁屼汉琛ㄥ瓧娈垫竻鍗曡鐩朑DD_5
+* test_鎺夎惤琛ㄥ叏涓?00鍗曚竴閬撳叿
+* test_閬撳叿琛ㄥ瓧娈典笌浜ゅ弶绾︽潫
+* test_瑙ｆ瘨閬撳叿鍦˙4涔嬪墠鍙緱
+* test_B1鑷矪5缂栫粍鍏ㄩ儴寤哄崱涓旈厤缃榻怗DD_7
+* test_B3娣风紪鎴愬憳涓虹伀铚ュ啺鏅跺姞椋炶浘涓ゅ彧
+* test_鍙湁B5绂佺敤閫冭窇
+* test_stats_at閫愮骇瀹氬€肩疮鍔?
+* test_stats_at绛夌骇瓒婄晫閽冲埗
+* test_skills_up_to鎸夌瓑绾ч€掑
+* test_缁忛獙鏇茬嚎绛夌骇鏄犲皠涓庝簲鍦虹疮璁″鐓?
+* test_浜斿満鎴樻枟缁忛獙绱涓庨鏈熺瓑绾ц嚜娲?
+* test_鏁版嵁琛ㄨ剼鏈棤鍦烘櫙渚濊禆_A1閾佸緥3
+* test_鏁板€艰〃涓嶈JSON_A2鍒嗗煙
+* test_鏁板€艰祫婧愬叏閮ㄨ惤鍦╠ata_resources涓媉A2
+[1m33/33 passed.
+[0m[4m
+
+res://tests/gut/test_e3s2.gd
+[0m* test_浼ゅ鍏紡绯绘暟瀵归綈GDD_3_6
+* test_闃插尽鎺╂姢涓瘨闃熷垪閫冭窇绯绘暟瀵归綈GDD
+* test_鍏嬪埗鍊嶇巼鍞竴鍑哄鍦╟ore灞?
+* test_鍏嬪埗涓夋。鍊嶇巼绮剧‘鍊?
+* test_涓夌郴涔嬮棿涓嶆瀯鎴愬惊鐜厠鍒?
+* test_鏃犲睘鎬т笉鍚冨厠鍒?
+* test_鍏嬪埗涓夋。浼ゅ鏁板€兼纭?
+* test_闃熷垪鎸塖PD闄嶅簭
+* test_鍚孲PD鏃舵垜鏂规亽鍦ㄦ晫鏂逛箣鍓?
+* test_鍚孲PD鏃舵寜妲戒綅搴廮鎴戞柟闃熶紞搴忎笌鏁屾柟鐢熸垚搴?
+* test_鍚岄厤缃垬鏂楅『搴忓彲澶嶇幇_鏃犻殢鏈轰粙鍏ユ帓搴?
+* test_姝昏€呬笉鍏ラ槦
+* test_鍑婚€€鍚戝悗绉诲姩2涓Ы浣?
+* test_鍑婚€€杈圭紭3_鍙墿1涓湭琛屽姩妲戒綅鍙Щ鍒版湰杞湯灏句笉璺ㄨ疆
+* test_鍑婚€€杈圭紭3_鍦烘櫙B_鐩爣鍦ㄦ湰杞€掓暟绗簩涓斿悗鏈夊涓Ы浣?
+* test_鍑婚€€鍙綔鐢ㄤ簬灏氭湭琛屽姩鐨勫綋鍓嶈疆
+* test_鍑婚€€鎯╃綒涓嶈法杞?
+* test_鎴戞柟涓嶄細琚嚮閫€_鍗曡竟瑙勫垯
+* test_鍑婚€€鐩爣涓嶅湪闃熷垪鏃跺師鏍疯繑鍥炰笉鐐?
+* test_鍑婚€€涓虹函鍑芥暟涓嶄慨鏀瑰叆鍙?
+* test_鍑婚€€瑙﹀彂鏉′欢_寮辩偣鍛戒腑涓旂洰鏍囨湭闃插尽
+* test_杈圭紭1_闃熷垪涓崟浣嶅湪杞埌瀹冧箣鍓嶆浜″垯璺宠繃
+* test_杈圭紭6_鏁屼汉琚嚮閫€鍚庤鍔ㄥ墠姝讳骸鍒欎粠闃熷垪绉婚櫎
+* test_鍓旈櫎姝昏€呮椂淇娓告爣_涓嶅悶鎺夋椿浜鸿鍔?
+* test_advance_杞湯杩斿洖round_over
+* test_棰勫憡鏉′粠褰撳墠琛屽姩鑰呰捣鍙?鏍?
+* test_棰勫憡鏉″湪闃熷垪鏈熬鎴柇涓斾笉璺ㄨ疆
+* test_鐗╃悊浼ゅ鍏紡绮剧‘鍊?
+* test_娉曟湳浼ゅ鍏紡绮剧‘鍊?
+* test_娴姩澶栭儴鍖朹roll涓ょ涓虹簿纭€?
+* test_鍙栨暣鍙ｅ緞涓哄洓鑸嶄簲鍏?
+* test_娴姩瓒婄晫閽冲埗
+* test_闃插尽涓庢帺鎶ゅ悇鍑忎激50涓斾笉鍙犲姞
+* test_浼ゅ涓嬮檺涓?_涓嶅嚭鐜?浼ゅ
+* test_棰勪及浼ゅ鍖洪棿绔偣绛変簬娴姩涓ょ
+* test_浼ゅ涓虹函鍑芥暟涓嶄慨鏀瑰叆鍙?
+* test_瀛樻椿鐢盚P娲剧敓_鏃犲竷灏旀爣璁板彲婕傜Щ
+* test_鍥炲閲忕瓑浜嶮AG涔樺€嶇巼涓斾笉鍚僁EF
+* test_涓瘨姣忓洖鍚堟墸鏈€澶P鐨勭櫨鍒嗕箣浜?
+* test_涓瘨鏃堕暱閫掑噺涓斿埌鏈熷仠姝?
+* test_涓瘨鍙彔鍔犳椂闀夸笉鍙彔鍔犱激瀹?
+* test_闃插尽鎸囦护鍥炶摑骞剁疆浣嶄笖涓嶆孩鍑?
+* test_杞湯閲嶇疆鐬椂濮挎€佹爣璁?
+* test_閫冭窇鎴愬姛鐜囧叕寮忎笌閽冲埗
+* test_閫冭窇鎴愬姛鐜囧彧缁熻瀛樻椿鍗曚綅
+* test_閫冭窇妫€瀹氶殢鏈哄閮ㄥ寲
+* test_鍏ㄧ伃鍒ゅ畾涓庣┖鏁扮粍闃插尽
+* test_浠巘res鏋勫缓闃熶紞鍏淮涓巗tats_at涓€鑷?
+* test_缂栫粍灞曞紑妲戒綅搴忎笌members涓€鑷?
+* test_绔埌绔痏B1闃熷垪椤哄簭鐢眛res鍐冲畾
+* test_绔埌绔痏鑾夊鐏悆鎵撶敳铏激瀹虫潵鑷猼res
+* test_绔埌绔痏閫冭窇鐜囦笌Boss绂侀€冩潵鑷猼res
+* test_battle_logic闆跺満鏅緷璧朹A1閾佸緥3
+* test_battle_logic闆秈mport_涓嶈璇嗘暟鍊艰〃涓嶫SON
+* test_battle_logic闆堕殢鏈篈PI_鍙ｅ緞2
+* test_闅忔満鍥犲瓙鍏ㄩ儴鐢卞弬鏁版敞鍏?
+[1m56/56 passed.
+[0m[4m
+
+res://tests/gut/test_sanity.gd
+[0m* test_sanity_妗嗘灦鍙敤_涓€鍔犱竴绛変簬浜?
+* test_sanity_鍥沖autoload_鍙闂?
+* test_sanity_浜嬩欢鎬荤嚎鏄妭鐐?
+* test_sanity_鎵€鏈夋祴璇曡剼鏈兘鑳借GUT鏀堕泦
+[1m4/4 passed.
+[0m[4m
+
+res://tests/gut/test_smk_migration.gd
+[0m* test_smk01_鍥沖autoload_娉ㄥ唽鐢熸晥
+* test_smk02_鍏俊鍙穇澹版槑榻愬叏鍙傛暟涓€鑷?
+* test_smk03_鍏俊鍙穇鍙痏connect
+* test_smk04_emit_鍙傛暟鍘熸牱閫佽揪
+[SceneRouter] 鎷掔粷鍒囨崲锛氭湭鎵惧埌甯搁┗鏍?Main/World锛圧outer 渚濊禆 A4 缁撴瀯锛涜浠?res://scenes/main.tscn 鍚姩锛?
+WARNING: [BattleResultHandler] VICTORY 浣嗗嚮鐮村嚟鎹负绌猴紙result 涓庢殏瀛樿浇鑽峰潎鏃?defeat_ene
+my_uid锛夛紝鏁屼汉灏嗕繚鐣?
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _on_battle_finished (res://scripts/battle/battle_result_handler.gd:6
+4)
+       [1] test_smk04_emit_鍙傛暟鍘熸牱閫佽揪 (res://tests/gut/test_smk_migration.gd:102
+)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+WARNING: [BattleResultHandler] 鏃犲洖鍥剧洰鏍囷紙result/staged 鍧囩己 return_map锛夛紝鍋滅暀褰撳墠鍦烘
+櫙
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _on_battle_finished (res://scripts/battle/battle_result_handler.gd:7
+4)
+       [1] test_smk04_emit_鍙傛暟鍘熸牱閫佽揪 (res://tests/gut/test_smk_migration.gd:102
+)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+* test_smk05_EventBus_鏃犵姸鎬佽秺鐣?
+* test_smk06_GameData_瀛楁榻愬叏涓斿甫绫诲瀷鏍囨敞
+[1m6/6 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Scripts               8
+Tests               152
+Passing Tests       152
+Asserts            5771
+Time              6.184s
+
+
+[32m---- All tests passed! ----
+[0m

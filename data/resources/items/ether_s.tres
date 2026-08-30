@@ -1,0 +1,15 @@
+; 小魔瓶 ── 回MP 15，地图/战斗皆可
+; 15 ≈ 莉娜 3~4 发火球（MP4）或莫娜 3 发治疗（MP4）的补给量
+
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/item_data.gd" id="1_igd"]
+
+[resource]
+script = ExtResource("1_igd")
+id = "ether_s"
+name = "小魔瓶"
+kind = "heal_mp"
+value = 15
+usable_phase = "both"
+description = "回复我方单体 15 点 MP。"

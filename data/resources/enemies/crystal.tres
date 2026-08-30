@@ -1,0 +1,29 @@
+; 冰晶 ── B3 一只（GDD §7：冰晶(弱火)×1）
+; §7 只给了"弱火"。其余为工程初值：
+; HP 50 / ATK 11：杂兵档；对莉娜 Lv2：11×2 − 12 = 10 → 8.8% ✓（§3.6 规则）
+; DEF 7：B3 最硬的目标，莉娜 Lv2 火球 = (15×2.2 − 8.4) × 1.4 × 1.5 ≈ 51.7，
+;   两下收掉；凯尔 Lv2 重斩 = (20×2 − 10.5) × 1.8 = 53.1，物理也能打——
+;   两种解法都通，但弱点解法更快，符合 §7"B3 资源压力战"的取舍意图。
+; SPD 5：B3 最慢，给玩家"先集火高速的火蜥"的时间窗。
+; 掉落解毒草：B4（遗迹二层）才出现中毒，B3（遗迹一层）先给解药 = 预置容错通道。
+
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/enemy_data.gd" id="1_egd"]
+
+[resource]
+script = ExtResource("1_egd")
+id = "crystal"
+name = "冰晶"
+sprite_id = "enemy_crystal"
+hp = 50
+atk = 11
+def = 7
+spd = 5
+weakness = "fire"
+resist = "ice"
+exp = 26
+drop_id = "drop_crystal"
+ai_pattern = "normal"
+ai_weights = {"attack": 100}
+notes = "B3 混编的硬皮位：弱火抗冰，高防低速。掉落解毒草是给 B4 中毒战预置的解药通道。"

@@ -1,0 +1,19 @@
+; 冰锥 ── 莉娜 Lv2
+; §3.4：莉娜 / MP 4 / 敌单体 / 冰属性 / 倍率 ×1.4
+
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_sgd"]
+
+[resource]
+script = ExtResource("1_sgd")
+id = "ice_shard"
+name = "冰锥"
+kind = "magic"
+element = "ice"
+power = 1.4
+target = "enemy_single"
+mp_cost = 4
+effect_tag = "none"
+learn_level = 2
+description = "凝结冰锥射出，对单体敌人造成冰属性伤害。"

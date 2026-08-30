@@ -1,0 +1,31 @@
+; 火蜥 ── B3 一只（GDD §7：火蜥(弱冰)×1）
+; §7 只给了"弱冰"。其余为工程初值：
+; HP 55 / ATK 12：取 §3.6"杂兵 HP 30~60"上档 + "敌方 ATK 使无防御角色
+;   单次受 8%~15% 最大 HP 伤害"——对莉娜 Lv2（HP 113 / DEF 8）：
+;   12×2 − 8×1.5 = 12 → 10.6% ✓；对莫娜 Lv2（HP 127 / DEF 9）：10.5 → 8.3% ✓
+; DEF 4：莉娜 Lv2 冰锥 = (15×2.2 − 4.8) × 1.4 × 1.5（弱冰）≈ 59 → 一下半血，
+;   让"切属性打弱点"在 B3 立刻有正反馈。
+; SPD 12：与凯尔同值 → §3.1"SPD 同值我方恒在前"，凯尔先手，火蜥紧随其后，
+;   形成"高速威胁"的观感而不抢先手。
+; resist fire：火系生物抗火（主题自洽），且 §3.3 至多 1 弱 1 抗。
+
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/enemy_data.gd" id="1_egd"]
+
+[resource]
+script = ExtResource("1_egd")
+id = "salamander"
+name = "火蜥"
+sprite_id = "enemy_salamander"
+hp = 55
+atk = 12
+def = 4
+spd = 12
+weakness = "ice"
+resist = "fire"
+exp = 26
+drop_id = "drop_salamander"
+ai_pattern = "normal"
+ai_weights = {"attack": 100}
+notes = "B3 混编的高速位：弱冰抗火，速度 12 与凯尔同值（同值我方先手）。用火球打它会被抗性惩罚，逼玩家换冰锥。"

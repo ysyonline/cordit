@@ -1,0 +1,16 @@
+; 小药瓶 ── 回HP 40，地图/战斗皆可
+; 战斗 GDD §5 道具表：id, name, kind(回HP/回MP/解毒), value, 可用阶段
+; 40 ≈ 莫娜 Lv1 治疗量（MAG10×3=30）的 1.3 倍，是"奶妈没蓝时"的兜底
+
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/item_data.gd" id="1_igd"]
+
+[resource]
+script = ExtResource("1_igd")
+id = "potion_s"
+name = "小药瓶"
+kind = "heal_hp"
+value = 40
+usable_phase = "both"
+description = "回复我方单体 40 点 HP。"

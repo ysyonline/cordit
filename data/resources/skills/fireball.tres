@@ -1,0 +1,20 @@
+; 火球 ── 莉娜 Lv1（原 §3.6 为 Lv2，按"Lv1 各已有 1 基础技能"裁决下调）
+; §3.4：莉娜 / MP 4 / 敌单体 / 火属性 / 倍率 ×1.4
+; 下调理由：§7 定 B2 教学意图为"火球首杀触发弱点！+击退"，B2 预期等级 Lv1-2
+
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_sgd"]
+
+[resource]
+script = ExtResource("1_sgd")
+id = "fireball"
+name = "火球"
+kind = "magic"
+element = "fire"
+power = 1.4
+target = "enemy_single"
+mp_cost = 4
+effect_tag = "none"
+learn_level = 1
+description = "射出火球，对单体敌人造成火属性伤害。"

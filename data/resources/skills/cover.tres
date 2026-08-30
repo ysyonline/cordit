@@ -1,0 +1,20 @@
+; 掩护 ── 凯尔 Lv3（v1.1 重排：原 Lv5，切片内学不到）
+; §3.4：凯尔 / MP 4 / 我方单体 / 功能 / 代替目标承伤且自身承伤 ×0.5
+; 与防御不叠加，掩护中视为防御姿态（§3.4 原文）
+
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_sgd"]
+
+[resource]
+script = ExtResource("1_sgd")
+id = "cover"
+name = "掩护"
+kind = "utility"
+element = "none"
+power = 0.0
+target = "ally_single"
+mp_cost = 4
+effect_tag = "cover"
+learn_level = 3
+description = "本回合代替目标承受其受到的所有伤害，自身承伤减半。"

@@ -1,0 +1,15 @@
+; 大药瓶 ── 回HP 200，地图/战斗皆可（B5 Boss 战掉落，毕业战容错）
+; 200 ≈ 凯尔 Lv4 最大 HP（240）的 83%，是"濒死拉回"档而非"随便喝"档
+
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/item_data.gd" id="1_igd"]
+
+[resource]
+script = ExtResource("1_igd")
+id = "potion_l"
+name = "大药瓶"
+kind = "heal_hp"
+value = 200
+usable_phase = "both"
+description = "回复我方单体 200 点 HP。"

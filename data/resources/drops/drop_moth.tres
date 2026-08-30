@@ -1,0 +1,12 @@
+; 道路飞蛾掉落 ── 小药瓶 ×1，100%
+; GDD §5 掉落表裁决：切片掉落全 100% 单一道具，不做概率掉落（砍掉随机性 = 省测试）
+
+[gd_resource type="Resource" script_class="DropData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/drop_data.gd" id="1_dgd"]
+
+[resource]
+script = ExtResource("1_dgd")
+id = "drop_moth"
+items = [{"count": 1, "item_id": "potion_s", "probability": 1.0}]
+pity_rule = "无"

@@ -1,0 +1,12 @@
+; 遗迹核心（B5 Boss）掉落 ── 大药瓶 ×1，100%
+; 毕业战奖励：回 200 HP，约为凯尔 Lv4 最大 HP（240）的 83%
+
+[gd_resource type="Resource" script_class="DropData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/drop_data.gd" id="1_dgd"]
+
+[resource]
+script = ExtResource("1_dgd")
+id = "drop_core"
+items = [{"count": 1, "item_id": "potion_l", "probability": 1.0}]
+pity_rule = "无"

@@ -1,0 +1,21 @@
+; 莫娜 · 辅助（治疗与容错）── 战斗 GDD §3.6 属性量级表 Lv1 列
+; per_level 取 §3.6 正文：HP+32 / MP+7 / ATK+0 / MAG+5 / DEF+2 / SPD+0
+; 技能习得：治疗 Lv1（§3.6"Lv1 各已有 1 基础技能"裁决，原为 Lv2）、群愈 Lv2（v1.1 重排：原 Lv4）、净化 Lv3
+
+[gd_resource type="Resource" script_class="CharacterData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/character_data.gd" id="1_cgd"]
+
+[resource]
+script = ExtResource("1_cgd")
+id = "mona"
+name = "莫娜"
+job = "support"
+base_hp = 95
+base_mp = 24
+base_atk = 7
+base_mag = 10
+base_def = 7
+spd = 11
+per_level = {"atk": 0, "def": 2, "hp": 32, "mag": 5, "mp": 7, "spd": 0}
+skills_by_level = {1: ["heal"], 2: ["group_heal"], 3: ["cleanse"]}

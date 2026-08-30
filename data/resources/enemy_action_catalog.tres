@@ -1,0 +1,76 @@
+; 敌方行为目录（全局单例）── GDD v1.1 裁定：倍率从 enemy_data.gd 类常量迁到这里
+;
+; 迁移动机：倍率是数值，按 A2 应走 .tres。改倍率不该改代码、不该重跑编辑器导入。
+; 访问入口：DataTables.ACTION_CATALOG / DataTables.get_enemy_action(key)
+;
+; selectable = 是否进入【随机抽取池】：
+;   charge_release（蓄力解放）是蓄力后的【必发】动作，不参与权重随机，
+;   用 selectable=false 显式挡在池外——否则 E3-S3 很可能把它当普通行为塞进池子，
+;   表现为"Boss 不蓄力也能放 2.5 倍大招"：数值说得通、测试不报错，但语义是错的。
+;
+; 倍率口径（v1.1）：
+;   attack 1.0 / poison_strike 1.0 / sweep 0.7→0.8 / heavy_strike 1.8 /
+;   charge 0.0（telegraph，本回合不造成伤害）/ charge_release 2.5（新增）
+
+[gd_resource type="Resource" script_class="EnemyActionCatalog" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/enemy_action_catalog.gd" id="1_acgd"]
+
+[resource]
+script = ExtResource("1_acgd")
+actions = {
+"attack": {
+"applies_poison": false,
+"label": "攻击",
+"note": "普通敌唯一行为；GDD §5 普通敌 {攻击:100}",
+"power": 1.0,
+"selectable": true,
+"target": "enemy_single",
+"telegraph": false
+},
+"charge": {
+"applies_poison": false,
+"label": "蓄力",
+"note": "telegraph 技：本回合蓄力、下回合必放强力攻击（配合预告条教玩家'看到蓄力→防御'）。本回合不造成伤害，故 power=0",
+"power": 0.0,
+"selectable": true,
+"target": "none",
+"telegraph": true
+},
+"charge_release": {
+"applies_poison": false,
+"label": "蓄力解放",
+"note": "蓄力后的必发强力攻击（v1.1 新增，power 2.5）。不参与权重随机，由蓄力状态机强制触发",
+"power": 2.5,
+"selectable": false,
+"target": "enemy_single",
+"telegraph": false
+},
+"heavy_strike": {
+"applies_poison": false,
+"label": "单体重击",
+"note": "Boss 高伤单体（GDD §5 单体重击）",
+"power": 1.8,
+"selectable": true,
+"target": "enemy_single",
+"telegraph": false
+},
+"poison_strike": {
+"applies_poison": true,
+"label": "毒击",
+"note": "单体物理并附加中毒（§3.6：每回合行动前扣 最大HP×5%，持续 3 回合）",
+"power": 1.0,
+"selectable": true,
+"target": "enemy_single",
+"telegraph": false
+},
+"sweep": {
+"applies_poison": false,
+"label": "群击",
+"note": "精英群攻，逼辅助群体治疗（GDD §5 群击）。v1.1 倍率 0.7 → 0.8",
+"power": 0.8,
+"selectable": true,
+"target": "enemy_all",
+"telegraph": false
+}
+}

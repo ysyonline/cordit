@@ -1,0 +1,31 @@
+; 遗迹核心（Boss）── B5 一只（GDD §7）
+; §7 给定：HP 480、ATK 18、弱火、AI 攻50/单体重击30/蓄力20。DEF 12 / SPD 10 为工程初值。
+; DEF 12 依据：莉娜 Lv4 火球 = (21×2.2 − 14.4) × 1.4 × 1.5（弱火）≈ 66.8；
+;   凯尔 Lv4 重斩 = (23×2 − 18) × 1.8 = 50.4 → 合计约 117/回合，
+;   480 HP 纯输出约 4 轮，加上治疗/防御轮次落在 5~6 轮，
+;   对应 §8"单场 Boss 战 5-8 分钟"。§7 说明"Boss 弱火但 HP 厚，单靠火球刷不动"。
+; SPD 10 依据：与莉娜同值（同值我方先手），Boss 不抢玩家行动位。
+; ATK 18 校验：对莉娜 Lv4（HP 179 / DEF 14）= 36 − 21 = 15 → 8.4% ✓
+; 蓄力：telegraph 技，本回合蓄力、下回合必放强力攻击——配合预告条教玩家"看到蓄力→防御"（§5）。
+; 逃跑：Boss 战禁用（§3.5 菜单置灰）——由编组表 is_boss = true 驱动。
+
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/enemy_data.gd" id="1_egd"]
+
+[resource]
+script = ExtResource("1_egd")
+id = "core"
+name = "遗迹核心"
+sprite_id = "enemy_core"
+hp = 480
+atk = 18
+def = 12
+spd = 10
+weakness = "fire"
+resist = ""
+exp = 260
+drop_id = "drop_core"
+ai_pattern = "boss"
+ai_weights = {"attack": 50, "charge": 20, "heavy_strike": 30}
+notes = "B5 毕业考：蓄力 telegraph → 防御应对的完整循环。弱点为火但 HP 厚，单靠火球刷不动，仍需全队轮转。"

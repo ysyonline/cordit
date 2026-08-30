@@ -1,0 +1,14 @@
+; 中药瓶 ── 回HP 100，地图/战斗皆可（B4 精英战掉落）
+
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/item_data.gd" id="1_igd"]
+
+[resource]
+script = ExtResource("1_igd")
+id = "potion_m"
+name = "中药瓶"
+kind = "heal_hp"
+value = 100
+usable_phase = "both"
+description = "回复我方单体 100 点 HP。"

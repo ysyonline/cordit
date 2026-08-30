@@ -1,0 +1,20 @@
+; 雷爆 ── 莉娜 Lv2（v1.1 重排：原 Lv4）
+; §3.4：莉娜 / MP 8 / 敌全体 / 雷属性 / 倍率 ×1.0
+; 唯一的群体属性技，MP 贵——群体清杂与单体破弱点形成取舍（§3.4 原文）
+
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_sgd"]
+
+[resource]
+script = ExtResource("1_sgd")
+id = "thunder_burst"
+name = "雷爆"
+kind = "magic"
+element = "thunder"
+power = 1.0
+target = "enemy_all"
+mp_cost = 8
+effect_tag = "none"
+learn_level = 2
+description = "引爆雷光，对全体敌人造成雷属性伤害。"

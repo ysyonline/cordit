@@ -1,0 +1,28 @@
+; 雷壳甲虫 ── B2 两只（GDD §7）
+; §7 给定：HP 45、ATK 9、弱点火。DEF 6 / SPD 8 为工程初值。
+; DEF 6 依据：莉娜 Lv1 火球 = max(1, 12×2.2 − 6×1.2) × 1.4 × 1.5 ≈ 40.3，
+;   浮动 0.9~1.1 得 36~44，对 45 HP 稳定两下、高浮动接近秒杀——
+;   §7"B2 验证克制：火球首杀触发弱点！+击退的爽点"由此成立；
+;   而凯尔普攻 28 − 9 = 19 需三下，物理与克制的差距可感知。
+; SPD 8 依据：低于全队（12/11/10）→ B2 我方先手，玩家有机会切目标。
+
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/enemy_data.gd" id="1_egd"]
+
+[resource]
+script = ExtResource("1_egd")
+id = "beetle"
+name = "雷壳甲虫"
+sprite_id = "enemy_beetle"
+hp = 45
+atk = 9
+def = 6
+spd = 8
+weakness = "fire"
+resist = ""
+exp = 18
+drop_id = "drop_beetle"
+ai_pattern = "normal"
+ai_weights = {"attack": 100}
+notes = "B2 克制教学场：弱火无抗性，两只分立两侧逼玩家切目标。外壳高防（DEF 6）意在让物理流明显吃亏。"

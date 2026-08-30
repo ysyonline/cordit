@@ -1,0 +1,26 @@
+; 道路飞蛾 ── B1 单只 / B3 两只（GDD §7）
+; §7 给定：HP 50（v1.1 裁定 30→50）、ATK 8、无相性。DEF 3 / SPD 6 为工程初值。
+; DEF 3 依据：凯尔 Lv1 普攻 = 14×2 − 3×1.0 = 25 → 50 HP 两下收掉，
+;   对应 §7"B1 纯教学：攻击/道具，无压力"（v1.1 物理 DEF 系数 1.5→1.0）。
+; SPD 6 依据：低于全队（12/11/10），保证 B1 全程我方先手，教学场不被打断。
+
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/enemy_data.gd" id="1_egd"]
+
+[resource]
+script = ExtResource("1_egd")
+id = "moth"
+name = "道路飞蛾"
+sprite_id = "enemy_moth"
+hp = 50
+atk = 8
+def = 3
+spd = 6
+weakness = ""
+resist = ""
+exp = 15
+drop_id = "drop_moth"
+ai_pattern = "normal"
+ai_weights = {"attack": 100}
+notes = "B1 教学场：无相性、无威胁，让玩家先熟悉攻击与道具。B3 以两只出现时改为消耗战的杂兵位。"

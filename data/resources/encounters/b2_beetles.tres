@@ -1,0 +1,17 @@
+; B2 雷壳甲虫 ── GDD §7：甲虫×2（HP 45, 弱点火, ATK 9）
+; 位置：道路 | 教学意图：验证克制 | 预期等级 Lv1-2
+; members 数组顺序即敌方生成槽位序，同时是 §3.1"敌方之间按生成槽位序"的排序依据
+
+[gd_resource type="Resource" script_class="EncounterGroup" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/encounter_group.gd" id="1_ggd"]
+
+[resource]
+script = ExtResource("1_ggd")
+id = "b2_beetles"
+name = "雷壳甲虫"
+members = [{"count": 2, "enemy_id": "beetle"}]
+is_boss = false
+location = "road"
+teaching_intent = "验证克制：火球首杀触发'弱点！'+击退的爽点；两只分立两侧逼切目标"
+expected_level = "Lv1-2"

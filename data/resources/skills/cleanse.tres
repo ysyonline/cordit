@@ -1,0 +1,20 @@
+; 净化 ── 莫娜 Lv3
+; §3.4：莫娜 / MP 3 / 我方单体 / 解毒
+; 中毒仅存在于 B4/B5，此技能保证毒可被主动处理而非只能嗑药（§3.4 原文）
+
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_sgd"]
+
+[resource]
+script = ExtResource("1_sgd")
+id = "cleanse"
+name = "净化"
+kind = "utility"
+element = "none"
+power = 0.0
+target = "ally_single"
+mp_cost = 3
+effect_tag = "detox"
+learn_level = 3
+description = "解除我方单体的中毒状态。"

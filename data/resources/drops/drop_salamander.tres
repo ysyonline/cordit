@@ -1,0 +1,12 @@
+; 火蜥掉落 ── 小魔瓶 ×1，100%
+; B3 是"资源压力战"，给回蓝而非回血，逼玩家在 MP 与 HP 之间做取舍
+
+[gd_resource type="Resource" script_class="DropData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/drop_data.gd" id="1_dgd"]
+
+[resource]
+script = ExtResource("1_dgd")
+id = "drop_salamander"
+items = [{"count": 1, "item_id": "ether_s", "probability": 1.0}]
+pity_rule = "无"

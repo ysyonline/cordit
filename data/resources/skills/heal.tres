@@ -1,0 +1,19 @@
+; 治疗 ── 莫娜 Lv1（原 §3.6 为 Lv2，按"Lv1 各已有 1 基础技能"裁决下调）
+; §3.4：莫娜 / MP 4 / 我方单体 / 回复 MAG×3 HP
+
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_sgd"]
+
+[resource]
+script = ExtResource("1_sgd")
+id = "heal"
+name = "治疗"
+kind = "heal"
+element = "none"
+power = 3.0
+target = "ally_single"
+mp_cost = 4
+effect_tag = "none"
+learn_level = 1
+description = "回复我方单体 HP，回复量为施术者魔力的三倍。"

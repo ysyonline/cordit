@@ -1,0 +1,19 @@
+; 横扫 ── 凯尔 Lv2（v1.1 重排：原 Lv3）
+; §3.4：凯尔 / MP 5 / 敌全体 / 物理 / 倍率 ×0.9
+
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/skill_data.gd" id="1_sgd"]
+
+[resource]
+script = ExtResource("1_sgd")
+id = "wide_sweep"
+name = "横扫"
+kind = "physical"
+element = "none"
+power = 0.9
+target = "enemy_all"
+mp_cost = 5
+effect_tag = "none"
+learn_level = 2
+description = "横扫全体敌人，单体伤害偏低但覆盖面广。"
