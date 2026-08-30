@@ -2,7 +2,7 @@ extends GutTest
 ## E4-S1 SaveManager 完整实现（EPIC-4 第 1 条 Story）GUT 用例
 ##
 ## 【断言覆盖】EPIC-4 验收标准 + ADR-3 版本化承诺 + 探索 GDD §3.4 原子写：
-##   1. SCHEMA 常量与 ADR-3 九字段对齐（结构回归锚）；
+##   1. SCHEMA 常量与 ADR-3 十字段对齐（v2 结构回归锚）；
 ##   2. 存→读→存往返数据无损（集合/阶段/队伍数值全量）；
 ##   3. flags 运行时 Dictionary → JSON 数组的序列化语义；
 ##   4. 损坏/缺失文件容错（GameData 不被污染）；
@@ -104,16 +104,18 @@ func _read_json(path: String) -> Dictionary:
 	return parsed if parsed is Dictionary else {}
 
 
-# =============== 1. SCHEMA 结构回归锚（ADR-3 九字段） ===============
+# =============== 1. SCHEMA 结构回归锚（ADR-3 十字段，v2 起） ===============
 
-func test_01_schema与ADR3九字段对齐() -> void:
+func test_01_schema与ADR3十字段对齐() -> void:
+	# v2（E4-S8）：+inventory，其余九字段不变；ADR-3 字段表已同步 v2
 	var expected: Array = ["version", "map", "position", "party", "story_phase",
-			"flags", "chests_opened", "discovered_weakness_set", "cleared_enemy_set"]
+			"flags", "chests_opened", "discovered_weakness_set", "cleared_enemy_set",
+			"inventory"]
 	var keys: Array = SaveManager.SCHEMA.keys()
 	keys.sort()
 	expected.sort()
 	assert_eq(keys, expected, "SCHEMA 键集必须与 ADR-3 字段表一一对应")
-	assert_eq(SaveManager.SCHEMA_VERSION, 1, "当前格式版本应为 1")
+	assert_eq(SaveManager.SCHEMA_VERSION, 2, "当前格式版本应为 2（v1→v2 加 inventory）")
 	assert_eq(SaveManager.SAVE_PATH, "user://save.json", "存档路径应为 ADR-3 口径 user://save.json")
 
 

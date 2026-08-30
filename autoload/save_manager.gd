@@ -19,8 +19,10 @@ extends Node
 ## 存档槽路径（单存档槽；user:// 映射到用户数据目录）
 const SAVE_PATH: String = "user://save.json"
 
-## 存档格式版本（读档时据此走迁移函数；当前唯一版本）
-const SCHEMA_VERSION: int = 1
+## 存档格式版本（读档时据此走迁移函数）。
+## v2（E4-S8）：新增 inventory 字段（队伍共享背包持久化，E4-S5 复验补缺口）；
+##   v1 旧档经 _migrate 补空 Dictionary 上迁，旧档可读。
+const SCHEMA_VERSION: int = 2
 
 ## 可存状态快照的 schema（与 ADR-3 字段表一一对应，SMK-12 验收依据）：
 ##   version                  → int，格式版本
@@ -32,9 +34,11 @@ const SCHEMA_VERSION: int = 1
 ##   chests_opened            → Array，已开宝箱集合（GameData.chests_opened）
 ##   discovered_weakness_set  → Array，已记忆弱点集合（GameData.discovered_weakness_set）
 ##   cleared_enemy_set        → Array，已击破敌人集合（GameData.cleared_enemy_set）
+##   inventory                → Dictionary，队伍共享背包（item_id → count；
+##                              JSON 天然支持对象键值对，无需像 flags 那样转数组）
 ## 值为各字段的"类型示例占位"（空容器/零值），仅描述结构，不含数据。
 const SCHEMA: Dictionary = {
-	"version": 1,
+	"version": 2,
 	"map": "",
 	"position": [0.0, 0.0],
 	"party": [],
@@ -43,6 +47,7 @@ const SCHEMA: Dictionary = {
 	"chests_opened": [],
 	"discovered_weakness_set": [],
 	"cleared_enemy_set": [],
+	"inventory": {},
 }
 
 ## 角色记录类型（与 GameData 同款 preload 引用，headless 通道即时可用）
@@ -112,6 +117,13 @@ func _migrate(data: Dictionary) -> Dictionary:
 	if v < 1:
 		# v0 → v1：占位分支（当前无历史版本，进入即视为 v1 处理）。
 		pass
+	if v < 2:
+		# v1 → v2（E4-S8）：补 inventory 字段。旧档无背包概念（v1 schema
+		# 九冻结字段），补空 Dictionary 即"旧档背包为空"，语义无损；
+		# 已有的九个字段原样保留（merged 合并逻辑在下方统一处理，此处
+		# 无需动 data——空缺键由 SCHEMA 默认值兜底，此分支留作迁移
+		# 结构变换的落点与规程示范）。
+		pass
 	# E5/E6 迁移分支追加处（保持 v 从小到大逐级上迁）
 	# 缺失字段按 SCHEMA 默认值补齐（容错手改存档/半截字段），已有字段原样保留
 	var merged: Dictionary = SCHEMA.duplicate(true)
@@ -135,6 +147,15 @@ func _restore(data: Dictionary) -> void:
 	GameData.discovered_weakness_set = _to_string_array(data["discovered_weakness_set"])
 	GameData.cleared_enemy_set = _to_string_array(data["cleared_enemy_set"])
 	GameData.party = _deserialize_party(data["party"])
+	# inventory（v2）：重建为 item_id(String) → count(int)，逐键显式转换——
+	# JSON 解析的数字恒为 float，直接灌入会让 count 变 2.0（对账/累加会分型出错）；
+	# 整体替换 Dictionary 安全：战斗侧 set_inventory 注入是值拷贝（m3 host 逐条重建）。
+	var inv: Dictionary = {}
+	var raw_inv: Variant = data.get("inventory", {})
+	if raw_inv is Dictionary:
+		for item_id: Variant in (raw_inv as Dictionary):
+			inv[String(item_id)] = int((raw_inv as Dictionary)[item_id])
+	GameData.inventory = inv
 	# 注意：map / position 不写 GameData（职责边界），经 last_loaded 供 E4-S7 回图
 
 
@@ -152,6 +173,8 @@ func _snapshot(map: String, position: Vector2) -> Dictionary:
 	snap["chests_opened"] = GameData.chests_opened.duplicate()
 	snap["discovered_weakness_set"] = GameData.discovered_weakness_set.duplicate()
 	snap["cleared_enemy_set"] = GameData.cleared_enemy_set.duplicate()
+	# inventory（v2）：键值结构 JSON 原生，duplicate 防外部后续改动渗入快照
+	snap["inventory"] = GameData.inventory.duplicate()
 	return snap
 
 

@@ -177,7 +177,7 @@ Map（Node2D）
 
 - **背景**：Godot 4 教程普遍教 `ResourceSaver.save()` 存自定义 Resource；单存档槽、自动存档点 + 手动存档。
 - **备选**：① Resource 序列化（`ResourceSaver`）；② JSON 手写字段序列化；③ var_to_str/str_to_var。
-- **决策**：**JSON 手写序列化**——`SaveManager` 维护一个显式的 schema：`{ "version": 1, "map": "...", "position": [...], "party": [...], "story_phase": n, "flags": [...], "chests_opened": [...], "discovered_weakness_set": [...], "cleared_enemy_set": [...] }`，写入 `user://save.json`。
+- **决策**：**JSON 手写序列化**——`SaveManager` 维护一个显式的 schema：`{ "version": 2, "map": "...", "position": [...], "party": [...], "story_phase": n, "flags": [...], "chests_opened": [...], "discovered_weakness_set": [...], "cleared_enemy_set": [...], "inventory": {...} }`，写入 `user://save.json`。（v2 起 +`inventory`：队伍共享背包 item_id→count，E4-S8 补 E4-S5 复验发现的持久化缺口；v1 旧档经 `_migrate` 补空 Dictionary 无损上迁。）
 - **理由**：
   1. Resource 序列化的经典事故是**存档里直接存了场景/节点引用**——改一次场景结构，旧存档全部失效甚至崩溃加载；手写 JSON 强迫你只存"游戏状态的值"，天然规避此坑；
   2. 存档格式版本化（`version` 字段 + 迁移函数）在手写方案里是一行 if，在 Resource 方案里是玄学；

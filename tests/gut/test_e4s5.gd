@@ -293,10 +293,10 @@ func test_11_已开宝箱再交互不重开() -> void:
 
 
 func test_12_存档闭环_存读后已开不重开() -> void:
-	# ① 开箱 → 存档（快照落 chests_opened，ADR-3 v1 冻结字段）
-	# 【schema 边界注记】inventory 不在 ADR-3 v1 九字段内（E4-S1 冻结面），
-	#   存读档后道具量回灌属 schema 扩展议题（version bump，须用户拍板）；
-	#   本 Story 验收锚定 chests_opened 闭环："存→读→已开不重开"。
+	# ① 开箱 → 存档（快照落 chests_opened + inventory，ADR-3 v2 十字段）
+	# 【v2 升级注记】E4-S8 起 inventory 入存档（v1 无此字段），验收②闭环
+	#   从"chests_opened 回灌"升级为"chests_opened + inventory 双回灌"：
+	#   存→读后道具数量无损；已开宝箱再交互仍不重复给道具。
 	var road: Node = _load_map("road")
 	var chest: StaticBody2D = (road.content_points["chests"] as Array)[0]
 	_drive_chest(chest)
@@ -305,16 +305,19 @@ func test_12_存档闭环_存读后已开不重开() -> void:
 	assert_true(SaveManager.save("res://scenes/maps/road.tscn", Vector2(384, 64)), "存档")
 	# ② 扰动：模拟"读档前的运行时漂移"（读档必须清掉这份伪状态）
 	GameData.chests_opened = []
-	GameData.inventory = {}
+	GameData.inventory = {"junk": 99}
 	# ③ 读档回灌
 	assert_true(SaveManager.load_save(), "读档应成功")
 	assert_eq(GameData.chests_opened, ["chest_road_01"], "chests_opened 应从存档无损回灌")
+	assert_eq(int(GameData.inventory.get("potion_s", 0)), 2,
+			"inventory 应从存档无损回灌（E4-S8 v2）")
+	assert_false(GameData.inventory.has("junk"), "扰动值应被存档值替换")
 	# ④ 已开不重开：读档后的宝箱再交互，不得重复给道具（验收 ② 闭环断言）
 	var road2: Node = _load_map("road")
 	var chest2: StaticBody2D = (road2.content_points["chests"] as Array)[0]
 	_drive_chest(chest2)
-	assert_eq(int(GameData.inventory.get("potion_s", 0)), 0,
-			"存→读→已开不重开：chests_opened 回灌后模板不再给道具（验收 ②）")
+	assert_eq(int(GameData.inventory.get("potion_s", 0)), 2,
+			"存→读→已开不重开：道具不再重复发放（验收 ②，v2 口径）")
 
 
 # =============== G. 调查模板语义 ===============

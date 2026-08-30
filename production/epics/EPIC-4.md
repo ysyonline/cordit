@@ -63,6 +63,16 @@
   - [ ] 任意地图战败后回到该图入口存档点，状态=存档时状态
   - [ ] 读档后 DialogueRunner 强制 IDLE（对话 GDD 边缘 5，此时系统未建则预留）
 
+### E4-S8 inventory 入存档 schema · 1h（追加 Story，实际 ≈0.4h，2026-08-31）
+- 需求依据：E4-S5 复验发现的持久化缺口（开箱道具存读档后丢失）；ADR-3"加字段同步改 schema"义务；用户拍板单开。
+- 做什么：schema v1→2（+inventory 字段）；_migrate 追加 v<2 分支；snapshot/restore 对称接线；JSON float→int 逐键转换。
+- 验收标准：
+  - [x] 存→读→inventory 无损往返（含多道具多数量、空背包、二存二读）
+  - [x] v1 旧档读档不报错、inventory 补空、其余九字段不污染；旧档→读→再存即 v2
+  - [x] GUT 全量零回归（258→266，+8 用例）
+
+  > 施工证据：`evidence/e4s8-inventory-save.md`（主理人亲跑 266/266 exit 0 复验）。ADR-3 决策正文已同步 v2 十字段。
+
 ## M4 收口
 - A8 行 4 全绿：三层遗迹探索 + 单槽存读档可演示；"存档/读档"Must 条目（5h）关闭。
 - 试玩视频 #4 + git tag `m4`。
