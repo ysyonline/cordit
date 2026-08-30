@@ -58,6 +58,10 @@ const FADE_MASK_NODE_PATH: String = "UILayer/FadeMask"
 ## 真实战斗系统落地后仍经此路由，届时仅换本常量）
 const BATTLE_SCENE_PATH: String = "res://scenes/battle/battle.tscn"
 
+## 战后处理器脚本（E2-S4：battle_finished 的常驻消费端，装配于本 Router
+## 之下——跨场景常驻 + 与 enemy_touched 接线同属一条 A5 数据流）
+const RESULT_HANDLER_SCRIPT: GDScript = preload("res://scripts/battle/battle_result_handler.gd")
+
 # ------------------------------------------------------------------
 # 运行时簿记（路由元数据，非游戏状态——游戏状态只在 GameData，见 A3）
 # ------------------------------------------------------------------
@@ -82,6 +86,13 @@ func _ready() -> void:
 	# （GUT 直跑等无 A4 结构环境），change_scene 会在结构检查处拒绝，
 	# 不炸不静默（日志可见）。
 	EventBus.enemy_touched.connect(_on_enemy_touched)
+	# E2-S4 接线：A5 数据闭环下半段——battle_finished(BattleResult) 的
+	# 常驻消费端（覆写 GameData / 胜利登记 / 回图 / 玩家回置+免疫）。
+	# 处理器挂本 Router 之下：battle_finished 发出时旧地图已销毁、新图
+	# 未装载，只有跨场景常驻节点收得到（装配理由见处理器头注释）。
+	var handler: Node = RESULT_HANDLER_SCRIPT.new()
+	handler.name = "BattleResultHandler"
+	add_child(handler)
 
 
 ## enemy_touched 消费：payload 即切换参数，四字段校验在 change_scene 内执行。

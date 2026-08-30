@@ -75,6 +75,11 @@ var _input_override: Vector2 = Vector2.ZERO
 ## 默认 false——E1-S4/E1-S5 全部断言在解锁态下运行，行为零变化。
 var is_input_locked: bool = false
 
+## 遇敌免疫剩余秒数（E2-S4）：>0 期间接触判定放行（敌我互穿不触发战斗）。
+## 探索 GDD §3.2 战后回置保护——0.5s 计时器由 BattleResultHandler 经
+## start_encounter_immunity() 启动；E2-S2 的敌人接触判定消费本状态。
+var encounter_immunity: float = 0.0
+
 ## 遮挡自检最近一次命中结果（SMK 观察用）
 var _occluded_by: Node = null
 
@@ -93,6 +98,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	# 遇敌免疫倒计时（E2-S4）：非负递减，归零即恢复可触敌
+	if encounter_immunity > 0.0:
+		encounter_immunity = maxf(encounter_immunity - delta, 0.0)
 	var dir: Vector2 = _get_move_vector()
 	_update_facing(dir, delta)
 	velocity = dir * move_speed
@@ -184,6 +192,17 @@ func get_interact_target() -> Object:
 ## 测试注入：设置后忽略真实键盘（Vector2.ZERO 恢复正常输入）
 func set_input_override(v: Vector2) -> void:
 	_input_override = v.normalized() if v != Vector2.ZERO else Vector2.ZERO
+
+
+## 启动遇敌免疫（E2-S4）：持续 duration 秒，期间敌人接触判定放行。
+## 幂等取大：免疫期内再次调用不会缩短剩余时间（战后重叠触发场景）。
+func start_encounter_immunity(duration: float) -> void:
+	encounter_immunity = maxf(encounter_immunity, duration)
+
+
+## 是否处于遇敌免疫中（敌人接触判定与 GUT 断言的统一查询口）
+func is_encounter_immune() -> bool:
+	return encounter_immunity > 0.0
 
 
 ## 输入锁开关（E1-S6）：对话系统持有；锁定时 set_input_override 注入同样失效。

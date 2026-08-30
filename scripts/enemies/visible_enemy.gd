@@ -76,6 +76,12 @@ func _ready() -> void:
 	# 敌人 uid 兜底取节点名（npc.gd 同款约定；地图锚点直摆即用）
 	if enemy_uid.is_empty():
 		enemy_uid = String(name)
+	# 数据驱动防复活（E2-S4）：已被击破的敌人装载即自删——
+	# "谁记得删节点"改为"集合里有的人自己消失"，读档/重进图天然生效
+	if GameData.cleared_enemy_set.has(enemy_uid):
+		print("[VisibleEnemy] %s 已在击破集合，装载即移除（不复活）" % enemy_uid)
+		queue_free()
+		return
 	_home_position = global_position
 	_collect_waypoints()
 	var area: Area2D = get_node_or_null("TouchArea") as Area2D
@@ -145,9 +151,14 @@ func _on_touch_area_body_exited(body: Node2D) -> void:
 		_engaged = false
 
 
-## 接触处理：防重锁 + 组装 A5 四字段载荷 + EventBus 发射。
+## 接触处理：防重锁 + 玩家免疫放行 + 组装 A5 四字段载荷 + EventBus 发射。
 ## 拆出公开方法供 GUT 直接驱动（不依赖物理帧时序）。
 func _handle_player_contact(player: Node2D) -> void:
+	# 战后免疫（E2-S4）：玩家 start_encounter_immunity 期间接触不触发——
+	# "战后回图立即再撞同一敌人不会秒进战斗"（探索 GDD §3.2）
+	if player.has_method("is_encounter_immune") and player.is_encounter_immune():
+		print("[VisibleEnemy] %s：玩家免疫中，接触放行" % enemy_uid)
+		return
 	if _engaged:
 		return
 	_engaged = true
