@@ -1,5 +1,6 @@
-# 本地工具目录（WorkBuddy 会话数据，绝不进仓库）
-.workbuddy/
+# WorkBuddy 会话数据：工程记忆（memory/）入库随仓库同步；瞬时噪声排除
+.workbuddy/godot_proc_check.txt
+.workbuddy/automations/
 
 # Git 通用排除
 .DS_Store
