@@ -43,3 +43,4 @@
 - **tile-inspect 管线**：`.rgba` 缓存须经 `decode_png.py` 生成（应用 tRNS 透明），旧缓存未应用 tRNS 会把透明贴片误判为白底实体——像素分析前必查。town=ctype6 直色，temple/forest=ctype3 索引色。
 - **Python 工具控制台编码**：verify/gen 系脚本在 PowerShell 下因 GBK 打不出"✅"抛 UnicodeEncodeError（断言已跑完才崩，非产物问题）——统一 Git Bash 跑或设 `PYTHONIOENCODING=utf-8`。
 - **成员 spawn 流程**：先 TeamCreate 再 Agent(team_name=...)，直接 spawn 报 "No active team found"；成员会话可能 429 限流中断（exit 前检查回传完整性，收尾缺口主理人可代笔，沿 E4-S2/S3 先例）。
+- **Git 远程同步（2026-08-31 落定）**：origin=`git@github.com:ysyonline/cordit.git`（SSH，密钥永不过期）；网络走 `~/.gitconfig` 的 `http.https://github.com.proxy=127.0.0.1:7892` + `~/.ssh/config`（ssh.github.com:443，connect.exe 用 D:/software/Git 全路径，WorkBuddy 内置 Git Bash 无此工具）。`.workbuddy/memory/` 已入库随仓库同步。**坑**：仓库已设 `maintenance.auto=false`+`gc.auto=0`，勿删——沙箱会中断 fetch 后分离的 gc 进程致 pack-refs 半途而废、origin/main 引用"蒸发"（status 显示 [gone]）。
