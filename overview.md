@@ -7,12 +7,12 @@
 
 | 项 | 值 |
 |---|---|
-| 阶段 | Phase 5 · 制作，Sprint 3 收口 |
-| 当前 Sprint | Sprint 3 · EPIC-3「战斗是游戏」（W5-6，30h 卡满） |
-| 在飞 Story | E3-S1 ~ E3-S6 全部完成，M3 收口中（门3 试玩视频 + 门5 tag 待用户批准） |
+| 阶段 | Phase 5 · 制作，Sprint 3 已收口（tag m3，五门全绿） |
+| 当前 Sprint | Sprint 3 · EPIC-3「战斗是游戏」✅ 完成 |
+| 待办尾巴 | 无（门3 试玩视频 #3 已于 2026-08-30 补录入库：`evidence/m3-gameplay.avi`） |
 | 测试基线 | GUT 9.7.1，187/187 全绿（`evidence/s3-gut-e3s6.log`） |
-| 下一道门 | M4：遗迹可探索 + 存档落地（EPIC-4，19h） |
-| 冲刺计划 | `production/sprints/sprint-3.md` |
+| 下一道门 | M4：遗迹可探索 + 存档落地（EPIC-4，19h），计划草案 `production/sprints/sprint-4-draft.md` 待拍板 |
+| 冲刺计划 | `production/sprints/sprint-3.md`（已收口）→ Sprint 4 草案待批 |
 
 ## 2. 里程碑进展（A8 表七行）
 
@@ -20,7 +20,7 @@
 |---|---|---|---|
 | M1 能走路的世界 | EPIC-1（15.5h） | PASS | `f9840ed` / tag m1 |
 | M2 遇敌能打 | EPIC-2（9h） | PASS | `1b61358` / tag m2 |
-| M3 战斗是游戏 | EPIC-3（30h） | PASS（收口待门3 试玩视频） | commit 72e1354 / tag m3，187/187 |
+| M3 战斗是游戏 | EPIC-3（30h） | PASS（五门全绿） | commit 72e1354 / tag m3，187/187 |
 | M4 遗迹可探索 + 存档落地 | EPIC-4（19h） | 待启动 | — |
 | M5 ~ M7 | EPIC-5 ~ 7 | 待启动 | — |
 

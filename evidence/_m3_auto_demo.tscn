@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://evidence/_m3_auto_demo.gd" id="1_m3demo"]
+
+; ── M3 门3 自动演示驱动器（临时场景，仅供录制，录后可删）──────────
+; 结构镜像 scenes/main.tscn 的 A4 常驻根：Main/World + UILayer/FadeMask。
+; SceneRouter 与 BattleResultHandler 按 "Main/World"、"Main/UILayer/FadeMask"
+; 寻址，故本场景可直接以启动场景运行并复用真实切换/回图链路。
+; 字幕 Label 由脚本运行时挂到 UILayer。
+
+[node name="Main" type="Node"]
+script = ExtResource("1_m3demo")
+
+[node name="World" type="Node" parent="."]
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="FadeMask" type="ColorRect" parent="UILayer"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

@@ -62,7 +62,7 @@
 - [x] 门1：GUT 全量 187/187 PASS（`evidence/s3-gut-e3s6.log`，零回归，含 E3-S6 八边缘用例）
 - [x] 门2：EPIC-3 六 Story 验收标准全部勾绿（本文件上方逐项 [x]）
 - [x] 门4：证据文件入库——`evidence/s3-gut-e3s6.log`（GUT 全量）、`evidence/m3-closeout.md`（收口报告）
-- [ ] 门3：试玩视频 #3（auto-demo + Godot movie maker，同 M2 做法；用户本机录制，沙箱无显示无法渲染）
+- [x] 门3：试玩视频 #3（auto-demo + Godot movie maker，同 M2 做法）——**2026-08-30 沙箱实录成功**（勘误：仅 --headless 无显示，非 headless 启动有 GPU）：`evidence/m3-gameplay.avi`（17.53s@30fps 640×360，展示进战转场/普攻/火球弱火克制弹字/受击闪白/治疗/胜利结算回图），录制日志 `evidence/m3-recording.log`，用户判定 PASS 批准入库
 - [x] 门5：git tag `m3`（commit `72e1354` / tag `m3`，2026-08-30 用户批准收口）
 
 > 收口细节与两处 defect 修复记录见 `evidence/m3-closeout.md`。

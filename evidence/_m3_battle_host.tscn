@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://evidence/_m3_battle_host.gd" id="1_m3host"]
+
+; ── M3 门3 战斗演示舞台（临时场景，仅供录制，录后可删）────────────
+; 由 _m3_auto_demo 经 SceneRouter 正常切换装入 Main/World（带 BattlePayload）；
+; 脚本在 _ready 组装真实 BattleCommand + BattleUI 并自动打完 b2_beetles。
+
+[node name="M3BattleHost" type="Node2D"]
+script = ExtResource("1_m3host")
