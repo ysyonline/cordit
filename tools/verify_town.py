@@ -4,13 +4,17 @@ verify_town.py — E1-S5 静态核验器（施工单第 7 节可文件化条目�
 独立于生成器：重新解析 town.tscn 的 tile_map_data 字节流与节点树，逐条断言。
 用法：python verify_town.py  → 全部 PASS 则退出码 0
 """
+import os
 import re
 import struct
 import sys
 
-TSCN = r"D:\code\cordit\scenes\maps\town.tscn"
-TRES = r"D:\code\cordit\assets\tiles\town_map_tileset.tres"
-GD = r"D:\code\cordit\scripts\maps\town_map.gd"
+# 仓库根目录 = 本脚本所在 tools/ 的上一级（E4-S0 修复：替代原硬编码 D:\code\cordit）
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# 待核验产物路径（仓库相对）
+TSCN = os.path.join(REPO_ROOT, "scenes", "maps", "town.tscn")
+TRES = os.path.join(REPO_ROOT, "assets", "tiles", "town_map_tileset.tres")
+GD = os.path.join(REPO_ROOT, "scripts", "maps", "town_map.gd")
 
 failures = []
 passed = 0

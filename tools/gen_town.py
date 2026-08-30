@@ -14,7 +14,11 @@ tile_map_data 格式（Godot 4.x TileMapLayer）：
 tile 选型依据 production/tile_ascii.py 像素像画辨认（详见回传"选型裁量点"）。
 本文件为一次性施工工具，位于 production/（工作缓存，不随本次 git 提交）。
 """
+import os
 import struct
+
+# 仓库根目录 = 本脚本所在 tools/ 的上一级（仓库相对路径，替代原硬编码 D:\code\cordit）
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # ---------------------------------------------------------------- 选型表（冻结）
 # source_id: 0 = town_tiles, 1 = forest_tiles；值 = (source, atlas_x, atlas_y)
@@ -377,9 +381,10 @@ for (nm, tx, ty) in TRIGGERS:
              '']
 TSCN_TEXT = "\n".join(tscn) + "\n"
 
-with open(r"D:\code\cordit\assets\tiles\town_map_tileset.tres", "w", encoding="utf-8", newline="\n") as f:
+# 输出路径改为仓库相对路径（E4-S0 修复：不再写死 D:\code\cordit）
+with open(os.path.join(REPO_ROOT, "assets", "tiles", "town_map_tileset.tres"), "w", encoding="utf-8", newline="\n") as f:
     f.write(TRES_TEXT)
-with open(r"D:\code\cordit\scenes\maps\town.tscn", "w", encoding="utf-8", newline="\n") as f:
+with open(os.path.join(REPO_ROOT, "scenes", "maps", "town.tscn"), "w", encoding="utf-8", newline="\n") as f:
     f.write(TSCN_TEXT)
 
 print("tileset tres:", len(TRES_TEXT), "chars")

@@ -13,7 +13,12 @@
 
 > 事后手工改过 `.tscn` 的话，重跑第 5 步即可回归（M1 期 108/108 PASS 就是它产出的）。
 
-## 已知缺陷（2026-08-30 主理人核查）
+## 已知缺陷
+
+（无）——2026-08-30 E4-S0 工具链修复后本表清零。
+
+<details>
+<summary>历史缺陷存档（2026-08-30 主理人核查，已修复）</summary>
 
 四个脚本内部硬编码了 `D:\code\cordit\...` 绝对路径，共 7 处：
 
@@ -24,6 +29,8 @@
 | `tile-inspect/analyze_tiles.py` | 8 | 读取的 `.rgba` 路径 |
 | `tile-inspect/tile_ascii.py` | 38 | 读取的 `.rgba` 路径 |
 
-**其中 `tile-inspect/` 两个脚本当前是坏的**：它们指向 `D:\code\cordit\production\*.rgba`，而 `.rgba` 文件已随裁决迁移到 `tools/tile-inspect/`，路径失效。
+**其中 `tile-inspect/` 两个脚本当时是坏的**：它们指向 `D:\code\cordit\production\*.rgba`，而 `.rgba` 文件已随裁决迁移到 `tools/tile-inspect/`，路径失效。
 
-**影响与处理**：EPIC-4 遗迹施工要克隆这套工具，动工前必须先改为仓库相对路径（或加 argparse 参数），改动量约十行。已立案为待办，未修。
+**修复（E4-S0，2026-08-30）**：7 处全部改为仓库相对路径（脚本内以 `__file__` 推算仓库根 / 脚本所在目录）；tile-inspect 两脚本同步指向迁址后的 `tools/tile-inspect/*.rgba`，修路径保留。验收：五步调用顺序全链路复跑退出码 0，`verify_town.py` 回归 108/108 PASS，`gen_town.py` 重生成产物与修复前基线 MD5 逐字节一致。证据：`evidence/e4s0-toolchain-repair.md`。
+
+</details>

@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 """把图集候选区域渲染成 ASCII 像画：每像素一字符，供无图环境辨认证 tile。"""
+import os
 import sys
+
+# 解码缓存目录 = 本脚本所在目录（E4-S0 修复：.rgba 已随裁决迁至 tools/tile-inspect/，
+# 不再指向原硬编码 D:\code\cordit\production\）
+RGBA_DIR = os.path.dirname(os.path.abspath(__file__))
 
 PAL = [
     # (判定函数缩写, 字符)
@@ -33,9 +38,12 @@ def px_char(r, g, b, a):
     return '?'
 
 def load(name):
-    fname = {"town": "town_tiles", "forest": "forest_tiles"}[name]
-    W = {"town": (512, 512), "forest": (240, 160)}[name]
-    px = open(rf"D:\code\cordit\production\{fname}.rgba", "rb").read()
+    # E4-S3 选型扩充：classical_temple 图集接入（64×48 网格，1024×768）
+    fname = {"town": "town_tiles", "forest": "forest_tiles",
+             "temple": "classical_temple_tiles"}[name]
+    W = {"town": (512, 512), "forest": (240, 160),
+         "temple": (1024, 768)}[name]
+    px = open(os.path.join(RGBA_DIR, f"{fname}.rgba"), "rb").read()
     return W[0], W[1], px
 
 def region(name, x0, y0, x1, y1, label=""):

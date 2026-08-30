@@ -8,11 +8,11 @@
 | 项 | 值 |
 |---|---|
 | 阶段 | Phase 5 · 制作，Sprint 3 已收口（tag m3，五门全绿） |
-| 当前 Sprint | Sprint 3 · EPIC-3「战斗是游戏」✅ 完成 |
-| 待办尾巴 | 无（门3 试玩视频 #3 已于 2026-08-30 补录入库：`evidence/m3-gameplay.avi`） |
-| 测试基线 | GUT 9.7.1，187/187 全绿（`evidence/s3-gut-e3s6.log`） |
-| 下一道门 | M4：遗迹可探索 + 存档落地（EPIC-4，19h），计划草案 `production/sprints/sprint-4-draft.md` 待拍板 |
-| 冲刺计划 | `production/sprints/sprint-3.md`（已收口）→ Sprint 4 草案待批 |
+| 当前 Sprint | Sprint 4 · EPIC-4「遗迹可探索 + 存档落地」进行中（S0~S2 ✅ + D3 修复，剩余 S3~S7 ≈12h） |
+| 待办尾巴 | 无——前段收口已 commit（2026-08-30 晚，用户拍板） |
+| 测试基线 | GUT 9.7.1，**221/221 全绿**（`evidence/e4s2-gut-s2.log`；D3 修复后 200/200 另证 `evidence/d3-gut-full.log`） |
+| 下一道门 | M4：三层遗迹可探索 + 存档落地——当前 **E4-S3 遗迹三层地图（4.5h）**，前置已清零 |
+| 冲刺计划 | `production/sprints/sprint-4.md`（已生效，5 项拍板全落） |
 
 ## 2. 里程碑进展（A8 表七行）
 
@@ -21,7 +21,7 @@
 | M1 能走路的世界 | EPIC-1（15.5h） | PASS | `f9840ed` / tag m1 |
 | M2 遇敌能打 | EPIC-2（9h） | PASS | `1b61358` / tag m2 |
 | M3 战斗是游戏 | EPIC-3（30h） | PASS（五门全绿） | commit 72e1354 / tag m3，187/187 |
-| M4 遗迹可探索 + 存档落地 | EPIC-4（19h） | 待启动 | — |
+| M4 遗迹可探索 + 存档落地 | EPIC-4（19h） | 进行中：S0/S1/S2 ✅ + D3 缺陷修复，剩 S3~S7 | 前段收口 commit（2026-08-30 晚） |
 | M5 ~ M7 | EPIC-5 ~ 7 | 待启动 | — |
 
 ## 3. 冻结决策（勿翻案）

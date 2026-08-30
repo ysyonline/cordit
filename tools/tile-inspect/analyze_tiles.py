@@ -2,10 +2,15 @@
 """E1-S5 施工辅助：逐 16x16 格统计两图集 RGBA 像素，输出分类 ASCII 图与明细。
 只读 assets/tiles 下的 png 解码缓存（*.rgba），不碰任何游戏文件。
 """
-import sys, statistics
+import os
+import sys
+
+# 解码缓存目录 = 本脚本所在目录（E4-S0 修复：.rgba 已随裁决迁至 tools/tile-inspect/，
+# 不再指向原硬编码 D:\code\cordit\production\）
+RGBA_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def load(name, w, h):
-    px = open(rf"D:\code\cordit\production\{name}.rgba", "rb").read()
+    px = open(os.path.join(RGBA_DIR, f"{name}.rgba"), "rb").read()
     assert len(px) == w * h * 4
     return px
 
