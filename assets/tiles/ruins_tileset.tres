@@ -1,0 +1,79 @@
+[gd_resource type="TileSet" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/tiles/classical_temple_tiles.png" id="1_temple"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_temple"]
+texture = ExtResource("1_temple")
+texture_region_size = Vector2i(16, 16)
+27:22/0 = 0
+28:22/0 = 0
+29:22/0 = 0
+30:22/0 = 0
+27:23/0 = 0
+29:23/0 = 0
+23:10/0 = 0
+14:29/0 = 0
+14:29/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+14:29/0/y_sort_origin = 8
+15:29/0 = 0
+15:29/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:29/0/y_sort_origin = 8
+4:6/0 = 0
+5:6/0 = 0
+27:8/0 = 0
+27:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+40:8/0 = 0
+40:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+11:16/0 = 0
+11:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+11:16/0/y_sort_origin = 8
+52:34/0 = 0
+52:34/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+52:34/0/y_sort_origin = 8
+53:34/0 = 0
+53:34/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+53:34/0/y_sort_origin = 8
+9:16/0 = 0
+9:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+9:16/0/y_sort_origin = 8
+10:16/0 = 0
+10:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+10:16/0/y_sort_origin = 8
+22:10/0 = 0
+22:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+22:10/0/y_sort_origin = 8
+22:11/0 = 0
+22:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+22:11/0/y_sort_origin = 8
+39:46/0 = 0
+39:46/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+39:46/0/y_sort_origin = 8
+57:46/0 = 0
+57:46/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+57:46/0/y_sort_origin = 8
+14:26/0 = 0
+14:26/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+14:26/0/y_sort_origin = 8
+15:26/0 = 0
+15:26/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:26/0/y_sort_origin = 8
+14:27/0 = 0
+14:27/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+14:27/0/y_sort_origin = 8
+15:27/0 = 0
+15:27/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+15:27/0/y_sort_origin = 8
+39:44/0 = 0
+39:45/0 = 0
+57:44/0 = 0
+57:45/0 = 0
+14:24/0 = 0
+15:24/0 = 0
+14:25/0 = 0
+15:25/0 = 0
+
+[resource]
+tile_size = Vector2i(16, 16)
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_temple")
