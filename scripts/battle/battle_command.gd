@@ -213,6 +213,36 @@ func _alive(list: Array[Dictionary]) -> Array[Dictionary]:
 	return out
 
 
+## 解析技能结算目标（D3 修复）。
+## 【正本】GDD §3.4：目标类型由技能表 target 字段定义（敌单/敌群/我单/我群）；
+##   单体技能必须只命中玩家在 UI 光标选中的那一个单位（target_slot），
+##   群体技能命中对应阵营全体存活单位（行为与修复前一致，保持不变）。
+## 【兜底口径】GDD 未定义"target_slot 无效 / 未选"时的行为；此处采用
+##   "对应阵营数组序首个存活单位"，与 targets_for 候选列表顺序、UI 光标
+##   初位（_cursor_idx=0）及敌方 AI _first_alive_party 的既有约定一致，
+##   保证确定性与可测性。不回退到"全体命中"（那正是 D3 缺陷本身）。
+## 注意：类型化数组禁止 as 泛型整体转换，须逐元素 append（A1 已知坑）。
+func _resolve_skill_targets(sk: Variant, command: Dictionary) -> Array[Dictionary]:
+	var target: String = String(sk.target)
+	# 群体技能（*_all）：维持 targets_for 全体命中行为（修复要求 2）
+	if target.ends_with("_all"):
+		return targets_for({"type": CMD_SKILL, "skill_id": String(sk.id)})
+	# 单体技能（*_single）：按 target 前缀定位阵营
+	var side: String = BattleLogic.SIDE_ENEMY if target.begins_with("enemy") else BattleLogic.SIDE_PARTY
+	var slot: int = int(command.get("target_slot", -1))
+	var tgt: Dictionary = _unit(side, slot)
+	if not tgt.is_empty() and BattleLogic.is_alive(tgt):
+		var picked: Array[Dictionary] = []
+		picked.append(tgt)
+		return picked
+	# 兜底：target_slot 无效 / 未选 / 目标已死 → 首个存活单位（数组序）
+	var alive: Array[Dictionary] = _alive(party if side == BattleLogic.SIDE_PARTY else enemies)
+	var fallback: Array[Dictionary] = []
+	if not alive.is_empty():
+		fallback.append(alive[0])
+	return fallback
+
+
 # ==================================================================
 # 玩家提交指令（核心驱动入口）
 # ==================================================================
@@ -294,7 +324,8 @@ func _do_skill(actor: Dictionary, command: Dictionary, variance: float) -> Array
 
 	match String(sk.kind):
 		"physical", "magic":
-			var targets: Array[Dictionary] = targets_for({"type": CMD_SKILL, "skill_id": sk.id})
+			# D3 修复：单体技能只结算玩家选中的 target_slot，群体技能保持全体
+			var targets: Array[Dictionary] = _resolve_skill_targets(sk, command)
 			for tgt: Dictionary in targets:
 				var dmg: int
 				if String(sk.kind) == "physical":
@@ -310,7 +341,8 @@ func _do_skill(actor: Dictionary, command: Dictionary, variance: float) -> Array
 					BattleLogic.is_weakness_hit(sk.element, String(tgt.get("weakness", ""))),
 					{"name": String(actor.get("name", "")), "skill": sk.name}))
 		"heal":
-			var targets: Array[Dictionary] = targets_for({"type": CMD_SKILL, "skill_id": sk.id})
+			# D3 修复：单体治疗（ally_single）同样只命中 target_slot；群愈（ally_all）不变
+			var targets: Array[Dictionary] = _resolve_skill_targets(sk, command)
 			for tgt: Dictionary in targets:
 				var amt: int = BattleLogic.compute_heal(int(actor.get("mag", 1)), sk.power)
 				tgt = BattleLogic.heal_unit(tgt, amt)

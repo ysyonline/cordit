@@ -21,6 +21,10 @@ Movie Maker mode enabled, recording movie in 640×360 @ 30 FPS...
 [M3Demo] 凯尔 行动：防御
 [M3Demo] 莫娜 行动：技能 heal → 槽位 0
 [M3Demo] 莉娜 行动：技能 fireball → 槽位 1
+[M3Demo] 敌方 雷壳甲虫 行动（AI roll=0.0 → attack）
+[M3Demo] 凯尔 行动：防御
+[M3Demo] 莫娜 行动：技能 heal → 槽位 0
+[M3Demo] 莉娜 行动：技能 fireball → 槽位 1
 [M3Demo] 结局 -> VICTORY（结算画面展示 2.2s）
 [M3Demo] 出战黑屏（play_outro 0.5s）
 [M3Demo] 发 battle_finished → BattleResultHandler 写回 + 回图
@@ -33,11 +37,10 @@ Movie Maker mode enabled, recording movie in 640×360 @ 30 FPS...
 [SceneRouter] 装载完成 -> res://tests/smoke/fixtures/map_a.tscn
 [BattleResultHandler] 玩家回置 -> (96.0, 160.0)，免疫 0.5s 启动
 [M3Demo] 录制完成：进战转场 / 普攻 / 火球弱点(闪白+弹字+击退) / 敌方行动 / 防御 / 治疗 / 胜利结算 / 回图 全覆盖
-[M3Demo] 自动退出（Movie Maker 收尾写盘）
 --------------------------------------------------------------------------------
-Done recording movie at path: D:\code\cordit\evidence\m3-gameplay.avi
-526 frames at 30 FPS (movie length: 00:00:17:16), recorded in 00:00:11 (154% of real-time speed).
-CPU render time: 0.38 seconds (average: 0.71 ms/frame)
-GPU render time: 0.26 seconds (average: 0.48 ms/frame)
-Encoding time: 2.87 seconds (average: 5.45 ms/frame)
+Done recording movie at path: D:/code/cordit/evidence/m3-gameplay.avi
+660 frames at 30 FPS (movie length: 00:00:22:00), recorded in 00:00:12 (183% of real-time speed).
+CPU render time: 0.31 seconds (average: 0.46 ms/frame)
+GPU render time: 0.34 seconds (average: 0.52 ms/frame)
+Encoding time: 2.03 seconds (average: 3.08 ms/frame)
 --------------------------------------------------------------------------------
