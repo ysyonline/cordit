@@ -7,11 +7,11 @@
 
 | 项 | 值 |
 |---|---|
-| 阶段 | Phase 5 · 制作，Sprint 3 起点 |
+| 阶段 | Phase 5 · 制作，Sprint 3 收口 |
 | 当前 Sprint | Sprint 3 · EPIC-3「战斗是游戏」（W5-6，30h 卡满） |
-| 在飞 Story | E3-S1 数值 Resource 表（4h，地基，无依赖） |
-| 测试基线 | GUT 9.7.1，62/62 全绿（`evidence/s2-gut-e2s4-FINAL-62of62-PASS.log`） |
-| 下一道门 | M3：速度队列 + 技能 + 三系克制 + 战斗 UI 成型 |
+| 在飞 Story | E3-S1 ~ E3-S6 全部完成，M3 收口中（门3 试玩视频 + 门5 tag 待用户批准） |
+| 测试基线 | GUT 9.7.1，187/187 全绿（`evidence/s3-gut-e3s6.log`） |
+| 下一道门 | M4：遗迹可探索 + 存档落地（EPIC-4，19h） |
 | 冲刺计划 | `production/sprints/sprint-3.md` |
 
 ## 2. 里程碑进展（A8 表七行）
@@ -20,7 +20,7 @@
 |---|---|---|---|
 | M1 能走路的世界 | EPIC-1（15.5h） | PASS | `f9840ed` / tag m1 |
 | M2 遇敌能打 | EPIC-2（9h） | PASS | `1b61358` / tag m2 |
-| M3 战斗是游戏 | EPIC-3（30h） | 进行中 | E3-S1 已开工 |
+| M3 战斗是游戏 | EPIC-3（30h） | PASS（收口待门3/门5） | E3-S1~S6 全完成，187/187 |
 | M4 遗迹可探索 + 存档落地 | EPIC-4（19h） | 待启动 | — |
 | M5 ~ M7 | EPIC-5 ~ 7 | 待启动 | — |
 
@@ -68,4 +68,4 @@ Godot 可执行文件（WinGet 安装，`find`/`Glob` 搜不到，直接用全�
 
 GUT 跑测命令见 `tests/README.md` §2.4（Git Bash 需加 `MSYS2_ARG_CONV_EXCL="*"` 前缀）。
 
-> 注意：仓库 `.gitignore` 第 23 行 `*.log` 会忽略全部日志，`evidence/` 下的证据文件入库时需显式 `git add -f`，否则证据会丢失。
+> 注意：仓库 `.gitignore` 第 23 行 `*.log` 全局忽略日志，但第 26 行 `!evidence/*.log` 已白名单放行——`evidence/` 下的证据日志正常 `git add` 即可，无需 `-f`。

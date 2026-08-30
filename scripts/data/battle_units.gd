@@ -32,6 +32,7 @@ static func build_party_unit(character_id: String, level: int = 1) -> Dictionary
 		"name": c.name,
 		"side": BattleLogic.SIDE_PARTY,
 		"slot": DataTables.PARTY_ORDER.find(character_id),
+		"level": level,
 		"hp": int(s["hp"]),
 		"max_hp": int(s["hp"]),
 		"mp": int(s["mp"]),

@@ -132,6 +132,7 @@ static func make_unit(stats: Dictionary) -> Dictionary:
 		"name": String(stats.get("name", "")),
 		"side": String(stats.get("side", SIDE_PARTY)),
 		"slot": int(stats.get("slot", 0)),
+		"level": int(stats.get("level", 1)),
 		"hp": int(stats.get("hp", 1)),
 		"max_hp": int(stats.get("max_hp", 1)),
 		"mp": int(stats.get("mp", 0)),

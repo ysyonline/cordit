@@ -1,0 +1,583 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WARNING: res://addons/gut/GutScene.tscn:3 - ext_resource, invalid UID: uid://bw7tukh738kw1 - using text path instead: res://addons/gut/GutScene.gd
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/GutScene.tscn:4 - ext_resource, invalid UID: uid://duxblir3vu8x7 - using text path instead: res://addons/gut/gui/NormalGui.tscn
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/NormalGui.tscn:3 - ext_resource, invalid UID: uid://cstkhwkpajvqu - using text path instead: res://addons/gut/gui/GutSceneTheme.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/GutSceneTheme.tres:3 - ext_resource, invalid UID: uid://c6c7gnx36opr0 - using text path instead: res://addons/gut/fonts/AnonymousPro-Regular.ttf
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/NormalGui.tscn:4 - ext_resource, invalid UID: uid://blvhsbnsvfyow - using text path instead: res://addons/gut/gui/gut_gui.gd
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/NormalGui.tscn:5 - ext_resource, invalid UID: uid://bnh0lslf4yh87 - using text path instead: res://addons/gut/fonts/CourierPrime-Regular.ttf
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: Cannot open file 'res://.godot/imported/CourierPrime-Regular.ttf-3babe7e4a7a588dfc9a84c14b4f1fe23.fontdata'.
+   at: load (core/io/resource_format_binary.cpp:1156)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: Failed loading resource: res://.godot/imported/CourierPrime-Regular.ttf-3babe7e4a7a588dfc9a84c14b4f1fe23.fontdata.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: Failed loading resource: res://addons/gut/fonts/CourierPrime-Regular.ttf.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/NormalGui.tscn:6 - ext_resource, invalid UID: uid://bvrqqgjpyouse - using text path instead: res://addons/gut/gui/ResizeHandle.tscn
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/ResizeHandle.tscn:3 - ext_resource, invalid UID: uid://duf6rfdqr6yoc - using text path instead: res://addons/gut/gui/ResizeHandle.gd
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: res://addons/gut/gui/NormalGui.tscn:140 - Parse Error: [ext_resource] referenced non-existent resource at: res://addons/gut/fonts/CourierPrime-Regular.ttf.
+   at: _printerr (scene/resources/resource_format_text.cpp:41)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: res://addons/gut/gui/NormalGui.tscn:156 - Parse Error: [ext_resource] referenced non-existent resource at: res://addons/gut/fonts/CourierPrime-Regular.ttf.
+   at: _printerr (scene/resources/resource_format_text.cpp:41)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/GutScene.tscn:5 - ext_resource, invalid UID: uid://cnqqdfsn80ise - using text path instead: res://addons/gut/gui/MinGui.tscn
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/MinGui.tscn:3 - ext_resource, invalid UID: uid://cstkhwkpajvqu - using text path instead: res://addons/gut/gui/GutSceneTheme.tres
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/MinGui.tscn:4 - ext_resource, invalid UID: uid://bnh0lslf4yh87 - using text path instead: res://addons/gut/fonts/CourierPrime-Regular.ttf
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: Cannot open file 'res://.godot/imported/CourierPrime-Regular.ttf-3babe7e4a7a588dfc9a84c14b4f1fe23.fontdata'.
+   at: load (core/io/resource_format_binary.cpp:1156)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: Failed loading resource: res://.godot/imported/CourierPrime-Regular.ttf-3babe7e4a7a588dfc9a84c14b4f1fe23.fontdata.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: Failed loading resource: res://addons/gut/fonts/CourierPrime-Regular.ttf.
+   at: _load (core/io/resource_loader.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/MinGui.tscn:5 - ext_resource, invalid UID: uid://blvhsbnsvfyow - using text path instead: res://addons/gut/gui/gut_gui.gd
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/MinGui.tscn:6 - ext_resource, invalid UID: uid://bvrqqgjpyouse - using text path instead: res://addons/gut/gui/ResizeHandle.tscn
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: res://addons/gut/gui/MinGui.tscn:106 - Parse Error: [ext_resource] referenced non-existent resource at: res://addons/gut/fonts/CourierPrime-Regular.ttf.
+   at: _printerr (scene/resources/resource_format_text.cpp:41)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+ERROR: res://addons/gut/gui/MinGui.tscn:123 - Parse Error: [ext_resource] referenced non-existent resource at: res://addons/gut/fonts/CourierPrime-Regular.ttf.
+   at: _printerr (scene/resources/resource_format_text.cpp:41)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:55)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/RunExternally.tscn:3 - ext_resource, invalid UID: uid://bi8pg352un4om - using text path instead: res://addons/gut/gui/RunExternally.gd
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @static_initializer (res://addons/gut/utils.gd:60)
+       [1] _static_init (res://addons/gut/gut_loader.gd:40)
+       [2] @static_initializer (res://addons/gut/gut_loader.gd:1)
+       [3] _init (res://addons/gut/gut_cmdln.gd:24)
+WARNING: res://addons/gut/gui/GutRunner.tscn:3 - ext_resource, invalid UID: uid://eg8k46gd42a4 - using text path instead: res://addons/gut/gui/GutRunner.gd
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @implicit_new (res://addons/gut/cli/gut_cli.gd:5)
+       [1] _init (res://addons/gut/gut_cmdln.gd:36)
+WARNING: res://addons/gut/gui/GutRunner.tscn:4 - ext_resource, invalid UID: uid://m28heqtswbuq - using text path instead: res://addons/gut/GutScene.tscn
+   at: load (scene/resources/resource_format_text.cpp:501)
+   GDScript backtrace (most recent call first):
+       [0] @implicit_new (res://addons/gut/cli/gut_cli.gd:5)
+       [1] _init (res://addons/gut/gut_cmdln.gd:36)
+---  GUT  ---
+[1m[INFO]:  [0musing [C:/Users/weixufeng/AppData/Roaming/Godot/app_userdata/轨迹残响] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+[4m
+
+res://tests/gut/test_e2s1.gd
+[0m* test_队伍恰好三名角色
+* test_角色字段齐全且类型正确
+* test_角色初始数值与战斗GDD一致
+* test_职业构成剑士术士辅助各一
+* test_角色记录是Resource子类而非裸Dictionary
+* test_GameData_源码零IO函数
+* test_GameData_新队伍字段仍有类型标注
+* test_面板场景可实例化且根节点是CanvasLayer
+* test_面板控件树不拦截鼠标输入
+* test_面板挂载于UILayer子树而非World
+* test_面板刷新不重建控件树
+* test_toggle_开_关往返
+* test_M键按下事件被判定为toggle
+* test_M键事件驱动toggle_非_M_事件面板不动
+[1m14/14 passed.
+[0m[4m
+
+res://tests/gut/test_e2s2.gd
+[0m* test_巡逻恒速每帧位移与循环回卷
+[VisibleEnemy] 就绪：e1（编组 g1）巡逻点 2 个
+* test_单点巡逻自动补全为两点往返
+[VisibleEnemy] 就绪：e_single（编组 g1）巡逻点 2 个
+* test_巡逻到点吸附无过冲
+[VisibleEnemy] 就绪：e2（编组 g1）巡逻点 2 个
+* test_空巡逻点驻守零移动
+[VisibleEnemy] 就绪：e3（编组 g1）巡逻点 0 个
+* test_接触载荷四字段全部正确
+[VisibleEnemy] 就绪：enemy_x_01（编组 slime_01）巡逻点 0 个
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[VisibleEnemy] enemy_x_01 接触遇敌 -> slime_01（回置点 (200.0, 216.0)）
+* test_回置点主导轴四向判定
+[VisibleEnemy] 就绪：e_axis（编组 g1）巡逻点 0 个
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[VisibleEnemy] e_axis 接触遇敌 -> g1（回置点 (216.0, 200.0)）
+[VisibleEnemy] 就绪：e_axis（编组 g1）巡逻点 0 个
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[VisibleEnemy] e_axis 接触遇敌 -> g1（回置点 (184.0, 200.0)）
+[VisibleEnemy] 就绪：e_axis（编组 g1）巡逻点 0 个
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[VisibleEnemy] e_axis 接触遇敌 -> g1（回置点 (200.0, 216.0)）
+[VisibleEnemy] 就绪：e_axis（编组 g1）巡逻点 0 个
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[VisibleEnemy] e_axis 接触遇敌 -> g1（回置点 (200.0, 184.0)）
+* test_重复接触防重_离开后复位
+[VisibleEnemy] 就绪：e_dup（编组 g1）巡逻点 0 个
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[VisibleEnemy] e_dup 接触遇敌 -> g1（回置点 (300.0, 316.0)）
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[VisibleEnemy] e_dup 接触遇敌 -> g1（回置点 (300.0, 316.0)）
+* test_返回图回退链_导出值优先_路由簿记兜底
+[VisibleEnemy] 就绪：e_fb（编组 g1）巡逻点 0 个
+WARNING: [VisibleEnemy] e_fb：return_map 为空（导出值与 Router 簿记皆空），载荷将被 Router 拒绝
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _build_payload (res://scripts/enemies/visible_enemy.gd:188)
+       [1] _handle_player_contact (res://scripts/enemies/visible_enemy.gd:165)
+       [2] test_返回图回退链_导出值优先_路由簿记兜底 (res://tests/gut/test_e2s2.gd:213)
+       [3] _run_test (res://addons/gut/gut.gd:622)
+       [4] _test_the_scripts (res://addons/gut/gut.gd:835)
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[VisibleEnemy] e_fb 接触遇敌 -> g1（回置点 (100.0, 116.0)）
+* test_敌人节点带全部导出量与触摸区
+[VisibleEnemy] 就绪：e_struct（编组 g2）巡逻点 0 个
+* test_接触过滤_只认CharacterBody2D
+[VisibleEnemy] 就绪：e_filter（编组 g1）巡逻点 0 个
+* test_真实玩家实例触发接触区回调
+[VisibleEnemy] 就绪：e_real（编组 g1）巡逻点 0 个
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[VisibleEnemy] e_real 接触遇敌 -> g1（回置点 (416.0, 240.0)）
+* test_碰撞矩阵_敌间无碰撞_敌与玩家地形有碰撞
+[VisibleEnemy] 就绪：e_layer（编组 g1）巡逻点 0 个
+* test_测试场fixture含两名敌人与玩家挂载
+* test_waypoints_导出数组与节点序列合并
+[VisibleEnemy] 就绪：VisibleEnemy（编组 ）巡逻点 4 个
+[1m14/14 passed.
+[0m[4m
+
+res://tests/gut/test_e2s3.gd
+[0m* test_Router_合法载荷受理
+* test_Router_缺字段拒绝并逐条报因
+[SceneRouter] payload 校验失败：缺字段 "enemy_group_id"
+[SceneRouter] payload 校验失败：缺字段 "return_map"
+[SceneRouter] payload 校验失败：缺字段 "return_position"
+[SceneRouter] payload 校验失败：缺字段 "defeat_enemy_uid"
+* test_Router_Vector2i冒充Vector2被拒
+[SceneRouter] payload 校验失败：类型错 "return_position"：应为 Vector2，实为 Vector2i
+* test_Router_多余字段放行不拒绝
+[SceneRouter] 警告：payload 含协议外字段 "extra_note"（放行不拒绝）
+* test_接线_合法载荷经信号装入战斗场景
+[BattleScene] 就绪：编组=slime_01 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人
+[SceneRouter] 装载完成 -> res://scenes/battle/battle.tscn
+[SceneRouter] 受理切换 -> res://scenes/battle/battle.tscn
+* test_接线_非法载荷被拒_世界不动
+[SceneRouter] payload 校验失败：类型错 "return_position"：应为 Vector2，实为 Vector2i
+[SceneRouter] 拒绝切换到 "res://scenes/battle/battle.tscn"：BattlePayload 不合法（明细见上一行）
+* test_战斗场景可实例化_空载荷防御态
+[BattleScene] 就绪：编组=<空> 回图=<空> 队伍=3 人
+* test_方块阵_同编组恒同阵_数量在界内
+[BattleScene] 就绪：编组=slime_01 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人
+[BattleScene] 就绪：编组=slime_01 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人
+* test_战斗场景直读GameData队伍初始态
+[BattleScene] 就绪：编组=slime_01 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人
+* test_胜利按钮发BattleResult_VICTORY带队伍快照
+[BattleScene] 就绪：编组=slime_01 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[BattleResultHandler] VICTORY 结算完成 -> 回图 res://tests/smoke/fixtures/map_e2s2.tscn（回置 (64.0, 32.0)）
+[BattleScene] 结局模拟 -> VICTORY（party_state 占位 3 条）
+* test_失败按钮发BattleResult_DEFEAT
+[BattleScene] 就绪：编组=slime_01 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[BattleResultHandler] DEFEAT 结算完成 -> 回图 res://tests/smoke/fixtures/map_e2s2.tscn（回置 (64.0, 32.0)）
+[BattleScene] 结局模拟 -> DEFEAT（party_state 占位 3 条）
+* test_按钮触发后GameData零变化
+[BattleScene] 就绪：编组=slime_01 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[BattleResultHandler] VICTORY 结算完成 -> 回图 res://tests/smoke/fixtures/map_e2s2.tscn（回置 (64.0, 32.0)）
+[BattleScene] 结局模拟 -> VICTORY（party_state 占位 3 条）
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[BattleResultHandler] DEFEAT 结算完成 -> 回图 res://tests/smoke/fixtures/map_e2s2.tscn（回置 (64.0, 32.0)）
+[BattleScene] 结局模拟 -> DEFEAT（party_state 占位 3 条）
+[1m12/12 passed.
+[0m[4m
+
+res://tests/gut/test_e2s4.gd
+[0m* test_party_state快照逐字段覆写
+* test_party_state含队伍外id跳过不炸
+WARNING: [BattleResultHandler] party_state 含队伍外 id "ghost_xx"，跳过
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _apply_party_state (res://scripts/battle/battle_result_handler.gd:107)
+       [1] test_party_state含队伍外id跳过不炸 (res://tests/gut/test_e2s4.gd:167)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+* test_VICTORY击破凭据写入cleared集合且查重
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[BattleResultHandler] VICTORY 结算完成 -> 回图 res://tests/smoke/fixtures/map_e2s2.tscn（回置 (100.0, 200.0)）
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[BattleResultHandler] VICTORY 结算完成 -> 回图 res://tests/smoke/fixtures/map_e2s2.tscn（回置 (100.0, 200.0)）
+* test_数据驱动防复活_命中集合的敌人装载即自删
+[VisibleEnemy] enemy_e2s2_a 已在击破集合，装载即移除（不复活）
+[VisibleEnemy] 就绪：enemy_alive（编组 ）巡逻点 0 个
+* test_VICTORY回图并回置_簿记清空
+[VisibleEnemy] enemy_e2s2_a 已在击破集合，装载即移除（不复活）
+[VisibleEnemy] 就绪：enemy_e2s2_b（编组 slime_02）巡逻点 2 个
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[TempPlayerMount] 玩家已挂载 -> YSorted/Player @ (96.0, 320.0)（脚底）
+[WhiteBoxMap] 装载完成：map_e2s2（显示色 (0.3, 0.25, 0.4, 1.0)）
+[SceneRouter] 装载完成 -> res://tests/smoke/fixtures/map_e2s2.tscn
+[SceneRouter] 受理切换 -> res://tests/smoke/fixtures/map_e2s2.tscn
+[BattleResultHandler] VICTORY 结算完成 -> 回图 res://tests/smoke/fixtures/map_e2s2.tscn（回置 (100.0, 200.0)）
+[BattleResultHandler] 玩家回置 -> (100.0, 200.0)，免疫 0.5s 启动
+* test_VICTORY缺击破凭据仅告警不炸
+WARNING: [BattleResultHandler] VICTORY 但击破凭据为空（result 与暂存载荷均无 defeat_enemy_uid），敌人将保留
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _on_battle_finished (res://scripts/battle/battle_result_handler.gd:64)
+       [1] test_VICTORY缺击破凭据仅告警不炸 (res://tests/gut/test_e2s4.gd:228)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+[VisibleEnemy] 就绪：enemy_e2s2_a（编组 slime_01）巡逻点 2 个
+[VisibleEnemy] 就绪：enemy_e2s2_b（编组 slime_02）巡逻点 2 个
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[TempPlayerMount] 玩家已挂载 -> YSorted/Player @ (96.0, 320.0)（脚底）
+[WhiteBoxMap] 装载完成：map_e2s2（显示色 (0.3, 0.25, 0.4, 1.0)）
+[SceneRouter] 装载完成 -> res://tests/smoke/fixtures/map_e2s2.tscn
+[SceneRouter] 受理切换 -> res://tests/smoke/fixtures/map_e2s2.tscn
+[BattleResultHandler] VICTORY 结算完成 -> 回图 res://tests/smoke/fixtures/map_e2s2.tscn（回置 (100.0, 200.0)）
+* test_DEFEAT经暂存兜底回图
+[VisibleEnemy] 就绪：enemy_e2s2_a（编组 slime_01）巡逻点 2 个
+[VisibleEnemy] 就绪：enemy_e2s2_b（编组 slime_02）巡逻点 2 个
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[TempPlayerMount] 玩家已挂载 -> YSorted/Player @ (96.0, 320.0)（脚底）
+[WhiteBoxMap] 装载完成：map_e2s2（显示色 (0.3, 0.25, 0.4, 1.0)）
+[SceneRouter] 装载完成 -> res://tests/smoke/fixtures/map_e2s2.tscn
+[SceneRouter] 受理切换 -> res://tests/smoke/fixtures/map_e2s2.tscn
+[BattleResultHandler] DEFEAT 结算完成 -> 回图 res://tests/smoke/fixtures/map_e2s2.tscn（回置 (48.0, 60.0)）
+[BattleResultHandler] 玩家回置 -> (48.0, 60.0)，免疫 0.5s 启动
+* test_result自带字段优先于暂存
+[VisibleEnemy] enemy_e2s2_a 已在击破集合，装载即移除（不复活）
+[VisibleEnemy] 就绪：enemy_e2s2_b（编组 slime_02）巡逻点 2 个
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[TempPlayerMount] 玩家已挂载 -> YSorted/Player @ (96.0, 320.0)（脚底）
+[WhiteBoxMap] 装载完成：map_e2s2（显示色 (0.3, 0.25, 0.4, 1.0)）
+[SceneRouter] 装载完成 -> res://tests/smoke/fixtures/map_e2s2.tscn
+[SceneRouter] 受理切换 -> res://tests/smoke/fixtures/map_e2s2.tscn
+[BattleResultHandler] VICTORY 结算完成 -> 回图 res://tests/smoke/fixtures/map_e2s2.tscn（回置 (100.0, 200.0)）
+* test_无回图目标仅告警停留原地
+WARNING: [BattleResultHandler] 无回图目标（result/staged 均缺 return_map），停留当前场景
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _on_battle_finished (res://scripts/battle/battle_result_handler.gd:74)
+       [1] test_无回图目标仅告警停留原地 (res://tests/gut/test_e2s4.gd:276)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+* test_免疫启动与倒计时清零
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+* test_免疫期内敌人接触不发射_过期后恢复
+[VisibleEnemy] 就绪：VisibleEnemy（编组 ）巡逻点 0 个
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[VisibleEnemy] VisibleEnemy：玩家免疫中，接触放行
+WARNING: [VisibleEnemy] VisibleEnemy：return_map 为空（导出值与 Router 簿记皆空），载荷将被 Router 拒绝
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _build_payload (res://scripts/enemies/visible_enemy.gd:188)
+       [1] _handle_player_contact (res://scripts/enemies/visible_enemy.gd:165)
+       [2] test_免疫期内敌人接触不发射_过期后恢复 (res://tests/gut/test_e2s4.gd:321)
+       [3] _run_test (res://addons/gut/gut.gd:622)
+       [4] _test_the_scripts (res://addons/gut/gut.gd:835)
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[VisibleEnemy] VisibleEnemy 接触遇敌 -> （回置点 (400.0, 224.0)）
+WARNING: [BattleResultHandler] 回置失败：Main/World 无当前场景（GUT/无 Main 环境）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _pos_return_immediate (res://scripts/battle/battle_result_handler.gd:143)
+       [1] _do_return (res://scripts/battle/battle_result_handler.gd:126)
+* test_免疫重复启动取大不缩短
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+* test_免疫查询不依赖方法存在性_普通节点安全
+[VisibleEnemy] 就绪：VisibleEnemy（编组 ）巡逻点 0 个
+WARNING: [VisibleEnemy] VisibleEnemy：return_map 为空（导出值与 Router 簿记皆空），载荷将被 Router 拒绝
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _build_payload (res://scripts/enemies/visible_enemy.gd:188)
+       [1] _handle_player_contact (res://scripts/enemies/visible_enemy.gd:165)
+       [2] test_免疫查询不依赖方法存在性_普通节点安全 (res://tests/gut/test_e2s4.gd:357)
+       [3] _run_test (res://addons/gut/gut.gd:622)
+       [4] _test_the_scripts (res://addons/gut/gut.gd:835)
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[VisibleEnemy] VisibleEnemy 接触遇敌 -> （回置点 (26.0, 10.0)）
+[1m13/13 passed.
+[0m[4m
+
+res://tests/gut/test_e3s1.gd
+[0m* test_五表行数符合建卡要求
+* test_全表validate零问题
+* test_跨表引用零悬空
+* test_行id与文件名一致
+* test_每行都挂载了Resource脚本
+* test_角色表Lv1初值对齐GDD_3_6
+* test_角色表per_level对齐GDD_3_6正文
+* test_角色表SPD恒为静态值不随等级成长
+* test_角色表字段清单覆盖GDD_5
+* test_9技能全部建卡且归属正确
+* test_effect_tag含掩护与解毒
+* test_技能字段对齐GDD_3_4
+* test_术士三系齐全且吃克制_其余技能不带元素
+* test_Lv1时三人各有1个基础技能
+* test_敌人表GDD_7给定值对齐
+* test_每个敌人至多1弱点至多1抗性且不同源
+* test_敌人AI权重和恒为100
+* test_Boss蓄力为telegraph技
+* test_敌人表字段清单覆盖GDD_5
+* test_掉落表全为100单一道具
+* test_道具表字段与交叉约束
+* test_解毒道具在B4之前可得
+* test_B1至B5编组全部建卡且配置对齐GDD_7
+* test_B3混编成员为火蜥冰晶加飞蛾两只
+* test_只有B5禁用逃跑
+* test_stats_at逐级定值累加
+* test_stats_at等级越界钳制
+* test_skills_up_to按等级递增
+* test_经验曲线等级映射与五场累计对照
+* test_五场战斗经验累计与预期等级自洽
+* test_数据表脚本无场景依赖_A1铁律3
+* test_数值表不读JSON_A2分域
+* test_数值资源全部落在data_resources下_A2
+[1m33/33 passed.
+[0m[4m
+
+res://tests/gut/test_e3s2.gd
+[0m* test_伤害公式系数对齐GDD_3_6
+* test_防御掩护中毒队列逃跑系数对齐GDD
+* test_克制倍率唯一出处在core层
+* test_克制三档倍率精确值
+* test_三系之间不构成循环克制
+* test_无属性不吃克制
+* test_克制三档伤害数值正确
+* test_队列按SPD降序
+* test_同SPD时我方恒在敌方之前
+* test_同SPD时按槽位序_我方队伍序与敌方生成序
+* test_同配置战斗顺序可复现_无随机介入排序
+* test_死者不入队
+* test_击退向后移动2个槽位
+* test_击退边缘3_只剩1个未行动槽位只移到本轮末尾不跨轮
+* test_击退边缘3_场景B_目标在本轮倒数第二且后有多个槽位
+* test_击退只作用于尚未行动的当前轮
+* test_击退惩罚不跨轮
+* test_我方不会被击退_单边规则
+* test_击退目标不在队列时原样返回不炸
+* test_击退为纯函数不修改入参
+* test_击退触发条件_弱点命中且目标未防御
+* test_边缘1_队列中单位在轮到它之前死亡则跳过
+* test_边缘6_敌人被击退后行动前死亡则从队列移除
+* test_剔除死者时修正游标_不吞掉活人行动
+* test_advance_轮末返回round_over
+* test_预告条从当前行动者起取3格
+* test_预告条在队列末尾截断且不跨轮
+* test_物理伤害公式精确值
+* test_法术伤害公式精确值
+* test_浮动外部化_roll两端为精确值
+* test_取整口径为四舍五入
+* test_浮动越界钳制
+* test_防御与掩护各减伤50且不叠加
+* test_伤害下限为1_不出现0伤害
+* test_预估伤害区间端点等于浮动两端
+* test_伤害为纯函数不修改入参
+* test_存活由HP派生_无布尔标记可漂移
+* test_回复量等于MAG乘倍率且不吃DEF
+* test_中毒每回合扣最大HP的百分之五
+* test_中毒时长递减且到期停止
+* test_中毒可叠加时长不可叠加伤害
+* test_防御指令回蓝并置位且不溢出
+* test_轮末重置瞬时姿态标记
+* test_逃跑成功率公式与钳制
+* test_逃跑成功率只统计存活单位
+* test_逃跑检定随机外部化
+* test_全灭判定与空数组防御
+* test_从tres构建队伍六维与stats_at一致
+* test_编组展开槽位序与members一致
+* test_端到端_B1队列顺序由tres决定
+* test_端到端_莉娜火球打甲虫伤害来自tres
+* test_端到端_逃跑率与Boss禁逃来自tres
+* test_battle_logic零场景依赖_A1铁律3
+* test_battle_logic零import_不认识数值表与JSON
+* test_battle_logic零随机API_口径2
+* test_随机因子全部由参数注入
+[1m56/56 passed.
+[0m[4m
+
+res://tests/gut/test_e3s3.gd
+[0m* test_B1锁技能_可用指令不含技能
+* test_Boss战_逃跑置灰
+* test_MP不足_技能置灰
+* test_攻击造成物理伤害按公式
+* test_火球命中弱点_伤害放大且记录弱点且击退
+* test_防御_减伤姿态且回MP
+* test_逃跑成功_整队脱离
+* test_胜利_敌全灭触发
+* test_失败_我方全灭触发
+* test_边缘8_中毒行动前致死中断
+* test_边缘2_掩护承接伤害转移
+* test_敌人AI_普通敌只放攻击
+[1m12/12 passed.
+[0m[4m
+
+res://tests/gut/test_sanity.gd
+[0m* test_sanity_框架可用_一加一等于二
+* test_sanity_四_autoload_可访问
+* test_sanity_事件总线是节点
+* test_sanity_所有测试脚本都能被GUT收集
+[1m4/4 passed.
+[0m[4m
+
+res://tests/gut/test_smk_migration.gd
+[0m* test_smk01_四_autoload_注册生效
+* test_smk02_六信号_声明齐全参数一致
+* test_smk03_六信号_可_connect
+* test_smk04_emit_参数原样送达
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+WARNING: [BattleResultHandler] VICTORY 但击破凭据为空（result 与暂存载荷均无 defeat_enemy_uid），敌人将保留
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _on_battle_finished (res://scripts/battle/battle_result_handler.gd:64)
+       [1] test_smk04_emit_参数原样送达 (res://tests/gut/test_smk_migration.gd:102)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+WARNING: [BattleResultHandler] 无回图目标（result/staged 均缺 return_map），停留当前场景
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _on_battle_finished (res://scripts/battle/battle_result_handler.gd:74)
+       [1] test_smk04_emit_参数原样送达 (res://tests/gut/test_smk_migration.gd:102)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+* test_smk05_EventBus_无状态越界
+* test_smk06_GameData_字段齐全且带类型标注
+[1m6/6 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Scripts               9
+Tests               164
+Passing Tests       164
+Asserts            5920
+Time              6.348s
+
+
+[32m---- All tests passed! ----
+[0m
