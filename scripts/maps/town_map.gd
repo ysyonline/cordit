@@ -8,28 +8,21 @@ extends Node2D
 ##   npc.tscn 实体。装配代码全部集中在 _assemble_dialogue_system()，
 ##   其余 E1-S5 已验收行为零触碰。
 ##
-## TODO(E4-S6) 正式时序衔接（三条，重做本脚本时逐条落实）：
-## 1. 简版 teleport 无转场、无 map_ready、无自动存档——正式时序按探索 GDD §3.4：
-##    teleport 动作 → 载图/落位 → 地图广播 map_ready → SaveManager.save()
-##    （同图室内传送是否触发自动存档，E4-S6 裁决）。
-## 2. trigger 现为 Area2D 直连行为；正式版换成 events/trigger_*.tscn 薄壳
-##    （只带 event_id，行为走 JSON），本场景 4 个 Area2D 的碰撞形状与位置可原样迁移。
-## 3. 相机 limit 三组数值已内聚在本脚本 export，正式版迁入事件动作参数即可，
-##    节点布局不变（黑幕框即 limit 边界，布局勿动）。
+## 【E4-S6 增量】传送网络接入（TODO(E4-S6) 三条逐一落实）：
+##   1. 简版 teleport 退役：_routes 字典分派移除，4 门行为改由
+##      TeleportAssembler 按目录装配 trigger_teleport 薄壳（场景内旧
+##      Area2D 由装配器移除后同位重建）；相机限区查
+##      TeleportCatalog.SAME_MAP_LIMITS（与下方 export 三组互为镜像，
+##      GUT 对表锁死）；传送落位正本在目录 target 字段。
+##   2. 进图自动存档：_ready 尾部 AutosaveNotifier.announce_ready()
+##      （广播 map_ready → SaveManager.save()，§3.4"过传送点存"时序）。
+##   3. 相机 limit 三组数值保留本脚本 export（正式版迁事件动作参数，布局勿动）。
 
 ## 相机限区。注意：Rect2i 前两位 = 左上角坐标，后两位 = 宽高（不是 right/bottom）。
 ## 室内限区取"黑幕框"640×360（= 视口尺寸），房间在框内居中，相机实际静止。
 @export var limits_main: Rect2i = Rect2i(0, 0, 1024, 768)       # 主图 64×48 tile
 @export var limits_inn: Rect2i = Rect2i(1056, 0, 640, 360)      # 室内A 黑幕框 (1056,0)-(1696,360)
 @export var limits_house: Rect2i = Rect2i(1056, 188, 640, 360)  # 室内B 黑幕框 (1056,188)-(1696,548)
-
-## 传送落位（tile 中心像素；落位恒在出口 trigger 之外一格，防原地弹回循环）
-@export var pos_inn_spawn: Vector2 = Vector2(85, 17) * 16.0 + Vector2(8, 8)    # 客栈入口落位 (85,17)
-@export var pos_house_spawn: Vector2 = Vector2(85, 29) * 16.0 + Vector2(8, 8)  # 民居A入口落位 (85,29)
-@export var pos_inn_out: Vector2 = Vector2(29, 19) * 16.0 + Vector2(8, 8)      # 客栈出口落位 (29,19)
-@export var pos_house_out: Vector2 = Vector2(12, 19) * 16.0 + Vector2(8, 8)    # 民居A出口落位 (12,19)
-
-var _routes := {}  # trigger 节点名 → { "target": Vector2, "limits": Rect2i }
 
 ## 对话运行器实例（E1-S6 装配产物；公开供测试树定位/断言）
 var dialogue_runner: Node = null
@@ -40,11 +33,16 @@ var interaction_controller: Node = null
 ## E4-S5 内容点位装配产物（{"chests": Array, "investigates": Array}，测试对表用）
 var content_points: Dictionary = {}
 
+## E4-S6 传送触发器装配产物（Array[Area2D]，测试对表用）
+var teleports: Array = []
+
 ## E1-S6 预载：对话系统三件套（runner / controller / 对话框场景 / NPC 场景）
 const DialogueRunnerScript := preload("res://scripts/dialogue/dialogue_runner.gd")
 const InteractionControllerScript := preload("res://scripts/events/interaction_controller.gd")
 const DialogueBoxScene := preload("res://scenes/ui/dialogue_box.tscn")
 const NpcScene := preload("res://scenes/npc/npc.tscn")
+const TeleportAssembler := preload("res://scripts/events/teleport_assembler.gd")
+const AutosaveNotifier := preload("res://scripts/events/autosave_notifier.gd")
 
 ## 本 Story 实体化的 NPC 锚点名（最小版：摆 2 个验证，其余 M1 前补——
 ## 命名 = E1-S5 验收锚点名，锚点 Marker2D 原样保留不删）。
@@ -52,21 +50,16 @@ const SPAWN_NPC_IDS: Array[String] = ["npc_01_innkeeper", "npc_04_guard"]
 
 
 func _ready() -> void:
-	_routes = {
-		"Door_Inn": {"target": pos_inn_spawn, "limits": limits_inn},
-		"Door_HouseA": {"target": pos_house_spawn, "limits": limits_house},
-		"Inn_Exit": {"target": pos_inn_out, "limits": limits_main},
-		"HouseA_Exit": {"target": pos_house_out, "limits": limits_main},
-	}
 	var player: CharacterBody2D = $YSorted/Player
 	_apply_limits(player.get_node("Camera2D"), limits_main)
-	for area in $Triggers.get_children():
-		if area is Area2D:
-			area.body_entered.connect(_on_trigger_body_entered.bind(String(area.name)))
 	# E1-S6：对话系统装配（锚点实体化 + runner/controller + 对话框入 UILayer）
 	_assemble_dialogue_system(player)
 	# E4-S5：内容点位装配（1 宝箱 + 6 调查点，数据/装配见 scripts/events/）
 	_assemble_content_points()
+	# E4-S6：传送装配（场景内旧 4 门由装配器移除，目录驱动薄壳同位重建）
+	teleports = TeleportAssembler.assemble(self, "town", dialogue_runner)
+	# E4-S6：进图自动存档（map_ready 广播 + save + 图标，§3.4 时序收口）
+	AutosaveNotifier.announce_ready(self, "town")
 
 
 func _assemble_content_points() -> void:
@@ -112,19 +105,6 @@ func _assemble_dialogue_system(player: CharacterBody2D) -> void:
 	interaction_controller.set_script(InteractionControllerScript)
 	add_child(interaction_controller)
 	interaction_controller.setup(player, dialogue_runner)
-
-
-func _on_trigger_body_entered(body: Node2D, trigger_name: String) -> void:
-	if not (body is CharacterBody2D) or not _routes.has(trigger_name):
-		return
-	# 对话期间触发器不响应（对话 GDD §4；边缘情况 2 同规则前瞻）
-	if dialogue_runner != null and not dialogue_runner.is_idle():
-		return
-	var route: Dictionary = _routes[trigger_name]
-	body.global_position = route["target"]
-	var cam: Camera2D = body.get_node("Camera2D")
-	_apply_limits(cam, route["limits"])
-	cam.reset_smoothing()
 
 
 func _apply_limits(cam: Camera2D, rect: Rect2i) -> void:

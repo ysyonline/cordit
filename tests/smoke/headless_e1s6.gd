@@ -259,16 +259,17 @@ func _rerun_e1s5_regression() -> void:
 		if e != null and a != null and e.position.distance_to(a.position) < 0.5:
 			in_place += 1
 	_pass_cond(in_place == 2, "R-NPC", "NPC 实体 2/2 摆位与锚点重合（脚底原点）")
-	# 门传送抽测：Door_Inn 进出往返（E1S5-A1 同口径）
+	# 门传送抽测：客栈门进出往返（E1S5-A1 同口径；E4-S6 起节点由装配器
+	# 目录驱动重建为 Evt_tp_town_door_inn / Evt_tp_town_inn_exit）
 	var player: CharacterBody2D = _player
-	var trig: Area2D = _map.get_node("Triggers/Door_Inn") as Area2D
+	var trig: Area2D = _map.get_node("Triggers/Evt_tp_town_door_inn") as Area2D
 	player.position = trig.position
 	player.velocity = Vector2.ZERO
 	await get_tree().create_timer(0.3).timeout
 	var want_in: Vector2 = Vector2(85, 17) * 16.0 + Vector2(8, 8)
 	var door_in_ok: bool = player.position.distance_to(want_in) < 2.0
 	# 出门
-	var trig_out: Area2D = _map.get_node("Triggers/Inn_Exit") as Area2D
+	var trig_out: Area2D = _map.get_node("Triggers/Evt_tp_town_inn_exit") as Area2D
 	player.position = trig_out.position
 	player.velocity = Vector2.ZERO
 	await get_tree().create_timer(0.3).timeout

@@ -10,13 +10,14 @@ const SMK_SCRIPT := preload("res://tests/smoke/headless_e1s6.gd")
 
 
 func _ready() -> void:
-	# Main 常驻根（UILayer 宿主）；MainController._ready 会初始装载 map_a（含
-	# 0.4s 淡入淡出），装载完成后下方"整层替换"会把它原样换掉——不影响本测试。
+	# Main 常驻根（UILayer 宿主）；MainController._ready 会初始装载 town
+	# 【E4-S6/R2 起为 town，装载不落盘——AutosaveNotifier 门控】，装载完成后
+	# 下方"整层替换"会把它原样换掉——不影响本测试。
 	var main: Node = MAIN_SCENE.instantiate()
 	main.name = "Main"
 	get_tree().root.add_child.call_deferred(main)
 	await get_tree().create_timer(0.8).timeout  # 等 Router 初始装载淡入淡出彻底结束
-	# 整层替换 World（queue_free 旧 map_a，直接放 town，不经 Router）
+	# 整层替换 World（queue_free 初始装载的 town，直接放 town，不经 Router）
 	var world: Node = main.get_node("World")
 	for old in world.get_children():
 		old.queue_free()

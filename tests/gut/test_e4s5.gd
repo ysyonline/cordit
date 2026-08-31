@@ -80,6 +80,7 @@ func after_all() -> void:
 	_restore_gamedata_baseline()
 	SaveManager.save_path = SaveManager.SAVE_PATH
 	SaveManager.last_loaded = {}
+	SaveManager.save_requested_pending = false
 	_cleanup_test_files()
 
 
@@ -87,6 +88,9 @@ func before_each() -> void:
 	_restore_gamedata_baseline()
 	SaveManager.save_path = TEST_PATH
 	SaveManager.last_loaded = {}
+	# E4-S6 存档意图位清零（防其他脚本的 VICTORY/传送置位外溢，
+	# 导致本文件装载地图时 announce_ready 门控意外放行写盘）
+	SaveManager.save_requested_pending = false
 	_cleanup_test_files()
 
 

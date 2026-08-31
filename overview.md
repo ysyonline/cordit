@@ -1,70 +1,21 @@
-# 《轨迹残响》项目状态总览
+# Sprint 4 收尾：E4-S6 传送网络 + 自动存档 & E4-S7 失败读档 — 会话总结
 
-> 主理人：游承峰（编排）｜更新：2026-08-31｜当前阶段：**Phase 5 · 制作（Sprint 循环）**
-> 本文件是项目入口索引，只反映"现在在哪"。历史收口报告见 `evidence/m1-closeout.md`、`evidence/m2-closeout.md`。
+## 概要
+接手程基岩代理（429 限流停摆、零代码产出）的任务，在本会话完成 E4-S6（传送网络 + 进图自动存档）与 E4-S7（失败读档）全部实现与测试。**测试基线 266 → 286/286 全绿**，verify 三件套（town 108 + ruins 156 + road 65）全 PASS。按用户拍板制**未 commit**，等 M4 收口仪式。
 
-## 1. 当前位置
+## 交付内容
+1. **传送网络**：`teleport_catalog.gd`（12 处数据正本：town 室内 4 + 跨图 8）+ `teleports.json` 同构镜像 + `trigger_teleport.gd` 薄壳 + `teleport_assembler.gd` 装配器（town 旧 4 门退役并修复 E2-S2 门层位静默失效回归）。
+2. **门控自动存档**：`SaveManager.save_requested_pending` 意图位——跨图传送/战后胜利才落盘，启动装载与同图室内传送不落盘（防止启动即覆盖玩家既有存档；GDD §3.4"过传送点存，不进图即存"）；胜利即存兑现 §3.2 防复活。
+3. **R1/R2**：town 南门栅栏拆除（gen 正本路径）；初始场景切 `town.tscn`；三个冒烟 wrapper 与 e1s6 断言适配。
+4. **E4-S7 失败读档**：DEFEAT → `load_save()` → 回进图存档点 + 免疫；GameData 随 `_restore` 整体回滚；读档失败兜底回暂存图 + 告警。
+5. **测试**：`test_e4s6.gd` 19 条新增；`test_e2s4.gd` DEFEAT 用例重写 2 条；意图位泄漏防护补进 e2s4/e4s5。
 
-| 项 | 值 |
-|---|---|
-| 阶段 | Phase 5 · 制作，Sprint 3 已收口（tag m3，五门全绿） |
-| 当前 Sprint | Sprint 4 · EPIC-4「遗迹可探索 + 存档落地」进行中（S0~S5 + S8 ✅，剩 S6~S7 ≈3.5h） |
-| 待办尾巴 | 无——S5（`5c7ac2b`）、S8（`c1c4562`）均已收口（2026-08-31 凌晨，用户拍板） |
-| 测试基线 | GUT 9.7.1，**266/266 全绿**（`evidence/e4s8-gut-s8.log`；258 基线另证 `evidence/e4s5-gut-s5.log`） |
-| 下一道门 | M4：三层遗迹可探索 + 存档落地——当前 **E4-S6 传送网络+进图自动存档（2.5h）**，随后 S7（1h）即达门 |
-| 冲刺计划 | `production/sprints/sprint-4.md`（已生效，5 项拍板全落） |
+## 关键修正（目录初稿缺陷）
+- 同图 4 处落位半格口径 → 整数格（对齐旧 @export 正本）；Inn_Exit/HouseA_Exit 触发区 tile 偏 1 行（按旧 tscn 像素反推）；f1/f2/f3 to_spawn 对齐 verify_ruins 锚定值。修正后 12/12 处落位防弹回零重合。
 
-## 2. 里程碑进展（A8 表七行）
+## 待办（M4 收口仪式，用户侧）
+本机试玩 → 录视频#4 → 冒烟 headless 复跑确认 → commit 拍板 + tag m4。
 
-| 门 | Epic | 状态 | commit / tag |
-|---|---|---|---|
-| M1 能走路的世界 | EPIC-1（15.5h） | PASS | `f9840ed` / tag m1 |
-| M2 遇敌能打 | EPIC-2（9h） | PASS | `1b61358` / tag m2 |
-| M3 战斗是游戏 | EPIC-3（30h） | PASS（五门全绿） | commit 72e1354 / tag m3，187/187 |
-| M4 遗迹可探索 + 存档落地 | EPIC-4（19h） | 进行中：S0~S5 + S8 ✅，剩 S6~S7（3.5h） | db8a6be→021ffb7→5cbc36b→5c7ac2b(S5)→c1c4562(S8) |
-| M5 ~ M7 | EPIC-5 ~ 7 | 待启动 | — |
-
-## 3. 冻结决策（勿翻案）
-
-- 引擎 Godot 4.7.2 + GDScript 渐进类型；四 Autoload：GameData / EventBus / SceneRouter / SaveManager
-- ADR-4：640×360 视口 + Nearest + 整数缩放；数值走 Resource、内容走 JSON；core 层纯函数禁 `get_node`
-- 美术走开源素材（OGA 16x16 系列 + DawnLike + Kenney UI），**零采购**；许可账本 3×CC0 + 3×CC-BY + 1×OFL，**禁 CC-BY-SA / GPL-only**
-- 失败处理 = 读档回进图存档点；敌人头像 = 战斗精灵 ×2 整数放大；9-slice 窗体框全自制五色板两套
-- 详见 `docs/architecture/godot4-architecture-adr.md` 与各 GDD
-
-## 4. 文档索引
-
-| 类别 | 路径 |
-|---|---|
-| 概念与 GDD | `design/concept/`、`design/gdd/`（战斗 / 对话 / 探索 / 小镇施工单） |
-| 架构与 ADR | `docs/architecture/godot4-architecture-adr.md` |
-| 美术方向与许可 | `design/art-bible/`、`assets/CREDITS.md`、`assets/LICENSE-ASSETS.md` |
-| UI 规格 | `design/ui/ui-layout-specs.md` |
-| 音频方向 | `design/audio/`（Sprint 3 补建中） |
-| Epic 与冲刺 | `production/epics/EPIC-1~7.md`、`production/sprints/` |
-| 测试与证据 | `tests/`、`evidence/` |
-
-## 5. 已知风险（带入 Sprint 4 尾段）
-
-| # | 风险 | 缓解 |
-|---|---|---|
-| R3 | 失败读档仍占位（真读档 E4-S7，1h） | S6 完成后立即接 S7，M4 前清账 |
-| R6 | S5 宝箱为硬编码触发器形态（拍板项④授权） | E5-S2 JSON 加载器就绪后回迁；点位数据已在 point_catalog.gd + data/json/events/ 双写同构，回迁可平移 |
-| R7 | sfx 为 E6 预留钩子（开箱/调查暂无音效） | E6 音频系统落地时接入，接口已留 |
-| R8 | controller/runner 生产装配仅 town，road~f3 实地交互待验 | E4-S6 传送网络铺满五图；点位可达性建议 S6 后由 QA 走图实测 |
-
-## 6. 纪律备忘
-
-- **无用户明确指令不 git commit**（提交由主理人统一安排）
-- 每 Story 开工前 GUT 全量重跑，日志留 `evidence/`
-- 资产**先登记后复制**，入库前核对许可
-- 中文输出（代码注释与文档一律中文）
-
-## 7. 环境备忘
-
-Godot 可执行文件（WinGet 安装，`find`/`Glob` 搜不到，直接用全路径）：
-`C:\Users\weixufeng\AppData\Local\Microsoft\WinGet\Packages\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\Godot_v4.7.2-stable_win64_console.exe`
-
-GUT 跑测命令见 `tests/README.md` §2.4（Git Bash 需加 `MSYS2_ARG_CONV_EXCL="*"` 前缀）。
-
-> 注意：仓库 `.gitignore` 第 23 行 `*.log` 全局忽略日志，但第 26 行 `!evidence/*.log` 已白名单放行——`evidence/` 下的证据日志正常 `git add` 即可，无需 `-f`。
+## 主要产物
+- 证据档：`evidence/e4s6-teleport-autosave.md`、`evidence/e4s6-gut-full.log`
+- 代码：`scripts/events/`（4 新文件）、`autoload/save_manager.gd`、`scripts/battle/battle_result_handler.gd`、`scripts/main/main_controller.gd`、五图脚本、`tests/gut/test_e4s6.gd`

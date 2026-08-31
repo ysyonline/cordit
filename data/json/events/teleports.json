@@ -1,0 +1,24 @@
+{
+  "comment": "E4-S6 传送镜像（拍板项④数据正本模式）：本文件为 scripts/events/teleport_catalog.gd TELEPORTS 的同构 JSON 镜像，GUT 锁死同构（test_e4s6）。tile/size/to_spawn 为 [x, y]；same_map 条目的 target 为落位 tile（整数格，像素=tile*16+8 格中心）、to_map/to_spawn 恒空；cross_map 条目 target 恒 [0, 0] 占位，to_spawn 可含 .5 半格（门中缝）。f3 南门双用途（入口+返程）。entry_spawns 为首入参考表（road/f1/f2 为双入口图，存档坐标恒取玩家实际落位）。",
+  "teleports": [
+    { "id": "tp_town_door_inn", "map": "town", "tile": [29, 18], "size": [1, 1], "kind": "same_map", "target": [85, 17], "to_map": "", "to_spawn": [0, 0] },
+    { "id": "tp_town_door_house_a", "map": "town", "tile": [12, 18], "size": [1, 1], "kind": "same_map", "target": [85, 29], "to_map": "", "to_spawn": [0, 0] },
+    { "id": "tp_town_inn_exit", "map": "town", "tile": [85, 18], "size": [1, 1], "kind": "same_map", "target": [29, 19], "to_map": "", "to_spawn": [0, 0] },
+    { "id": "tp_town_house_a_exit", "map": "town", "tile": [85, 30], "size": [1, 1], "kind": "same_map", "target": [12, 19], "to_map": "", "to_spawn": [0, 0] },
+    { "id": "tp_town_to_road", "map": "town", "tile": [12, 47], "size": [2, 1], "kind": "cross_map", "target": [0, 0], "to_map": "road", "to_spawn": [23.5, 3.5] },
+    { "id": "tp_road_to_town", "map": "road", "tile": [23, 0], "size": [2, 1], "kind": "cross_map", "target": [0, 0], "to_map": "town", "to_spawn": [12.5, 45.5] },
+    { "id": "tp_road_to_f1", "map": "road", "tile": [23, 63], "size": [2, 1], "kind": "cross_map", "target": [0, 0], "to_map": "ruins_f1", "to_spawn": [27.5, 3] },
+    { "id": "tp_f1_to_road", "map": "ruins_f1", "tile": [27, 0], "size": [2, 1], "kind": "cross_map", "target": [0, 0], "to_map": "road", "to_spawn": [23.5, 61.5] },
+    { "id": "tp_f1_to_f2", "map": "ruins_f1", "tile": [27, 43], "size": [2, 1], "kind": "cross_map", "target": [0, 0], "to_map": "ruins_f2", "to_spawn": [23.5, 2] },
+    { "id": "tp_f2_to_f1", "map": "ruins_f2", "tile": [23, 0], "size": [2, 1], "kind": "cross_map", "target": [0, 0], "to_map": "ruins_f1", "to_spawn": [27.5, 41.5] },
+    { "id": "tp_f2_to_f3", "map": "ruins_f2", "tile": [23, 47], "size": [2, 1], "kind": "cross_map", "target": [0, 0], "to_map": "ruins_f3", "to_spawn": [19.5, 2] },
+    { "id": "tp_f3_to_f2", "map": "ruins_f3", "tile": [19, 0], "size": [2, 1], "kind": "cross_map", "target": [0, 0], "to_map": "ruins_f2", "to_spawn": [23.5, 45.5] }
+  ],
+  "entry_spawns": {
+    "town": [12.5, 45.5],
+    "road": [23.5, 3.5],
+    "ruins_f1": [27.5, 3],
+    "ruins_f2": [23.5, 2],
+    "ruins_f3": [19.5, 2]
+  }
+}

@@ -4,8 +4,8 @@ extends Node
 ## 【职责】（架构 A4；本文件是 E1-S3 "Main 常驻根"的实现侧）：
 ##   ① 启动时自检 A4 结构（World / UILayer / UILayer/FadeMask 齐备），
 ##      结构缺失立即报错——后续所有场景切换都依赖该结构，坏结构必须启动即暴露；
-##   ② 装载初始场景（当前为白盒图 A，进入 E1-S5 后换成小镇正式地图，
-##      届时只改 INITIAL_SCENE_PATH 一个常量）。
+##   ② 装载初始场景（E4-S6/R2 起为小镇正式地图 town.tscn，
+##      届时只改 INITIAL_SCENE_PATH 一个常量——已兑现）。
 ##
 ## 【边界】：
 ##   - 不实现任何玩法逻辑、不存游戏状态（游戏状态只在 GameData，A3）；
@@ -20,8 +20,10 @@ extends Node
 ##   - SMK-08/09/10：切换一律经 SceneRouter，拒绝路径不影响本层。
 
 
-## 初始场景路径（白盒图 A；E1-S5 小镇落地后替换为 res://scenes/maps/town.tscn）
-const INITIAL_SCENE_PATH: String = "res://tests/smoke/fixtures/map_a.tscn"
+## 初始场景路径（E4-S6/R2 起 = 小镇正式地图；白盒图 A 退役为冒烟夹具）。
+## 注意：初始装载【不落盘】——AutosaveNotifier 门控（save_requested_pending
+## 未置位即跳过写盘），防止启动即用默认出生位覆盖玩家既有存档。
+const INITIAL_SCENE_PATH: String = "res://scenes/maps/town.tscn"
 
 
 func _ready() -> void:

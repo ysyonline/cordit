@@ -76,6 +76,8 @@ func before_each() -> void:
 	SceneRouter._staged_payload = {}
 	SceneRouter.current_scene_path = ""
 	SceneRouter._switching = false
+	# E4-S6 存档意图位重置（VICTORY 置位会外溢到后续用例/脚本）
+	SaveManager.save_requested_pending = false
 
 
 func after_each() -> void:
@@ -86,6 +88,8 @@ func after_each() -> void:
 	# 处理器簿记清零（跨用例隔离）
 	if _handler != null and is_instance_valid(_handler):
 		_handler._pending_return = {}
+	# 存档意图位还原（防 VICTORY 用例置位外溢）
+	SaveManager.save_requested_pending = false
 	# 每条用例后还原队伍/集合（用例内覆写不外溢）
 	after_all()
 
@@ -234,20 +238,53 @@ func test_VICTORY缺击破凭据仅告警不炸() -> void:
 
 # =============== C. 失败分支与回退链 ===============
 
-func test_DEFEAT经暂存兜底回图() -> void:
-	# DEFEAT result 不带回图三字段 → 回退 Router 暂存（E2-S2 受理时写入）
+func test_DEFEAT读档成功_回存档点() -> void:
+	# 【E4-S7 语义】DEFEAT → load_save() 成功 → 回存档 map/position；
+	# GameData 随 _restore 回滚（story_phase 等回到存档时点）。
+	# 准备：写一份独立存档（save_path 覆写隔离，SMK-12 口径）
+	var old_path: String = SaveManager.save_path
+	SaveManager.save_path = "user://e2s4_defeat_test_save.json"
+	GameData.story_phase = 7
+	GameData.flags = {"evt_flag_test": true}
+	assert_true(SaveManager.save("ruins_f1", Vector2(448, 56)), "预置存档")
+	# 战斗"污染"状态（模拟战斗期间状态变化；DEFEAT 后应回滚）
+	GameData.story_phase = 99
+	_make_fake_main()
+	_handler._on_battle_finished(_defeat_result())
+	# 读档回滚断言
+	assert_eq(GameData.story_phase, 7, "DEFEAT 读档应回滚 story_phase 到存档时点")
+	assert_true(GameData.flags.has("evt_flag_test"), "flags 应随 _restore 回滚")
+	assert_eq(SceneRouter.current_scene_path,
+			"res://scenes/maps/ruins_f1.tscn", "DEFEAT 应回存档 map 的场景路径")
+	_handler._on_map_ready("ruins_f1")
+	_handler._pos_return_immediate()
+	var player: Node2D = _routed_player()
+	assert_eq(player.global_position, Vector2(448, 56),
+			"DEFEAT 回置应取存档 position（进图存档点）")
+	assert_true(player.is_encounter_immune(), "DEFEAT 回置后同样免疫")
+	# 清理（隔离纪律：还原 save_path + 删测试档）
+	SaveManager.save_path = old_path
+	SaveManager.last_loaded = {}
+	DirAccess.remove_absolute("user://e2s4_defeat_test_save.json")
+
+
+func test_DEFEAT读档失败_兜底回暂存图() -> void:
+	# 【E4-S7 兜底】无存档（load_save false）→ 回暂存 return_map + 告警，
+	# 流程不断（防御式：存档链路异常时仍能回到战斗前地图）
+	var old_path: String = SaveManager.save_path
+	SaveManager.save_path = "user://e2s4_no_such_dir/cannot_exist.json"
 	SceneRouter._staged_payload = {"return_map": MAP_SCENE_PATH,
 			"return_position": Vector2(48, 60)}
 	_make_fake_main()
 	_handler._on_battle_finished(_defeat_result())
 	assert_eq(SceneRouter.current_scene_path, MAP_SCENE_PATH,
-			"DEFEAT 应能回地图（读档占位口径）")
+			"读档失败应兜底回暂存图")
 	_handler._on_map_ready("map_e2s2")
 	_handler._pos_return_immediate()
 	var player: Node2D = _routed_player()
 	assert_eq(player.global_position, Vector2(48, 60),
-			"DEFEAT 回置应取暂存 return_position")
-	assert_true(player.is_encounter_immune(), "DEFEAT 回置后同样免疫")
+			"兜底回置应取暂存 return_position")
+	SaveManager.save_path = old_path
 
 
 func test_result自带字段优先于暂存() -> void:

@@ -15,6 +15,8 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TSCN = os.path.join(REPO_ROOT, "scenes", "maps", "town.tscn")
 TRES = os.path.join(REPO_ROOT, "assets", "tiles", "town_map_tileset.tres")
 GD = os.path.join(REPO_ROOT, "scripts", "maps", "town_map.gd")
+# E4-S6：同图传送的 reset_smoothing 已随薄壳架构迁入 trigger_teleport.gd，断言跟随行为归属
+TP_GD = os.path.join(REPO_ROOT, "scripts", "events", "trigger_teleport.gd")
 
 failures = []
 passed = 0
@@ -33,6 +35,7 @@ def check(name, cond, detail=""):
 tscn_text = open(TSCN, encoding="utf-8").read()
 tres_text = open(TRES, encoding="utf-8").read()
 gd_text = open(GD, encoding="utf-8").read()
+tp_gd_text = open(TP_GD, encoding="utf-8").read()
 
 # ---------- 解析 tile_map_data ----------
 def parse_layer(text, layer_name):
@@ -84,7 +87,8 @@ check("gd: 三组 limit", len(gd_limits) == 3, str(gd_limits))
 check("gd: 主图 limit 0,0,1024,768", "Rect2i(0, 0, 1024, 768)" in gd_text)
 check("gd: 室内A limit 1056,0,640,360", "Rect2i(1056, 0, 640, 360)" in gd_text)
 check("gd: 室内B limit 1056,188,640,360", "Rect2i(1056, 188, 640, 360)" in gd_text)
-check("gd: reset_smoothing", "reset_smoothing" in gd_text)
+# E4-S6：reset_smoothing 随薄壳架构迁入 trigger_teleport.gd（_do_same_map 内），断言跟随行为归属
+check("gd(薄壳): reset_smoothing", "reset_smoothing" in tp_gd_text)
 check("gd: E4-S6 衔接注释①", "map_ready" in gd_text)
 check("gd: E4-S6 衔接注释②", "trigger_*.tscn" in gd_text or "trigger_" in gd_text)
 check("gd: E4-S6 衔接注释③", "事件动作参数" in gd_text)
@@ -122,7 +126,7 @@ check("Wall 神殿封印门 (31,7)", walls.get((31, 7)) == (0, 0, 29))
 check("Wall 喷泉 2x2", all((x, y) in walls for x in (27, 28) for y in (27, 28)))
 check("Wall 边框树 (0,0)/(63,47)/(0,24)", (0, 0) in walls and (63, 47) in walls and (0, 24) in walls)
 check("Wall 南门开口 (12,47)(13,47) 无树", (12, 47) not in walls and (13, 47) not in walls)
-check("Wall 南门栅栏 (12,46)(13,46)", (12, 46) in walls and (13, 46) in walls)
+check("Wall 南门栅栏已拆除 (12,46)(13,46)【E4-S6/R1】", (12, 46) not in walls and (13, 46) not in walls)
 check("Wall 室内A 墙圈四角", all(p in walls for p in [(80, 11), (91, 11), (80, 19), (91, 19)]))
 check("Wall 室内B 墙圈四角", all(p in walls for p in [(80, 23), (91, 23), (80, 31), (91, 31)]))
 check("Wall 室内A 门洞 (85,19)", walls.get((85, 19)) == (0, 6, 1))

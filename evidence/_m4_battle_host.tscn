@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://evidence/_m4_battle_host.gd" id="1_m4host"]
+
+; ── M4 收口 DEFEAT 演示舞台（临时场景，仅供录制，录后可删）────────
+; 由 _m4_auto_demo 经 SceneRouter 正常切换装入 Main/World（带 BattlePayload）；
+; 脚本在 _ready 组装真实 BattleCommand + BattleUI 并自动打完 b4_guardian
+; 确定性 DEFEAT（推演见 _m4_battle_host.gd 头注释）。
+
+[node name="M4BattleHost" type="Node2D"]
+script = ExtResource("1_m4host")

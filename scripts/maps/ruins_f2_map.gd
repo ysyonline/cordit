@@ -6,10 +6,11 @@ extends Node2D
 ##   + 相机限区 + spawn 落位；聊天点锚点归 E5 事件（GDD §3.1 f2 行"队员聊天点"）。
 ## 传送接线（from_f1 / to_f3）与进图自动存档归 E4-S6（TODO 见下）。
 ##
-## TODO(E4-S6) 正式时序衔接：
-##   1. Triggers 容器挂 trigger_teleport（from_ruins_f1 / to_ruins_f3）；
-##   2. _ready 尾部广播 map_ready → SaveManager.save()（探索 GDD §3.4 精确时序）；
-##   3. spawn 支持双入口：from_f1(384,40) / from_f3 北口落位。
+## 【E4-S6 增量】传送接线 + 进图自动存档（TODO(E4-S6) 三条逐一落实）：
+##   1. Triggers 容器挂 trigger_teleport（from_f1 南门 / to_f3 北口 +
+##      from_f3 返程（北口复用），目录驱动）；
+##   2. _ready 尾部 AutosaveNotifier.announce_ready()（§3.4 精确时序）；
+##   3. spawn 双入口由传送目录 to_spawn 落位（南门 (23.5,2.5) / 北口返程 (23.5,45.5)）。
 
 ## 相机限区：主图 48×48 tile = 768×768 px
 @export var limits_main: Rect2i = Rect2i(0, 0, 768, 768)
@@ -24,6 +25,12 @@ var interaction_controller: Node = null
 ## E4-S5 内容点位装配产物（{"chests": Array, "investigates": Array}，测试对表用）
 var content_points: Dictionary = {}
 
+## E4-S6 传送触发器装配产物（Array[Area2D]，测试对表用）
+var teleports: Array = []
+
+const TeleportAssembler := preload("res://scripts/events/teleport_assembler.gd")
+const AutosaveNotifier := preload("res://scripts/events/autosave_notifier.gd")
+
 
 func _ready() -> void:
 	var player: CharacterBody2D = $YSorted/Player
@@ -31,7 +38,10 @@ func _ready() -> void:
 	# E4-S5：内容点位装配（2 宝箱 + 3 调查点，数据/装配见 scripts/events/）
 	const MapEvents := preload("res://scripts/events/map_events.gd")
 	content_points = MapEvents.assemble(self, "ruins_f2")
-	# TODO(E4-S6)：此处广播 EventBus.map_ready 并触发自动存档（§3.4 精确时序）
+	# E4-S6：传送装配（from_f1 / to_f3 / from_f3 返程；遗迹图无对话装配）
+	teleports = TeleportAssembler.assemble(self, "ruins_f2", null)
+	# E4-S6：进图自动存档（map_ready 广播 + save + 图标，§3.4 时序收口）
+	AutosaveNotifier.announce_ready(self, "ruins_f2")
 
 
 func _apply_limits(cam: Camera2D, rect: Rect2i) -> void:

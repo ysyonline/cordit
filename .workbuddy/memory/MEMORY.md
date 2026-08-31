@@ -24,17 +24,24 @@
 ## 其他裁决
 - 失败=读档回进图存档点；gold_gained 切片内恒 0；HD-2D 降级后期可选；"立绘"=头像差分；比例基准 16x18≈2.5 头身。
 
-## 进度（2026-08-31 01:55 快照，会话收尾）
+## 存档与传送语义（E4-S6/S7 裁决，2026-08-31，勿翻案）
+- **门控存档**：SaveManager.save_requested_pending 意图位——跨图传送受理/战后 VICTORY 置位 → 目标图 map_ready 时 consume_save_request() 消费落盘；**启动装载/同图室内传送不落盘**（防启动即覆盖既有存档；GDD §3.4"过传送点存，不进图即存"原文口径）。胜利即存=§3.2 防复活；存档坐标=玩家实际落位（非默认出生位）。
+- **传送正本**：teleport_catalog.gd 12 处（town 室内 4 同图 + 跨图 8）+ data/json/events/teleports.json 同构镜像（test_e4s6 锁死）；f3 南门 (19-20,0) 双用途（入口+返程）；落位防弹回口径=落位脚底盒 ±12px 与触发区零重合。
+- ** town 室内同图传送 target=整数格**（tile*16+8 格中心，旧 @export 口径；半格 .5 是缺陷不要复辟）；f1/f2/f3 首入 to_spawn y=3/2/2（verify_ruins 锚定 spawn_px），road=3.5。
+- **碰撞层**：传送触发器 collision_layer=0 / mask=16（玩家实体层）——town 旧四门 mask=1 在 E2-S2 玩家改 layer=16 后静默失效，已修，test_e4s6 test_12 锁定。
+- **DEFEAT 读档**（E4-S7）：load_save() → last_loaded.map/position → MAP_SCENE_PATHS 短名→路径 → 回置存档点+免疫 0.5s；GameData 随 _restore 整体回滚；读档失败兜底回暂存图+告警。
+- **R2 已落地**：INITIAL_SCENE_PATH=town.tscn；R1 已落地：town 南门栅栏已拆（gen_town.py 正本路径，verify_town L125 断言已反转）。
+
+## 进度（2026-08-31 15:00 快照，会话收尾）
 - **M1 ✅ tag m1｜M2 ✅ tag m2｜M3 ✅ tag m3 五门全绿**（D3 缺陷已修 `2242b99`；视频#3 重录入库）。
-- **Sprint 4（EPIC-4）S0~S5 + S8 ✅ 全部收口**：`db8a6be`(S0~S2)→`021ffb7`(S3)→`5cbc36b`(S4)→`5c7ac2b`(S5 宝箱/调查 27 点位+chests_opened 闭环)→`c1c4562`(S8 inventory 入档 schema v1→2)。
-- **测试基线 187→266/266 全绿**：S8 关键实现=SCHEMA 十字段+_migrate v<2 分支（SCHEMA 默认兜底）+JSON float→int 逐键转换；ADR-3 正文已同步 v2 十字段。
-- **剩 S6 传送+自动存档 2.5h → S7 失败读档 1h = 3.5h 即达 M4 门**；M4 收口仪式=用户本机试玩+视频#4+tag m4。
-- S5 拍板项④落地形态：硬编码模板 + point_catalog.gd 正本 + data/json/events/ JSON 镜像（test 同构锁死），E5-S2 加载器就绪后回迁。
-- 遗留小债：tools/README.md 未登记 gen/verify 工具链（S6 前补）；sfx 为 E6 预留钩子；SMK-12 静态记录"SCHEMA_VERSION=1"是历史留痕不触发红灯。
-- 协作模式：团队 cordit-sprint4-5235（会话结束自动清理，下次重建），程基岩（engineering-lead）续用效率高；主理人独立复验制（不采信自报全部亲跑）+ 用户拍板收口 commit。
+- **Sprint 4（EPIC-4）S0~S8 + S6 + S7 ✅ 全部收口**：`db8a6be`(S0~S2)→`021ffb7`(S3)→`5cbc36b`(S4)→`5c7ac2b`(S5)→`c1c4562`(S8)→**S6/S7 未 commit（工作区待拍板）**。
+- **测试基线 266→286/286 全绿**（e4s6 新增 19 条 + e2s4 扩 2 条净增 1）；证据 `evidence/e4s6-gut-full.log` + `evidence/e4s6-teleport-autosave.md`；verify 三件套 108+156+65 全 PASS。
+- **M4 收口仪式待办**：用户本机试玩 + 视频#4 + 冒烟 headless 复跑（e1s4/e1s6/smk08-12 静态断言已适配 R2）+ commit 拍板 + tag m4。
+- 遗留小债：tools/README.md 未登记 gen/verify 工具链；sfx 为 E6 预留钩子。
+- 协作模式：主理人独立实现制（程基岩代理 429 停摆后本会话接手）；用户拍板收口 commit。
 
 ## 环境与已踩坑
-- Godot exe（WinGet，Glob 搜不到，用全路径）：`C:\Users\weixufeng\AppData\Local\Microsoft\WinGet\Packages\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\Godot_v4.7.2-stable_win64_console.exe`
+- Godot exe（**D:\software\Godot\Godot_v4.7.2-stable_win64.exe**，本账户 user3667 自装解压版；控制台版同名 _console；旧 WinGet 路径属 weixufeng 账户已废弃）
 - GUT 实装 **9.7.1**（9.7.0 起兼容 4.7，非旧计划的 9.3.x）；headless 跑测：`MSYS2_ARG_CONV_EXCL="*"` 下 `--path` 与 exe 必须用 **Windows 反斜杠路径**（MSYS 不再转换），见 `tests/README.md` §2.4。
 - TextureRect 截图铺满用 `STRETCH_KEEP_ASPECT_COVERED`（**不存在** `STRETCH_COVER`，会 Compile Error 并级联拖垮依赖方）。
 - 类型化数组 `Array[Dictionary]` 赋值：`as` 对非类型化源转换不生效，须**逐元素 append 重建**。
@@ -44,3 +51,7 @@
 - **Python 工具控制台编码**：verify/gen 系脚本在 PowerShell 下因 GBK 打不出"✅"抛 UnicodeEncodeError（断言已跑完才崩，非产物问题）——统一 Git Bash 跑或设 `PYTHONIOENCODING=utf-8`。
 - **成员 spawn 流程**：先 TeamCreate 再 Agent(team_name=...)，直接 spawn 报 "No active team found"；成员会话可能 429 限流中断（exit 前检查回传完整性，收尾缺口主理人可代笔，沿 E4-S2/S3 先例）。
 - **Git 远程同步（2026-08-31 落定）**：origin=`git@github.com:ysyonline/cordit.git`（SSH，密钥永不过期）；网络走 `~/.gitconfig` 的 `http.https://github.com.proxy=127.0.0.1:7892` + `~/.ssh/config`（ssh.github.com:443，connect.exe 用 D:/software/Git 全路径，WorkBuddy 内置 Git Bash 无此工具）。`.workbuddy/memory/` 已入库随仓库同步。**坑**：WorkBuddy 内置 PortableGit 的 fetch/push 会静默丢弃 `refs/remotes/`（status 显示 [gone]，属装饰性问题，远程与本地 main 不受影响）；会话内查远程用 `git ls-remote`，或用 `/d/software/Git/cmd/git.exe`（v2.41.0，正常）。
+- **GUT 新建 .gd 必须配 .uid 文件**（uid://xxx 一行），否则 sanity 收集哨兵报 "Nonexistent function 'new' in base GDScript"（无 uid 的脚本 load 后 new 失败）。生成后跑一次 Godot 让其登记。
+- **GUT -gtest 参数在此环境不生效**（仍跑全量）；筛失败用 `> /tmp/x.log 2>&1` 后 grep "[Failed]"。
+- **queue_free 帧末生效**：GUT 断言"旧节点已退役"不能同帧断言其不存在，改按装配产物计数/命名/脚本判定。
+- **无 uid 的目录初稿偏差教训**：传送/落位类数据修正时先查"旧 tscn 像素 + verify_*.py 锚定值 + 冒烟断言值"三方正本，任何一方不一致即停下裁决，不要沿用会话内记忆坐标。

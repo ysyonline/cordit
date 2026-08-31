@@ -63,7 +63,7 @@ T_FIREPLACE = (0, 16, 12)   # 炉火占位（暂用深棕柜件，回传报备�
 T_SAVEPOINT = (0, 16, 12)   # 存档占位（同上）
 T_CHEST = (0, 26, 22)    # 宝箱（木箱件，挂碰撞）
 T_INDOOR_FLOOR = (0, 18, 0)  # 木板地板（室内 Ground）
-T_FENCE = (0, 22, 10)    # 栅栏（灰石件，南门封路）
+T_FENCE = (0, 22, 10)    # 栅栏（灰石件；E4-S6/R1 起南门不封路，选型保留备用）
 
 # WallsObjects 层全部 tile：满格碰撞 + Y Sort Origin = 8
 WALL_TILES = sorted({
@@ -161,9 +161,9 @@ for x in range(64):
 for y in range(48):
     walls.append((0, y, T_TREE_TRUNK))
     walls.append((63, y, T_TREE_TRUNK))
-# 南门栅栏 (12,46)-(13,46)（挂碰撞封路）
-walls.append((12, 46, T_FENCE))
-walls.append((13, 46, T_FENCE))
+# 【E4-S6/R1】南门栅栏拆除：原 (12,46)(13,46) 施工期占位封路已裁撤（E4-S6
+# 传送网络接线，南门须通行；verify_town.py L125 断言同步改为"无栅栏"）。
+# 通道 = 铺路 (12,46)-(13,47) + 边框开口 (12,47)(13,47)。
 
 # --- 建筑（顶 2 行→Above 屋顶；立面 3 行→WallsObjects 墙）
 buildings = [

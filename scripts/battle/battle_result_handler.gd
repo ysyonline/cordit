@@ -17,8 +17,14 @@ extends Node
 ##   VICTORY：defeat_enemy_uid 写入 GameData.cleared_enemy_set（查重）——
 ##         敌人不复活的机制是"数据驱动"：重装地图时 visible_enemy._ready
 ##         自查该集合并自删，无需任何人持有地图引用去删节点；
-##   DEFEAT：读档占位（真读档 E4-S7）——本阶段队伍态未被战斗改动，
-##         覆写幂等，直接回图即达成"能回地图"验收。
+##         并登记存档意图（GDD §3.2 胜利即存防复活；§3.4 时序：意图在此
+##         置位，回图 map_ready 时 AutosaveNotifier 门控消费落盘）；
+##   DEFEAT：自动读档（战斗 GDD §3.5"残响中断"，E4-S7 兑现）——
+##         load_save() 成功 → last_loaded 取 map/position 回图回置；
+##         GameData 状态（party/flags/集合/背包）随 _restore 一并回滚到
+##         存档时点（无额外惩罚，§3.5"读档后角色状态为存档时状态"）；
+##         读档失败（无档/损坏）→ 兜底回暂存 return_map + push_warning
+##         （防御性：正常流程进图必有自动存档，失败兜底保流程不断）。
 ##   共通：经 SceneRouter 回图（不带 payload，p_has_payload=false——地图
 ##         装载无 BattlePayload 协议），并在 map_ready 后把玩家回置到
 ##         return_position + 启动 0.5s encounter_immunity（探索 GDD §3.2：
@@ -53,8 +59,8 @@ func _ready() -> void:
 # ------------------------------------------------------------------
 
 func _on_battle_finished(result: Dictionary) -> void:
-	# 1) 队伍态覆写（VICTORY/DEFEAT 共通；本阶段快照=战前态，幂等；
-	#    EPIC-3 真结算后 VICTORY 写战后值、DEFEAT 由读档回滚）
+	# 1) 队伍态覆写（VICTORY 写战后值；DEFEAT 下方读档会整体回滚，此处
+	#    幂等覆写无害——读档失败兜底路径也保持队伍态自洽）
 	_apply_party_state(result.get("party_state", []) as Array)
 	# 2) 胜利登记击破（数据驱动防复活：敌人 _ready 自查自删）
 	var outcome: String = String(result.get("outcome", ""))
@@ -64,12 +70,37 @@ func _on_battle_finished(result: Dictionary) -> void:
 			push_warning("[BattleResultHandler] VICTORY 但击破凭据为空（result 与暂存载荷均无 defeat_enemy_uid），敌人将保留")
 		elif not GameData.cleared_enemy_set.has(uid):
 			GameData.cleared_enemy_set.append(uid)
-	# 3) 回图目标解析：result 自带字段优先（E2-S3 起战斗场景随结果转交
-	#    payload 三字段），Router 暂存兜底（战斗期间暂存不会被覆盖）
-	var staged: Dictionary = SceneRouter.get_staged_payload()
-	var return_map: String = String(result.get("return_map", staged.get("return_map", "")))
-	var return_pos: Vector2 = result.get("return_position",
-			staged.get("return_position", Vector2.ZERO))
+		# 胜利即存档意图（探索 GDD §3.2 防复活：读档不得让已击破敌人回来；
+		# §3.4 时序：意图在此登记，目标图 map_ready 时由 AutosaveNotifier
+		# 门控消费落盘——存档坐标 = 回置后的战前位置，非默认出生位）
+		SaveManager.save_requested_pending = true
+	# 3) 回图目标解析：
+	#    DEFEAT → 自动读档（战斗 GDD §3.5）：回滚 GameData 到存档时点，
+	#    回图目标取存档的 map/position（"进入地图时的存档点"）；
+	#    VICTORY → result 自带字段优先（E2-S3 起战斗场景随结果转交 payload
+	#    三字段），Router 暂存兜底（战斗期间暂存不会被覆盖）。
+	var return_map: String
+	var return_pos: Vector2
+	if outcome == "DEFEAT":
+		if SaveManager.load_save():
+			return_map = _map_name_to_path(String(SaveManager.last_loaded["map"]))
+			return_pos = _position_from_loaded()
+			print("[BattleResultHandler] DEFEAT 读档成功 -> 回到存档点 %s @ %s" % [
+					String(SaveManager.last_loaded["map"]), return_pos])
+		else:
+			# 防御性兜底：无档/损坏。正常流程进图必有自动存档，走到这里说明
+			# 存档链路已出问题——保流程不断（暂存字段回图），告警交诊断。
+			var staged_fallback: Dictionary = SceneRouter.get_staged_payload()
+			return_map = String(result.get("return_map",
+					staged_fallback.get("return_map", "")))
+			return_pos = result.get("return_position",
+					staged_fallback.get("return_position", Vector2.ZERO))
+			push_warning("[BattleResultHandler] DEFEAT 读档失败（无档/损坏），兜底回暂存图 %s——存档链路需排查" % return_map)
+	else:
+		var staged: Dictionary = SceneRouter.get_staged_payload()
+		return_map = String(result.get("return_map", staged.get("return_map", "")))
+		return_pos = result.get("return_position",
+				staged.get("return_position", Vector2.ZERO))
 	if return_map.is_empty():
 		push_warning("[BattleResultHandler] 无回图目标（result/staged 均缺 return_map），停留当前场景")
 		return
@@ -87,6 +118,19 @@ func _resolve_defeat_uid(result: Dictionary) -> String:
 	if uid.is_empty():
 		uid = String(SceneRouter.get_staged_payload().get("defeat_enemy_uid", ""))
 	return uid
+
+
+## 存档 map 字段（短名 "town"/"ruins_f1"…）→ 场景路径（TeleportCatalog 正本）。
+## 未知短名返回空串（change_scene 会拒绝并告警，不静默）。
+func _map_name_to_path(map_name: String) -> String:
+	const Catalog := preload("res://scripts/events/teleport_catalog.gd")
+	return Catalog.MAP_SCENE_PATHS.get(map_name, "")
+
+
+## last_loaded["position"]（JSON 数组 [x, y]）→ Vector2（float 逐键转换）
+func _position_from_loaded() -> Vector2:
+	var arr: Array = SaveManager.last_loaded["position"]
+	return Vector2(float(arr[0]), float(arr[1]))
 
 
 ## party_state 快照写回 GameData.party（按 id 对账；E2-S3 备好的 6 字段结构）

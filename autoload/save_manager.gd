@@ -61,6 +61,29 @@ var save_path: String = SAVE_PATH
 ## 最近一次成功读档的完整快照（E4-S7 失败读档据此回图；读档失败不修改旧值）
 var last_loaded: Dictionary = {}
 
+## 存档意图登记（GDD §3.4"过传送点存，不进图即存"）：跨图传送受理后 /
+## 战后胜利结算置位；目标图 map_ready 时由 AutosaveNotifier 消费。
+## 启动装载、同图室内传送不置位 → map_ready 不落盘——防止启动即用
+## 默认出生位覆盖玩家既有存档（R2 初始场景切 town 后的真实风险）。
+var save_requested_pending: bool = false
+
+
+func _ready() -> void:
+	EventBus.save_requested.connect(_on_save_requested)
+
+
+## save_requested 消费端：仅做意图登记，不在此刻写盘（写盘时点 =
+## 目标图 map_ready，见 autosave_notifier.announce_ready）
+func _on_save_requested() -> void:
+	save_requested_pending = true
+
+
+## 读取并清零存档意图（consume-on-read；GUT 可直接置位模拟传送意图）
+func consume_save_request() -> bool:
+	var pending := save_requested_pending
+	save_requested_pending = false
+	return pending
+
 
 # ---------------------------------------------------------------- 存档
 

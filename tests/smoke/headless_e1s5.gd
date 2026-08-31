@@ -166,11 +166,15 @@ func _check_doors(map: Node2D) -> void:
 		_mark(false, "A1", "找不到玩家")
 		return
 	var cam: Camera2D = player.get_node("Camera2D")
+	# 【E4-S6 适配】town 旧四门（Door_Inn 等无脚本 Area2D）在 map_ready 时被
+	# TeleportAssembler 同位重建为 "Evt_tp_*" 薄壳（节点名 = "Evt_" + 目录 id，
+	# 几何同位、落位/限区从旧 @export 原样迁入 TeleportCatalog）——
+	# 断言对象升级为新实体名，期望落位/limit 与旧口径逐一相同。
 	var cases := [
-		{"trig": "Door_Inn", "to": Vector2(85, 17), "limits": Rect2i(1056, 0, 640, 360)},
-		{"trig": "Inn_Exit", "to": Vector2(29, 19), "limits": Rect2i(0, 0, 1024, 768)},
-		{"trig": "Door_HouseA", "to": Vector2(85, 29), "limits": Rect2i(1056, 188, 640, 360)},
-		{"trig": "HouseA_Exit", "to": Vector2(12, 19), "limits": Rect2i(0, 0, 1024, 768)},
+		{"trig": "Evt_tp_town_door_inn", "to": Vector2(85, 17), "limits": Rect2i(1056, 0, 640, 360)},
+		{"trig": "Evt_tp_town_inn_exit", "to": Vector2(29, 19), "limits": Rect2i(0, 0, 1024, 768)},
+		{"trig": "Evt_tp_town_door_house_a", "to": Vector2(85, 29), "limits": Rect2i(1056, 188, 640, 360)},
+		{"trig": "Evt_tp_town_house_a_exit", "to": Vector2(12, 19), "limits": Rect2i(0, 0, 1024, 768)},
 	]
 	var all_ok := true
 	var detail := ""

@@ -1,0 +1,86 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[M4Demo] 启动：M4 收口自动演示（传送网络/门控存档/失败读档，禁随机）
+[M4Demo] 已清除旧 demo 存档：user://save_m4_demo.json
+[M4Demo] 第 1 幕：装载 town（R2 初始场景）
+[SceneRouter] 受理切换 -> res://scenes/maps/town.tscn
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[SceneRouter] 装载完成 -> res://scenes/maps/town.tscn
+[M4Demo] 期望日志：启动装载应无存档意图：[AutosaveNotifier] town 无存档意图
+[M4Demo] 第 2 幕：走向客栈门（触发区中心 (472.0, 296.0)）
+[M4Demo][walk] 开始 (192.0, 640.0) -> (472.0, 640.0)（起点 (192.0, 640.0)）
+[M4Demo][walk] 结束 -> (469.202, 640.0)（历时 1.9s stuck=0.00）
+[M4Demo][walk] 开始 (469.202, 640.0) -> (472.0, 296.0)（起点 (469.202, 640.0)）
+[TriggerTeleport] 同图传送 tp_town_door_inn -> (85.0, 17.0)
+[M4Demo][walk] 结束 -> (1368.01, 278.8)（历时 2.3s stuck=0.00）
+[M4Demo] 期望日志：同图传送应已触发：[TriggerTeleport] 同图传送 tp_town_door_inn
+[M4Demo] 第 3 幕：走向客栈出口（Inn_Exit 触发区中心）
+[M4Demo][walk] 开始 (1368.01, 278.8) -> (1368.0, 296.0)（起点 (1368.01, 278.8)）
+[TriggerTeleport] 同图传送 tp_town_inn_exit -> (29.0, 19.0)
+[M4Demo][walk] 结束 -> (472.0, 312.0)（历时 0.1s stuck=0.00）
+[M4Demo] 期望日志：出口传送应已触发：[TriggerTeleport] 同图传送 tp_town_inn_exit
+[M4Demo] 第 4 幕：走向南门（触发区中心 (200.0, 760.0)）
+[M4Demo][walk] 开始 (472.0, 312.0) -> (200.0, 736.0)（起点 (472.0, 312.0)）
+[M4Demo][walk] 结束 -> (201.5604, 731.7267)（历时 3.7s stuck=0.00）
+[M4Demo][walk] 开始 (201.5604, 731.7267) -> (200.0, 760.0)（起点 (201.5604, 731.7267)）
+[SceneRouter] 受理切换 -> res://scenes/maps/road.tscn
+[TriggerTeleport] 跨图传送 tp_town_to_road -> road（受理=true）
+[M4Demo][walk] 结束 -> (200.2378, 755.6904)（历时 0.2s stuck=0.00）
+[VisibleEnemy] 就绪：road_moth_01（编组 b1_moth）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_01（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_02（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[MapEvents] road 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] road 装配完成：传送触发器 2 处
+[SceneRouter] 装载完成 -> res://scenes/maps/road.tscn
+[M4Demo] 期望日志：跨图落盘应已发生：[AutosaveNotifier] road + SaveManager 存档
+[M4Demo] 第 5 幕：构造 BattlePayload 进战斗（Router 同源受理）
+[SceneRouter] 受理切换 -> res://evidence/_m4_battle_host.tscn
+[M4Demo][BattleHost] 就绪：编组=b4_guardian（组装真实 BattleCommand + BattleUI，DEFEAT 剧本）
+[SceneRouter] 装载完成 -> res://evidence/_m4_battle_host.tscn
+[M4Demo] R1 凯尔 行动：普攻 → 敌方槽位 0
+[M4Demo] R2 莫娜 行动：普攻 → 敌方槽位 0
+[M4Demo] R3 莉娜 行动：技能 fireball → 槽位 0
+[M4Demo] R3 守卫 遗像守卫 行动（AI roll=0.90 → sweep 群击）
+[M4Demo] R4 凯尔 行动：普攻 → 敌方槽位 0
+[M4Demo] R5 莫娜 行动：普攻 → 敌方槽位 0
+[M4Demo] R6 莉娜 行动：技能 fireball → 槽位 0
+[M4Demo] R6 守卫 遗像守卫 行动（AI roll=0.90 → sweep 群击）
+[M4Demo] R7 凯尔 行动：普攻 → 敌方槽位 0
+[M4Demo] R8 莫娜 行动：普攻 → 敌方槽位 0
+[M4Demo] R9 莉娜 行动：技能 fireball → 槽位 0
+[M4Demo] R9 守卫 遗像守卫 行动（AI roll=0.90 → sweep 群击）
+[M4Demo] R10 凯尔 行动：普攻 → 敌方槽位 0
+[M4Demo] R11 莫娜 行动：普攻 → 敌方槽位 0
+[M4Demo] R12 莉娜 行动：技能 fireball → 槽位 0
+[M4Demo] R12 守卫 遗像守卫 行动（AI roll=0.90 → sweep 群击）
+[M4Demo] R13 凯尔 行动：普攻 → 敌方槽位 0
+[M4Demo] R14 莫娜 行动：普攻 → 敌方槽位 0
+[M4Demo] R14 守卫 遗像守卫 行动（AI roll=0.90 → sweep 群击）
+[M4Demo] R15 凯尔 行动：普攻 → 敌方槽位 0
+[M4Demo] R15 守卫 遗像守卫 行动（AI roll=0.90 → sweep 群击）
+[M4Demo] R16 凯尔 行动：普攻 → 敌方槽位 0
+[M4Demo] R16 守卫 遗像守卫 行动（AI roll=0.90 → sweep 群击）
+[M4Demo] 结局 -> DEFEAT（结算画面展示 2.6s）—— DEFEAT 剧本达成
+[M4Demo] 出战黑屏（play_outro 0.5s）
+[M4Demo] 发 battle_finished(DEFEAT) → BattleResultHandler 读档回图
+[BattleResultHandler] DEFEAT 读档成功 -> 回到存档点 road @ (384.0, 64.0)
+[SceneRouter] 受理切换 -> res://scenes/maps/road.tscn
+[BattleResultHandler] DEFEAT 结算完成 -> 回图 res://scenes/maps/road.tscn（回置 (384.0, 64.0)）
+[M4Demo] battle_finished 收到（DEFEAT）→ 等待读档回图
+[VisibleEnemy] 就绪：road_moth_01（编组 b1_moth）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_01（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_02（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[MapEvents] road 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] road 装配完成：传送触发器 2 处
+[AutosaveNotifier] road 无存档意图（启动装载/同图传送），跳过写盘
+[SceneRouter] 装载完成 -> res://scenes/maps/road.tscn
+[BattleResultHandler] 玩家回置 -> (384.0, 64.0)，免疫 0.5s 启动
+[M4Demo] 期望日志：读档回图应已发生：[BattleResultHandler] DEFEAT 读档成功 -> 回到存档点 road
+[M4Demo] 读档验证：map=road position=[384.0, 64.0]（预期 road / (384,64) 附近）
+[M4Demo] 读档验证 PASS：失败读档回滚到进图存档点
+[M4Demo] 自动退出（Movie Maker 收尾写盘）
