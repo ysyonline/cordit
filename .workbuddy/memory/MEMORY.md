@@ -32,13 +32,14 @@
 - **DEFEAT 读档**（E4-S7）：load_save() → last_loaded.map/position → MAP_SCENE_PATHS 短名→路径 → 回置存档点+免疫 0.5s；GameData 随 _restore 整体回滚；读档失败兜底回暂存图+告警。
 - **R2 已落地**：INITIAL_SCENE_PATH=town.tscn；R1 已落地：town 南门栅栏已拆（gen_town.py 正本路径，verify_town L125 断言已反转）。
 
-## 进度（2026-08-31 15:00 快照，会话收尾）
-- **M1 ✅ tag m1｜M2 ✅ tag m2｜M3 ✅ tag m3 五门全绿**（D3 缺陷已修 `2242b99`；视频#3 重录入库）。
-- **Sprint 4（EPIC-4）S0~S8 + S6 + S7 ✅ 全部收口**：`db8a6be`(S0~S2)→`021ffb7`(S3)→`5cbc36b`(S4)→`5c7ac2b`(S5)→`c1c4562`(S8)→**S6/S7 未 commit（工作区待拍板）**。
-- **测试基线 266→286/286 全绿**（e4s6 新增 19 条 + e2s4 扩 2 条净增 1）；证据 `evidence/e4s6-gut-full.log` + `evidence/e4s6-teleport-autosave.md`；verify 三件套 108+156+65 全 PASS。
-- **M4 收口仪式待办**：用户本机试玩 + 视频#4 + 冒烟 headless 复跑（e1s4/e1s6/smk08-12 静态断言已适配 R2）+ commit 拍板 + tag m4。
-- 遗留小债：tools/README.md 未登记 gen/verify 工具链；sfx 为 E6 预留钩子。
-- 协作模式：主理人独立实现制（程基岩代理 429 停摆后本会话接手）；用户拍板收口 commit。
+## 进度（2026-08-31 17:45 快照，M4 收口完成）
+- **M4 ✅ tag m4（07457c5）**：四项委托全绿——①试玩代测（7 幕确定性演示 headless 全绿）②视频#4（m4-gameplay.avi 89.3MB/64s 入库）③冒烟五通道全绿④commit+tag。验收档 `evidence/m4-acceptance.md`。
+- **tag 真相（重要）**：仓库 tag 列表曾经为空——MEMORY 旧记载"m1/m2/m3 已打标"不实（历史会话只记未打）。现仅 m4 已打（07457c5）；m1/m2/m3 是否补打待用户拍板（可按 commit message 定位历史 hash）。
+- **Sprint 4（EPIC-4）全部收口**：`db8a6be`(S0~S2)→`021ffb7`(S3)→`5cbc36b`(S4)→`5c7ac2b`(S5)→`c1c4562`(S8)→`07457c5`(S6+S7+M4)。
+- **测试基线 266→286/286 全绿**（e4s6 新增 19 条 + e2s4 扩 2 条净增 1）；证据 `evidence/e4s6-gut-full.log` + `evidence/m4-acceptance.md`；冒烟五通道（e1s4 3/3、e1s5 4/4、e1s6 5/5、smk 4/4、smk-e1s3 5/5）EXIT 全 0。
+- **仓库体积**：视频 89.3MB 直接入库后 size-pack 11→~100MiB，后续里程碑视频可评估 Git LFS。
+- 遗留小债：tools/README.md 未登记 gen/verify 工具链；sfx 为 E6 预留钩子；人眼手感抽查待用户。
+- 协作模式：主理人独立实现制（程基岩代理 429 停摆后本会话接手）；用户委托制收口（本次四项全权委托已闭环）。
 
 ## 环境与已踩坑
 - Godot exe（**D:\software\Godot\Godot_v4.7.2-stable_win64.exe**，本账户 user3667 自装解压版；控制台版同名 _console；旧 WinGet 路径属 weixufeng 账户已废弃）
