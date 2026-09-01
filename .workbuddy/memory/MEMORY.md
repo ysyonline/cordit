@@ -34,7 +34,7 @@
 
 ## 进度（2026-08-31 17:45 快照，M4 收口完成）
 - **M4 ✅ tag m4（07457c5）**：四项委托全绿——①试玩代测（7 幕确定性演示 headless 全绿）②视频#4（m4-gameplay.avi 89.3MB/64s 入库）③冒烟五通道全绿④commit+tag。验收档 `evidence/m4-acceptance.md`。
-- **tag 真相（重要）**：仓库 tag 列表曾经为空——MEMORY 旧记载"m1/m2/m3 已打标"不实（历史会话只记未打）。现仅 m4 已打（07457c5）；m1/m2/m3 是否补打待用户拍板（可按 commit message 定位历史 hash）。
+- **tag 真相（重要）**：仓库 tag 列表曾经为空——MEMORY 旧记载"m1/m2/m3 已打标"不实（历史会话只记未打）。**2026-09-01 用户拍板补齐：m1=f9840ed、m2=1b61358、m3=72e1354（+m4=07457c5），四 tag 已全部推送远程**。
 - **Sprint 4（EPIC-4）全部收口**：`db8a6be`(S0~S2)→`021ffb7`(S3)→`5cbc36b`(S4)→`5c7ac2b`(S5)→`c1c4562`(S8)→`07457c5`(S6+S7+M4)。
 - **测试基线 266→286/286 全绿**（e4s6 新增 19 条 + e2s4 扩 2 条净增 1）；证据 `evidence/e4s6-gut-full.log` + `evidence/m4-acceptance.md`；冒烟五通道（e1s4 3/3、e1s5 4/4、e1s6 5/5、smk 4/4、smk-e1s3 5/5）EXIT 全 0。
 - **仓库体积**：视频 89.3MB 直接入库后 size-pack 11→~100MiB，后续里程碑视频可评估 Git LFS。
