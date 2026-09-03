@@ -1,0 +1,22 @@
+{
+  "events": {
+    "npc_chase_kid": {
+      "conditions": {},
+      "actions": [
+        { "type": "dialogue", "id": { "0": "dlg_npc_03_chase_kid", "1": "dlg_npc_03_chase_kid_p12" } }
+      ]
+    },
+    "npc_smith": {
+      "conditions": {},
+      "actions": [
+        { "type": "dialogue", "id": { "0": "dlg_npc_05_smith", "1": "dlg_npc_05_smith_p12" } }
+      ]
+    },
+    "npc_traveler": {
+      "conditions": {},
+      "actions": [
+        { "type": "dialogue", "id": { "0": "dlg_npc_02_traveler", "1": "dlg_npc_02_traveler_p12" } }
+      ]
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+    "dlg_npc_08_prayer_woman":  {
+                                    "start":  {
+                                                  "speaker":  "祈祷的大婶",
+                                                  "text":  "今天也是平安的一天，感谢女神。你也来添一炷香吗？",
+                                                  "next":  "END"
+                                              }
+                                }
+}

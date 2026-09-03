@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[MainController] 常驻根就绪：Main / World / UILayer(CanvasLayer) + FadeMask —— 架构 A4
+[SceneRouter] 受理切换 -> res://scenes/maps/town.tscn
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：8 文件 / 20 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[SceneRouter] 装载完成 -> res://scenes/maps/town.tscn
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[TempPlayerMount] 玩家已挂载 -> YSorted/Player @ (96.0, 160.0)（脚底）
+[WhiteBoxMap] 装载完成：map_a（显示色 (0.25, 0.45, 0.3, 1.0)）
+[E1S4-1] PASS: 玩家挂载于 YSorted，脚底原点 @ (96.0, 160.0)
+[E1S4-2] PASS: 1s 右移 72.0px（≈72px/s = 4.5tile/s），停注即停
+[E1S4-3] PASS: 撞墙停住 x=266.0（墙左缘 272），无穿墙无漂移
+[E1S4] 汇总：3/3 PASS
+EXIT=0

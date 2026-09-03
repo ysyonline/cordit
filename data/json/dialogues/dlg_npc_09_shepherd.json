@@ -1,0 +1,9 @@
+{
+    "dlg_npc_09_shepherd":  {
+                                "start":  {
+                                              "speaker":  "牧羊少年",
+                                              "text":  "咩——别跑别跑！唉，数羊比赶羊还累。",
+                                              "next":  "END"
+                                          }
+                            }
+}

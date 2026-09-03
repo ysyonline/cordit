@@ -1,0 +1,37 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[M5Demo] 启动：M5 收口自动演示（对话事件/Boss 锚点/I5 全序列，禁随机）
+[M5Demo] 第 1 幕：装载 town（R2 初始场景）
+[SceneRouter] 受理切换 -> res://scenes/maps/town.tscn
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：8 文件 / 20 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[SceneRouter] 装载完成 -> res://scenes/maps/town.tscn
+[M5Demo][walk] 开始 -> (488.0, 318.0)（起点 (192.0, 640.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (488.0, 318.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (488.0, 318.0)（历时 3.0s stuck=0.52）
+[M5Demo] 交互键注入（Z）：真实分派链已触发
+[M5Demo] 翻页键注入（Z）
+[M5Demo] 翻页键注入（Z）
+[M5Demo] 第 2 幕：走向南门（触发区中心 (208.0, 760.0)）
+[M5Demo][walk] 开始 -> (200.0, 736.0)（起点 (488.0, 318.0)）
+[M5Demo][walk] 结束 -> (201.0586, 732.3817)（历时 3.9s stuck=0.00）
+[M5Demo][walk] 开始 -> (208.0, 760.0)（起点 (201.0586, 732.3817)）
+[SceneRouter] 受理切换 -> res://scenes/maps/road.tscn
+[TriggerTeleport] 跨图传送 tp_town_to_road -> road（受理=true）
+[M5Demo][walk] 结束 -> (206.9087, 755.6581)（历时 0.2s stuck=0.00）
+[VisibleEnemy] 就绪：road_moth_01（编组 b1_moth）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_01（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_02（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[MapEvents] road 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] road 装配完成：传送触发器 2 处
+[SceneRouter] 装载完成 -> res://scenes/maps/road.tscn
+[M5Demo] 期望日志：跨图落盘应已发生：[AutosaveNotifier] road + SaveManager 存档
+[M5Demo] 第 3 幕：road 东缘南下（敌人带 x≈224/288，本线 x=608 东缘）
+[M5Demo][walk] 开始 -> (608.0, 64.0)（起点 (384.0, 64.0)）

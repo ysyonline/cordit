@@ -1,0 +1,9 @@
+{
+    "dlg_npc_10_housewife":  {
+                                 "start":  {
+                                               "speaker":  "主妇卡娜",
+                                               "text":  "今天的菜价又贵了……哎，小伙子你要买菜吗？给你挑新鲜的。",
+                                               "next":  "END"
+                                           }
+                             }
+}

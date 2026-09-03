@@ -479,10 +479,12 @@ func test_数据表脚本无场景依赖_A1铁律3() -> void:
 					"%s 出现场景依赖：%s" % [file, stripped])
 			assert_eq(stripped.find("$"), -1,
 					"%s 出现节点取址符 $：%s" % [file, stripped])
-	# 10 = 7 个表类（角色/技能/敌人/掉落/道具/编组/经验曲线）
+	# 13 = 7 个表类（角色/技能/敌人/掉落/道具/编组/经验曲线）
 	#   + 1 个装载器 data_tables.gd
 	#   + 1 个数据桥 battle_units.gd（E3-S2 新增：数值表 → 战斗单位字典）
 	#   + 1 个行为目录类 enemy_action_catalog.gd（v1.1 倍率迁 .tres 配套）
+	#   + 3 个事件系统件（E5-S2：schema 校验器在 dialogue 域不算此处，
+	#     loader/executor 在 events 域——见 test_e5s2；本目录仍为纯数值域）
 	# 这个计数是"目录里混进无关脚本"的哨兵——新增文件请同步更新并说明。
 	assert_eq(scanned, 10, "scripts/data/ 下应有 10 个 .gd（7 表类 + 装载器 + 数据桥 + 行为目录类）")
 
@@ -490,6 +492,8 @@ func test_数据表脚本无场景依赖_A1铁律3() -> void:
 func test_数值表不读JSON_A2分域() -> void:
 	# A2：数值定义走 Resource（.tres），内容文本（对话/事件）走 JSON，不混。
 	# 数值层任何一处引用 .json 都是分域被打通的信号。
+	# E5-S2 例外清单：本目录不再落事件系统件（loader/executor 在 scripts/events，
+	# 校验器在 scripts/dialogue——E5-S2 首轮放错域已纠正），故无放行名单。
 	var dir: DirAccess = DirAccess.open(DATA_SCRIPT_DIR)
 	for file: String in dir.get_files():
 		if not file.ends_with(".gd"):

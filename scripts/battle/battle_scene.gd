@@ -129,7 +129,7 @@ func _spawn_enemy_blocks(group_id: String) -> void:
 		count = MAX_BLOCKS  # 无编组信息时按满阵灰块显示，暴露"载荷异常"而非静默空白
 	for i: int in count:
 		var col: int = i % GRID_COLS
-		var row: int = i / GRID_COLS
+		var row: int = int(i / float(GRID_COLS))   # 浮点除法显式转 int——int/int 会打 INTEGER_DIVISION 告警（GUT 判 Unexpected Errors）
 		var block := ColorRect.new()
 		block.name = "Block%d" % i
 		var cell_w: float = BLOCK_SIZE + BLOCK_GAP

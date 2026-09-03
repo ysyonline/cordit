@@ -1,0 +1,46 @@
+{
+  "events": {
+    "npc_peddler": {
+      "conditions": {},
+      "actions": [
+        { "type": "dialogue", "id": "dlg_npc_06_peddler" }
+      ]
+    },
+    "npc_priest": {
+      "conditions": {},
+      "actions": [
+        { "type": "dialogue", "id": "dlg_npc_07_priest" }
+      ]
+    },
+    "npc_prayer_woman": {
+      "conditions": {},
+      "actions": [
+        { "type": "dialogue", "id": "dlg_npc_08_prayer_woman" }
+      ]
+    },
+    "npc_shepherd": {
+      "conditions": {},
+      "actions": [
+        { "type": "dialogue", "id": "dlg_npc_09_shepherd" }
+      ]
+    },
+    "npc_housewife": {
+      "conditions": {},
+      "actions": [
+        { "type": "dialogue", "id": "dlg_npc_10_housewife" }
+      ]
+    },
+    "npc_porter": {
+      "conditions": {},
+      "actions": [
+        { "type": "dialogue", "id": "dlg_npc_11_porter" }
+      ]
+    },
+    "npc_elder": {
+      "conditions": {},
+      "actions": [
+        { "type": "dialogue", "id": "dlg_npc_12_elder" }
+      ]
+    }
+  }
+}

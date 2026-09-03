@@ -36,6 +36,10 @@ var content_points: Dictionary = {}
 ## E4-S6 传送触发器装配产物（Array[Area2D]，测试对表用）
 var teleports: Array = []
 
+## E5-S3 事件层装配产物（事件表 + 执行器；NPC 阶段对话与 E5-S4 剧情锚点共用）
+var event_loader: RefCounted = null
+var event_executor: RefCounted = null
+
 ## E1-S6 预载：对话系统三件套（runner / controller / 对话框场景 / NPC 场景）
 const DialogueRunnerScript := preload("res://scripts/dialogue/dialogue_runner.gd")
 const InteractionControllerScript := preload("res://scripts/events/interaction_controller.gd")
@@ -43,10 +47,19 @@ const DialogueBoxScene := preload("res://scenes/ui/dialogue_box.tscn")
 const NpcScene := preload("res://scenes/npc/npc.tscn")
 const TeleportAssembler := preload("res://scripts/events/teleport_assembler.gd")
 const AutosaveNotifier := preload("res://scripts/events/autosave_notifier.gd")
+## E5-S3 事件层（NPC 阶段对话：交互事件按 phase 映射选对话，GDD §3.3）
+const EventLoader := preload("res://scripts/events/event_loader.gd")
+const EventExecutor := preload("res://scripts/events/event_executor.gd")
 
-## 本 Story 实体化的 NPC 锚点名（最小版：摆 2 个验证，其余 M1 前补——
-## 命名 = E1-S5 验收锚点名，锚点 Marker2D 原样保留不删）。
-const SPAWN_NPC_IDS: Array[String] = ["npc_01_innkeeper", "npc_04_guard"]
+## 本 Story 实体化的 NPC 锚点名（E5-S3 起全量 12 个：6 个配额 NPC 带阶段
+## 增量事件，其余 6 个单阶段事件——文案占位，S4 剧情线补正稿）。
+## E1-S6 冒烟对 NPC 实体数的断言只点 npc_01/npc_04 两个（在位判定），扩到
+## 12 不破冒烟；锚点 Marker2D 原样保留不删（验收物）。
+const SPAWN_NPC_IDS: Array[String] = [
+	"npc_01_innkeeper", "npc_02_traveler", "npc_03_chase_kid", "npc_04_guard",
+	"npc_05_smith", "npc_06_peddler", "npc_07_priest", "npc_08_prayer_woman",
+	"npc_09_shepherd", "npc_10_housewife", "npc_11_porter", "npc_12_elder",
+]
 
 
 func _ready() -> void:
@@ -99,12 +112,21 @@ func _assemble_dialogue_system(player: CharacterBody2D) -> void:
 	dialogue_runner.set_script(DialogueRunnerScript)
 	ui_host.add_child(dialogue_runner)
 	dialogue_runner.setup(box, player)
-	# ④ 交互轮询器（挂本地图）
+	# ③' E5-S3 事件层：事件表装载 + 执行器（runner 注入 dialogue 动作与
+	# battle 收束消费面；装载失败仅日志，NPC 交互退回兼容路径不炸图）
+	event_loader = EventLoader.new()
+	var load_failed: Array[String] = event_loader.load_all()
+	if not load_failed.is_empty():
+		push_warning("[TownMap] 事件文件加载失败：%s（对应事件不可触发）" % [load_failed])
+	event_executor = EventExecutor.new()
+	event_executor.setup(dialogue_runner)
+	# ④ 交互轮询器（挂本地图）+ 事件层注入（NPC 交互按 phase 映射选对话）
 	interaction_controller = Node.new()
 	interaction_controller.name = "InteractionController"
 	interaction_controller.set_script(InteractionControllerScript)
 	add_child(interaction_controller)
 	interaction_controller.setup(player, dialogue_runner)
+	interaction_controller.setup_events(event_loader, event_executor)
 
 
 func _apply_limits(cam: Camera2D, rect: Rect2i) -> void:

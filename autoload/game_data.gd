@@ -49,7 +49,8 @@ var gold: int = 0
 ## 当前剧情阶段（Cut 清单外唯一的状态机制，只需一个 int）
 var story_phase: int = 0
 
-## 全局剧情标志集合（事件脚本 set_flag / check_flag 的存取处，键为字符串）
+## 全局剧情标志集合（事件脚本 set_flag 动作的存取处，键为字符串；条件判定
+## 走事件级 conditions 的 flag / not_flag 键，动作白名单见 GDD §3.2）
 var flags: Dictionary = {}
 
 ## 已开启宝箱集合（存宝箱 event_id，Array 去重约定）

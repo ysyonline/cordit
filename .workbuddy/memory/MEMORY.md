@@ -32,14 +32,17 @@
 - **DEFEAT 读档**（E4-S7）：load_save() → last_loaded.map/position → MAP_SCENE_PATHS 短名→路径 → 回置存档点+免疫 0.5s；GameData 随 _restore 整体回滚；读档失败兜底回暂存图+告警。
 - **R2 已落地**：INITIAL_SCENE_PATH=town.tscn；R1 已落地：town 南门栅栏已拆（gen_town.py 正本路径，verify_town L125 断言已反转）。
 
-## 进度（2026-08-31 17:45 快照，M4 收口完成）
-- **M4 ✅ tag m4（07457c5）**：四项委托全绿——①试玩代测（7 幕确定性演示 headless 全绿）②视频#4（m4-gameplay.avi 89.3MB/64s 入库）③冒烟五通道全绿④commit+tag。验收档 `evidence/m4-acceptance.md`。
+## 进度（2026-09-03 快照，M5 demo 全绿待收口）
+- **M5 收口四件套**：①demo 全绿 ✅（dryrun10 PASS + GUT 415/415，见 2026-09-03.md）→ ②录视频 m5-gameplay.avi（tools/record_m5_gameplay.bat 待写，镜像 M4；avi 已配 LFS）→ ③验收档 m5-acceptance.md → ④commit+tag m5（须用户确认）。**新会话从②开始**。
+- **Sprint 5（EPIC-5 对话/事件层）全部完成**：S1-S5 五 Story + E5-QA PASS + GUT 基线 286→**415/415**（+129 条）。测试证据 evidence/e5s*-gut-s*.log、qa-e5-*。
+- **M5 demo 生产级修复（本会话，勿翻案）**：①Router `change_scene` 每次受理**无条件覆写暂存位**——切场景传空载荷会清掉先前暂存的完整 payload（demo 捕获重传规避；生产侧无人触发此坑）；②ruins_f3 装配 runner 注入改直取 `SceneRouter.global_event_executor`（成员变量在后续装配函数才赋值，恒假判断）；③Router 对 `_from_event_battle` 哨兵载荷直通跳过（桥是事件战斗唯一受理转发方，防双切换竞态）。
+- **M4 ✅ tag m4（07457c5）**：四项委托全绿。验收档 `evidence/m4-acceptance.md`。
 - **tag 真相（重要）**：仓库 tag 列表曾经为空——MEMORY 旧记载"m1/m2/m3 已打标"不实（历史会话只记未打）。**2026-09-01 用户拍板补齐：m1=f9840ed、m2=1b61358、m3=72e1354（+m4=07457c5），四 tag 已全部推送远程**。
 - **Sprint 4（EPIC-4）全部收口**：`db8a6be`(S0~S2)→`021ffb7`(S3)→`5cbc36b`(S4)→`5c7ac2b`(S5)→`c1c4562`(S8)→`07457c5`(S6+S7+M4)。
-- **测试基线 266→286/286 全绿**（e4s6 新增 19 条 + e2s4 扩 2 条净增 1）；证据 `evidence/e4s6-gut-full.log` + `evidence/m4-acceptance.md`；冒烟五通道（e1s4 3/3、e1s5 4/4、e1s6 5/5、smk 4/4、smk-e1s3 5/5）EXIT 全 0。
-- **仓库体积**：视频 89.3MB 直接入库后 size-pack 11→~100MiB，后续里程碑视频可评估 Git LFS。
+- **仓库体积**：视频 89.3MB 直接入库后 size-pack 11→~100MiB；**2026-09-03 已配 `*.avi filter=lfs`**（.gitattributes），旧 m1-m4 avi 显示 133 bytes 是 filter 效应。
 - 遗留小债：tools/README.md 未登记 gen/verify 工具链；sfx 为 E6 预留钩子；人眼手感抽查待用户。
-- 协作模式：主理人独立实现制（程基岩代理 429 停摆后本会话接手）；用户委托制收口（本次四项全权委托已闭环）。
+- 协作模式：主理人独立实现制（成员代理 429 停摆后接手）；用户委托制收口。
+- **M6 后续（EPIC-6，17.5h）**：菜单三页/胜利结算升级/逃跑失败结算/队员聊天/剧情实写一批；**M7（EPIC-7，15h）**：数值平衡三问/剧情收尾/Windows 导出包。
 
 ## 环境与已踩坑
 - Godot exe（**D:\software\Godot\Godot_v4.7.2-stable_win64.exe**，本账户 user3667 自装解压版；控制台版同名 _console；旧 WinGet 路径属 weixufeng 账户已废弃）

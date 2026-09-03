@@ -35,6 +35,11 @@ const SNAPSHOT_LINA: Dictionary = {
 var _party_backup: Array = []
 var _cleared_backup: Array = []
 var _flags_backup: Dictionary = {}
+## 【E5-S3 修】story_phase 纳入快照：DEFEAT 读档用例直写 phase=7 并经 load_save
+## 回滚到 7，本字段不备份还原时值会泄漏给后续所有套件（E5-S3 全量跑实测：
+## 泄漏经 e4s1/e4s5/e4s8 的 before_all 接力放大，致 e5s3 b2/d2/d4/e1 四测
+## "phase=0 选了 p12 档"集体挂——根因 B 正本，此处即修复落点）。
+var _phase_backup: int = 0
 
 ## 每条用例的 handler 实例（直驱消费方法）
 var _handler: Node = null
@@ -51,6 +56,7 @@ func before_all() -> void:
 			"mp": c.mp, "max_mp": c.max_mp})
 	_cleared_backup = (GameData.cleared_enemy_set as Array).duplicate()
 	_flags_backup = GameData.flags.duplicate()
+	_phase_backup = GameData.story_phase   # 【E5-S3 修】见 _phase_backup 注
 
 
 func after_all() -> void:
@@ -65,6 +71,7 @@ func after_all() -> void:
 		c.max_mp = b["max_mp"]
 	GameData.cleared_enemy_set = _cleared_backup.duplicate()
 	GameData.flags = _flags_backup.duplicate()
+	GameData.story_phase = _phase_backup   # 【E5-S3 修】phase 泄漏堵口
 
 
 func before_each() -> void:

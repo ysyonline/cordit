@@ -1,0 +1,106 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[M5Demo] 启动：M5 收口自动演示（对话事件/Boss 锚点/I5 全序列，禁随机）
+[M5Demo] 已清除旧 demo 存档：user://save_m5_demo.json
+[M5Demo] 第 1 幕：装载 town（R2 初始场景）
+[SceneRouter] 受理切换 -> res://scenes/maps/town.tscn
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：8 文件 / 20 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[SceneRouter] 装载完成 -> res://scenes/maps/town.tscn
+[M5Demo][walk] 开始 -> (488.0, 318.0)（起点 (192.0, 640.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (488.0, 318.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (488.0, 318.0)（历时 3.0s stuck=0.52）
+[M5Demo] 交互键注入（Z）：真实分派链已触发
+[M5Demo] 翻页键注入（Z）
+[M5Demo] 翻页键注入（Z）
+[M5Demo] 第 2 幕：走向南门（触发区中心 (208.0, 760.0)）
+[M5Demo][walk] 开始 -> (200.0, 736.0)（起点 (488.0, 318.0)）
+[M5Demo][walk] 结束 -> (201.0586, 732.3817)（历时 3.9s stuck=0.00）
+[M5Demo][walk] 开始 -> (208.0, 760.0)（起点 (201.0586, 732.3817)）
+[SceneRouter] 受理切换 -> res://scenes/maps/road.tscn
+[TriggerTeleport] 跨图传送 tp_town_to_road -> road（受理=true）
+[M5Demo][walk] 结束 -> (206.9087, 755.6581)（历时 0.2s stuck=0.00）
+[VisibleEnemy] 就绪：road_moth_01（编组 b1_moth）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_01（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_02（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[MapEvents] road 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] road 装配完成：传送触发器 2 处
+[SceneRouter] 装载完成 -> res://scenes/maps/road.tscn
+[M5Demo] 期望日志：跨图落盘应已发生：[AutosaveNotifier] road + SaveManager 存档
+[M5Demo] 第 3 幕：road 东缘南下（敌人带 x≈224/288，本线 x=608 东缘）
+[M5Demo][walk] 开始 -> (608.0, 64.0)（起点 (384.0, 64.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (608.0, 64.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (608.0, 64.0)（历时 1.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (608.0, 1000.0)（起点 (608.0, 64.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (608.0, 1000.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (608.0, 1000.0)（历时 1.6s stuck=0.52）
+[M5Demo][walk] 开始 -> (384.0, 1024.0)（起点 (608.0, 1000.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (384.0, 1024.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (384.0, 1024.0)（历时 0.6s stuck=0.52）
+[SceneRouter] 受理切换 -> res://scenes/maps/ruins_f1.tscn
+[TriggerTeleport] 跨图传送 tp_road_to_f1 -> ruins_f1（受理=true）
+[VisibleEnemy] 就绪：ruins_f1_salamander（编组 b3_ruin_mix）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：ruins_f1_crystal（编组 b3_ruin_mix）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[MapEvents] ruins_f1 装配完成：宝箱 3 + 调查 4
+[TeleportAssembler] ruins_f1 装配完成：传送触发器 2 处
+[SceneRouter] 装载完成 -> res://scenes/maps/ruins_f1.tscn
+[M5Demo] 期望日志：road→f1 跨图应已触发：tp_road_to_f1
+[M5Demo] 第 4 幕：f1 东缘北上（敌带 (20,22)/(36,25)，本线 x=440）
+[M5Demo][walk] 开始 -> (440.0, 640.0)（起点 (448.0, 56.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (440.0, 640.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (440.0, 640.0)（历时 1.9s stuck=0.52）
+[M5Demo][walk] 开始 -> (448.0, 704.0)（起点 (440.0, 640.0)）
+[SceneRouter] 受理切换 -> res://scenes/maps/ruins_f2.tscn
+[TriggerTeleport] 跨图传送 tp_f1_to_f2 -> ruins_f2（受理=true）
+[M5Demo][walk] 结束 -> (447.4421, 699.5367)（历时 0.4s stuck=0.00）
+[VisibleEnemy] 就绪：ruins_f2_guardian（编组 b4_guardian）巡逻点 0 个 初始态 GUARD
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[MapEvents] ruins_f2 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] ruins_f2 装配完成：传送触发器 2 处
+[SceneRouter] 装载完成 -> res://scenes/maps/ruins_f2.tscn
+[M5Demo] 期望日志：f1→f2 跨图应已触发：tp_f1_to_f2
+[M5Demo] 第 5 幕：f2 西环（B4 定守 (23,24) 正中，本线绕 V3 西缘）
+[M5Demo][walk] 开始 -> (680.0, 64.0)（起点 (384.0, 40.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (680.0, 64.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (680.0, 64.0)（历时 0.9s stuck=0.52）
+[M5Demo][walk] 开始 -> (680.0, 420.0)（起点 (680.0, 64.0)）
+[M5Demo][walk] 结束 -> (680.0, 416.8011)（历时 2.4s stuck=0.00）
+[M5Demo][walk] 开始 -> (112.0, 420.0)（起点 (680.0, 416.8011)）
+[M5Demo][walk] 结束 -> (116.0129, 419.9774)（历时 3.9s stuck=0.00）
+[M5Demo][walk] 开始 -> (112.0, 664.0)（起点 (116.0129, 419.9774)）
+[M5Demo][walk] 结束 -> (112.0667, 659.9432)（历时 1.7s stuck=0.00）
+[M5Demo][walk] 开始 -> (376.0, 664.0)（起点 (112.0667, 659.9432)）
+[M5Demo][walk] 结束 -> (371.2364, 663.9268)（历时 1.8s stuck=0.00）
+[M5Demo][walk] 开始 -> (384.0, 768.0)（起点 (371.2364, 663.9268)）
+[SceneRouter] 受理切换 -> res://scenes/maps/ruins_f3.tscn
+[TriggerTeleport] 跨图传送 tp_f2_to_f3 -> ruins_f3（受理=true）
+[M5Demo][walk] 结束 -> (383.5069, 763.9792)（历时 0.7s stuck=0.00）
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[MapEvents] ruins_f3 装配完成：宝箱 1 + 调查 2
+[TeleportAssembler] ruins_f3 装配完成：传送触发器 1 处
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：8 文件 / 20 事件（失败 0）
+[RuinsF3Map] Boss 锚点装配完成：story_boss_pre（交互键，事件 story_boss_pre）
+[SceneRouter] 装载完成 -> res://scenes/maps/ruins_f3.tscn
+[M5Demo] 期望日志：f2→f3 跨图应已触发：tp_f2_to_f3
+[M5Demo] 第 6 幕：走向棺前锚点 (312,568)，面北交互
+[M5Demo][walk] 开始 -> (312.0, 584.0)（起点 (320.0, 40.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (312.0, 584.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (312.0, 584.0)（历时 1.7s stuck=0.52）
+[M5Demo] 交互键注入（Z）：真实分派链已触发
+[M5Demo] 翻页键注入（Z）
+[M5Demo] 翻页键注入（Z）
+[M5Demo] 期望日志：battle 挂起应已发生：[EventExecutor] battle b5_core + 桥转发
+[M5Demo] 第 7 幕：切 _m5_battle_host（真实 BattleCommand+UI，VICTORY 剧本）
+[SceneRouter] payload 校验失败：缺字段 "return_map"；缺字段 "return_position"；缺字段 "defeat_enemy_uid"
+[SceneRouter] 拒绝切换到 "res://evidence/_m5_battle_host.tscn"：BattlePayload 不合法（明细见上一行）

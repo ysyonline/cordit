@@ -1,0 +1,5 @@
+{
+  "dlg_innkeeper_p12": {
+    "start": { "speaker": "客栈老板", "text": "听说遗迹那边出了大事？你们可要小心啊。", "next": "END" }
+  }
+}

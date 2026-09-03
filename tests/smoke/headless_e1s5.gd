@@ -26,8 +26,11 @@ const WAYPOINTS: Array = [
 	# 到 (9,9) 才东行汇入北街——彻底避开 row18-19 的门 trigger 带（y∈[288,304]）。
 	# (9,19)→(12,19) 东行接北街的路废弃（停位容差散布会擦到 trigger）。
 	Vector2i(12, 34), Vector2i(9, 34), Vector2i(9, 26), Vector2i(9, 9), Vector2i(12, 9), # L1a+L1b
-	# L3 绕 B4：B4 足迹 (42,13)-(47,17)，col48 无墙。绕行走 col 48，
-	# 南下直接下到 row19（市场街）再西行回 (44,19)——row18 停位偏北会擦 row17 墙。
+	# L2 北街东行【E5-S3 绕行】：NPC 全量实体化后，神父 npc_07_priest 锚定 (24,9)
+	# （施工单 3.2 布局 + e1s5 A3 对表冻结坐标，不可挪），其脚部碰撞盒
+	# y∈[146,152] 正卡 row9 行走带 → 抬升行 8 绕行（col20 上 / col28 回）。
+	# 行 8 段终点 col28，远离祈祷女 npc_08 (32,8) 的同带碰撞盒 x∈[508,532]。
+	Vector2i(20, 9), Vector2i(20, 8), Vector2i(28, 8), Vector2i(28, 9),                    # L2 绕神父
 	Vector2i(44, 9),                                                                        # L2
 	Vector2i(44, 12), Vector2i(48, 12), Vector2i(48, 19), Vector2i(44, 19),                # L3 绕 B4 东墙 x=48
 	Vector2i(60, 19),                                                                       # L4（衔接 row19 主街）
@@ -36,12 +39,20 @@ const WAYPOINTS: Array = [
 	# → ☆观位(58,20) → 回 (60,19)。绕开斜排树带 (57,20)/(58,21)/(60,21)。
 	Vector2i(55, 19), Vector2i(55, 24), Vector2i(55, 26), Vector2i(61, 26), Vector2i(61, 27), Vector2i(62, 22), Vector2i(62, 20), Vector2i(58, 20), Vector2i(60, 19),
 	Vector2i(12, 20),                                                                       # L6 西行
-	Vector2i(12, 28), Vector2i(24, 28),                                                     # L7+L8
+	# L7 南下【E5-S3 绕行】：长者 npc_12_elder 锚定 (12,24)（施工单 3.2 + A3 冻结），
+	# 脚部碰撞盒 y∈[380,386] 正卡 W街 col12 南下行走带 → 西移 col11 绕行（row20 下 / row28 回）。
+	Vector2i(11, 20), Vector2i(11, 28), Vector2i(12, 28),
+	Vector2i(24, 28),                                                     # L7+L8
 	# L9 绕喷泉（喷泉本体 (27,27)-(28,28) 全墙）：西侧 (26,28) → 北上 (26,26) →
 	# 东行 row26 越顶 (29,26) → 南下 (29,31)（脱喷泉 y 带）→ 西移 (28,31) → L10 南下
 	Vector2i(26, 28), Vector2i(26, 26), Vector2i(29, 26), Vector2i(29, 31), Vector2i(28, 31), # L9 绕喷泉
 	Vector2i(28, 36),                                                     # L10
-	Vector2i(53, 35), Vector2i(12, 36), Vector2i(12, 44), Vector2i(12, 40),              # L11+L12+L13 回出生点
+	# L11 西行【E5-S3 绕行】：主妇 npc_10_housewife 锚定 (16,35)（A3 冻结），
+	# 脚部碰撞盒 y∈[562,568] 擦 row35 行走带 → 先沿 row36 走带西行（y=584，
+	# 离盒 16px），近主妇处微降行 37 再回——porter npc_11 (50,34) 同理其盒
+	# y∈[546,552] 在 row34 带，row36 带起点即避开。
+	Vector2i(53, 36), Vector2i(18, 36), Vector2i(18, 37), Vector2i(14, 37), Vector2i(12, 36),
+	Vector2i(12, 44), Vector2i(12, 40),              # L12+L13 回出生点
 ]
 const WALK_TPS := 4.5  # 4.5 tile/s
 
@@ -266,9 +277,10 @@ func _check_loop_walk(map: Node2D) -> void:
 	# 判定回到出生点附近（L13 经过 (12,40)）
 	var home := Vector2(12, 40) * 16.0 + Vector2(8, 8)
 	var home_ok: bool = player.position.distance_to(home) < 40.0
-	# 纯走计时口径 56~78s：勘误版 279T ≈ 62s 纯走 + 航点起停/避障横移开销 ~14s
-	# （27 个航点逐段加减速，比人手连续走慢，属导航开销非地图缺陷）
-	var time_ok: bool = elapsed >= 56.0 and elapsed <= 78.0
+	# 纯走计时口径 56~86s：勘误版 279T ≈ 62s 纯走 + 航点起停/避障横移开销 ~14s
+	# （27 个航点逐段加减速，比人手连续走慢，属导航开销非地图缺陷）；
+	# 【E5-S3 绕行 +8 航点（绕神父/绕长者）】上限放宽 8s（每航点起停≈1s 开销）
+	var time_ok: bool = elapsed >= 56.0 and elapsed <= 86.0
 	_mark(home_ok and time_ok, "A4",
-		"环线走通，回到出生点±40px，纯走 %.1fs（区间 56~78）" % elapsed if home_ok and time_ok
+		"环线走通，回到出生点±40px，纯走 %.1fs（区间 56~86）" % elapsed if home_ok and time_ok
 		else "home_ok=%s（距离 %.0f）time=%.1fs" % [home_ok, player.position.distance_to(home), elapsed])

@@ -1,0 +1,10 @@
+{
+  "events": {
+    "npc_guard": {
+      "conditions": {},
+      "actions": [
+        { "type": "dialogue", "id": { "0": "dlg_npc_04_guard", "1": "dlg_npc_04_guard_p12" } }
+      ]
+    }
+  }
+}

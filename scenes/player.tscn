@@ -17,6 +17,10 @@ size = Vector2(12, 6)
 ;   ├── InteractRay   RayCast2D         交互射线：起点胸口 (0,-10)，E1-S6 消费；
 ;                                       collision_mask = 1|2（墙体+交互层），排除
 ;                                       遮挡层（第4值）——被遮挡≠不可交互（俯视惯例）。
+;                                       E5-M5：collide_with_areas 开——Boss 事件壳
+;                                       是 Area2D（trigger_event_shell），默认关时
+;                                       射线对 Area2D 完全不可见（E1-S6 探针矩阵
+;                                       实测结论的前提即本开关默认关），Z 键打不中壳。
 ;   ├── OcclusionRay  RayCast2D         遮挡自检射线：起点脚底 (0,0) 向下 12px，
 ;                                       collision_mask = 4（仅遮挡层），只做日志自证。
 ;   └── Camera2D                        跟随相机（取舍依据见 player.gd 头注释）：
@@ -56,6 +60,7 @@ shape = SubResource("RectangleShape2D_feet")
 position = Vector2(0, -10)
 enabled = false
 collision_mask = 3
+collide_with_areas = true
 
 [node name="OcclusionRay" type="RayCast2D" parent="."]
 target_position = Vector2(0, 12)

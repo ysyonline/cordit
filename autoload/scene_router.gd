@@ -62,6 +62,18 @@ const BATTLE_SCENE_PATH: String = "res://scenes/battle/battle.tscn"
 ## 之下——跨场景常驻 + 与 enemy_touched 接线同属一条 A5 数据流）
 const RESULT_HANDLER_SCRIPT: GDScript = preload("res://scripts/battle/battle_result_handler.gd")
 
+## 事件流战斗桥（E5-S5：battle 动作挂起事件流 → 战斗 → 胜利续行/失败清场，
+## 对话 GDD §6"对战斗"）。装配于本 Router 之下的理由同 RESULT_HANDLER：
+## battle_finished 时旧图已销毁，桥必须跨场景常驻，且同属 A5 数据流支线。
+const EVENT_BRIDGE_SCRIPT: GDScript = preload("res://scripts/events/battle_event_bridge.gd")
+
+## 全局事件执行器脚本（E5-S5：全项目共享的 EventExecutor 单实例）。地图
+## 侧（f3 装配）与事件流桥（跨场景续行）复用同一实例——battle 挂起的事件
+## 簿记随实例跨场景存活，这是"转场后胜利续行"的载体。普通 NPC/剧情事件
+## 语义不变：executor 本是无状态分派器，共享单例只新增 battle 挂起一种
+## 有状态形态（暂停闸在挂起期间拒绝一切新事件——E5-S5 语义）。
+const GLOBAL_EXECUTOR_SCRIPT: GDScript = preload("res://scripts/events/event_executor.gd")
+
 # ------------------------------------------------------------------
 # 运行时簿记（路由元数据，非游戏状态——游戏状态只在 GameData，见 A3）
 # ------------------------------------------------------------------
@@ -76,6 +88,16 @@ var _staged_payload: Dictionary = {}
 
 ## 切换进行中标志（防重入：淡入淡出期间再调 change_scene 一律拒绝并打日志）
 var _switching: bool = false
+
+
+## 全局事件执行器（E5-S5 单实例；BattleEventBridge 与地图装配共用——
+## battle 挂起簿记随实例跨场景存活）。公开供地图侧注入/测试断言；
+## RefCounted 无需手动释放，未用即无开销。
+var global_event_executor: RefCounted = null
+
+## 事件流战斗桥实例（E5-S5；_ready 装配后公开。地图侧/测试经此取簿记
+## 查询口 has_pending_event_battle，不经自动加载路径字符串查点）
+var battle_event_bridge: Node = null
 
 
 func _ready() -> void:
@@ -93,10 +115,26 @@ func _ready() -> void:
 	var handler: Node = RESULT_HANDLER_SCRIPT.new()
 	handler.name = "BattleResultHandler"
 	add_child(handler)
+	# E5-S5 接线：事件流战斗桥 + 全局事件执行器（对话 GDD §6"对战斗"——
+	# battle 动作挂起事件流交战斗，胜利续行/失败清场由桥分岔）。
+	# 全局 executor 先建：桥的簿记登记以它为宿主（enemy_touched 消费时读取）。
+	global_event_executor = GLOBAL_EXECUTOR_SCRIPT.new()
+	var bridge: Node = EVENT_BRIDGE_SCRIPT.new()
+	bridge.name = "BattleEventBridge"
+	add_child(bridge)
+	battle_event_bridge = bridge
 
 
 ## enemy_touched 消费：payload 即切换参数，四字段校验在 change_scene 内执行。
+## 【E5-S5 补丁（dryrun8 实锤）】事件战斗载荷带 _from_event_battle 哨兵时本端
+## 直通跳过——战斗转场由 battle_event_bridge 补全回程字段后再转发（真实受理方）。
+## 旧序缺陷：本端先于桥连接、盲受理空回程载荷开始 0.4s 切换（_switching 置位），
+## 桥的完整载荷反被防重入闸拒绝 → 战斗场景拿到残缺 payload、回图丢回程坐标。
+## 哨兵字段由 executor._start_battle 写入、桥转发前擦除，普通遇敌零感知。
 func _on_enemy_touched(payload: Dictionary) -> void:
+	if payload.get("_from_event_battle", false) == true:
+		print("[SceneRouter] 事件战斗载荷经桥转发处理，本端跳过（防双切换竞态）")
+		return
 	change_scene(BATTLE_SCENE_PATH, payload, true)
 
 

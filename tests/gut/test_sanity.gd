@@ -58,4 +58,4 @@ func test_sanity_所有测试脚本都能被GUT收集() -> void:
 		elif instance is RefCounted:
 			(instance as RefCounted).free()
 		checked += 1
-	assert_gte(checked, 8, "扫描到的测试脚本数应不少于既有数量（新增脚本请同步更新此哨兵值）")
+	assert_gte(checked, 11, "扫描到的测试脚本数应不少于既有数量（新增脚本请同步更新此哨兵值）")

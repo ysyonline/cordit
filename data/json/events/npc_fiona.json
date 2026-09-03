@@ -1,0 +1,10 @@
+{
+  "events": {
+    "npc_fiona": {
+      "conditions": {},
+      "actions": [
+        { "type": "dialogue", "id": { "0": "dlg_npc_13_fiona", "1": "dlg_npc_13_fiona_p12" } }
+      ]
+    }
+  }
+}

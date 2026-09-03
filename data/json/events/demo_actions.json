@@ -1,0 +1,33 @@
+{
+  "events": {
+    "ev_demo_heal_save": {
+      "conditions": {},
+      "actions": [
+        { "type": "heal" },
+        { "type": "save_point" }
+      ]
+    },
+    "ev_demo_loot": {
+      "conditions": { "not_flag": "demo_loot_taken" },
+      "actions": [
+        { "type": "give_item", "item_id": "potion_s", "count": 2 },
+        { "type": "set_flag", "flag": "demo_loot_taken" }
+      ]
+    },
+    "ev_demo_battle": {
+      "conditions": {},
+      "actions": [
+        { "type": "battle", "group": "b1_moth" }
+      ]
+    },
+    "ev_demo_full": {
+      "conditions": { "story_phase": [">=", 1] },
+      "actions": [
+        { "type": "wait", "duration": 0.5 },
+        { "type": "play_sfx", "sfx": "res://assets/audio/sfx/chest_open.ogg" },
+        { "type": "set_story_phase", "phase": 2 },
+        { "type": "dialogue", "id": "dlg_story_quest_accept" }
+      ]
+    }
+  }
+}

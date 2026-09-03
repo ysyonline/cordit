@@ -1,0 +1,10 @@
+{
+  "dlg_inn_rina_p0": {
+    "start": { "speaker": "莉娜", "portrait": "rina_smile",
+      "text": "委托书写得密密麻麻的……喂凯尔，游击士都是这么过日子的吗？",
+      "choices": [ {"text": "「大概吧。」", "next": "a1"},
+                   {"text": "「你想回去了？」", "next": "a2"} ] },
+    "a1": { "speaker": "莉娜", "portrait": "rina_normal", "text": "哦……那走吧。", "next": "END" },
+    "a2": { "speaker": "莉娜", "portrait": "rina_angry", "text": "才、才没有！走吧！", "next": "END" }
+  }
+}

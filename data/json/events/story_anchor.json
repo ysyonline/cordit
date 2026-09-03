@@ -1,0 +1,21 @@
+{
+  "events": {
+    "story_ruin_enter": {
+      "conditions": { "story_phase": [">=", 1] },
+      "actions": [
+        { "type": "dialogue", "id": "story_p2_ruin_enter" },
+        { "type": "set_story_phase", "phase": 2 }
+      ]
+    },
+    "story_boss_pre": {
+      "conditions": { "story_phase": [">=", 2] },
+      "actions": [
+        { "type": "dialogue", "id": "story_p3_boss_front" },
+        { "type": "battle", "group": "b5_core" },
+        { "type": "dialogue", "id": "story_p3_finale" },
+        { "type": "set_story_phase", "phase": 3 },
+        { "type": "save_point" }
+      ]
+    }
+  }
+}

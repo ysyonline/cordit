@@ -1,0 +1,78 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WARNING: The signal "enemy_touched" is declared but never explicitly used in the class.
+   at: GDScript::reload (res://autoload/event_bus.gd:13)
+WARNING: The signal "dialogue_finished" is declared but never explicitly used in the class.
+   at: GDScript::reload (res://autoload/event_bus.gd:16)
+WARNING: The signal "battle_finished" is declared but never explicitly used in the class.
+   at: GDScript::reload (res://autoload/event_bus.gd:20)
+WARNING: The signal "story_phase_changed" is declared but never explicitly used in the class.
+   at: GDScript::reload (res://autoload/event_bus.gd:23)
+WARNING: The signal "save_requested" is declared but never explicitly used in the class.
+   at: GDScript::reload (res://autoload/event_bus.gd:26)
+WARNING: The signal "map_ready" is declared but never explicitly used in the class.
+   at: GDScript::reload (res://autoload/event_bus.gd:29)
+WARNING: The variable "exp" has the same name as a built-in function.
+   at: GDScript::reload (res://scripts/data/enemy_data.gd:79)
+WARNING: "await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+   at: GDScript::reload (res://tests/smoke/headless_smk_e1s3.gd:26)
+WARNING: The local variable "before_child" is declared but never used in the block. If this is intended, prefix it with an underscore: "_before_child".
+   at: GDScript::reload (res://tests/smoke/headless_smk_e1s3.gd:98)
+[MainController] 常驻根就绪：Main / World / UILayer(CanvasLayer) + FadeMask —— 架构 A4
+WARNING: The class variable "_panel" is declared but never used in the class.
+   at: GDScript::reload (res://scripts/dialogue/dialogue_box.gd:43)
+   GDScript backtrace (most recent call first):
+       [0] change_scene (res://autoload/scene_router.gd:166)
+       [1] _load_initial_scene (res://scripts/main/main_controller.gd:51)
+       [2] _ready (res://scripts/main/main_controller.gd:32)
+WARNING: The local variable "consumed" is declared but never used in the block. If this is intended, prefix it with an underscore: "_consumed".
+   at: GDScript::reload (res://scripts/dialogue/dialogue_runner.gd:119)
+   GDScript backtrace (most recent call first):
+       [0] change_scene (res://autoload/scene_router.gd:166)
+       [1] _load_initial_scene (res://scripts/main/main_controller.gd:51)
+       [2] _ready (res://scripts/main/main_controller.gd:32)
+[SceneRouter] 受理切换 -> res://scenes/maps/town.tscn
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：8 文件 / 20 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[SceneRouter] 装载完成 -> res://scenes/maps/town.tscn
+[SceneRouter] 受理切换 -> res://tests/smoke/fixtures/map_a.tscn
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[TempPlayerMount] 玩家已挂载 -> YSorted/Player @ (96.0, 160.0)（脚底）
+[WhiteBoxMap] 装载完成：map_a（显示色 (0.25, 0.45, 0.3, 1.0)）
+[SceneRouter] 装载完成 -> res://tests/smoke/fixtures/map_a.tscn
+[SceneRouter] 受理切换 -> res://tests/smoke/fixtures/map_b.tscn
+[WhiteBoxMap] 装载完成：map_b（显示色 (0.45, 0.3, 0.5, 1.0)）
+[SceneRouter] 装载完成 -> res://tests/smoke/fixtures/map_b.tscn
+[SMK-08] PASS: 合法 payload 受理并完成切换 MapA→MapB，暂存载荷可取回
+[SceneRouter] payload 校验失败：缺字段 "enemy_group_id"；缺字段 "return_map"；缺字段 "return_position"；缺字段 "defeat_enemy_uid"
+[SceneRouter] 拒绝切换到 "res://tests/smoke/fixtures/map_b.tscn"：BattlePayload 不合法（明细见上一行）
+[SceneRouter] payload 校验失败：缺字段 "return_map"
+[SceneRouter] 拒绝切换到 "res://tests/smoke/fixtures/map_b.tscn"：BattlePayload 不合法（明细见上一行）
+[SceneRouter] payload 校验失败：类型错 "return_position"：应为 Vector2，实为 String
+[SceneRouter] 拒绝切换到 "res://tests/smoke/fixtures/map_b.tscn"：BattlePayload 不合法（明细见上一行）
+[SMK-09] PASS: 三种非法 payload 全部拒绝（拒绝日志见上，含缺字段/类型错区分）
+[SceneRouter] payload 校验失败：缺字段 "enemy_group_id"；缺字段 "return_map"；缺字段 "return_position"；缺字段 "defeat_enemy_uid"
+[SceneRouter] 拒绝切换到 "res://tests/smoke/fixtures/map_b.tscn"：BattlePayload 不合法（明细见上一行）
+[SceneRouter] 受理切换 -> res://tests/smoke/fixtures/map_a.tscn
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[TempPlayerMount] 玩家已挂载 -> YSorted/Player @ (96.0, 160.0)（脚底）
+[WhiteBoxMap] 装载完成：map_a（显示色 (0.25, 0.45, 0.3, 1.0)）
+[SceneRouter] 装载完成 -> res://tests/smoke/fixtures/map_a.tscn
+[SMK-10] PASS: 非法调用零副作用（World 未被破坏），后续合法切换正常到 MapA
+[SceneRouter] 受理切换 -> res://tests/smoke/fixtures/map_b.tscn
+[WhiteBoxMap] 装载完成：map_b（显示色 (0.45, 0.3, 0.5, 1.0)）
+[SceneRouter] 装载完成 -> res://tests/smoke/fixtures/map_b.tscn
+[SceneRouter] 受理切换 -> res://tests/smoke/fixtures/map_a.tscn
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[TempPlayerMount] 玩家已挂载 -> YSorted/Player @ (96.0, 160.0)（脚底）
+[WhiteBoxMap] 装载完成：map_a（显示色 (0.25, 0.45, 0.3, 1.0)）
+[SceneRouter] 装载完成 -> res://tests/smoke/fixtures/map_a.tscn
+[SMK-11] PASS: 两轮切换后 TestLabel 同实例存活（valid 且指针一致）
+[SMK-12] PASS: user:// 零存档/零游戏文件（仅引擎 logs），空壳无副作用
+[SMK-E1S3] 汇总：5/5 PASS

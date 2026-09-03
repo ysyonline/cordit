@@ -19,6 +19,10 @@ extends Node
 
 const TOWN_SCENE := preload("res://scenes/maps/town.tscn")
 const GUARD_NPC_ID := "npc_04_guard"
+## E5-S3 起 town 装配注入事件层：guard 交互走事件路径（npc_guard 事件，
+## phase=0 取 "0" 键），dialogue_finished 参数 = 映射解析出的对话脚本 id，
+## 不再是 npc_id（兼容路径 npc_id 语义由 GUT e5s3 d3 锁定）
+const GUARD_DLG_ID := "dlg_npc_04_guard"
 # guard 锚点 (504,440) = tile(31,27) 中心；玩家站东侧 1 格 tile(32,27)=(520,440)，
 # 面西射线 20px（胸口 y=430）落入 InteractShape（x∈[496,512] y∈[424,440]）。
 const GUARD_FACE_TILE := Vector2i(32, 27)
@@ -167,9 +171,9 @@ func _check_finish_and_signal() -> void:
 	for child in get_tree().root.get_node_or_null("Main/UILayer").get_children():
 		if child.has_method("set_text"):
 			box_closed = not child.visible
-	var sig_ok: bool = _received_count == 1 and _received_event_id == GUARD_NPC_ID
+	var sig_ok: bool = _received_count == 1 and _received_event_id == GUARD_DLG_ID
 	_pass_cond(idle and box_closed and sig_ok, "A3",
-			"收束：IDLE=%s 框关=%s dialogue_finished(1次)=\"%s\"" % [idle, box_closed, _received_event_id])
+			"收束：IDLE=%s 框关=%s dialogue_finished(1次)=\"%s\"（E5-S3 事件路径参数=映射脚本 id）" % [idle, box_closed, _received_event_id])
 	# 解锁后移动恢复：注入 RIGHT 0.5s，位移必须 > 0
 	_player.set_input_override(Vector2.RIGHT)
 	await get_tree().create_timer(0.5).timeout
@@ -185,7 +189,9 @@ func _check_finish_and_signal() -> void:
 # ------------------------------------------------------------------
 
 func _check_json_driven() -> void:
-	var path: String = "res://data/json/dialogues/%s.json" % GUARD_NPC_ID
+	# 【E5-S3】改文目标 = 事件路径实际开演的对话脚本（dlg_npc_04_guard.json，
+	# phase 映射 "0" 键正本）；旧 npc_04_guard.json 已是兼容路径孤儿档
+	var path: String = "res://data/json/dialogues/%s.json" % GUARD_DLG_ID
 	# 读原文（ResourceLoader 在编辑器管线内直接读 res:// 文本）
 	var original: String = FileAccess.get_file_as_string(path)
 	var parsed: Dictionary = JSON.parse_string(original)
@@ -205,9 +211,11 @@ func _check_json_driven() -> void:
 	await get_tree().create_timer(0.4).timeout  # 等 0.4s 哨兵串(14字)应已逐字显示 12 字
 	var got: String = _map.dialogue_runner.get_current_full_text()
 	var data_ok: bool = got == SENTINEL_TEXT
-	# 收束对话（start → warn 共 2 条：补完 + 翻页 ×2 后到达 END；多按一次
-	# 属 IDLE 态空按，runner 静默忽略——按键 4 次确保回 IDLE，恢复干净状态）
-	for i in range(4):
+	# 收束对话【E5-S3】按键数不按条目数硬编码：循环注入直到 IDLE（dlg_npc_04_guard
+	# 2 条目 = 4 按；上限 12 次防数据异常死循环，IDLE 态空按 runner 静默忽略）
+	for i in range(12):
+		if _map.dialogue_runner.is_idle():
+			break
 		_map.dialogue_runner.inject_interact_press()
 		await get_tree().process_frame
 	await get_tree().process_frame
@@ -220,8 +228,10 @@ func _check_json_driven() -> void:
 	await get_tree().process_frame
 	var restored: String = _map.dialogue_runner.get_current_full_text()
 	var restore_ok: bool = restored == original_text
-	# 收束（还原干净状态供后续回归；同上 4 次按键确保回 IDLE）
-	for i in range(4):
+	# 收束（还原干净状态供后续回归；同上循环到 IDLE）
+	for i in range(12):
+		if _map.dialogue_runner.is_idle():
+			break
 		_map.dialogue_runner.inject_interact_press()
 		await get_tree().process_frame
 	await get_tree().process_frame

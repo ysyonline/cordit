@@ -1,10 +1,16 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/dialogue/dialogue_box.gd" id="1_boxgd"]
 
-; ── 对话框 UI 装配（E1-S6 最小版，对话 GDD §4）────────────────────
-; 视口 640×360 底部面板；九宫格窗体/像素字体/继续箭头精修属后续 Story，
-; 本版用 ColorRect 面板 + 默认主题（headless 自验可跑，白盒可读）。
+[sub_resource type="StyleBoxFlat" id="0"]
+bg_color = Color(0.65098, 0.258824, 0.227451, 1)
+
+; ── 对话框 UI 装配（E5-S1 完整版，对话 GDD §4 + ui-layout-specs.md §二）────
+; 视口 640×360；主体窗锚定底部，冻结坐标 (16,244,608,108)（下边距 8）。
+; 五要素：名字栏(24,224,96,20 压窗上沿) / 头像窗(24,252,88,88 内嵌 48×48) /
+; 文本区(x∈[128,612]) / 继续箭头(600,336) / 选项窗(448,168,176,68)。
+; 白盒阶段用 Panel 色块落位；九宫格窗体/像素字体精修随美术线，
+; 坐标契约（§2.1 冻结值）不随精修变。
 ; 层级约定：实例化后挂在 Main/UILayer（layer=10）或测试树的 CanvasLayer 下，
 ; 不挂 World 层（UI 不随地图销毁，A4）。
 
@@ -14,7 +20,9 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -96.0
+offset_left = 16.0
+offset_top = -116.0
+offset_right = -16.0
 offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -29,36 +37,92 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Margin" type="MarginContainer" parent="Panel"]
+[node name="SpeakerBar" type="PanelContainer" parent="Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = -20.0
+offset_right = 104.0
+offset_bottom = 0.0
+theme_override_styles/panel = SubResource("0")
+[node name="SpeakerLabel" type="Label" parent="Panel/SpeakerBar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = ""
+vertical_alignment = 1
+
+[node name="PortraitFrame" type="Panel" parent="Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 96.0
+offset_bottom = 96.0
+
+[node name="PortraitRect" type="TextureRect" parent="Panel/PortraitFrame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextLabel" type="RichTextLabel" parent="Panel"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 12.0
+offset_right = 596.0
+offset_bottom = 96.0
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = false
+scroll_active = false
+text = ""
+
+[node name="ContinueHint" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 580.0
+offset_top = 84.0
+offset_right = 596.0
+offset_bottom = 100.0
+theme_override_font_sizes/font_size = 8
+text = "▼"
+horizontal_alignment = 2
+
+[node name="ChoicesWindow" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 448.0
+offset_top = -76.0
+offset_right = 624.0
+offset_bottom = -8.0
+
+[node name="Margin" type="MarginContainer" parent="ChoicesWindow"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 6
 
-[node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
+[node name="VBox" type="VBoxContainer" parent="ChoicesWindow/Margin"]
 layout_mode = 2
+theme_override_constants/separation = 8
 
-[node name="SpeakerLabel" type="Label" parent="Panel/Margin/VBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = ""
-
-[node name="TextLabel" type="RichTextLabel" parent="Panel/Margin/VBox"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/normal_font_size = 14
-bbcode_enabled = false
-scroll_active = false
-text = ""
-
-[node name="ContinueHint" type="Label" parent="Panel/Margin/VBox"]
+[node name="Choice0" type="Label" parent="ChoicesWindow/Margin/VBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
-text = "▼"
-horizontal_alignment = 2
+text = ""
+
+[node name="Choice1" type="Label" parent="ChoicesWindow/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = ""

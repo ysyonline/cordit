@@ -1,0 +1,11 @@
+{
+  "events": {
+    "story_quest_accept": {
+      "conditions": {},
+      "actions": [
+        { "type": "dialogue", "id": "story_p1_dispatch" },
+        { "type": "set_story_phase", "phase": 1 }
+      ]
+    }
+  }
+}

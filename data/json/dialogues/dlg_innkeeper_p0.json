@@ -1,0 +1,5 @@
+{
+  "dlg_innkeeper_p0": {
+    "start": { "speaker": "客栈老板", "text": "最近生意不好做哇……你要住店吗？", "next": "END" }
+  }
+}

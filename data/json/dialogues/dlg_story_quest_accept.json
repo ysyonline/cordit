@@ -1,0 +1,6 @@
+{
+  "dlg_story_quest_accept": {
+    "start": { "speaker": "", "text": "（委托所的木门在身后合上，菲奥拉把委托书递了过来。）", "next": "f1" },
+    "f1": { "speaker": "菲奥拉", "portrait": "", "text": "遗迹的异变越来越明显了。这趟委托，就拜托你们了。", "next": "END" }
+  }
+}

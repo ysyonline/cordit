@@ -1,0 +1,10 @@
+{
+  "events": {
+    "npc_innkeeper": {
+      "conditions": {},
+      "actions": [
+        { "type": "dialogue", "id": { "0": "dlg_npc_01_innkeeper", "1": "dlg_npc_01_innkeeper_p12" } }
+      ]
+    }
+  }
+}
