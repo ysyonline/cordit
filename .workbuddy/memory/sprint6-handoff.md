@@ -1,27 +1,41 @@
-# Sprint 6 会话交接文档（2026-09-04 13:10 归档）
+# Sprint 6 会话交接文档（2026-09-04 23:00 归档，T6 收口版）
 
-> 用途：本文件是 Sprint 6（EPIC-6 战斗结算升级 + 逃跑失败 + 菜单三页 + 聊天存档）的**会话交接正本**。
-> 新开会话时把此文件喂给主理人即可无损续跑。协作铁律：**每完成一任务停下汇报，用户确认后才进下一个；无指令不 commit。**
+> 用途：本文件是 Sprint 6 的**会话交接正本**。新开会话时把此文件喂给主理人即可无损续跑。
+> 协作铁律：**每完成一任务停下汇报，用户确认后才进下一个；无指令不 commit。**
 
-## 一、当前状态总览（2026-09-04 16:10 更新，T4 收口版）
+## 一、当前状态总览（2026-09-04 23:00 更新，T6 五件收口版）
 
-**Sprint 6 进度：T7 ✅ → T2 ✅ → T3 全部四步 ✅ → T4 全部三步 ✅（S4 收口）。当前测试基线 503/503 全绿 + demo dryrun PASS + 冒烟五通道满额。下一步 = T6（文策侧剧情实写，等用户在新窗口确认开工）。**
+**Sprint 6 进度：T7 ✅ → T2 ✅ → T3 ✅ → T4 ✅ → T6.1-6.5 全 ✅。当前测试基线 GUT 513/513（503 基线 + T6.5 新增 10 用例，Totals 实锤）。demo dryrun FAIL（T6.6 待修，见开工卡）。下一步 = T6.6（工程侧 demo 校准）→ T5（M6 收口）。**
 
-**已提交（2026-09-04，两笔）**：`65b524b` = feat(E6-S2,S3) 战斗侧（T7+T2）；第二笔 = feat(E6-S1,S4) 菜单/装备/聊天侧（T3+T4 全部，hash 见 git log）。工作区仅剩 .import CRLF 噪音。
+**E6-S5（剧情实写第一批）已全部完成**：P0 51 条 / P1 55 条 / NPC 总量 43（预算 42±10% 内）/ 聊天两段润色 / P0 孤儿脚本接线。全部文本零产品代码改动（测试适配除外）。
 
-| # | 任务（工具编号=Story） | 状态 | 基线 | 证据 |
+| # | 任务 | 状态 | 基线 | 证据/产物 |
 |---|------|------|------|------|
-| T7 | E6-S2 战结（骨架/EXP 事件流/多级连升+习得/掉落） | ✅ 收口 | 415→445 | evidence/e6s2-gut-t2*.log |
-| T2 | E6-S3 逃跑画面/残响中断/胜利回图自动存档 | ✅ 收口 | 445→460? | evidence/e6s3-gut-run1.log |
-| T3.1 | E6-S1① 菜单壳+状态页（C 键呼出/五项导航/门闸） | ✅ 收口 | 415→460 | evidence/e6s1-gut-t31.log |
-| T3.2 | E6-S1② 道具页（阶段门控过滤/使用写回/detox 地图态） | ✅ 收口 | 460→470 | evidence/e6s1-gut-t32.log |
-| T3.3 | E6-S1③④ 装备页（最小 schema/换装/伤害并项/存档 v3） | ✅ 收口（9/4） | 470→482 | evidence/e6s1-gut-t33.log |
-| T3.4 | E6-S1⑤ 集成验证（demo 回归+冒烟五通道） | ✅ 收口（9/4） | 482 全绿 | evidence/m6-t34-*.log 共 7 件 |
-| T4.1 | E6-S4① 菜单存读档项接线 SaveManager | ✅ 收口（9/4） | 482→488 | evidence/m6-t41-gut.log |
-| T4.2 | E6-S4② 队员聊天 2 段+位置触发点×2+JSON | ✅ 收口（9/4） | 488→503 | evidence/m6-t42-gut.log |
-| T4.3 | E6-S4③ road 触发区扩 3×2+最终集成验证 | ✅ 收口（9/4） | 503 全绿 | evidence/m6-t43-*.log 共 7 件 |
-| **T6** | **E6-S5 剧情实写第一批（P0 50 条+P1 55 条+NPC 42 条+热改跑对账）** | **⏳ 下一个（文策侧，等用户新窗口确认开工）** | — | 字数 350 封顶；文案含 T4.2 聊天 2 段【待润色】一并统稿 |
-| T5 | M6 收口（A8 行 6 全绿+试玩视频 #6+tag m6） | ⏳ 排队（依赖 T6） | — | commit/tag 前须用户发话 |
+| T7/T2/T3/T4 | 前四个 Story | ✅ 已提交（65b524b/08a9bc7） | — | 见 git log |
+| T6.1 | P0 主线 51 条（2 占位→实写） | ✅ 用户放行 | — | story_p0_intro.json |
+| T6.2 | P1 主线 55 条（road 第一次残响兑现） | ✅ 用户认收 | — | story_p1_dispatch.json |
+| T6.3 | NPC 总量 43（新增 20，零孤儿） | ✅ ⚠️phase2 档位待拍板 | — | dlg_npc_* 16 文件 |
+| T6.4 | 聊天润色+test_a3 适配 | ✅ | — | party_chat_*.json + test_m6t42.gd |
+| T6.5 | P0 孤儿脚本接线（事件+触发器+双守卫） | ✅ | 503→513 | evidence/t65-* 4 件 |
+| **T6.6** | **demo dryrun 驱动重校准** | **⏳ 下一个（工程侧）** | — | 见 §六开工卡 |
+| T5 | M6 收口（A8 行6 全绿+视频#6+tag m6） | ⏳ 排队（依赖 T6.6） | — | commit/tag 前须用户发话 |
+
+### 本窗口用户裁决记录（勿翻案）
+1. **g4「我们接了」保持原样**（P0 口头接单 vs GDD §3.3 冲突的折中已获认可；phase 语义由 P1 末尾 set_story_phase 1 把关）。
+2. **遗迹方位**：flavor_inv_town_02「北部」→「镇外」已修；全文零「北」字（lint 实测）。
+3. **P0 孤儿脚本立项 T6.5** → 程基岩直接做路线收口。
+4. **6 席阶段 NPC = GDD §3.3 版**（菲奥拉/客栈老板/追鸡孩子/铁匠/守卫/旅人），build-sheet 版作废。
+5. **P0/P1 语气均已放行**。
+6. **待拍板**：① T6.6 派工 ② phase 2 专属档要不要加（现 0/1 两档，加"2"档=6 条新文案+events 改动，主理人倾向接受两档）。
+
+### 本 Sprint 新增关键裁决（T6 五件，勿翻案）
+- **UI 行宽口径**：`design/ui/` §2.1 = 484px÷12px ≈ **40 字/行**；写作纪律=50 字软上限/60 硬红线；P0-P1 全部条目单行内（最长 39 字）。
+- **portrait 显式纪律**：dialogue_runner.gd 的 portrait 缺省沿用上一条 → **每条必须显式写 portrait**（三人 kyle_/rina_/mona_* 差分，NPC/旁白一律 "" 走头像窗隐藏降级）。P0/P1/T6.3 新写条目全覆盖；既有 01/04/13 日常档无该字段（无害，未动）。
+- **branch_endpoint 只走 1 跳**（max_steps=2 含起点）→ 分支尾巴只能 1 条即汇合。
+- **42 条=总量预算口径**：GDD §3.5 的 NPC 块预算是文本总量（现有 23 正稿+新增 20=43），非新增 42。
+- **set_story_phase 在事件层**（events/story_quest_accept.json：dialogue→set_story_phase(1)），对话 JSON 内无 phase 字段是正常的。
+- **T6.5 接线方案**：新事件 `data/json/events/story_intro.json`（not_flag story_p0_seen 一次性 + phase==0 + 双守卫 current_scene=="Main" && !has_save()）+ town.tscn 出生格 (192,640) 锚点 + town_map.gd +77 行程序化装配（A7 薄壳纪律，mask=16）；save_point 语义自洽=executor 置意图位→首次出镇 map_ready 落盘（出镇前退出=无档重演 P0）。
+- **demo FAIL 根因（勿误判为回归）**：文策 T6.3/T6.4 改变对话条数节奏（innkeeper_p12 1→3 条等），demo 自动驱动按键步数按旧节奏写死 → 收束超时挂到第 6 幕 → 第 8 幕 phase=3 时序错位（终态 phase=2≠3）。非 T6.5 引入（基线对照排除）、非内容质量问题。修复=T6.6 校准驱动。
 
 ## 二、本 Sprint 关键裁决（勿翻案）
 
@@ -70,33 +84,35 @@
 - **GUT 482/482**（28 脚本/8176 断言/29s）。
 - 证据 7 件：`evidence/m6-t34-{demo-dryrun,gut-full,smoke-smk,smoke-e1s4,smoke-e1s5,smoke-e1s6,smoke-smk_e1s3}.log`。
 
-## 五、工作区状态（2026-09-04 16:10 已提交）
+## 五、工作区状态（2026-09-04 23:00 收口提交版）
 
-- **Sprint 6 全部产物已提交两笔**：`65b524b` = feat(E6-S2,S3) 战斗侧（T7+T2）；第二笔 = feat(E6-S1,S4) 菜单/装备/聊天侧（T3+T4，含存档 v3、聊天 JSON、交接档）。HEAD 以 `git log --oneline -3` 实查为准。
-- 工作区仅剩 .import 大面积"改动"=CRLF 噪音（`git -c core.autocrlf=false diff` 零差异），沿 M4/M5 惯例永远剔除。
-- tag：m1=f9840ed/m2=1b61358/m3=72e1354/m4=07457c5/m5=b550126 均已推远程；**Sprint 6 两笔未推、未打 tag**（tag m6 留给 T5 收口时打）——push/tag 等用户发话。
+- **9/4 全天提交史**：`65b524b`=feat(E6-S2,S3) 战斗侧 → `08a9bc7`=feat(E6-S1,S4) 菜单/装备/聊天侧 → `39c47af` 等记忆 docs 笔 → 17:20 已 push（b550126..39c47af 验证过）。
+- **23:00 收口新增三笔**（T6 五件产物，本窗口用户授权"该提交的提交"）：① feat(E6-S5) 文策内容侧（story_p0/p1、dlg_npc_*×16、party_chat×2、flavor 方位修正、test_m6t42 适配）② feat(T6.5) 工程接线侧（story_intro.json、town.tscn、town_map.gd、test_t65、evidence/t65-*×4）③ docs(memory) 交接档更新。具体 hash 以 `git log --oneline -6` 实查为准。
+- 工作区仅剩 .import 大面积"改动"=CRLF 噪音（`git -c core.autocrlf=false diff` 零差异），沿惯例永远剔除。
+- tag：m1–m5 均已推远程；**tag m6 留给 T5 收口时打**。
 
-## 六、下一步 T6（E6-S5）开工卡
+## 六、下一步 T6.6（demo dryrun 驱动重校准）开工卡
 
-**范围**（正本 = production/epics/EPIC-6.md「E6-S5 剧情实写第一批」）：
-1. P0 开场+委托 50 条、P1 异变+出发 55 条主线文本实写 JSON。
-2. 6 NPC 阶段增量对话 42 条实写。
-3. 每拍写完进游戏跑一遍（JSON 热改兑现）；验收=条数对齐预算表 ±10% + 全程零代码改动替换占位。
-4. **顺手项**：T4.2 聊天 2 段文案带【待润色】前缀（party_chat_road_01/f2_01.json），T6 统稿时一并润色并删前缀（test_a3 只断言前缀标记，不锁文案内容）。
+**背景**：E6-S5 剧情实写改变了对话条数与节奏（innkeeper_p12 1→3 条、P0 2→51 条等），`evidence/_m5_auto_demo.tscn` 的自动驱动按键步数/等待窗按旧节奏写死 → npc_innkeeper_p12 收束超时（demo 中盘切入 phase=2，town 命中 p12 档）挂到第 6 幕 force_idle → 第 8 幕 set_story_phase(3) 时序错位，终态 FAIL（phase=2≠3，存档指纹同）。GUT 513/513 全绿，**仅 demo 一项待修，是 T5（M6 收口）的硬阻塞**。
 
-**验收锚**：EPIC-6 E6-S5 验收条 + 字数 350 封顶/拍；GDD §3.5 预算表为正本。
+**范围**：
+1. 校准 `_m5_auto_demo` 驱动（等待窗/收束判定），适配新对话节奏——优先找「按对话实际条数驱动」的通用解，不要逐幕硬编码步数。
+2. 复验终态指纹：map=ruins_f3 / (320,40) / phase=3 全吻合。
+3. 顺手复验冒烟五通道（demo 与冒烟**勿并行**，演示档落盘污染 user:// 的教训 9/4 刚踩过）。
+4. 证据落 evidence/，命名带 t66 前缀。
 
-**参考正本**：data/json/dialogues/ 既有对话 JSON 结构（含 T4.2 两段聊天实例）；E5-S3 NPC 事件装配；对话 GDD §3.5。
-**执行者**：文策渊（design-strategist）+ 工程侧跑测配合；主理人编排。
+**执行者**：程基岩（engineering-lead）。**裁决前置**：派工前等用户发话；若发现需要动 GameData/存档语义，停下回传 A/B/C。
+
+**T6.6 收口后 → T5**：A8 行 6 全绿打勾 + 试玩视频 #6（M6 试玩拍聊天用 main.tscn 正常入口）+ git tag `m6` + push，等用户发话。
 
 ## 七、环境坑速查（继承 Sprint 5 交接档，新增 3 条）
 
-- Godot exe：`D:\software\Godot\Godot_v4.7.2-stable_win64.exe`（console 版同名 _console）；headless 跑测 `MSYS2_ARG_CONV_EXCL="*"` 下 `--path` 与 exe 用 Windows 反斜杠路径。
+- Godot exe：**winget 路径 `C:\Users\weixufeng\AppData\Local\Microsoft\WinGet\Packages\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\Godot_v4.7.2-stable_win64_console.exe`（⚠️ 9/4 晚实测 `D:\software\Godot\` 已不存在，旧路径作废）**；headless 跑测 `MSYS2_ARG_CONV_EXCL="*"` 下 `--path` 与 exe 用 Windows 反斜杠路径。
 - GUT 9.7.1；`-gtest` 不生效（跑全量）；**GUT 日志 GBK**：Bash 管道提取易撞 output truncated——**改用 Grep/Read 工具直读日志文件**（`cygpath -w /tmp/xxx.log` 拿 Windows 路径），Run Summary 锚点 `^Totals` 在尾部。
 - 新建 .gd 必配 .uid；queue_free 帧末生效；类型化数组逐元素 append 重建。
 - 冒烟入口形态不一：e1s5 用 `headless_e1s5_wrapper.tscn`，其余用裸 .tscn。
 - 全量 GUT 命令（Git Bash 项目根）：
-  `MSYS2_ARG_CONV_EXCL="*" "/d/software/Godot/Godot_v4.7.2-stable_win64_console.exe" --headless --path "D:\\code\\cordit" -s res://addons/gut/gut_cmdln.gd -gdir=res://tests/gut -ginclude_subdirs -gexit > /tmp/run.log 2>&1`
-- demo dryrun 命令：同上去掉 `-s ... -gexit` 改 `res://evidence/_m5_auto_demo.tscn`。
+  `MSYS2_ARG_CONV_EXCL="*" "/c/Users/weixufeng/AppData/Local/Microsoft/WinGet/Packages/GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe/Godot_v4.7.2-stable_win64_console.exe" --headless --path "D:\\code\\cordit" -s res://addons/gut/gut_cmdln.gd -gdir=res://tests/gut -ginclude_subdirs -gexit > /tmp/run.log 2>&1`
+- demo dryrun 命令：同上去掉 `-s ... -gexit` 改 `res://evidence/_m5_auto_demo.tscn`，**加 `--fixed-fps 30 --quit-after 5400`（unthrottled 形态）**。
 - **（9/4 新增）Game 菜单测试驱动口径**：主模态入口=confirm_current() 直驱；子模态=合成事件 `_consume_event(_down_key())` / 各 `_consume_xxx(_confirm_event())`；两者勿混用（三态导航用例曾混用+干扰代码，已重写为统一通道）。
 - **（9/4 新增）WorkBuddy 内置 Git Bash 的 grep/awk 大输出会截断**——日志分析一律 Grep/Read 工具直读文件。

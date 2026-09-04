@@ -23,17 +23,18 @@
 - **DEFEAT 读档**（E4-S7）：load_save() → last_loaded → 回存档点+免疫 0.5s；读档失败兜底回暂存图。
 - R1/R2 已落地：INITIAL_SCENE_PATH=town；town 南门栅栏已拆（gen_town.py 正本，verify_town L125 已反转）。
 
-## 进度（2026-09-04 快照④ T4 收口版，交接正本=sprint6-handoff.md）
+## 进度（2026-09-04 快照⑤ T6 收口版，交接正本=sprint6-handoff.md）
 - **⚡ 新会话续跑入口：喂 `.workbuddy/memory/sprint6-handoff.md` 即可无损续接**（本节只留摘要）。
-- **Sprint 6**：T7 ✅ → T2 ✅ → T3.1-3.4 全 ✅ → **T4.1-4.3 全 ✅（E6-S4 整体收口）**。基线 **GUT 503/503** + demo dryrun PASS + 冒烟五通道满额。**下一步=T6（E6-S5 剧情实写，文策侧），等用户新窗口确认开工**。
-- **Sprint 6 产物已提交两笔（9/4）**：`65b524b`=feat(E6-S2,S3) 战斗侧；`08a9bc7`=feat(E6-S1,S4) 菜单/装备/聊天侧。工作区仅剩 .import CRLF 噪音。**未 push、未打 tag**（tag m6 留 T5 收口）。
-- T4 新增裁决（勿翻案，详见 handoff §二）：菜单手动存=即时落盘不碰门控；菜单读档复用 DEFEAT 链；聊天触发=位置触发（EPIC-6.md:36 正本），not_flag+set_flag 一次性，flag 走 GameData.flags；road 命中区 3×2/f2 2×2（size_tiles 目录字段）；聊天文案【待润色】待 T6 统稿。
-- **Sprint 5 ✅ tag m5=b550126**：EPIC-5 收口 GUT 286→415。M5 demo 修复（勿翻案）：①Router 覆写暂存位 ②f3 runner 直取 ③桥哨兵直通。tag：m1=f9840ed/m2=1b61358/m3=72e1354/m4=07457c5/m5=b550126 均已推远程。小债：tools/README.md、sfx 钩子、手感抽查。协作=主理人独立实现制。M7（15h）：数值平衡/剧情收尾/导出包。
-- **Sprint 6 计划（9/3 批准）**：T7→T2→T3→T4→T5，T6 剧情实写穿插（P0 50+P1 55+NPC 42 条）。编号映射 T2=S3/T3=S1/T4=S4/T5=M6 收口/T6=S5/T7=S2。细节（裁定/六态机/并项同源/11 挂教训/T6 开工卡）**全在 `sprint6-handoff.md`**。⚠️ GameData 加新字段须全测试文件补快照/还原对。
+- **Sprint 6**：T7 ✅ → T2 ✅ → T3 ✅ → T4 ✅ → **T6.1-6.5 全 ✅（E6-S5 剧情实写第一批收口：P0 51 条/P1 55 条/NPC 43/聊天润色/P0 孤儿接线）**。基线 **GUT 513/513**。demo dryrun FAIL=**T6.6 待修**（对话节奏变了、demo 驱动按键步数旧的，非回归；根因+开工卡在 handoff §六）。**下一步=T6.6（工程侧 demo 校准）→ T5（M6 收口）**。待拍板：phase 2 专属档（主理人倾向接受现两档）。
+- **T6 新裁决（勿翻案，详见 handoff §一）**：行宽口径 40 字/行（50 软/60 硬）；portrait 每条显式写（NPC/旁白=""）；branch_endpoint 只走 1 跳；42=总量预算口径（总 43）；set_story_phase 在事件层；T6.5 双守卫接线（not_flag story_p0_seen+phase==0+Main 场景+无存档）。
+- **Sprint 6 提交**：`65b524b`(E6-S2,S3) → `08a9bc7`(E6-S1,S4) → 9/4 晚新增三笔（E6-S5 内容/T6.5 接线/docs memory，hash 以 git log 实查）。tag m1–m5 已推远程；**tag m6 留 T5**。
+- **Sprint 5 ✅ tag m5=b550126**：EPIC-5 收口 GUT 286→415。M5 demo 修复（勿翻案）：①Router 覆写暂存位 ②f3 runner 直取 ③桥哨兵直通。小债：tools/README.md、sfx 钩子、手感抽查。M7（15h）：数值平衡/剧情收尾/导出包。
+- **Sprint 6 计划（9/3 批准）**：T7→T2→T3→T4→T5，T6 剧情实写穿插。编号映射 T2=S3/T3=S1/T4=S4/T5=M6 收口/T6=S5/T7=S2。⚠️ GameData 加新字段须全测试文件补快照/还原对。
+- **⚠️ 外部试玩者是 M7 硬阻塞**：E7-S1 三问测试需 ≥1 名外部测试者，人选/档期未定，宜早锁定。
 - **仓库**：`*.avi filter=lfs` 已配；.import 大面积"改动"=CRLF 噪音（`git -c core.autocrlf=false diff` 零差异），commit 时剔除。
 
 ## 环境与已踩坑（全量版见 sprint6-handoff.md §七）
-- Godot=**D:\software\Godot\Godot_v4.7.2-stable_win64.exe**（console 同名 _console）；GUT 9.7.1；headless 跑测 `MSYS2_ARG_CONV_EXCL="*"`+**Windows 反斜杠路径**。
+- Godot=**winget 安装**：`C:\Users\weixufeng\AppData\Local\Microsoft\WinGet\Packages\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\Godot_v4.7.2-stable_win64_console.exe`（⚠️ 2026-09-04 实测 `D:\software\Godot\` 已不存在，旧记录作废；demo dryrun 需加 `--fixed-fps 30 --quit-after 5400` unthrottled 形态）；GUT 9.7.1；headless 跑测 `MSYS2_ARG_CONV_EXCL="*"`+**Windows 反斜杠路径**。
 - 通用坑：`STRETCH_KEEP_ASPECT_COVERED`；类型化数组逐元素 append；submit_command 显式传 roll；.gd 必配 .uid；-gtest 不生效；queue_free 帧末生效；Python 工具走 Git Bash（GBK）；成员 spawn 先 TeamCreate；日志分析用 Grep/Read 工具直读（Bash 大输出截断）。
 - **Git 远程**：`git@github.com:ysyonline/cordit.git`（SSH）+代理 127.0.0.1:7892；PortableGit 丢 refs/remotes 属装饰性问题——查远程用 `git ls-remote`。
 - 传送/落位修正先查"tscn 像素+verify 锚定+冒烟断言"三方正本，不一致即停。
