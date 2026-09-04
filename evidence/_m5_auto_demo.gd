@@ -118,9 +118,13 @@ func _run() -> void:
 	await _sleep(1.0)   # 逐字起播观感
 	_set_caption("客栈老板 · 事件对话（npc_01_innkeeper → 事件层 phase 映射）")
 	await _sleep(1.6)
-	_advance_dialogue()   # 补完+翻页（直驱 runner，等于按 Z）
-	await _sleep(1.2)
-	_advance_dialogue()   # 收束对话（info → END）
+	# 【T6.6 修改】按对话实际条目数驱动——E6-S5 剧情实写把 npc_01_innkeeper_p12
+	# 从 1 条扩到 3 条（start→info→info2→END，完整走完需 6 按）。旧版逐幕硬编码
+	# 两按 + 等收束：3 条下第 6 幕前 runner 必卡 PLAYING → 收束超时 → 第 6 幕
+	# force_idle → 第 8 幕 set_story_phase(3) 时序错位 → 终态 phase=2≠3。
+	# 改 _advance_until_idle：按 runner 状态补按直到回 IDLE，与第 8 幕 finale
+	# 同一通用驱动，不随条目数/字数变节（上限 15 给足余量）。
+	await _advance_until_idle("npc_innkeeper 按实际条数翻页收束", 15)
 	await _wait_dialogue_finished("npc_innkeeper 收束")
 	await _sleep(0.6)
 
@@ -504,8 +508,10 @@ func _wait_dialogue_finished(what: String, timeout: float = 5.0) -> void:
 
 ## 补按循环（dryrun9 实锤修正配套）：长条目逐字未完时一按只"补完"不"翻页"，
 ## 固定节拍按法对条目数/字数敏感会差按。0.6s 一按直到 runner 回 IDLE——
-## runner 未注入（理论上不可达）直接返回防死循环；上限 6 按防御异常数据。
-func _advance_until_idle(what: String, max_presses: int = 6) -> void:
+## runner 未注入（理论上不可达）直接返回防死循环；上限 15 防御异常数据
+## （T6.6 起从 6 放宽：E6-S5 剧情实写把单对话条目数扩到 3+，2×条数=按数，
+## 6 无余量；统一用此通用驱动按实际条目数收束，勿逐幕硬编码按数）。
+func _advance_until_idle(what: String, max_presses: int = 15) -> void:
 	var runner: Node = _find_runner()
 	var presses: int = 0
 	while presses < max_presses:
