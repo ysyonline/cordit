@@ -150,9 +150,9 @@ func test_a2_聊天事件E5同构登记且结构与宝箱一次性语义对齐()
 				"%s 登记 flag 名应与门闸对齐" % eid)
 
 
-func test_a3_聊天文本待润色标记与无ASCII引号() -> void:
-	# 任务纪律：文本占位禁 ASCII 引号（直角引号替代）；功能可用版统一带
-	# 【待润色】前缀（策划润色后整段替换，可 grep 定位）
+func test_a3_聊天文本已润色无占位前缀且无ASCII引号() -> void:
+	# 任务纪律：文本占位禁 ASCII 引号（直角引号替代）；【待润色】前缀已于
+	# T6.4 润色时整段替换删除——此处反向锁定，防止占位前缀回潮
 	for id: String in [ROAD_CHAT_EVENT, F2_CHAT_EVENT]:
 		var parsed: Variant = JSON.parse_string(
 				FileAccess.get_file_as_string("res://data/json/dialogues/%s.json" % id))
@@ -163,8 +163,8 @@ func test_a3_聊天文本待润色标记与无ASCII引号() -> void:
 			var entry: Dictionary = entries[eid]
 			var text: String = String(entry.get("text", ""))
 			assert_false(text.contains("\""), "条目 %s 的 text 不应含 ASCII 引号" % String(eid))
-			assert_true(text.begins_with("【待润色】"),
-					"条目 %s 应带【待润色】标记（功能可用版，待策划润色）" % String(eid))
+			assert_false(text.begins_with("【待润色】"),
+					"条目 %s 不应再带【待润色】前缀（T6.4 润色已完成）" % String(eid))
 
 
 # ------------------------------------------------------------------

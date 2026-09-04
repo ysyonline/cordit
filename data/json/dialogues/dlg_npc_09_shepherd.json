@@ -1,9 +1,16 @@
 {
-    "dlg_npc_09_shepherd":  {
-                                "start":  {
-                                              "speaker":  "牧羊少年",
-                                              "text":  "咩——别跑别跑！唉，数羊比赶羊还累。",
-                                              "next":  "END"
-                                          }
-                            }
+  "dlg_npc_09_shepherd": {
+    "start": {
+      "speaker": "牧羊少年",
+      "portrait": "",
+      "text": "咩——别跑别跑！唉，数羊比赶羊还累。",
+      "next": "info"
+    },
+    "info": {
+      "speaker": "牧羊少年",
+      "portrait": "",
+      "text": "数到七十三就乱套了。要不……你帮我数？别数出声，羊会害羞的。",
+      "next": "END"
+    }
+  }
 }

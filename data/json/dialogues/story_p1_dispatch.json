@@ -1,13 +1,339 @@
 {
   "story_p1_dispatch": {
     "start": {
-      "speaker": "菲奥拉",
-      "text": "【P1 委托·占位】委托内容：调查遗迹一层的异常亮光。报酬照协会标准。清单你收好，出门左转直走就是南门。",
-      "next": "accept"
-    },
-    "accept": {
       "speaker": "",
-      "text": "【占位】你接过委托单。镇子看起来和昨天没什么两样，但空气里多了些说不清的味道。",
+      "portrait": "",
+      "text": "（第二天一早。委托所的窗台上摊着地图，菲奥拉已经站在柜台后面了。）",
+      "next": "fio_brief"
+    },
+    "fio_brief": {
+      "speaker": "菲奥拉",
+      "portrait": "",
+      "text": "早。清单和地图——说好的。",
+      "next": "fio_content"
+    },
+    "fio_content": {
+      "speaker": "菲奥拉",
+      "portrait": "",
+      "text": "委托内容：镇外那座遗迹，一层有异常亮光。查清它是什么，回来报告。",
+      "next": "kyle_ask"
+    },
+    "kyle_ask": {
+      "speaker": "凯尔",
+      "portrait": "kyle_normal",
+      "text": "就这样？不用我们进去处理？",
+      "next": "fio_rule"
+    },
+    "fio_rule": {
+      "speaker": "菲奥拉",
+      "portrait": "",
+      "text": "调查委托。看见什么记什么，别逞能——协会不缺一枚勋章，缺一份写得清楚的报告。",
+      "next": "lina_prev"
+    },
+    "lina_prev": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "上一批接单的人，也是这么被叮嘱的吧。",
+      "next": "fio_pause"
+    },
+    "fio_pause": {
+      "speaker": "菲奥拉",
+      "portrait": "",
+      "text": "（她停了一瞬。）……是。",
+      "next": "mona_where"
+    },
+    "mona_where": {
+      "speaker": "莫娜",
+      "portrait": "mona_normal",
+      "text": "那我们能不能先找他们问问？",
+      "next": "fio_gone"
+    },
+    "fio_gone": {
+      "speaker": "菲奥拉",
+      "portrait": "",
+      "text": "交完报告的第二天就走了。搭货车走的，说是调去别的支部。",
+      "next": "lina_report"
+    },
+    "lina_report": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "报告上一个字没提亮光，人倒走得比谁都快。",
+      "next": "fio_map"
+    },
+    "fio_map": {
+      "speaker": "菲奥拉",
+      "portrait": "",
+      "text": "（她把地图推过来。）出南门，一条路走到底，半天路程。天黑前进不去，就回来。",
+      "next": "kyle_ok"
+    },
+    "kyle_ok": {
+      "speaker": "凯尔",
+      "portrait": "kyle_normal",
+      "text": "明白。",
+      "next": "fio_paper"
+    },
+    "fio_paper": {
+      "speaker": "菲奥拉",
+      "portrait": "",
+      "text": "（她从抽屉里拿出半张纸，边缘是焦的。）这个，前天有人塞在我门缝里。",
+      "next": "fio_words"
+    },
+    "fio_words": {
+      "speaker": "菲奥拉",
+      "portrait": "",
+      "text": "上面只剩三个字还认得出：「别应声」。前面还缺了一截，不知是谁的笔迹。",
+      "next": "lina_smell"
+    },
+    "lina_smell": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "（她接过纸闻了闻。）……烧过。和昨天傍晚那阵风一个味道——从镇外飘来的。",
+      "next": "narr_leave"
+    },
+
+    "narr_leave": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（出门时，广场上那个孩子正趴在柴堆边喊猫。）",
+      "next": "kid_call"
+    },
+    "kid_call": {
+      "speaker": "追风的小孩",
+      "portrait": "",
+      "text": "花卷——出来——花卷——",
+      "next": "mona_what"
+    },
+    "mona_what": {
+      "speaker": "莫娜",
+      "portrait": "mona_normal",
+      "text": "（她蹲下去。）它怎么啦？",
+      "next": "kid_morning"
+    },
+    "kid_morning": {
+      "speaker": "追风的小孩",
+      "portrait": "",
+      "text": "不知道。从今天早上就躲着，怎么叫都不出来。",
+      "next": "kid_dried"
+    },
+    "kid_dried": {
+      "speaker": "追风的小孩",
+      "portrait": "",
+      "text": "昨天它还往房顶上跑呢。今天连鱼干都不吃了。",
+      "next": "kyle_reach"
+    },
+    "kyle_reach": {
+      "speaker": "凯尔",
+      "portrait": "kyle_normal",
+      "text": "（他伸手往柴堆里探了一下。猫猛地弓起背，毛全炸开。）……嚯！",
+      "next": "mona_dont"
+    },
+    "mona_dont": {
+      "speaker": "莫娜",
+      "portrait": "mona_normal",
+      "text": "别吓它。",
+      "next": "lina_south"
+    },
+    "lina_south": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "它没看你。它在看南边。",
+      "next": "narr_cat"
+    },
+    "narr_cat": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（柴堆的缝里，那只花猫盯着镇外的方向。尾巴压得死死的，一声不出。）",
+      "next": "kid_going"
+    },
+    "kid_going": {
+      "speaker": "追风的小孩",
+      "portrait": "",
+      "text": "……你们要去镇外吗？",
+      "next": "kyle_back"
+    },
+    "kyle_back": {
+      "speaker": "凯尔",
+      "portrait": "kyle_smile",
+      "text": "去一趟就回来。",
+      "next": "kid_warn"
+    },
+    "kid_warn": {
+      "speaker": "追风的小孩",
+      "portrait": "",
+      "text": "那你们别学花卷。它盯了一整天那边，看完就躲起来了，再也不敢看。",
+      "next": "narr_road"
+    },
+
+    "narr_road": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（南门外的路比想象中好走。前半段是田埂，后半段进了林子。）",
+      "next": "narr_cicada"
+    },
+    "narr_cicada": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（进了林子没多久，蝉声忽然断了。）",
+      "next": "lina_listen"
+    },
+    "lina_listen": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "……听。",
+      "next": "kyle_what"
+    },
+    "kyle_what": {
+      "speaker": "凯尔",
+      "portrait": "kyle_normal",
+      "text": "听什么？",
+      "next": "lina_cicada"
+    },
+    "lina_cicada": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "蝉。刚才还有的。",
+      "next": "mona_wind"
+    },
+    "mona_wind": {
+      "speaker": "莫娜",
+      "portrait": "mona_normal",
+      "text": "（她放轻了脚步。）……风也停了。",
+      "next": "narr_fork"
+    },
+    "narr_fork": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（路在这里分了岔。往南那条继续走，右边夹着石柱的旧路通向遗迹。）",
+      "next": "mona_again"
+    },
+
+    "mona_again": {
+      "speaker": "莫娜",
+      "portrait": "mona_normal",
+      "text": "（她忽然站住。）……又来了。",
+      "next": "kyle_what_again"
+    },
+    "kyle_what_again": {
+      "speaker": "凯尔",
+      "portrait": "kyle_normal",
+      "text": "什么又来了？",
+      "next": "mona_name"
+    },
+    "mona_name": {
+      "speaker": "莫娜",
+      "portrait": "mona_normal",
+      "text": "有人在叫我的名字。上次在委托所里，就是这个。",
+      "next": "lina_hush"
+    },
+    "lina_hush": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "（她抬起一只手。）别出声。都别出声。",
+      "next": "narr_light"
+    },
+    "narr_light": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（石柱之间，光忽然歪了一下。）",
+      "next": "narr_figures"
+    },
+    "narr_figures": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（三个人影从石柱后面走出来，朝着镇子那边走。两男一女，游击士的装束。）",
+      "next": "echo_f"
+    },
+    "echo_f": {
+      "speaker": "残响·女声",
+      "portrait": "",
+      "text": "……别走散了。这路不对，回去吧。",
+      "next": "echo_m"
+    },
+    "echo_m": {
+      "speaker": "残响·男声",
+      "portrait": "",
+      "text": "报告就写「道路状况不佳」。别的，别往纸上写。",
+      "next": "kyle_choice"
+    },
+    "kyle_choice": {
+      "speaker": "凯尔",
+      "portrait": "kyle_normal",
+      "text": "（凯尔盯着那三个人影。）",
+      "choices": [
+        { "text": "「喂——！」", "next": "kyle_shout" },
+        { "text": "「（按住剑柄，别出声）」", "next": "kyle_silent" }
+      ]
+    },
+    "kyle_shout": {
+      "speaker": "凯尔",
+      "portrait": "kyle_normal",
+      "text": "喂——！",
+      "next": "narr_gone"
+    },
+    "kyle_silent": {
+      "speaker": "凯尔",
+      "portrait": "kyle_normal",
+      "text": "（他把手按在剑柄上，一个字也没说。）",
+      "next": "narr_gone"
+    },
+    "narr_gone": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（人影一晃，像水面上的倒影散开了。石柱之间又只剩下光和草。）",
+      "next": "mona_rule"
+    },
+    "mona_rule": {
+      "speaker": "莫娜",
+      "portrait": "mona_normal",
+      "text": "……不是在叫我的名字。它谁的名字都叫——谁应，它就找谁。",
+      "next": "lina_paper"
+    },
+    "lina_paper": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "（她把那半张纸举起来。）「别应声」。上一批人已经知道了。",
+      "next": "lina_note"
+    },
+    "lina_note": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "记下来。从现在起，路上听见有人叫名字，谁都不许应。",
+      "next": "kyle_noyes"
+    },
+    "kyle_noyes": {
+      "speaker": "凯尔",
+      "portrait": "kyle_normal",
+      "text": "那就别应。",
+      "next": "mona_ok"
+    },
+    "mona_ok": {
+      "speaker": "莫娜",
+      "portrait": "mona_normal",
+      "text": "（她把药囊往怀里收了收。）嗯。",
+      "next": "lina_grass"
+    },
+    "lina_grass": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "（她蹲下摸了摸地面。）……草是断的。刚才真有人从这里走过去。",
+      "next": "mona_wind2"
+    },
+    "mona_wind2": {
+      "speaker": "莫娜",
+      "portrait": "mona_normal",
+      "text": "长老说，风对了的时候，能听见从前的人说话。刚才……风是停的。",
+      "next": "kyle_go"
+    },
+    "kyle_go": {
+      "speaker": "凯尔",
+      "portrait": "kyle_smile",
+      "text": "走吧。天黑前进不去就回来——菲奥拉说的，我记着。",
+      "next": "narr_south"
+    },
+    "narr_south": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（他们拐上往南那条岔路。身后的石柱立着，什么也没说。）",
       "next": "END"
     }
   }

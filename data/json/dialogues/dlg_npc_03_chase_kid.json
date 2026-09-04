@@ -1,5 +1,16 @@
 {
   "dlg_npc_03_chase_kid": {
-    "start": { "speaker": "追风的小孩", "text": "别挡路别挡路！我家的猫又跑上房顶啦——喵星人的心思猜不透！", "next": "END" }
+    "start": {
+      "speaker": "追风的小孩",
+      "portrait": "",
+      "text": "别挡路别挡路！我家的猫又跑上房顶啦——喵星人的心思猜不透！",
+      "next": "info"
+    },
+    "info": {
+      "speaker": "追风的小孩",
+      "portrait": "",
+      "text": "花卷跑遍全镇都没事！它最厉害了！……你有没有看见它往哪边跑了？",
+      "next": "END"
+    }
   }
 }

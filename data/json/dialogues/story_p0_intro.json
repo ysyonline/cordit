@@ -2,12 +2,320 @@
   "story_p0_intro": {
     "start": {
       "speaker": "",
-      "text": "【P0 开场·占位】清晨的里瓦镇，广场的喷泉声与货郎的吆喝混在一起。你——新任游击士——在今天抵达了这个边陲小镇。",
-      "next": "meet"
+      "portrait": "",
+      "text": "（正午。里瓦镇的南门敞着，门轴晒得发烫。你们走了三天，鞋底是同一种土的颜色。）",
+      "next": "a_kyle1"
     },
-    "meet": {
+    "a_kyle1": {
+      "speaker": "凯尔",
+      "portrait": "kyle_normal",
+      "text": "到了——就是这儿。镇子不大嘛，一条街走到头，用不了一刻钟。",
+      "next": "a_lina1"
+    },
+    "a_lina1": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "用不了一刻钟的是你。从刚才那个坡下来，我数过，四十二分钟。",
+      "next": "a_mona1"
+    },
+    "a_mona1": {
+      "speaker": "莫娜",
+      "portrait": "mona_smile",
+      "text": "别吵啦。好不容易到了，先看看这是什么样的镇子吧。",
+      "next": "a_lina2"
+    },
+    "a_lina2": {
+      "speaker": "莉娜",
+      "portrait": "rina_smile",
+      "text": "看就看。反正委托板上不会自己长出字来。",
+      "next": "b_narr1"
+    },
+
+    "b_narr1": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（一条南北的街，一个广场，几排晒着衣服的院子。屋顶一个挨一个，像晒着的鱼干。）",
+      "next": "b_kana1"
+    },
+    "b_kana1": {
+      "speaker": "主妇卡娜",
+      "portrait": "",
+      "text": "生面孔啊。买菜往东街去，今早刚上的货。客栈的莉安做饭比我还咸，晚饭别点她的汤。",
+      "next": "b_narr2"
+    },
+    "b_narr2": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（一个孩子从你们中间穿过去。身后一只花猫踩着水洼跳上墙头，回头看了一眼。）",
+      "next": "b_kid1"
+    },
+    "b_kid1": {
+      "speaker": "追风的小孩",
+      "portrait": "",
+      "text": "让开让开——花卷又跑啦！今天第三次上房顶了！",
+      "next": "b_mona1"
+    },
+    "b_mona1": {
+      "speaker": "莫娜",
+      "portrait": "mona_normal",
+      "text": "……那只猫，名字叫花卷呀。",
+      "next": "b_lina1"
+    },
+    "b_lina1": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "比起名字，我更在意它为什么一天要上三回房顶。",
+      "next": "c_narr1"
+    },
+
+    "c_narr1": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（广场的喷泉边，几个孩子在数池底的硬币。一名守卫靠着长矛打哈欠。）",
+      "next": "c_guard1"
+    },
+    "c_guard1": {
+      "speaker": "镇口守卫",
+      "portrait": "",
+      "text": "外乡人？镇上没什么要紧事——别往镇外的老林子里钻就行。",
+      "next": "c_kyle_q"
+    },
+    "c_kyle_q": {
+      "speaker": "凯尔",
+      "portrait": "kyle_normal",
+      "text": "（镇外？他把这两个字在心里过了一遍。）",
+      "choices": [
+        { "text": "「镇外那座遗迹，是什么样的地方？」", "next": "c_ka1" },
+        { "text": "「……记下了。多谢提醒。」", "next": "c_ka2" }
+      ]
+    },
+    "c_ka1": {
+      "speaker": "镇口守卫",
+      "portrait": "",
+      "text": "老石头堆，谁也说不清是哪年头留下的。会跑的人进去过，没人往深处走。",
+      "next": "c_elder1"
+    },
+    "c_ka2": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（他点点头，把长矛换了个肩。长椅上的老人倒先开了口。）",
+      "next": "c_elder1"
+    },
+    "c_elder1": {
+      "speaker": "村中长老",
+      "portrait": "",
+      "text": "别听他的，那地方没那么凶。老辈人管它叫「会记声音的石头」。",
+      "next": "c_elder2"
+    },
+    "c_elder2": {
+      "speaker": "村中长老",
+      "portrait": "",
+      "text": "说是风对了的时候，能听见从前的人在那儿说话。哄小孩的，别当真。",
+      "next": "c_lina1"
+    },
+    "c_lina1": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "「风对了」……倒是挺讲究的条件。什么风，什么时候，才算对？",
+      "next": "c_mona2"
+    },
+    "c_mona2": {
+      "speaker": "莫娜",
+      "portrait": "mona_smile",
+      "text": "莉娜，你把人家的故事拆开来验算的样子，有点吓人呢。",
+      "next": "d_narr1"
+    },
+
+    "d_narr1": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（北街尽头是神殿。封着的那扇石门很旧，门上的封条却新得发白。）",
+      "next": "d_mel1"
+    },
+    "d_mel1": {
+      "speaker": "神官梅尔",
+      "portrait": "",
+      "text": "外乡的客人。愿女神的辉光，也照着你们要走的路。",
+      "next": "d_lina1"
+    },
+    "d_lina1": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "神官先生，那张封条……是最近换的吧。",
+      "next": "d_mel2"
+    },
+    "d_mel2": {
+      "speaker": "神官梅尔",
+      "portrait": "",
+      "text": "上个月换的。旧的那张自己掉了——纸脆了，年头到了，仅此而已。",
+      "next": "e_narr1"
+    },
+
+    "e_narr1": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（客栈在街中段，招牌上的菜价被划改过两回。老板娘抱着一摞被褥要上楼。）",
+      "next": "e_lian1"
+    },
+    "e_lian1": {
+      "speaker": "莉安大婶",
+      "portrait": "",
+      "text": "打尖还是住店？……手上都有茧，是拿剑和拿笔的手——住店，对吧。",
+      "next": "e_mona1"
+    },
+    "e_mona1": {
+      "speaker": "莫娜",
+      "portrait": "mona_normal",
+      "text": "您怎么一眼就看出来的呀。",
+      "next": "e_lian2"
+    },
+    "e_lian2": {
+      "speaker": "莉安大婶",
+      "portrait": "",
+      "text": "拿笔的手上有墨，拿剑的手上有茧。你嘛——你的手上有药味。",
+      "next": "f_narr1"
+    },
+
+    "f_narr1": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（委托所在广场东侧。推开木门，门上的铜铃响了很久。）",
+      "next": "f_fio1"
+    },
+    "f_fio1": {
       "speaker": "菲奥拉",
-      "text": "【占位】你就是协会派来的新人？我是前台菲奥拉。镇上最近还算太平，不过……先跟我来，有件事要拜托你。",
+      "portrait": "",
+      "text": "游击士协会，里瓦镇委托所。我是前台菲奥拉。三位的推荐信，给我吧。",
+      "next": "f_kyle1"
+    },
+    "f_kyle1": {
+      "speaker": "凯尔",
+      "portrait": "kyle_normal",
+      "text": "凯尔。这两位是莉娜和莫娜。——给您。",
+      "next": "f_fio2"
+    },
+    "f_fio2": {
+      "speaker": "菲奥拉",
+      "portrait": "",
+      "text": "（她把信看了两遍，又抬头看了你们三个。）……三个人一起派到边境镇，少见。",
+      "next": "f_lina1"
+    },
+    "f_lina1": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "少见，是因为人手不够，还是因为这里需要三个人？",
+      "next": "f_fio3"
+    },
+    "f_fio3": {
+      "speaker": "菲奥拉",
+      "portrait": "",
+      "text": "都有一点。报酬照协会标准，一个铜板不少——先把委托听完，再谈钱。",
+      "next": "f_fio4"
+    },
+    "f_fio4": {
+      "speaker": "菲奥拉",
+      "portrait": "",
+      "text": "（她从木板底下抽出一张单子，推到台面上。）这张压了十一天，没人接。",
+      "next": "f_fio5"
+    },
+    "f_fio5": {
+      "speaker": "菲奥拉",
+      "portrait": "",
+      "text": "镇外那座遗迹，近一个月夜里有人看见亮光。报的人越来越多，谁也说不清是什么。",
+      "next": "f_lina2"
+    },
+    "f_lina2": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "亮光。……协会三个月前贴了「非请勿入」的告示，之后反而更热闹了？",
+      "next": "f_fio6"
+    },
+    "f_fio6": {
+      "speaker": "菲奥拉",
+      "portrait": "",
+      "text": "告示是三个月前贴的，亮光是一个月前开始的。两件事不一定有关系。",
+      "next": "f_kyle_q"
+    },
+    "f_kyle_q": {
+      "speaker": "凯尔",
+      "portrait": "kyle_normal",
+      "text": "（凯尔盯着那张单子看了两秒。）",
+      "choices": [
+        { "text": "「交给我们吧。」", "next": "f_ka1" },
+        { "text": "「先问一句：之前有人去查过吗？」", "next": "f_ka2" }
+      ]
+    },
+    "f_ka1": {
+      "speaker": "凯尔",
+      "portrait": "kyle_smile",
+      "text": "交给我们吧。这种事早一天查清，镇上的人就早一天安心。",
+      "next": "g1"
+    },
+    "f_ka2": {
+      "speaker": "凯尔",
+      "portrait": "kyle_normal",
+      "text": "（他没有伸手。）上一批接单的人呢？他们查到什么了？",
+      "next": "g1"
+    },
+    "g1": {
+      "speaker": "菲奥拉",
+      "portrait": "",
+      "text": "上一批走到半路就折回来了。报告上写「道路状况不佳」，一个字没提亮光。",
+      "next": "g2"
+    },
+
+    "g2": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "「道路状况不佳」……那就是看见了什么，只是没敢往纸上写。",
+      "next": "g3"
+    },
+    "g3": {
+      "speaker": "菲奥拉",
+      "portrait": "",
+      "text": "我不催你们。明早来拿清单和地图——天亮出发，正好一天走到。",
+      "next": "g4"
+    },
+    "g4": {
+      "speaker": "凯尔",
+      "portrait": "kyle_smile",
+      "text": "……我们接了。明早见。",
+      "next": "g5"
+    },
+    "g5": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（出门时天已经偏西。广场上有人在收摊，喷泉的水声比中午小了些。）",
+      "next": "g6"
+    },
+    "g6": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "（她忽然站住。）……闻到了吗。风里有一股烧过的味道。",
+      "next": "g7"
+    },
+    "g7": {
+      "speaker": "凯尔",
+      "portrait": "kyle_normal",
+      "text": "烧过的？这会儿谁家还生火……风是从镇外来的。",
+      "next": "g8"
+    },
+    "g8": {
+      "speaker": "莫娜",
+      "portrait": "mona_normal",
+      "text": "……刚才在委托所里，我好像听见有人叫我的名字。可屋里只有我们四个呀。",
+      "next": "g9"
+    },
+    "g9": {
+      "speaker": "",
+      "portrait": "",
+      "text": "（凯尔回过头。街那头，追风的小孩正踮着脚喊：「花卷——下来——」。）",
+      "next": "g10"
+    },
+    "g10": {
+      "speaker": "莫娜",
+      "portrait": "mona_smile",
+      "text": "……嗯。大概是听错了吧。",
       "next": "END"
     }
   }

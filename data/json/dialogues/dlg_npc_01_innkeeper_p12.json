@@ -2,12 +2,20 @@
   "dlg_npc_01_innkeeper_p12": {
     "start": {
       "speaker": "莉安大婶",
+      "portrait": "",
       "text": "听说了吗？遗迹那边起了异变，夜里能看到怪光。哎，客人啊，出门千万当心。",
       "next": "info"
     },
     "info": {
       "speaker": "莉安大婶",
+      "portrait": "",
       "text": "房钱不涨，但每晚睡前我都多拜一次神——保佑你们这些孩子平安回来。",
+      "next": "info2"
+    },
+    "info2": {
+      "speaker": "莉安大婶",
+      "portrait": "",
+      "text": "昨晚也没睡好。不是怕——是狗叫了一整夜。狗比人灵，它们夜里朝着镇外叫。",
       "next": "END"
     }
   }

@@ -1,9 +1,16 @@
 {
-    "dlg_npc_07_priest":  {
-                              "start":  {
-                                            "speaker":  "神官梅尔",
-                                            "text":  "愿女神的辉光庇佑这座小镇。累了的话，进来静坐片刻也好。",
-                                            "next":  "END"
-                                        }
-                          }
+  "dlg_npc_07_priest": {
+    "start": {
+      "speaker": "神官梅尔",
+      "portrait": "",
+      "text": "愿女神的辉光庇佑这座小镇。累了的话，进来静坐片刻也好。",
+      "next": "info"
+    },
+    "info": {
+      "speaker": "神官梅尔",
+      "portrait": "",
+      "text": "祈祷不收钱。收的话，那就不叫祈祷了——你坐一会儿也好，殿里凉快。",
+      "next": "END"
+    }
+  }
 }

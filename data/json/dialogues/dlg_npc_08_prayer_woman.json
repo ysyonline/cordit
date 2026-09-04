@@ -1,9 +1,16 @@
 {
-    "dlg_npc_08_prayer_woman":  {
-                                    "start":  {
-                                                  "speaker":  "祈祷的大婶",
-                                                  "text":  "今天也是平安的一天，感谢女神。你也来添一炷香吗？",
-                                                  "next":  "END"
-                                              }
-                                }
+  "dlg_npc_08_prayer_woman": {
+    "start": {
+      "speaker": "祈祷的大婶",
+      "portrait": "",
+      "text": "今天也是平安的一天，感谢女神。你也来添一炷香吗？",
+      "next": "info"
+    },
+    "info": {
+      "speaker": "祈祷的大婶",
+      "portrait": "",
+      "text": "我家那口子上个月摔了腿，如今能下地了。女神面前，我只谢这一件。",
+      "next": "END"
+    }
+  }
 }

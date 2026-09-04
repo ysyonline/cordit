@@ -1,9 +1,16 @@
 {
-    "dlg_npc_12_elder":  {
-                             "start":  {
-                                           "speaker":  "村中长老",
-                                           "text":  "这座镇子啊，靠的是山，靠的是水，最靠得住的是人。",
-                                           "next":  "END"
-                                       }
-                         }
+  "dlg_npc_12_elder": {
+    "start": {
+      "speaker": "村中长老",
+      "portrait": "",
+      "text": "这座镇子啊，靠的是山，靠的是水，最靠得住的是人。",
+      "next": "info"
+    },
+    "info": {
+      "speaker": "村中长老",
+      "portrait": "",
+      "text": "太阳好就多晒晒。人老了才知道，被子里攒的那点热乎气，比什么都金贵。",
+      "next": "END"
+    }
+  }
 }

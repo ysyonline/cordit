@@ -1,5 +1,22 @@
 {
   "dlg_npc_05_smith_p12": {
-    "start": { "speaker": "铁匠老葛", "text": "异变？哼，炉火烧得比平时旺，铁料却总差那么一口气——邪门。", "next": "END" }
+    "start": {
+      "speaker": "铁匠老葛",
+      "portrait": "",
+      "text": "异变？哼，炉火烧得比平时旺，铁料却总差那么一口气——邪门。",
+      "next": "info"
+    },
+    "info": {
+      "speaker": "铁匠老葛",
+      "portrait": "",
+      "text": "打出来的刀刃发乌，淬火的水也不对味。打了三十年铁，头一回见。",
+      "next": "info2"
+    },
+    "info2": {
+      "speaker": "铁匠老葛",
+      "portrait": "",
+      "text": "刀要常磨，话要少说。到了那边，眼睛比耳朵管用——记住了，回来请你喝酒。",
+      "next": "END"
+    }
   }
 }

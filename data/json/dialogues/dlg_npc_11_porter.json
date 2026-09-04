@@ -1,9 +1,16 @@
 {
-    "dlg_npc_11_porter":  {
-                              "start":  {
-                                            "speaker":  "搬运工老壮",
-                                            "text":  "让让让让——一车面粉呢！这腰啊，是越干越硬，越睡越酸。",
-                                            "next":  "END"
-                                        }
-                          }
+  "dlg_npc_11_porter": {
+    "start": {
+      "speaker": "搬运工老壮",
+      "portrait": "",
+      "text": "让让让让——一车面粉呢！这腰啊，是越干越硬，越睡越酸。",
+      "next": "info"
+    },
+    "info": {
+      "speaker": "搬运工老壮",
+      "portrait": "",
+      "text": "腰疼就别学我扛整袋。年轻人要惜力——力气这东西，跟钱一样，花了才心疼。",
+      "next": "END"
+    }
+  }
 }
