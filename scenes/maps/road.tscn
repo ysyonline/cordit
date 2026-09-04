@@ -28,21 +28,21 @@ y_sort_enabled = true
 position = Vector2(296, 424)
 enemy_uid = "road_moth_01"
 group_id = "b1_moth"
-return_map = "road"
+return_map = "res://scenes/maps/road.tscn"
 waypoints = Array[Vector2]([Vector2(80, 0), Vector2(-80, 0)])
 
 [node name="Enemy_road_beetle_01" parent="YSorted" instance=ExtResource("4_enemy")]
 position = Vector2(232, 584)
 enemy_uid = "road_beetle_01"
 group_id = "b2_beetles"
-return_map = "road"
+return_map = "res://scenes/maps/road.tscn"
 waypoints = Array[Vector2]([Vector2(80, 0), Vector2(-80, 0)])
 
 [node name="Enemy_road_beetle_02" parent="YSorted" instance=ExtResource("4_enemy")]
 position = Vector2(488, 856)
 enemy_uid = "road_beetle_02"
 group_id = "b2_beetles"
-return_map = "road"
+return_map = "res://scenes/maps/road.tscn"
 waypoints = Array[Vector2]([Vector2(96, 0), Vector2(-96, 0)])
 
 [node name="Anchors" type="Node2D" parent="YSorted"]

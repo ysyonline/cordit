@@ -91,6 +91,15 @@ static func assemble(p_map_root: Node, p_map_name: String, p_runner: Node = null
 		var tree: SceneTree = p_map_root.get_tree()
 		if tree != null:
 			runner = tree.root.get_node_or_null("Main/UILayer/DialogueRunner")
+	# R5 修复：全局 executor 是共享单例（Router 装配），壳的 setup 只把 runner
+	# 存到壳自身做门闸，executor.dialogue_runner 仍为 null → dialogue 动作被
+	# 跳过。f3 Boss 锚点（ruins_f3_map.gd）装配前显式 gexec.setup(runner)，
+	# 聊天点装配漏了这步。has_dialogue_runner() 守卫防跨图重复注入（幂等）。
+	if runner != null and executor != null and executor.has_method("setup") \
+			and executor.has_method("has_dialogue_runner") \
+			and not executor.has_dialogue_runner():
+		executor.setup(runner)
+		print("[ChatPointAssembler] 全局 executor 已注入 runner（R5 修复）")
 	var loader: RefCounted = EventLoader.new()
 	loader.load_all()
 	var built: Array = []

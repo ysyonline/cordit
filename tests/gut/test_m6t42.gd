@@ -74,6 +74,9 @@ func after_each() -> void:
 	SaveManager.last_loaded = {}
 	_remove_test_save()
 	SceneRouter.current_scene_path = ""
+	# 全局 executor runner 清理（test_b3/b4 注入后须复位，防跨用例悬垂引用）
+	if SceneRouter.global_event_executor != null:
+		SceneRouter.global_event_executor.setup(null)
 	_menu = null
 	_runner = null   # 上一用例 autofree 实例的悬垂引用复位（防跨用例摸释放对象）
 
@@ -209,6 +212,31 @@ func test_b3_薄壳注入直驱触发链与真实踩踏同语义() -> void:
 	GameData.story_phase = 1
 	(built[0] as Area2D).inject_emit()
 	assert_eq(_runner.current_event_id, ROAD_CHAT_EVENT, "薄壳命中应走事件链开演（真实踩踏同语义）")
+	_runner.force_idle()
+
+
+func test_b4_正常入口路径自动注入全局executor_runner() -> void:
+	# R5 回归：正常入口（road_map.gd:55 / ruins_f2_map.gd:51 在 _ready 调
+	# assemble 时传 dialogue_runner）下，全局 executor 须由 assemble 自动
+	# 注入 runner——否则 dialogue 动作被静默跳过、聊天不开演。
+	# test_b3 走的是"测试侧预先注入 + assemble 传 null"路径，未覆盖此缺陷。
+	_make_stack()
+	var gexec: RefCounted = SceneRouter.global_event_executor
+	assert_true(gexec != null, "Router 应装配全局事件执行器")
+	# 前置：清掉残留 runner，模拟首次进图（Router._ready 仅建实例不注入）
+	gexec.setup(null)
+	assert_false(gexec.has_dialogue_runner(), "前置：全局 executor 未注入 runner")
+	# 正常入口：assemble 传 runner（地图脚本同款调用形态）
+	var map: Node2D = _make_map(RoadMapScript, "Anchors")
+	var built: Array = Assembler.assemble(map, "road", _runner)
+	assert_eq(built.size(), 1, "road 应装配 1 处聊天点")
+	# R5 修复断言：assemble 应自动把 runner 注入全局 executor
+	assert_true(gexec.has_dialogue_runner(),
+			"正常入口下全局 executor 应被自动注入 runner（R5 修复）")
+	# 端到端：薄壳命中应走事件链开演（不再因 executor 缺 runner 跳过）
+	GameData.story_phase = 1
+	(built[0] as Area2D).inject_emit()
+	assert_eq(_runner.current_event_id, ROAD_CHAT_EVENT, "正常入口聊天应开演（R5 修复）")
 	_runner.force_idle()
 
 
