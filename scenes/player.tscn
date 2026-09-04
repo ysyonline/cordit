@@ -39,7 +39,7 @@ size = Vector2(12, 6)
 ;     "接触前先被实体挡半步，再由接触区触发遇敌"，贴合探索 GDD §3.2）。
 ; 运动模式：脚本 _ready 强制 MOTION_MODE_FLOATING（俯视必需，原因见脚本注释）。
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_player")
 collision_layer = 16
 collision_mask = 9

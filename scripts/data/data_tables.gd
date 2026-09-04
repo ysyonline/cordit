@@ -28,6 +28,7 @@ const SkillData := preload("res://scripts/data/skill_data.gd")
 const EnemyData := preload("res://scripts/data/enemy_data.gd")
 const DropData := preload("res://scripts/data/drop_data.gd")
 const ItemData := preload("res://scripts/data/item_data.gd")
+const EquipmentData := preload("res://scripts/data/equipment_data.gd")
 const EncounterGroup := preload("res://scripts/data/encounter_group.gd")
 const GrowthCurve := preload("res://scripts/data/growth_curve.gd")
 const EnemyActionCatalog := preload("res://scripts/data/enemy_action_catalog.gd")
@@ -88,9 +89,14 @@ const ITEMS: Dictionary = {
 	"antidote": preload("res://data/resources/items/antidote.tres"),
 }
 
+## 装备表（E6-S1 T3.3 最小装备 schema；切片 2 件=初始背包直塞配额）
+const EQUIPMENTS: Dictionary = {
+	"iron_sword": preload("res://data/resources/equipment/iron_sword.tres"),
+	"leather_armor": preload("res://data/resources/equipment/leather_armor.tres"),
+}
+
 ## 敌方编组表（§7 B1-B5 编排；A5 enemy_group_id 的查表对象）
-const ENCOUNTERS: Dictionary = {
-	"b1_moth": preload("res://data/resources/encounters/b1_moth.tres"),
+const ENCOUNTERS: Dictionary = {	"b1_moth": preload("res://data/resources/encounters/b1_moth.tres"),
 	"b2_beetles": preload("res://data/resources/encounters/b2_beetles.tres"),
 	"b3_ruin_mix": preload("res://data/resources/encounters/b3_ruin_mix.tres"),
 	"b4_guardian": preload("res://data/resources/encounters/b4_guardian.tres"),
@@ -130,6 +136,10 @@ static func get_drop(id: String) -> DropData:
 
 static func get_item(id: String) -> ItemData:
 	return ITEMS.get(id, null)
+
+
+static func get_equipment(id: String) -> EquipmentData:
+	return EQUIPMENTS.get(id, null)
 
 
 static func get_encounter(id: String) -> EncounterGroup:

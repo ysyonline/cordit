@@ -1,0 +1,15 @@
+; 旧铁剑 ── 武器，ATK+3（≈一级成长，2026-09-04 T3.3 数值口径）
+; 初始背包直塞件 1/2：开局即可给凯尔换上，装备页首装教学用
+
+[gd_resource type="Resource" script_class="EquipmentData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/equipment_data.gd" id="1_eqd"]
+
+[resource]
+script = ExtResource("1_eqd")
+id = "iron_sword"
+name = "旧铁剑"
+slot = "weapon"
+atk_bonus = 3
+def_bonus = 0
+description = "一把用了很久的铁剑。ATK+3。"

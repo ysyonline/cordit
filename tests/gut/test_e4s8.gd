@@ -188,8 +188,9 @@ func test_05_v1旧档再存档升级为v2带inventory() -> void:
 	GameData.inventory = {"potion_m": 1}   # 旧档玩家开新档后拿到道具
 	assert_true(SaveManager.save("m2", Vector2(5, 6)), "再存档")
 	var data := _read_json(TEST_PATH)
-	assert_eq(int(data["version"]), 2, "再存档落盘应为 v2")
-	assert_true(data.has("inventory"), "v2 落盘应含 inventory 键")
+	# T3.3 起 schema bump 2→3（equipment 入档）：再存档落盘 = 当前版本
+	assert_eq(int(data["version"]), 3, "再存档落盘应为 v3（当前版本）")
+	assert_true(data.has("inventory"), "落盘应含 inventory 键（v2 起冻结）")
 	# JSON 解析数值恒为 float，逐键 int 化比较（test_09 同款教训：整字典直比会分型判异）
 	var disk_inv: Dictionary = data["inventory"]
 	assert_eq(int(disk_inv.get("potion_m", 0)), 1, "inventory 内容落盘无损")
@@ -217,8 +218,9 @@ func test_07_v2快照键集等于SCHEMA且inventory为JSON对象() -> void:
 	var schema_keys: Array = SaveManager.SCHEMA.keys()
 	snap_keys.sort()
 	schema_keys.sort()
-	assert_eq(snap_keys, schema_keys, "快照键集必须 ≡ SCHEMA 键集（十字段，不多不少）")
-	assert_eq(int(data["version"]), 2, "落盘 version 应为 2")
+	assert_eq(snap_keys, schema_keys, "快照键集必须 ≡ SCHEMA 键集（11 字段，不多不少）")
+	# T3.3 起 schema bump 2→3（equipment 入档），版本锚随之更新
+	assert_eq(int(data["version"]), 3, "落盘 version 应为 3（当前版本）")
 	assert_true(data["inventory"] is Dictionary, "inventory 应以 JSON 对象（键值对）落盘")
 	assert_eq(int(data["inventory"]["potion_s"]), 2, "inventory 数值落盘无损")
 

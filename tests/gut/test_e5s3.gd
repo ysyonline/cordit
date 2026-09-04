@@ -23,6 +23,7 @@ const InteractionControllerScript := preload("res://scripts/events/interaction_c
 const RunnerScript := preload("res://scripts/dialogue/dialogue_runner.gd")
 const NpcScript := preload("res://scripts/npc/npc.gd")
 const PlayerScript := preload("res://scripts/player/player.gd")
+const CharacterRecord := preload("res://scripts/core/character_record.gd")
 
 ## E1-S6 冒烟契约锚点（npc_04_guard 兼容路径直开对话的文件名正本）
 const GUARD_NPC_ID := "npc_04_guard"
@@ -37,6 +38,10 @@ const QUOTA_EVENT_IDS: Array[String] = [
 ## GameData/SaveManager 状态快照（after_each 恢复——autoload 跨测试零污染）
 var _snapshot: Dictionary = {}
 var _save_path_backup: String = ""
+## party 字段级快照（E6-S2 泄漏修复：test_a5 手写 "party":[] 旧档 load 后
+## GameData.party 被整体替换为空数组，后续套件索引 party[1] 越界——
+## party 必须纳入还原纪律，与 inventory/flags 同级）
+var _party_backup: Array = []
 var _loader: RefCounted = null
 var _executor: RefCounted = null
 var _runner: Node = null
@@ -51,6 +56,11 @@ func before_each() -> void:
 		"story_phase": GameData.story_phase,
 		"chests_opened": GameData.chests_opened.duplicate(true),
 	}
+	_party_backup.clear()
+	for c: Resource in GameData.party:
+		_party_backup.append({
+			"id": c.id, "name": c.name, "job": c.job, "level": c.level,
+			"hp": c.hp, "max_hp": c.max_hp, "mp": c.mp, "max_mp": c.max_mp})
 	_save_path_backup = SaveManager.save_path
 	SaveManager.save_path = "user://e5s3_test_save.json"
 	if FileAccess.file_exists(SaveManager.save_path):
@@ -62,6 +72,13 @@ func after_each() -> void:
 	GameData.flags = _snapshot["flags"]
 	GameData.story_phase = _snapshot["story_phase"]
 	GameData.chests_opened = _snapshot["chests_opened"]
+	# party 重建式还原（test_a5 的 "party":[] 档会把数组整体换空，必须重建）
+	var party: Array[CharacterRecord] = []
+	for pd: Dictionary in _party_backup:
+		party.append(CharacterRecord.new(
+			pd["id"], pd["name"], pd["job"], pd["level"],
+			pd["hp"], pd["max_hp"], pd["mp"], pd["max_mp"]))
+	GameData.party = party
 	SaveManager.save_path = _save_path_backup
 	SaveManager.consume_save_request()
 

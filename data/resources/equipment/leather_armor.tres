@@ -1,0 +1,15 @@
+; 皮甲 ── 防具，DEF+2（≈一级成长，2026-09-04 T3.3 数值口径）
+; 初始背包直塞件 2/2：开局即可给任意人换上（最小 schema 防具不锁角色）
+
+[gd_resource type="Resource" script_class="EquipmentData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/equipment_data.gd" id="1_eqd"]
+
+[resource]
+script = ExtResource("1_eqd")
+id = "leather_armor"
+name = "皮甲"
+slot = "armor"
+atk_bonus = 0
+def_bonus = 2
+description = "轻便的皮质护甲。DEF+2。"

@@ -1,0 +1,18 @@
+{
+  "events": {
+    "party_chat_road_01": {
+      "conditions": { "story_phase": [">=", 1], "not_flag": "chat_road_01_seen" },
+      "actions": [
+        { "type": "dialogue", "id": "party_chat_road_01" },
+        { "type": "set_flag", "flag": "chat_road_01_seen" }
+      ]
+    },
+    "party_chat_f2_01": {
+      "conditions": { "story_phase": [">=", 2], "not_flag": "chat_f2_01_seen" },
+      "actions": [
+        { "type": "dialogue", "id": "party_chat_f2_01" },
+        { "type": "set_flag", "flag": "chat_f2_01_seen" }
+      ]
+    }
+  }
+}

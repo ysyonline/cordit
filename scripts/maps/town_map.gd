@@ -50,6 +50,11 @@ const AutosaveNotifier := preload("res://scripts/events/autosave_notifier.gd")
 ## E5-S3 事件层（NPC 阶段对话：交互事件按 phase 映射选对话，GDD §3.3）
 const EventLoader := preload("res://scripts/events/event_loader.gd")
 const EventExecutor := preload("res://scripts/events/event_executor.gd")
+## E6-S1 主菜单（UILayer 常驻装配，C 键呼出）
+const MenuPanelScript := preload("res://scripts/ui/menu_panel.gd")
+
+## E6-S1 主菜单实例（UILayer 常驻装配产物；公开供测试树定位/断言）
+var menu_panel: Control = null
 
 ## 本 Story 实体化的 NPC 锚点名（E5-S3 起全量 12 个：6 个配额 NPC 带阶段
 ## 增量事件，其余 6 个单阶段事件——文案占位，S4 剧情线补正稿）。
@@ -73,6 +78,8 @@ func _ready() -> void:
 	teleports = TeleportAssembler.assemble(self, "town", dialogue_runner)
 	# E4-S6：进图自动存档（map_ready 广播 + save + 图标，§3.4 时序收口）
 	AutosaveNotifier.announce_ready(self, "town")
+	# E6-S1：主菜单装配（UILayer 常驻 + C 键呼出；town 首装，跨图复用）
+	_assemble_menu()
 
 
 func _assemble_content_points() -> void:
@@ -134,3 +141,29 @@ func _apply_limits(cam: Camera2D, rect: Rect2i) -> void:
 	cam.limit_top = rect.position.y
 	cam.limit_right = rect.position.x + rect.size.x
 	cam.limit_bottom = rect.position.y + rect.size.y
+
+
+## E6-S1：主菜单装配（全部增量集中于此，既有验收行为零触碰）。
+## 层位归属：挂 Main/UILayer（跨场景常驻，A4——town 首装、遗迹图复用同一
+## 实例，避免每图一份）；无 Main 结构（测试直挂）时兜底挂本地图，由测试侧
+## 负责释放。已存在实例时跳过（防重复装配——跨图往返会多次走 _ready）。
+## 守卫改为按脚本判定：ui_host 下可能存在他人挂的同名 Control（防御性），
+## 且兜底宿主（本图）在跨图往返时自身也会换新——按 name 复用会把旧图临死
+## 节点当正本；脚本一致才是"确实是主菜单"的可靠判据。
+func _assemble_menu() -> void:
+	var ui_host: Node = get_tree().root.get_node_or_null("Main/UILayer")
+	var is_temp: bool = false
+	if ui_host == null:
+		ui_host = self
+		is_temp = true
+	var existing: Node = ui_host.get_node_or_null("MenuPanel")
+	if existing != null and existing.get_script() == MenuPanelScript:
+		menu_panel = existing
+		return
+	var panel: Control = Control.new()
+	panel.name = "MenuPanel"
+	panel.set_script(MenuPanelScript)
+	ui_host.add_child(panel)
+	if is_temp:
+		panel.set_meta("temp_menu_panel", true)  # 标记：测试树释放时随图销毁
+	menu_panel = panel

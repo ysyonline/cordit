@@ -1,0 +1,19 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：9 文件 / 22 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[E1S5-A3] PASS: 12 个 NPC 锚点全对表
+[E1S5-A2] PASS: 四边边框均挡住玩家
+[TriggerTeleport] 同图传送 tp_town_door_inn -> (85.0, 17.0)
+[TriggerTeleport] 同图传送 tp_town_inn_exit -> (29.0, 19.0)
+[TriggerTeleport] 同图传送 tp_town_door_house_a -> (85.0, 29.0)
+[TriggerTeleport] 同图传送 tp_town_house_a_exit -> (12.0, 19.0)
+[E1S5-A1] PASS: 4 门传送+limit 切换+防弹回全过
+[E1S5-A4] PASS: 环线走通，回到出生点±40px，纯走 78.8s（区间 56~86）
+[E1S5] 汇总：4/4 PASS

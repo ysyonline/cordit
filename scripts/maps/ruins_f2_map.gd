@@ -28,6 +28,9 @@ var content_points: Dictionary = {}
 ## E4-S6 传送触发器装配产物（Array[Area2D]，测试对表用）
 var teleports: Array = []
 
+## T4.2 队员聊天点触发器（Array[Area2D]，测试对表用；E6-S4 第 2 步）
+var chat_points: Array = []
+
 const TeleportAssembler := preload("res://scripts/events/teleport_assembler.gd")
 const AutosaveNotifier := preload("res://scripts/events/autosave_notifier.gd")
 
@@ -42,6 +45,10 @@ func _ready() -> void:
 	teleports = TeleportAssembler.assemble(self, "ruins_f2", null)
 	# E4-S6：进图自动存档（map_ready 广播 + save + 图标，§3.4 时序收口）
 	AutosaveNotifier.announce_ready(self, "ruins_f2")
+	# T4.2：队员聊天点（E6-S4 第 2 步，P2 遗迹二层段位置触发；事件门闸
+	# phase>=2 + 一次性 flag 在数据侧，此处纯装配）
+	const ChatPointAssembler := preload("res://scripts/events/chat_point_assembler.gd")
+	chat_points = ChatPointAssembler.assemble(self, "ruins_f2", dialogue_runner)
 
 
 func _apply_limits(cam: Camera2D, rect: Rect2i) -> void:

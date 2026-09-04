@@ -1,0 +1,28 @@
+{
+  "party_chat_f2_01": {
+    "start": {
+      "speaker": "莉娜",
+      "portrait": "rina_normal",
+      "text": "【待润色】二层比一层安静得反常。遗像前的供品还新鲜……最近有人来过，或者——有什么东西一直住在这里。",
+      "next": "mona_1"
+    },
+    "mona_1": {
+      "speaker": "莫娜",
+      "portrait": "mona_normal",
+      "text": "【待润色】魔力浓得发闷，我每次念咒都像在搅动水底。再往深处走，若真遇上大家伙，撤退口令只喊一遍。",
+      "next": "kyle_1"
+    },
+    "kyle_1": {
+      "speaker": "凯尔",
+      "portrait": "kyle_angry",
+      "text": "【待润色】不会有大家伙。就算有——委托写明要查到源头，我们已经走到这里了。",
+      "next": "lina_2"
+    },
+    "lina_2": {
+      "speaker": "莉娜",
+      "portrait": "rina_smile",
+      "text": "【待润色】那把大剑终于有用了。走吧，趁它还没听见我们的脚步声。",
+      "next": "END"
+    }
+  }
+}

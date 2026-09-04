@@ -22,7 +22,11 @@ const SAVE_PATH: String = "user://save.json"
 ## 存档格式版本（读档时据此走迁移函数）。
 ## v2（E4-S8）：新增 inventory 字段（队伍共享背包持久化，E4-S5 复验补缺口）；
 ##   v1 旧档经 _migrate 补空 Dictionary 上迁，旧档可读。
-const SCHEMA_VERSION: int = 2
+## v3（E6-S1 T3.3）：①party 条目新增 weapon_id/armor_id（装备内嵌）；
+##   ②顶层新增 equipment（装备持有池 Array[String]）。v1/v2 旧档经
+##   _migrate 补默认值上迁：角色装备补空串（人人空手）、持有池补
+##   初始 2 件（与 New Game 一致——旧档玩家不该比新档玩家少装备）。
+const SCHEMA_VERSION: int = 3
 
 ## 可存状态快照的 schema（与 ADR-3 字段表一一对应，SMK-12 验收依据）：
 ##   version                  → int，格式版本
@@ -36,9 +40,11 @@ const SCHEMA_VERSION: int = 2
 ##   cleared_enemy_set        → Array，已击破敌人集合（GameData.cleared_enemy_set）
 ##   inventory                → Dictionary，队伍共享背包（item_id → count；
 ##                              JSON 天然支持对象键值对，无需像 flags 那样转数组）
+##   equipment                → Array[String]，装备持有池（E6-S1 T3.3；
+##                              未装上身上的装备 id 列表，装身上的在 party 条目内）
 ## 值为各字段的"类型示例占位"（空容器/零值），仅描述结构，不含数据。
 const SCHEMA: Dictionary = {
-	"version": 2,
+	"version": 3,
 	"map": "",
 	"position": [0.0, 0.0],
 	"party": [],
@@ -48,6 +54,7 @@ const SCHEMA: Dictionary = {
 	"discovered_weakness_set": [],
 	"cleared_enemy_set": [],
 	"inventory": {},
+	"equipment": [],
 }
 
 ## 角色记录类型（与 GameData 同款 preload 引用，headless 通道即时可用）
@@ -147,6 +154,14 @@ func _migrate(data: Dictionary) -> Dictionary:
 		# 无需动 data——空缺键由 SCHEMA 默认值兜底，此分支留作迁移
 		# 结构变换的落点与规程示范）。
 		pass
+	if v < 3:
+		# v2 → v3（E6-S1 T3.3）：装备系统上档。party 条目的装备字段由
+		# _deserialize_party 的 pd.get("weapon_id","") 兜底（无需结构变换）；
+		# 持有池 equipment 缺省补初始 2 件——与 New Game 一致，旧档玩家
+		# 不比新档玩家少装备（下方 merged 合并会把 SCHEMA 默认空数组
+		# 覆盖成 data 的缺失 → 仍为空数组，故此处显式补）。
+		if not data.has("equipment"):
+			data["equipment"] = ["iron_sword", "leather_armor"]
 	# E5/E6 迁移分支追加处（保持 v 从小到大逐级上迁）
 	# 缺失字段按 SCHEMA 默认值补齐（容错手改存档/半截字段），已有字段原样保留
 	var merged: Dictionary = SCHEMA.duplicate(true)
@@ -179,6 +194,13 @@ func _restore(data: Dictionary) -> void:
 		for item_id: Variant in (raw_inv as Dictionary):
 			inv[String(item_id)] = int((raw_inv as Dictionary)[item_id])
 	GameData.inventory = inv
+	# equipment（v3）：重建为 Array[String]（逐元素 String 化，防御 JSON 数字混入）
+	var eq_pool: Array[String] = []
+	var raw_eq: Variant = data.get("equipment", [])
+	if raw_eq is Array:
+		for eid: Variant in (raw_eq as Array):
+			eq_pool.append(String(eid))
+	GameData.owned_equipment = eq_pool
 	# 注意：map / position 不写 GameData（职责边界），经 last_loaded 供 E4-S7 回图
 
 
@@ -198,29 +220,34 @@ func _snapshot(map: String, position: Vector2) -> Dictionary:
 	snap["cleared_enemy_set"] = GameData.cleared_enemy_set.duplicate()
 	# inventory（v2）：键值结构 JSON 原生，duplicate 防外部后续改动渗入快照
 	snap["inventory"] = GameData.inventory.duplicate()
+	# equipment（v3）：持有池 duplicate 防渗入；装身上的在 party 条目内
+	snap["equipment"] = GameData.owned_equipment.duplicate()
 	return snap
 
 
-## 队伍快照：CharacterRecord → 纯值字典（8 字段，与 E2-S4 写回字段同构）
+## 队伍快照：CharacterRecord → 纯值字典（10 字段；T3.3 增 weapon_id/armor_id）
 func _serialize_party(party: Array[CharacterRecord]) -> Array:
 	var out: Array = []
 	for c: CharacterRecord in party:
 		out.append({
 			"id": c.id, "name": c.name, "job": c.job, "level": c.level,
 			"hp": c.hp, "max_hp": c.max_hp, "mp": c.mp, "max_mp": c.max_mp,
+			"weapon_id": c.weapon_id, "armor_id": c.armor_id,
 		})
 	return out
 
 
 ## 队伍回灌：纯值字典数组 → 重建 CharacterRecord（类型化数组逐元素 append，
-## 规避 Array[CharacterRecord] 直接赋值的类型坑）
+## 规避 Array[CharacterRecord] 直接赋值的类型坑）。装备两字段 get 兜底
+## 空串——v2 旧档条目无此键，迁移后统一补空（人人空手）。
 func _deserialize_party(arr: Array) -> Array[CharacterRecord]:
 	var out: Array[CharacterRecord] = []
 	for pd: Dictionary in arr:
 		out.append(CharacterRecord.new(
 			String(pd.get("id", "")), String(pd.get("name", "")), String(pd.get("job", "")),
 			int(pd.get("level", 1)), int(pd.get("hp", 1)), int(pd.get("max_hp", 1)),
-			int(pd.get("mp", 1)), int(pd.get("max_mp", 1))))
+			int(pd.get("mp", 1)), int(pd.get("max_mp", 1)),
+			String(pd.get("weapon_id", "")), String(pd.get("armor_id", ""))))
 	return out
 
 

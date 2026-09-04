@@ -39,6 +39,13 @@ var party: Array[CharacterRecord] = [
 ## 队伍共享背包：道具 id -> 数量（战斗 GDD I2：道具为队伍共享，非按角色）
 var inventory: Dictionary = {}
 
+## 装备持有池（E6-S1 T3.3）：背包里的装备 id 列表（未装上身上的）。
+## 与道具背包分离：装备无数量语义（同 id 不会叠两件——切片 2 件配额），
+## 装上=从池移除并写 party[].weapon_id/armor_id，卸下=反向。
+## 初始直塞 2 件（用户裁定"初始背包直塞 2 件"：1 武器+1 防具），
+## 切片无商店（§3.5 裁决），后续来源=宝箱 give_equipment（暂无用例）。
+var owned_equipment: Array[String] = ["iron_sword", "leather_armor"]
+
 ## 队伍金钱（切片内恒为 0，GDD 已裁决切片无商店；保留字段避免未来加商店时改协议——架构 A5 同款理由）
 var gold: int = 0
 

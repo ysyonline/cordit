@@ -483,10 +483,11 @@ func test_数据表脚本无场景依赖_A1铁律3() -> void:
 	#   + 1 个装载器 data_tables.gd
 	#   + 1 个数据桥 battle_units.gd（E3-S2 新增：数值表 → 战斗单位字典）
 	#   + 1 个行为目录类 enemy_action_catalog.gd（v1.1 倍率迁 .tres 配套）
+	#   + 1 个装备表类 equipment_data.gd（E6-S1 T3.3 新增：装备最小 schema）
 	#   + 3 个事件系统件（E5-S2：schema 校验器在 dialogue 域不算此处，
 	#     loader/executor 在 events 域——见 test_e5s2；本目录仍为纯数值域）
 	# 这个计数是"目录里混进无关脚本"的哨兵——新增文件请同步更新并说明。
-	assert_eq(scanned, 10, "scripts/data/ 下应有 10 个 .gd（7 表类 + 装载器 + 数据桥 + 行为目录类）")
+	assert_eq(scanned, 11, "scripts/data/ 下应有 11 个 .gd（8 表类 + 装载器 + 数据桥 + 行为目录类）")
 
 
 func test_数值表不读JSON_A2分域() -> void:

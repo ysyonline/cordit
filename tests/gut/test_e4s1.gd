@@ -36,21 +36,27 @@ const DEFAULT_PARTY: Array = [
 var _party_backup: Array = []
 var _flags_backup: Dictionary = {}
 var _sets_backup: Array = []   # [chests_opened, discovered_weakness_set, cleared_enemy_set]
+var _equip_pool_backup: Array = []   # T3.3：owned_equipment 隔离
+var _inv_backup: Dictionary = {}   # T3.3：inventory 隔离（test_17 会写 potion_s，
+                                   #  不还原会外溢到后续套件——e4s5/e5s2 连环挂教训）
 var _phase_backup: int = 0
 
 
 func before_all() -> void:
 	_phase_backup = GameData.story_phase
 	_flags_backup = GameData.flags.duplicate()
+	_inv_backup = GameData.inventory.duplicate()
 	_sets_backup = [
 		(GameData.chests_opened as Array).duplicate(),
 		(GameData.discovered_weakness_set as Array).duplicate(),
 		(GameData.cleared_enemy_set as Array).duplicate(),
 	]
+	_equip_pool_backup = GameData.owned_equipment.duplicate()
 	for c: Resource in GameData.party:
 		_party_backup.append({
 			"id": c.id, "name": c.name, "job": c.job, "level": c.level,
-			"hp": c.hp, "max_hp": c.max_hp, "mp": c.mp, "max_mp": c.max_mp})
+			"hp": c.hp, "max_hp": c.max_hp, "mp": c.mp, "max_mp": c.max_mp,
+			"weapon_id": c.weapon_id, "armor_id": c.armor_id})
 
 
 func after_all() -> void:
@@ -73,9 +79,11 @@ func before_each() -> void:
 func _restore_gamedata_baseline() -> void:
 	GameData.story_phase = _phase_backup
 	GameData.flags = _flags_backup.duplicate()
+	GameData.inventory = _inv_backup.duplicate()
 	GameData.chests_opened = (_sets_backup[0] as Array).duplicate()
 	GameData.discovered_weakness_set = (_sets_backup[1] as Array).duplicate()
 	GameData.cleared_enemy_set = (_sets_backup[2] as Array).duplicate()
+	GameData.owned_equipment = _equip_pool_backup.duplicate()
 	var party: Array[CharacterRecord] = []
 	for pd: Dictionary in DEFAULT_PARTY:
 		party.append(CharacterRecord.new(
@@ -107,15 +115,16 @@ func _read_json(path: String) -> Dictionary:
 # =============== 1. SCHEMA 结构回归锚（ADR-3 十字段，v2 起） ===============
 
 func test_01_schema与ADR3十字段对齐() -> void:
-	# v2（E4-S8）：+inventory，其余九字段不变；ADR-3 字段表已同步 v2
+	# v3（E6-S1 T3.3）：+equipment（装备持有池），其余字段不变；
+	# party 条目内嵌 weapon_id/armor_id 由 _serialize/_deserialize 锚定
 	var expected: Array = ["version", "map", "position", "party", "story_phase",
 			"flags", "chests_opened", "discovered_weakness_set", "cleared_enemy_set",
-			"inventory"]
+			"inventory", "equipment"]
 	var keys: Array = SaveManager.SCHEMA.keys()
 	keys.sort()
 	expected.sort()
 	assert_eq(keys, expected, "SCHEMA 键集必须与 ADR-3 字段表一一对应")
-	assert_eq(SaveManager.SCHEMA_VERSION, 2, "当前格式版本应为 2（v1→v2 加 inventory）")
+	assert_eq(SaveManager.SCHEMA_VERSION, 3, "当前格式版本应为 3（v2→v3 加 equipment）")
 	assert_eq(SaveManager.SAVE_PATH, "user://save.json", "存档路径应为 ADR-3 口径 user://save.json")
 
 
@@ -307,3 +316,45 @@ func test_15_has_save与last_loaded语义() -> void:
 			"last_loaded 携带 map（E4-S7 回图依据）")
 	assert_eq(SaveManager.last_loaded["position"], [192.0, 640.0],
 			"last_loaded 携带 position（E4-S7 回置依据）")
+
+
+# =============== 6. 装备持久化（v3，E6-S1 T3.3） ===============
+
+func test_16_装备往返_持有池与身上装备() -> void:
+	# 写入态：凯尔装铁剑（出池）、池里只剩皮甲
+	GameData.party[0].weapon_id = "iron_sword"
+	GameData.party[0].armor_id = ""
+	GameData.owned_equipment = ["leather_armor"]
+	assert_true(SaveManager.save("m", Vector2.ZERO), "存档")
+	# 扰动后读档
+	GameData.party[0].weapon_id = ""
+	GameData.owned_equipment = []
+	assert_true(SaveManager.load_save(), "读档")
+	assert_eq(String(GameData.party[0].weapon_id), "iron_sword",
+			"身上武器往返无损")
+	assert_eq(GameData.owned_equipment, ["leather_armor"], "持有池往返无损")
+	# 落盘 JSON 结构锚定：party 条目含装备键、顶层 equipment 为数组
+	var data := _read_json(TEST_PATH)
+	assert_true((data["party"][0] as Dictionary).has("weapon_id"),
+			"party 条目应内嵌 weapon_id（v3 结构）")
+	assert_true(data["equipment"] is Array, "顶层 equipment 应为数组")
+
+
+func test_17_v2旧档迁移_补装备默认值() -> void:
+	# 构造 v2 真实结构旧档：无 equipment 键、party 条目无装备字段
+	_write_raw(TEST_PATH, JSON.stringify({
+		"version": 2, "map": "res://scenes/maps/town.tscn",
+		"position": [1.0, 2.0], "story_phase": 3, "flags": [],
+		"chests_opened": [], "discovered_weakness_set": [],
+		"cleared_enemy_set": [], "inventory": {"potion_s": 1},
+		"party": [{"id": "kyle", "name": "凯尔", "job": "swordsman",
+			"level": 1, "hp": 120, "max_hp": 120, "mp": 10, "max_hp2": 0,
+			"max_mp": 10}],
+	}))
+	assert_true(SaveManager.load_save(), "v2 旧档应经迁移后可读")
+	assert_eq(int(SaveManager.last_loaded["version"]), 3, "迁移后 version 应为 3")
+	assert_eq(GameData.owned_equipment, ["iron_sword", "leather_armor"],
+			"v2 旧档持有池应补初始 2 件（与 New Game 一致）")
+	assert_eq(String(GameData.party[0].weapon_id), "",
+			"v2 旧档角色装备应补空串（人人空手）")
+	assert_eq(int(GameData.inventory["potion_s"]), 1, "v2 背包字段原样保留")

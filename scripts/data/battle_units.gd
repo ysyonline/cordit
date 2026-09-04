@@ -21,12 +21,19 @@ const DataTables := preload("res://scripts/data/data_tables.gd")
 ## 六维走 CharacterData.stats_at(level)（E3-S2 口径③：派生函数直接用，
 ## 不要在调用方自己再算一遍 base + per_level × (level-1)）。
 ## 槽位取 PARTY_ORDER 的下标——它同时是 §3.1"同 SPD 时我方按队伍槽位序"的键。
-static func build_party_unit(character_id: String, level: int = 1) -> Dictionary:
+## equip（T3.3 可选）：{weapon_id:String, armor_id:String}——非空时走
+## apply_equipment 叠加装备加成（E6-S1 验收第 3 条"装备反映到战斗伤害"）；
+## 缺省不叠加，旧调用点（demo host / 存量 GUT）零改动。
+static func build_party_unit(character_id: String, level: int = 1,
+		equip: Dictionary = {}) -> Dictionary:
 	var c: Resource = DataTables.get_character(character_id)
 	if c == null:
 		push_warning("[BattleUnits] 角色 id 不存在：%s" % character_id)
 		return {}
 	var s: Dictionary = c.stats_at(level)
+	if not equip.is_empty():
+		s = apply_equipment(s, String(equip.get("weapon_id", "")),
+				String(equip.get("armor_id", "")))
 	return BattleLogic.make_unit({
 		"unit_id": c.id,
 		"name": c.name,
@@ -42,6 +49,26 @@ static func build_party_unit(character_id: String, level: int = 1) -> Dictionary
 		"mag": int(s["mag"]),
 		"spd": int(s["spd"]),
 	})
+
+
+## 装备加成并项（E6-S1 T3.3 唯一并项函数）：六维面板 + 武器/防具 id
+## -> 叠加后的六维（hp/mp/mag/spd 原样透传，装备只动 atk/def）。
+## 状态页（refresh_status_page）与战斗侧（build_party_unit）共用本函数——
+## 同源保证"面板数字 = 战斗公式输入"，两处永不漂移（验收第 3 条口径）。
+## 未知装备 id 按 0 加成跳过（防御式：脏档不炸，warning 留痕）。
+static func apply_equipment(stats: Dictionary, weapon_id: String,
+		armor_id: String) -> Dictionary:
+	var out: Dictionary = stats.duplicate()
+	for eid: String in [weapon_id, armor_id]:
+		if eid.is_empty():
+			continue
+		var eq: Resource = DataTables.get_equipment(eid)
+		if eq == null:
+			push_warning("[BattleUnits] 装备 id 不存在：%s（按 0 加成跳过）" % eid)
+			continue
+		out["atk"] = int(out.get("atk", 0)) + int(eq.atk_bonus)
+		out["def"] = int(out.get("def", 0)) + int(eq.def_bonus)
+	return out
 
 
 ## 构建完整三人队伍（满血满蓝开局，按 PARTY_ORDER 槽位序返回）。
