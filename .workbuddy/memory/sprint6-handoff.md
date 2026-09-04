@@ -87,7 +87,7 @@
 ## 五、工作区状态（2026-09-04 23:00 收口提交版）
 
 - **9/4 全天提交史**：`65b524b`=feat(E6-S2,S3) 战斗侧 → `08a9bc7`=feat(E6-S1,S4) 菜单/装备/聊天侧 → `39c47af` 等记忆 docs 笔 → 17:20 已 push（b550126..39c47af 验证过）。
-- **23:00 收口新增三笔**（T6 五件产物，本窗口用户授权"该提交的提交"）：① feat(E6-S5) 文策内容侧（story_p0/p1、dlg_npc_*×16、party_chat×2、flavor 方位修正、test_m6t42 适配）② feat(T6.5) 工程接线侧（story_intro.json、town.tscn、town_map.gd、test_t65、evidence/t65-*×4）③ docs(memory) 交接档更新。**HEAD=05cc92a，⚠️ 三笔未推远程（23:05 push 失败：代理软件未开全端口不通）——下窗口用户开代理后第一件事 push+ls-remote 验证**。工作区 status 全净。
+- **23:00 收口新增三笔**（T6 五件产物，本窗口用户授权"该提交的提交"）：① feat(E6-S5) 文策内容侧（story_p0/p1、dlg_npc_*×16、party_chat×2、flavor 方位修正、test_m6t42 适配）② feat(T6.5) 工程接线侧（story_intro.json、town.tscn、town_map.gd、test_t65、evidence/t65-*×4）③ docs(memory) 交接档更新。**已推远程（23:10，远程 main=98c9ed1，ls-remote 验证一致）**。工作区 status 全净。
 - 工作区仅剩 .import 大面积"改动"=CRLF 噪音（`git -c core.autocrlf=false diff` 零差异），沿惯例永远剔除。
 - tag：m1–m5 均已推远程；**tag m6 留给 T5 收口时打**。
 
