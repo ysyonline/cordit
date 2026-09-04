@@ -47,6 +47,8 @@ const DialogueBoxScene := preload("res://scenes/ui/dialogue_box.tscn")
 const NpcScene := preload("res://scenes/npc/npc.tscn")
 const TeleportAssembler := preload("res://scripts/events/teleport_assembler.gd")
 const AutosaveNotifier := preload("res://scripts/events/autosave_notifier.gd")
+## T6.5 开局剧情锚点（P0 接线）：统一事件薄壳复用（A7 第 1 层，同 ruins_f3 Boss 锚点）
+const ShellScript := preload("res://scripts/events/trigger_event_shell.gd")
 ## E5-S3 事件层（NPC 阶段对话：交互事件按 phase 映射选对话，GDD §3.3）
 const EventLoader := preload("res://scripts/events/event_loader.gd")
 const EventExecutor := preload("res://scripts/events/event_executor.gd")
@@ -66,6 +68,18 @@ const SPAWN_NPC_IDS: Array[String] = [
 	"npc_09_shepherd", "npc_10_housewife", "npc_11_porter", "npc_12_elder",
 ]
 
+## T6.5 开局剧情（P0）事件 id（data/json/events/story_intro.json 同名顶层事件；
+## 动作序列 = dialogue story_p0_intro → set_flag story_p0_seen → save_point，
+## 门控在数据侧 conditions：story_phase == 0 且未打 story_p0_seen 旗）
+const OPENING_EVENT_ID: String = "story_p0_intro"
+
+## T6.5 开局锚点路径（town.tscn YSorted/P0_Anchor，与玩家出生位 (192,640) 同格——
+## 出生即物理重叠，body_entered 首物理帧开演 P0）
+const OPENING_ANCHOR_PATH: String = "YSorted/P0_Anchor"
+
+## T6.5 开局触发器实体名（Triggers 容器内；测试对表用）
+const OPENING_TRIGGER_NAME: String = "Evt_P0_Opening"
+
 
 func _ready() -> void:
 	var player: CharacterBody2D = $YSorted/Player
@@ -76,6 +90,8 @@ func _ready() -> void:
 	_assemble_content_points()
 	# E4-S6：传送装配（场景内旧 4 门由装配器移除，目录驱动薄壳同位重建）
 	teleports = TeleportAssembler.assemble(self, "town", dialogue_runner)
+	# T6.5：开局剧情锚点装配（P0 接线；守卫见函数头注）
+	_assemble_opening_story()
 	# E4-S6：进图自动存档（map_ready 广播 + save + 图标，§3.4 时序收口）
 	AutosaveNotifier.announce_ready(self, "town")
 	# E6-S1：主菜单装配（UILayer 常驻 + C 键呼出；town 首装，跨图复用）
@@ -141,6 +157,66 @@ func _apply_limits(cam: Camera2D, rect: Rect2i) -> void:
 	cam.limit_top = rect.position.y
 	cam.limit_right = rect.position.x + rect.size.x
 	cam.limit_bottom = rect.position.y + rect.size.y
+
+
+## T6.5：开局剧情锚点装配（探索 GDD §3.4"首次启动（无存档）：开场剧情 P0
+## 结束处执行一次 save_point"——此前 story_p0_intro 对话零引用，玩家看不到 P0）。
+##
+## 【装配面】trigger_event_shell 薄壳（A7 第 1 层，行为全在数据侧）挂 Triggers
+## 容器：踩踏面（mask=16 玩家层，同 TeleportAssembler 口径）以出生锚点为中心，
+## 出生即重叠 → body_entered 首物理帧 _emit_event → executor 走
+## conditions（phase==0 且无 story_p0_seen 旗）→ dialogue/set_flag/save_point。
+## 三件套注入本图 _assemble_dialogue_system 装配产物（runner/loader/executor）。
+##
+## 【双守卫——为何不能无条件装配】"首次启动"与既有测试环境在数据面不可区分
+## （GUT 直挂 town / m6t41 假 Main 经 Router 读档回 town：均为 phase=0、
+## flags 空、玩家先落出生位）——无条件接线会在 503 基线内自动开演 P0 并置
+## 存档意图位，污染存档门控与对话门闸断言（净增不改旧纪律）。故：
+##   ① 生产启动守卫：current_scene 必须是 Main 本体（生产 F5/运行 main.tscn
+##     时 Main 恒为 current_scene；GUT 用例树 / 冒烟包装器 / 演示替身的
+##     current_scene 均非 Main——smk_e1s3、e1s4 是手动重挂 Main，包装器才
+##     是 current_scene，同样不接线，冒烟 user:// 纯净性（SMK-12）不受扰）。
+##   ② 无存档守卫：SaveManager.has_save() 为假才装配——GDD"首次启动（无存档）"
+##     原文口径；带档启动（旧档玩家/续玩）不触发 P0（旧档若 phase>0 或带
+##     story_p0_seen 旗，conditions 亦会拦，双保险）。
+## 两守卫只影响【接线】，事件数据本身 schema 与执行链由 test_t65 全量覆盖。
+func _assemble_opening_story() -> void:
+	if not is_inside_tree():
+		return
+	var cs: Node = get_tree().current_scene
+	if cs == null or cs.name != "Main":
+		print("[TownMap] 非生产启动语境（current_scene=%s），P0 锚点不接线" % [
+				String(cs.name) if cs != null else "<null>"])
+		return
+	if SaveManager.has_save():
+		print("[TownMap] 已有存档（has_save=true），P0 锚点不接线（GDD 首次启动口径）")
+		return
+	var anchor: Node2D = get_node_or_null(OPENING_ANCHOR_PATH) as Node2D
+	if anchor == null:
+		push_warning("[TownMap] 无 %s 锚点，P0 开局装配跳过" % OPENING_ANCHOR_PATH)
+		return
+	var container: Node = get_node_or_null("Triggers")
+	if container == null:
+		push_warning("[TownMap] 无 Triggers 容器，P0 开局装配跳过")
+		return
+	var trigger: Area2D = Area2D.new()
+	trigger.set_script(ShellScript)
+	trigger.name = OPENING_TRIGGER_NAME
+	trigger.event_id = OPENING_TRIGGER_NAME
+	trigger.new_event_id = OPENING_EVENT_ID
+	trigger.setup(event_loader, event_executor, dialogue_runner)
+	trigger.collision_layer = 0
+	trigger.collision_mask = 16   # 玩家实体层（与 TeleportAssembler 同口径）
+	var shape_node: CollisionShape2D = CollisionShape2D.new()
+	shape_node.name = "CollisionShape2D"
+	var rect: RectangleShape2D = RectangleShape2D.new()
+	rect.size = Vector2(32, 32)   # 出生格 ±1 格重叠面：脚盒落格即触发
+	shape_node.shape = rect
+	trigger.add_child(shape_node)
+	trigger.position = anchor.position
+	container.add_child(trigger)
+	print("[TownMap] P0 开局锚点装配完成：%s → 事件 %s（踩踏@%s）" % [
+			OPENING_TRIGGER_NAME, OPENING_EVENT_ID, trigger.position])
 
 
 ## E6-S1：主菜单装配（全部增量集中于此，既有验收行为零触碰）。

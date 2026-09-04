@@ -1,0 +1,261 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[M5Demo] 启动：M5 收口自动演示（对话事件/Boss 锚点/I5 全序列，禁随机）
+[M5Demo] 剧情中盘切入：story_phase=2（Boss 门闸 >=2 放行）
+[M5Demo] 第 1 幕：装载 town（R2 初始场景）
+[SceneRouter] 受理切换 -> res://scenes/maps/town.tscn
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：9 文件 / 22 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[SceneRouter] 装载完成 -> res://scenes/maps/town.tscn
+[M5Demo][walk] 开始 -> (200.0, 640.0)（起点 (192.0, 640.0)）
+[M5Demo][walk] 结束 -> (195.6, 640.0)（历时 0.0s stuck=0.00）
+[M5Demo][walk] 开始 -> (200.0, 328.0)（起点 (195.6, 640.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (200.0, 328.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (200.0, 328.0)（历时 1.2s stuck=0.52）
+[M5Demo][walk] 开始 -> (312.0, 328.0)（起点 (200.0, 328.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (312.0, 328.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (312.0, 328.0)（历时 0.7s stuck=0.52）
+[M5Demo][walk] 开始 -> (312.0, 318.0)（起点 (312.0, 328.0)）
+[M5Demo][walk] 结束 -> (312.0, 320.7999)（历时 0.1s stuck=0.00）
+[M5Demo][walk] 开始 -> (488.0, 316.0)（起点 (312.0, 320.7999)）
+[M5Demo][walk] 结束 -> (484.7358, 316.089)（历时 1.2s stuck=0.00）
+[M5Demo] 朝向已设 -> (0.0, -1.0)（交互射线对准北面目标）
+[DialogueRunner] 开演：dlg_npc_01_innkeeper_p12（3 条目）
+[M5Demo] 交互注入（dispatch 直驱 npc_01_innkeeper_entity）：E5-S3 事件路径
+[M5Demo] 对话已开演：npc_innkeeper 对话（耗时 0.0s）
+[M5Demo] 翻页注入（runner 直驱）
+[M5Demo] 翻页注入（runner 直驱）
+WARNING: [M5Demo] 等待收束超时：npc_innkeeper 收束——后续按兜底流程走
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _wait_dialogue_finished (res://evidence/_m5_auto_demo.gd:502)
+       [1] _sleep (res://evidence/_m5_auto_demo.gd:298)
+[M5Demo] 第 2 幕：走向南门（触发区中心 (208.0, 760.0)）
+[M5Demo][walk] 开始 -> (200.0, 328.0)（起点 (484.7358, 316.089)）
+[M5Demo] 走位被阻挡，兜底直落 -> (200.0, 328.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (200.0, 328.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (200.0, 736.0)（起点 (200.0, 328.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (200.0, 736.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (200.0, 736.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (208.0, 760.0)（起点 (200.0, 736.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (208.0, 760.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (208.0, 760.0)（历时 0.5s stuck=0.52）
+[M5Demo] 期望日志：跨图落盘应已发生：[AutosaveNotifier] road + SaveManager 存档
+[M5Demo] 第 3 幕：road 蛇形链（N0→H1→V1→H1b→V2→H2→V3），敌带全部避开
+[M5Demo][walk] 开始 -> (384.0, 200.0)（起点 (208.0, 760.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (384.0, 200.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (384.0, 200.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (696.0, 152.0)（起点 (384.0, 200.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (696.0, 152.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (696.0, 152.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (696.0, 264.0)（起点 (696.0, 152.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (696.0, 264.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (696.0, 264.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (176.0, 280.0)（起点 (696.0, 264.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (176.0, 280.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (176.0, 280.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (176.0, 344.0)（起点 (176.0, 280.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (176.0, 344.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (176.0, 344.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (584.0, 440.0)（起点 (176.0, 344.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (584.0, 440.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (584.0, 440.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (584.0, 536.0)（起点 (584.0, 440.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (584.0, 536.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (584.0, 536.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (72.0, 592.0)（起点 (584.0, 536.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (72.0, 592.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (72.0, 592.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (72.0, 760.0)（起点 (72.0, 592.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (72.0, 760.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (72.0, 760.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (216.0, 856.0)（起点 (72.0, 760.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (216.0, 856.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (216.0, 856.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (696.0, 872.0)（起点 (216.0, 856.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (696.0, 872.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (696.0, 872.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (696.0, 984.0)（起点 (696.0, 872.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (696.0, 984.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (696.0, 984.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (384.0, 984.0)（起点 (696.0, 984.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (384.0, 984.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (384.0, 984.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (384.0, 1024.0)（起点 (384.0, 984.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (384.0, 1024.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (384.0, 1024.0)（历时 0.5s stuck=0.52）
+[M5Demo] 期望日志：road→f1 跨图应已触发：tp_road_to_f1
+[M5Demo] 第 4 幕：f1 蛇形链北上，巡逻带 (20,22)/(36,25) 均在中央避开
+[M5Demo][walk] 开始 -> (448.0, 168.0)（起点 (384.0, 1024.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (448.0, 168.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (448.0, 168.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (728.0, 168.0)（起点 (448.0, 168.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (728.0, 168.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (728.0, 168.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (728.0, 416.0)（起点 (728.0, 168.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (728.0, 416.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (728.0, 416.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (176.0, 416.0)（起点 (728.0, 416.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (176.0, 416.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (176.0, 416.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (176.0, 560.0)（起点 (176.0, 416.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (176.0, 560.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (176.0, 560.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (456.0, 632.0)（起点 (176.0, 560.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (456.0, 632.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (456.0, 632.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (448.0, 656.0)（起点 (456.0, 632.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (448.0, 656.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (448.0, 656.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (448.0, 696.0)（起点 (448.0, 656.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (448.0, 696.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (448.0, 696.0)（历时 0.5s stuck=0.52）
+[M5Demo] 期望日志：f1→f2 跨图应已触发：tp_f1_to_f2
+[M5Demo] 第 5 幕：f2 蛇形链北上（B4 定守 (23,24) 正中，横道走南侧 y=28）
+[M5Demo][walk] 开始 -> (384.0, 168.0)（起点 (448.0, 696.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (384.0, 168.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (384.0, 168.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (664.0, 168.0)（起点 (384.0, 168.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (664.0, 168.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (664.0, 168.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (664.0, 448.0)（起点 (664.0, 168.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (664.0, 448.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (664.0, 448.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (112.0, 448.0)（起点 (664.0, 448.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (112.0, 448.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (112.0, 448.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (112.0, 560.0)（起点 (112.0, 448.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (112.0, 560.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (112.0, 560.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (176.0, 608.0)（起点 (112.0, 560.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (176.0, 608.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (176.0, 608.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (384.0, 664.0)（起点 (176.0, 608.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (384.0, 664.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (384.0, 664.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (384.0, 760.0)（起点 (384.0, 664.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (384.0, 760.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (384.0, 760.0)（历时 0.5s stuck=0.52）
+[M5Demo] 期望日志：f2→f3 跨图应已触发：tp_f2_to_f3
+[M5Demo] 第 6 幕：走向棺前锚点 (312,552)，面南交互（石棺在 +y 方向）
+[M5Demo][walk] 开始 -> (320.0, 120.0)（起点 (384.0, 751.924)）
+[M5Demo] 走位被阻挡，兜底直落 -> (320.0, 120.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (320.0, 120.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (544.0, 120.0)（起点 (320.0, 120.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (544.0, 120.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (544.0, 120.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (544.0, 296.0)（起点 (544.0, 120.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (544.0, 296.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (544.0, 296.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (176.0, 384.0)（起点 (544.0, 296.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (176.0, 384.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (176.0, 384.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (176.0, 480.0)（起点 (176.0, 384.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (176.0, 480.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (176.0, 480.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (240.0, 512.0)（起点 (176.0, 480.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (240.0, 512.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (240.0, 512.0)（历时 0.5s stuck=0.52）
+[M5Demo][walk] 开始 -> (312.0, 552.0)（起点 (240.0, 512.0)）
+[M5Demo] 走位被阻挡，兜底直落 -> (312.0, 552.0)（碰撞链路日志可查）
+[M5Demo][walk] 结束 -> (312.0, 552.0)（历时 0.6s stuck=0.52）
+WARNING: [M5Demo] 第 6 幕前 runner 非 IDLE，force_idle 收束残留
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://evidence/_m5_auto_demo.gd:227)
+       [1] _sleep (res://evidence/_m5_auto_demo.gd:298)
+[DialogueRunner] 强制收束（读档安全，边缘 5）：弃 dlg_npc_01_innkeeper_p12 → IDLE
+[M5Demo] 朝向已设 -> (0.0, 1.0)（交互射线对准北面目标）
+WARNING: [M5Demo] 半径内无交互目标（want_boss=true）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _find_interact_target (res://evidence/_m5_auto_demo.gd:463)
+       [1] _interact_with_npc (res://evidence/_m5_auto_demo.gd:397)
+       [2] _run (res://evidence/_m5_auto_demo.gd:232)
+       [3] _sleep (res://evidence/_m5_auto_demo.gd:298)
+[M5Demo] 交互注入（runner 直驱兜底）
+WARNING: [M5Demo] 等待开演超时：story_p3_boss_front 战前拍（runner=true）——后续按兜底流程走
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _wait_dialogue_started (res://evidence/_m5_auto_demo.gd:488)
+       [1] _sleep (res://evidence/_m5_auto_demo.gd:298)
+[M5Demo] 翻页注入（runner 直驱）
+[M5Demo] 翻页注入（runner 直驱）
+WARNING: [M5Demo] 战斗挂起超时（暂停=false 转发=false）——替身切换改带兜底载荷
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _wait_battle_suspended (res://evidence/_m5_auto_demo.gd:546)
+       [1] _sleep (res://evidence/_m5_auto_demo.gd:298)
+[SceneRouter] 受理切换 -> res://evidence/_m5_battle_host.tscn
+[M5Demo] 第 7 幕：切 _m5_battle_host（真实 BattleCommand+UI，VICTORY 剧本）
+[SceneRouter] 拒绝切换：上一轮切换（淡入淡出）尚未完成，拒绝重入
+[M5Demo][BattleHost] 就绪：编组=b5_core（真实 BattleCommand+BattleUI，VICTORY 教学剧本）
+[SceneRouter] 装载完成 -> res://evidence/_m5_battle_host.tscn
+[M5Demo] R1 凯尔 行动：技能 heavy_slash → 槽位 0
+[M5Demo] R1 莫娜 行动：技能 group_heal → 槽位 -1
+[M5Demo] R1 莉娜 行动：技能 fireball → 槽位 0
+[M5Demo] R1 核心 行动（AI roll=0.55 → 蓄力/释放拍）
+[M5Demo] R2 凯尔 行动：技能 heavy_slash → 槽位 0
+[M5Demo] R2 莫娜 行动：防御（蓄力应对教学拍）
+[M5Demo] R2 莉娜 行动：技能 fireball → 槽位 0
+[M5Demo] R2 核心 行动（AI roll=0.55 → 蓄力/释放拍）
+[M5Demo] R3 凯尔 行动：技能 heavy_slash → 槽位 0
+[M5Demo] R3 莫娜 行动：技能 group_heal → 槽位 -1
+[M5Demo] R3 莉娜 行动：技能 fireball → 槽位 0
+[M5Demo] R3 核心 行动（AI roll=0.55 → 蓄力/释放拍）
+[M5Demo] R4 凯尔 行动：技能 heavy_slash → 槽位 0
+[M5Demo] R4 莫娜 行动：防御（蓄力应对教学拍）
+[M5Demo] R4 莉娜 行动：技能 fireball → 槽位 0
+[M5Demo] R4 核心 行动（AI roll=0.55 → 蓄力/释放拍）
+[M5Demo] R5 凯尔 行动：技能 heavy_slash → 槽位 0
+[M5Demo] R5 莫娜 行动：技能 group_heal → 槽位 -1
+[M5Demo] R5 莉娜 行动：技能 fireball → 槽位 0
+[M5Demo] 结局 -> VICTORY（结算画面展示 4.0s，揭示中=false，待弹 0 行）
+[M5Demo] 出战黑屏（play_outro 0.5s）
+[M5Demo] 发 battle_finished(VICTORY) → 桥消费 → resolve_victory 续行战后段
+[BattleResultHandler] 掉落入包 potion_l x1（背包 { "potion_l": 1 }）
+[SceneRouter] 受理切换 -> res://scenes/maps/ruins_f3.tscn
+[BattleResultHandler] VICTORY 结算完成 -> 回图 res://scenes/maps/ruins_f3.tscn（回置 (312.0, 552.0)）
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[MapEvents] ruins_f3 装配完成：宝箱 1 + 调查 2
+[TeleportAssembler] ruins_f3 装配完成：传送触发器 1 处
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：9 文件 / 22 事件（失败 0）
+[RuinsF3Map] Boss 锚点装配完成：story_boss_pre（交互键，事件 story_boss_pre）
+[SceneRouter] 装载完成 -> res://scenes/maps/ruins_f3.tscn
+[BattleResultHandler] 玩家回置 -> (312.0, 552.0)，免疫 0.5s 启动
+[M5Demo] 期望日志：胜利续行应已发生：桥 VICTORY → resolve_victory → 战后段
+[M5Demo] 第 8 幕：战后台词 + set_story_phase(3) + save_point
+WARNING: [M5Demo] 等待开演超时：story_p3_finale 战后拍（runner=true）——后续按兜底流程走
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _wait_dialogue_started (res://evidence/_m5_auto_demo.gd:488)
+       [1] _sleep (res://evidence/_m5_auto_demo.gd:298)
+[M5Demo] 翻页注入（runner 直驱）
+[M5Demo] 翻页注入（runner 直驱）
+[M5Demo] story_p3_finale 补按收束：经 0 次补按收束
+[M5Demo] 对话已收束：story_p3_finale 收束（耗时 0.0s）
+[M5Demo] 终态验证：story_phase=2（预期 3）
+WARNING: [M5Demo] 终态验证 FAIL：story_phase=2 ≠ 3
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _verify_m5_final_state (res://evidence/_m5_auto_demo.gd:565)
+       [1] _run (res://evidence/_m5_auto_demo.gd:281)
+       [2] _sleep (res://evidence/_m5_auto_demo.gd:298)
+[M5Demo] 存档指纹：map=ruins_f3 position=[320.0, 40.0] story_phase=2（预期 ruins_f3 / 入图落位 (320,40) / 3）
+WARNING: [M5Demo] 终态验证 FAIL：存档 phase=2 ≠ 3
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _verify_m5_final_state (res://evidence/_m5_auto_demo.gd:595)
+       [1] _run (res://evidence/_m5_auto_demo.gd:281)
+       [2] _sleep (res://evidence/_m5_auto_demo.gd:298)
+[M5Demo] 收尾清理 demo 存档：user://save_m5_demo.json
+[M5Demo] 自动退出（Movie Maker 收尾写盘）

@@ -87,6 +87,9 @@ position = Vector2(200, 392)
 [node name="Chest_town_01" type="Marker2D" parent="YSorted"]
 position = Vector2(952, 360)
 
+[node name="P0_Anchor" type="Marker2D" parent="YSorted"]
+position = Vector2(192, 640)
+
 [node name="Player" parent="YSorted" instance=ExtResource("2_player")]
 position = Vector2(192, 640)
 

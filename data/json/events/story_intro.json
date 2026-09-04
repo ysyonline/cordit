@@ -1,0 +1,12 @@
+{
+  "events": {
+    "story_p0_intro": {
+      "conditions": { "story_phase": ["==", 0], "not_flag": "story_p0_seen" },
+      "actions": [
+        { "type": "dialogue", "id": "story_p0_intro" },
+        { "type": "set_flag", "flag": "story_p0_seen" },
+        { "type": "save_point" }
+      ]
+    }
+  }
+}
