@@ -1,11 +1,11 @@
-# Sprint 6 会话交接文档（2026-09-04 23:00 归档，T6 收口版）
+# Sprint 6 会话交接文档（2026-09-05 归档，T6.6 收口版）
 
 > 用途：本文件是 Sprint 6 的**会话交接正本**。新开会话时把此文件喂给主理人即可无损续跑。
 > 协作铁律：**每完成一任务停下汇报，用户确认后才进下一个；无指令不 commit。**
 
-## 一、当前状态总览（2026-09-04 23:00 更新，T6 五件收口版）
+## 一、当前状态总览（2026-09-05 更新，T6.6 收口版）
 
-**Sprint 6 进度：T7 ✅ → T2 ✅ → T3 ✅ → T4 ✅ → T6.1-6.5 全 ✅。当前测试基线 GUT 513/513（503 基线 + T6.5 新增 10 用例，Totals 实锤）。demo dryrun FAIL（T6.6 待修，见开工卡）。下一步 = T6.6（工程侧 demo 校准）→ T5（M6 收口）。**
+**Sprint 6 进度（2026-09-05 凌晨 T5 收口版）：T7 ✅ → T2 ✅ → T3 ✅ → T4 ✅ → T6.1-6.6 全 ✅ → T5 进展：T5-1 ✅ GUT 513/513 复核（evidence/t5-m6-gut-run.log）→ T5-2 ✅ A8 行6 勾绿（EPIC-6 全框 [x] + 战斗 GDD §8"三种结局"项打勾；回填 EPIC-4/5 验收框）→ T5-3 ✅ 视频 #6 录制完成（evidence/m6-gameplay.avi 4743 帧 2'38" 336MB，_m6_auto_demo 三件套 main.tscn 正常入口五镜头全拍，录制日志零 ERROR）→ **⏳ T5-4 tag m6 + push：等用户验收视频后发话**。收口正本=evidence/m6-closeout.md（门1-4 PASS，门5 待批）。⚠️ 程基岩新发现两处产品缺陷（demo 已补线，M7 修）：R4 road return_map 短名战后回图被拒；R5 road/f2 聊天点正常入口缺 runner 注入不开演。**
 
 **E6-S5（剧情实写第一批）已全部完成**：P0 51 条 / P1 55 条 / NPC 总量 43（预算 42±10% 内）/ 聊天两段润色 / P0 孤儿脚本接线。全部文本零产品代码改动（测试适配除外）。
 
@@ -17,8 +17,9 @@
 | T6.3 | NPC 总量 43（新增 20，零孤儿） | ✅ ⚠️phase2 档位待拍板 | — | dlg_npc_* 16 文件 |
 | T6.4 | 聊天润色+test_a3 适配 | ✅ | — | party_chat_*.json + test_m6t42.gd |
 | T6.5 | P0 孤儿脚本接线（事件+触发器+双守卫） | ✅ | 503→513 | evidence/t65-* 4 件 |
-| **T6.6** | **demo dryrun 驱动重校准** | **⏳ 下一个（工程侧）** | — | 见 §六开工卡 |
-| T5 | M6 收口（A8 行6 全绿+视频#6+tag m6） | ⏳ 排队（依赖 T6.6） | — | commit/tag 前须用户发话 |
+| **T6.6** | **demo dryrun 驱动重校准** | **✅（已 push f7f2a50）** | demo PASS + 冒烟全绿 | evidence/t66-* 6 件 |
+| T5-1/2/3 | M6 收口前三步（测试复核+A8 勾绿+视频#6） | ✅（9/5 凌晨） | 513/513 | t5-m6-gut-run.log / m6-closeout.md / m6-gameplay.avi 336MB |
+| T5-4 | tag m6 + push | ⏳ **等用户验收视频后发话** | — | commit 剔除 .import CRLF 噪音；push 前探代理 7892 |
 
 ### 本窗口用户裁决记录（勿翻案）
 1. **g4「我们接了」保持原样**（P0 口头接单 vs GDD §3.3 冲突的折中已获认可；phase 语义由 P1 末尾 set_story_phase 1 把关）。
@@ -26,7 +27,7 @@
 3. **P0 孤儿脚本立项 T6.5** → 程基岩直接做路线收口。
 4. **6 席阶段 NPC = GDD §3.3 版**（菲奥拉/客栈老板/追鸡孩子/铁匠/守卫/旅人），build-sheet 版作废。
 5. **P0/P1 语气均已放行**。
-6. **待拍板**：① T6.6 派工 ② phase 2 专属档要不要加（现 0/1 两档，加"2"档=6 条新文案+events 改动，主理人倾向接受两档）。
+6. **已拍板**：① T6.6 派工→已完成（f7f2a50）② phase 2 专属档**维持 0/1 两档不加**（主理人倾向采纳，最小改动）。
 
 ### 本 Sprint 新增关键裁决（T6 五件，勿翻案）
 - **UI 行宽口径**：`design/ui/` §2.1 = 484px÷12px ≈ **40 字/行**；写作纪律=50 字软上限/60 硬红线；P0-P1 全部条目单行内（最长 39 字）。
@@ -84,26 +85,30 @@
 - **GUT 482/482**（28 脚本/8176 断言/29s）。
 - 证据 7 件：`evidence/m6-t34-{demo-dryrun,gut-full,smoke-smk,smoke-e1s4,smoke-e1s5,smoke-e1s6,smoke-smk_e1s3}.log`。
 
-## 五、工作区状态（2026-09-04 23:00 收口提交版）
+## 五、工作区状态（2026-09-05 T6.6 收口提交版）
 
 - **9/4 全天提交史**：`65b524b`=feat(E6-S2,S3) 战斗侧 → `08a9bc7`=feat(E6-S1,S4) 菜单/装备/聊天侧 → `39c47af` 等记忆 docs 笔 → 17:20 已 push（b550126..39c47af 验证过）。
-- **23:00 收口新增三笔**（T6 五件产物，本窗口用户授权"该提交的提交"）：① feat(E6-S5) 文策内容侧（story_p0/p1、dlg_npc_*×16、party_chat×2、flavor 方位修正、test_m6t42 适配）② feat(T6.5) 工程接线侧（story_intro.json、town.tscn、town_map.gd、test_t65、evidence/t65-*×4）③ docs(memory) 交接档更新。**已推远程（23:10，远程 main=98c9ed1，ls-remote 验证一致）**。工作区 status 全净。
-- 工作区仅剩 .import 大面积"改动"=CRLF 噪音（`git -c core.autocrlf=false diff` 零差异），沿惯例永远剔除。
+- **23:00 收口新增三笔**（T6 五件产物）：① feat(E6-S5) 文策内容侧 ② feat(T6.5) 工程接线侧 ③ docs(memory) 交接档更新。**已推远程（23:10，远程 main=98c9ed1）**。
+- **9/5 T6.6 收口一笔**：`f7f2a50`=feat(T6.6) demo dryrun 驱动重校准（`_m5_auto_demo.gd` 第 1 幕改通用 `_advance_until_idle` 驱动 + `_advance_until_idle` 上限 6→15）+ evidence/t66-* 6 件日志。**已推远程（ls-remote 验证 main=f7f2a50）**。
+- 工作区 status 全净（仅剩 .import CRLF 噪音，沿惯例剔除）。
 - tag：m1–m5 均已推远程；**tag m6 留给 T5 收口时打**。
 
-## 六、下一步 T6.6（demo dryrun 驱动重校准）开工卡
+## 六、T6.6（demo dryrun 驱动重校准）收口记录（2026-09-05）
 
 **背景**：E6-S5 剧情实写改变了对话条数与节奏（innkeeper_p12 1→3 条、P0 2→51 条等），`evidence/_m5_auto_demo.tscn` 的自动驱动按键步数/等待窗按旧节奏写死 → npc_innkeeper_p12 收束超时（demo 中盘切入 phase=2，town 命中 p12 档）挂到第 6 幕 force_idle → 第 8 幕 set_story_phase(3) 时序错位，终态 FAIL（phase=2≠3，存档指纹同）。GUT 513/513 全绿，**仅 demo 一项待修，是 T5（M6 收口）的硬阻塞**。
 
-**范围**：
-1. 校准 `_m5_auto_demo` 驱动（等待窗/收束判定），适配新对话节奏——优先找「按对话实际条数驱动」的通用解，不要逐幕硬编码步数。
-2. 复验终态指纹：map=ruins_f3 / (320,40) / phase=3 全吻合。
-3. 顺手复验冒烟五通道（demo 与冒烟**勿并行**，演示档落盘污染 user:// 的教训 9/4 刚踩过）。
-4. 证据落 evidence/，命名带 t66 前缀。
+**修复（程基岩，2026-09-05）**：
+1. 第 1 幕 `dlg_npc_01_innkeeper_p12` 的 2 次硬编码 `_advance_dialogue()` → 改为已有的通用 `_advance_until_idle()`（按 runner 状态补按直到回 IDLE，与第 8 幕 finale 同一驱动，不随条目数/字数变节）。
+2. `_advance_until_idle` 上限 6→15：3 条对话需 6 按（2×条数），给足余量防御异常数据。
+3. 改动仅 `evidence/_m5_auto_demo.gd`（临时演示驱动器，非生产/GUT 覆盖），零 GameData/存档语义改动。
 
-**执行者**：程基岩（engineering-lead）。**裁决前置**：派工前等用户发话；若发现需要动 GameData/存档语义，停下回传 A/B/C。
+**验证结果**：
+- demo dryrun **PASS**：第 1 幕 p12 对话"经 5 次补按收束"，9 幕全链走完；终态指纹 `map=ruins_f3 / position=(320,40) / story_phase=3` 全吻合（日志"终态验证 PASS"）。
+- 冒烟五通道满额：smk 4/4、e1s4 3/3、e1s5 4/4（wrapper）、e1s6 5/5、smk_e1s3 5/5，**退出码全 0**；[SMK-12] 确认 `user://` 零存档，无 demo 污染（demo 与冒烟串行跑）。
+- 证据 6 件：`evidence/t66-{demo-dryrun,smoke-smk,smoke-e1s4,smoke-e1s5,smoke-e1s6,smoke-smk_e1s3}.log`。
+- commit `f7f2a50` 已推远程（ls-remote 验证 main 一致）。
 
-**T6.6 收口后 → T5**：A8 行 6 全绿打勾 + 试玩视频 #6（M6 试玩拍聊天用 main.tscn 正常入口）+ git tag `m6` + push，等用户发话。
+**T6.6 收口后 → T5**：A8 行 6 全绿打勾 + 试玩视频 #6（M6 试玩拍聊天用 main.tscn 正常入口，需本地 GUI 录屏，headless 不可拍）+ git tag `m6` + push，等用户发话。
 
 ## 七、环境坑速查（继承 Sprint 5 交接档，新增 3 条）
 

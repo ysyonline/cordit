@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://evidence/_m6_auto_demo.gd" id="1_m6demo"]
+
+; ── M6 收口自动演示驱动器（临时场景，仅供录制，录后可删）──────────
+; 与 M4/M5 替身模式的本质差异：本场景【不是】Main 替身，而是把真的
+; res://scenes/main.tscn 实例化挂到 /root 下并接管 current_scene
+; （见 _m6_auto_demo.gd _spawn_main_entry）——MainController 结构自检、
+; town 初始装载、P0 开局锚点接线（current_scene=="Main" 本体守卫 +
+; 无存档守卫）全部走生产路径，达成"main.tscn 正常入口"口径。
+; 字幕 Label 由脚本运行时挂到 Main/UILayer。
+
+[node name="M6Demo" type="Node"]
+script = ExtResource("1_m6demo")

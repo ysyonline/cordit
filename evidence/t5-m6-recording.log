@@ -1,0 +1,257 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 - Build 31.0.101.2137 - Compatibility - Using Device: Intel - Intel(R) UHD Graphics
+
+Movie Maker mode enabled, recording movie in 640×360 @ 30 FPS...
+[M6Demo] 启动：M6 收口自动演示（main.tscn 正常入口 + P0 开场 + 菜单三页 + 胜利/逃跑 + 两段队员聊天，禁随机）
+[M6Demo] 当前无用户存档（首次启动口径，P0 可触发；退出时清除 demo 档恢复无档状态）
+[M6Demo] GameData 清态确认：phase=0 flags={  }（P0 守卫 not_flag/==0 放行）
+[MainController] 常驻根就绪：Main / World / UILayer(CanvasLayer) + FadeMask —— 架构 A4
+[SceneRouter] 受理切换 -> res://scenes/maps/town.tscn
+[M6Demo] 正常入口已挂载：res://scenes/main.tscn（/root/Main，current_scene 已指向）
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] P0 开局锚点装配完成：Evt_P0_Opening → 事件 story_p0_intro（踩踏@(192.0, 640.0)）
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[SceneRouter] 装载完成 -> res://scenes/maps/town.tscn
+[DialogueRunner] 开演：story_p0_intro（51 条目）
+[EventExecutor] set_flag story_p0_seen（flags={ "story_p0_seen": true }）
+[EventExecutor] save_point：已发存档请求（story_p0_intro）
+[TriggerEventShell] Evt_P0_Opening 已发射事件 story_p0_intro
+[M6Demo] 期望日志：P0 接线应已发生：[TownMap] P0 开局锚点装配完成（守卫：Main 本体 + 无存档）
+[M6Demo] 全局 executor 已注入常驻 runner（demo 侧补线，聊天点开演通道打通）
+[M6Demo] 期望日志：P0 开演应已发生：[DialogueRunner] 开演：story_p0_intro（51 条目）
+[M6Demo] 对话已开演：P0 开场对白（耗时 0.0s）
+[DialogueRunner] 选项待决：c_kyle_q（2 项）
+[DialogueRunner] 选项已选 #0 → c_ka1（仅影响当句）
+[DialogueRunner] 选项待决：f_kyle_q（2 项）
+[DialogueRunner] 选项已选 #0 → f_ka1（仅影响当句）
+[DialogueRunner] 对话结束：story_p0_intro → IDLE
+[M6Demo] P0 按实际条数收束：经 99 次补按收束
+[M6Demo] 对话已收束：P0 收束（耗时 0.0s）
+[M6Demo] 期望日志：P0 动作应已落地：set_flag story_p0_seen + save_point 存档请求
+[M6Demo] 剧情推进注入：story_phase 0→1（P1 委托受理，聊天段① 门闸放行）
+[M6Demo] 演示注入：凯尔 HP-15（用药可见）+ 背包 小药瓶×2（初始直塞口径）
+[MenuPanel] 菜单打开（光标：status）
+[M6Demo] 状态页（换装前）：凯尔 ATK14 / DEF10
+[MenuPanel] 道具页打开（1 种）
+[MenuPanel] 使用 小药瓶 → 凯尔（剩 1）
+[M6Demo] 期望日志：用药应已发生：[MenuPanel] 使用 小药瓶 → 凯尔（剩 1）
+[MenuPanel] 道具页关闭
+[MenuPanel] 凯尔 换装 武器：[iron_sword]
+[M6Demo] 期望日志：换装应已发生：[MenuPanel] 凯尔 换装 武器：[iron_sword]
+[MenuPanel] 凯尔 换装 防具：[leather_armor]
+[M6Demo] 期望日志：换装应已发生：[MenuPanel] 凯尔 换装 防具：[leather_armor]
+[M6Demo] 状态页（换装后）：凯尔 ATK17 / DEF12（预期 ATK+3 / DEF+2 可见变化）
+[MenuPanel] 菜单关闭
+[M6Demo] 期望日志：关菜单应已发生：[MenuPanel] 菜单关闭
+[M6Demo][walk] 开始 -> (200.0, 640.0)（起点 (192.0, 640.0)）
+[M6Demo][walk] 结束 -> (195.6, 640.0)（历时 0.0s stuck=0.00）
+[M6Demo][walk] 开始 -> (200.0, 736.0)（起点 (195.6, 640.0)）
+[M6Demo][walk] 结束 -> (199.7756, 731.1035)（历时 0.6s stuck=0.00）
+[M6Demo][walk] 开始 -> (208.0, 760.0)（起点 (199.7756, 731.1035)）
+[SceneRouter] 受理切换 -> res://scenes/maps/road.tscn
+[TriggerTeleport] 跨图传送 tp_town_to_road -> road（受理=true）
+[M6Demo][walk] 结束 -> (207.0025, 756.4954)（历时 0.2s stuck=0.00）
+[VisibleEnemy] 就绪：road_moth_01（编组 b1_moth）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_01（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_02（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[MapEvents] road 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] road 装配完成：传送触发器 2 处
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] road 装配完成：聊天点 1 处
+[SceneRouter] 装载完成 -> res://scenes/maps/road.tscn
+[M6Demo] 期望日志：跨图落盘应已发生：[AutosaveNotifier] road + SaveManager 存档
+[M6Demo][walk] 开始 -> (384.0, 200.0)（起点 (384.0, 64.0)）
+[M6Demo][walk] 结束 -> (384.0, 197.1997)（历时 0.9s stuck=0.00）
+[M6Demo][walk] 开始 -> (696.0, 152.0)（起点 (384.0, 197.1997)）
+[M6Demo][walk] 结束 -> (692.7784, 152.4667)（历时 2.2s stuck=0.00）
+[M6Demo][walk] 开始 -> (696.0, 264.0)（起点 (692.7784, 152.4667)）
+[M6Demo][walk] 结束 -> (695.8966, 260.4211)（历时 0.8s stuck=0.00）
+[M6Demo][walk] 开始 -> (176.0, 280.0)（起点 (695.8966, 260.4211)）
+[M6Demo] 走位被阻挡，兜底直落 -> (176.0, 280.0)（碰撞链路日志可查）
+[M6Demo][walk] 结束 -> (176.0, 280.0)（历时 0.7s stuck=0.52）
+[M6Demo][walk] 开始 -> (176.0, 344.0)（起点 (176.0, 280.0)）
+[M6Demo][walk] 结束 -> (176.0, 340.0006)（历时 0.4s stuck=0.00）
+[M6Demo][walk] 开始 -> (296.0, 394.0)（起点 (176.0, 340.0006)）
+[M6Demo] 走位被阻挡，兜底直落 -> (296.0, 394.0)（碰撞链路日志可查）
+[M6Demo][walk] 结束 -> (296.0, 394.0)（历时 0.7s stuck=0.52）
+[M6Demo] 诱敌守候：道路飞蛾 road_moth_01（先等 6s 自然接触）
+[VisibleEnemy] road_moth_01：玩家免疫中，接触放行
+[M6Demo] 自然接触未发生（6s）——改用 GUT 直驱通道 _handle_player_contact
+[SceneRouter] 受理切换 -> res://scenes/battle/battle.tscn
+[VisibleEnemy] road_moth_01 接触遇敌 -> b1_moth（回置点 (296.0001, 383.8833)）
+[M6Demo] 直驱接触完成：道路飞蛾 road_moth_01（回置点 = 敌位沿来向外推 1 格）
+[BattleScene] 就绪：编组=b1_moth 回图=road 队伍=3 人
+[SceneRouter] 装载完成 -> res://scenes/battle/battle.tscn
+[M6Demo][Battle] 导演就绪：编组=b1_moth 剧本=victory（真实 BattleCommand+BattleUI，占位方块阵隐藏）
+[M6Demo] 战斗队伍构建（GameData 口径含装备）： kyleLv1(H120) linaLv1(H80) monaLv1(H95) 
+[M6Demo] 暂存载荷 return_map 短名补正："road" → "res://scenes/maps/road.tscn"（demo 侧数据补正，产品缺陷见回传报告）
+[M6Demo][Battle] R1 凯尔 行动：普攻 → 敌方槽位 0
+[M6Demo][Battle] R1 莫娜 行动：防御
+[M6Demo][Battle] R1 莉娜 行动：普攻 → 敌方槽位 0
+[M6Demo][Battle] R1 敌方 行动（AI roll=0.50 固定）
+[M6Demo][Battle] R2 凯尔 行动：普攻 → 敌方槽位 0
+[M6Demo][Battle] 结局 -> VICTORY（结算画面展示 4.2s，揭示中=false，待弹 0 行）
+[M6Demo][Battle] 发 battle_finished(VICTORY) → BattleResultHandler 生产回图链
+[BattleResultHandler] 掉落入包 potion_s x1（背包 { "potion_s": 2 }）
+[SceneRouter] 受理切换 -> res://scenes/maps/road.tscn
+[BattleResultHandler] VICTORY 结算完成 -> 回图 res://scenes/maps/road.tscn（回置 (296.0001, 383.8833)）
+[M6Demo] battle_finished 已回传（剧本=victory），等待 BattleResultHandler 回图
+[VisibleEnemy] road_moth_01 已在击破集合，装载即移除（不复活）
+[VisibleEnemy] 就绪：road_beetle_01（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_02（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[MapEvents] road 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] road 装配完成：传送触发器 2 处
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] road 装配完成：聊天点 1 处
+[SceneRouter] 装载完成 -> res://scenes/maps/road.tscn
+[BattleResultHandler] 玩家回置 -> (296.0001, 383.8833)，免疫 0.5s 启动
+[M6Demo] 战后回图完成（耗时 0.2s，current=res://scenes/maps/road.tscn）
+[M6Demo] 战后免疫延长至 4s（回置点贴敌防秒触）
+[M6Demo][walk] 开始 -> (584.0, 440.0)（起点 (296.0001, 383.8833)）
+[M6Demo][walk] 结束 -> (579.8635, 439.194)（历时 2.0s stuck=0.00）
+[M6Demo][walk] 开始 -> (584.0, 490.0)（起点 (579.8635, 439.194)）
+[M6Demo][walk] 结束 -> (583.7587, 487.0358)（历时 0.3s stuck=0.00）
+[M6Demo][walk] 开始 -> (584.0, 512.0)（起点 (583.7587, 487.0358)）
+[DialogueRunner] 开演：party_chat_road_01（4 条目）
+[EventExecutor] set_flag chat_road_01_seen（flags={ "story_p0_seen": true, "chat_road_01_seen": true }）
+[TriggerEventShell] chat_point_chat_road_01 已发射事件 party_chat_road_01
+[M6Demo][walk] 结束 -> (583.9674, 508.6349)（历时 0.1s stuck=0.00）
+[M6Demo] 对话已开演：party_chat_road_01（耗时 0.0s）
+[DialogueRunner] 对话结束：party_chat_road_01 → IDLE
+[M6Demo] party_chat_road_01 按实际条数收束：经 8 次补按收束
+[M6Demo] 对话已收束：party_chat_road_01（耗时 0.0s）
+[M6Demo] 期望日志：聊天段① 应已发生：[ChatPointAssembler] road 装配 + party_chat_road_01 开演/收束
+[M6Demo][walk] 开始 -> (584.0, 536.0)（起点 (583.9674, 508.6349)）
+[M6Demo][walk] 结束 -> (583.9946, 531.4351)（历时 0.2s stuck=0.00）
+[M6Demo][walk] 开始 -> (72.0, 592.0)（起点 (583.9946, 531.4351)）
+[VisibleEnemy] road_beetle_01：玩家免疫中，接触放行
+[M6Demo] 走位被阻挡，兜底直落 -> (72.0, 592.0)（碰撞链路日志可查）
+[M6Demo][walk] 结束 -> (72.0, 592.0)（历时 3.5s stuck=0.52）
+[M6Demo][walk] 开始 -> (72.0, 760.0)（起点 (72.0, 592.0)）
+[M6Demo][walk] 结束 -> (72.0, 755.2017)（历时 1.1s stuck=0.00）
+[M6Demo][walk] 开始 -> (216.0, 856.0)（起点 (72.0, 755.2017)）
+[M6Demo][walk] 结束 -> (213.5649, 854.2955)（历时 1.2s stuck=0.00）
+[M6Demo][walk] 开始 -> (488.0, 872.0)（起点 (213.5649, 854.2955)）
+[M6Demo][walk] 结束 -> (484.2021, 871.755)（历时 1.9s stuck=0.00）
+[M6Demo] 诱敌守候：雷壳甲虫×2 road_beetle_02（先等 6s 自然接触）
+[SceneRouter] 受理切换 -> res://scenes/battle/battle.tscn
+[VisibleEnemy] road_beetle_02 接触遇敌 -> b2_beetles（回置点 (481.4565, 867.7197)）
+[BattleScene] 就绪：编组=b2_beetles 回图=road 队伍=3 人
+[SceneRouter] 装载完成 -> res://scenes/battle/battle.tscn
+[M6Demo][Battle] 导演就绪：编组=b2_beetles 剧本=escape（真实 BattleCommand+BattleUI，占位方块阵隐藏）
+[M6Demo] 战斗队伍构建（GameData 口径含装备）： kyleLv1(H116) linaLv1(H80) monaLv1(H95) 
+[M6Demo] 暂存载荷 return_map 短名补正："road" → "res://scenes/maps/road.tscn"（demo 侧数据补正，产品缺陷见回传报告）
+[M6Demo][Battle] R1 凯尔 行动：逃跑（roll=0.0 确定性成功）
+[M6Demo][Battle] 结局 -> ESCAPE（结算画面展示 1.6s，揭示中=false，待弹 0 行）
+[M6Demo][Battle] 发 battle_finished(ESCAPE) → BattleResultHandler 生产回图链
+[SceneRouter] 受理切换 -> res://scenes/maps/road.tscn
+[BattleResultHandler] ESCAPE 结算完成 -> 回图 res://scenes/maps/road.tscn（回置 (481.4565, 867.7197)）
+[M6Demo] battle_finished 已回传（剧本=escape），等待 BattleResultHandler 回图
+[VisibleEnemy] road_moth_01 已在击破集合，装载即移除（不复活）
+[VisibleEnemy] 就绪：road_beetle_01（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_02（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[MapEvents] road 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] road 装配完成：传送触发器 2 处
+[AutosaveNotifier] road 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] road 装配完成：聊天点 1 处
+[SceneRouter] 装载完成 -> res://scenes/maps/road.tscn
+[BattleResultHandler] 玩家回置 -> (481.4565, 867.7197)，免疫 0.5s 启动
+[M6Demo] 战后回图完成（耗时 0.2s，current=res://scenes/maps/road.tscn）
+[M6Demo] 战后免疫延长至 4s（回置点贴敌防秒触）
+[M6Demo][walk] 开始 -> (696.0, 872.0)（起点 (481.4565, 867.7197)）
+[M6Demo][walk] 结束 -> (691.4159, 871.9084)（历时 1.5s stuck=0.00）
+[M6Demo][walk] 开始 -> (696.0, 984.0)（起点 (691.4159, 871.9084)）
+[M6Demo][walk] 结束 -> (695.8289, 979.8162)（历时 0.8s stuck=0.00）
+[M6Demo][walk] 开始 -> (384.0, 984.0)（起点 (695.8289, 979.8162)）
+[M6Demo][walk] 结束 -> (388.657, 983.9376)（历时 2.1s stuck=0.00）
+[M6Demo][walk] 开始 -> (384.0, 1024.0)（起点 (388.657, 983.9376)）
+[SceneRouter] 受理切换 -> res://scenes/maps/ruins_f1.tscn
+[TriggerTeleport] 跨图传送 tp_road_to_f1 -> ruins_f1（受理=true）
+[M6Demo][walk] 结束 -> (384.5003, 1019.696)（历时 0.2s stuck=0.00）
+[VisibleEnemy] 就绪：ruins_f1_salamander（编组 b3_ruin_mix）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：ruins_f1_crystal（编组 b3_ruin_mix）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[MapEvents] ruins_f1 装配完成：宝箱 3 + 调查 4
+[TeleportAssembler] ruins_f1 装配完成：传送触发器 2 处
+[SceneRouter] 装载完成 -> res://scenes/maps/ruins_f1.tscn
+[M6Demo] 期望日志：road→f1 跨图应已触发：tp_road_to_f1
+[M6Demo] 剧情推进注入：story_phase 1→2（进遗迹调查，聊天段② 门闸放行）
+[M6Demo][walk] 开始 -> (448.0, 168.0)（起点 (448.0, 56.0)）
+[M6Demo][walk] 结束 -> (448.0, 165.1998)（历时 0.8s stuck=0.00）
+[M6Demo][walk] 开始 -> (728.0, 168.0)（起点 (448.0, 165.1998)）
+[M6Demo][walk] 结束 -> (723.9888, 167.9599)（历时 1.9s stuck=0.00）
+[M6Demo][walk] 开始 -> (728.0, 416.0)（起点 (723.9888, 167.9599)）
+[M6Demo] 走位被阻挡，兜底直落 -> (728.0, 416.0)（碰撞链路日志可查）
+[M6Demo][walk] 结束 -> (728.0, 416.0)（历时 1.1s stuck=0.52）
+[M6Demo][walk] 开始 -> (176.0, 416.0)（起点 (728.0, 416.0)）
+[M6Demo][walk] 结束 -> (180.7954, 416.0)（历时 3.8s stuck=0.00）
+[M6Demo][walk] 开始 -> (176.0, 560.0)（起点 (180.7954, 416.0)）
+[M6Demo][walk] 结束 -> (176.1624, 555.1235)（历时 1.0s stuck=0.00）
+[M6Demo][walk] 开始 -> (456.0, 632.0)（起点 (176.1624, 555.1235)）
+[M6Demo][walk] 结束 -> (452.6266, 630.9329)（历时 2.0s stuck=0.00）
+[M6Demo][walk] 开始 -> (448.0, 656.0)（起点 (452.6266, 630.9329)）
+[M6Demo][walk] 结束 -> (448.7061, 652.1738)（历时 0.1s stuck=0.00）
+[M6Demo][walk] 开始 -> (448.0, 696.0)（起点 (448.7061, 652.1738)）
+[SceneRouter] 受理切换 -> res://scenes/maps/ruins_f2.tscn
+[TriggerTeleport] 跨图传送 tp_f1_to_f2 -> ruins_f2（受理=true）
+[M6Demo][walk] 结束 -> (448.0488, 692.968)（历时 0.3s stuck=0.00）
+[VisibleEnemy] 就绪：ruins_f2_guardian（编组 b4_guardian）巡逻点 0 个 初始态 GUARD
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位
+[MapEvents] ruins_f2 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] ruins_f2 装配完成：传送触发器 2 处
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] ruins_f2 装配完成：聊天点 1 处
+[SceneRouter] 装载完成 -> res://scenes/maps/ruins_f2.tscn
+[M6Demo] 期望日志：f1→f2 跨图应已触发：tp_f1_to_f2
+[M6Demo][walk] 开始 -> (384.0, 122.0)（起点 (384.0, 40.0)）
+[M6Demo][walk] 结束 -> (384.0, 117.9999)（历时 0.6s stuck=0.00）
+[M6Demo][walk] 开始 -> (384.0, 142.0)（起点 (384.0, 117.9999)）
+[DialogueRunner] 开演：party_chat_f2_01（4 条目）
+[EventExecutor] set_flag chat_f2_01_seen（flags={ "story_p0_seen": true, "chat_road_01_seen": true, "chat_f2_01_seen": true }）
+[TriggerEventShell] chat_point_chat_f2_01 已发射事件 party_chat_f2_01
+[M6Demo][walk] 结束 -> (384.0, 137.1998)（历时 0.1s stuck=0.00）
+[M6Demo] 对话已开演：party_chat_f2_01（耗时 0.0s）
+[DialogueRunner] 对话结束：party_chat_f2_01 → IDLE
+[M6Demo] party_chat_f2_01 按实际条数收束：经 8 次补按收束
+[M6Demo] 对话已收束：party_chat_f2_01（耗时 0.0s）
+[M6Demo] 期望日志：聊天段② 应已发生：party_chat_f2_01 开演/收束（B4 定守 (23,24) 不在动线上）
+[M6Demo] 终态验证：story_phase=2（预期 2）
+[M6Demo] 终态验证：flag story_p0_seen = true（预期 true）
+[M6Demo] 终态验证：flag chat_road_01_seen = true（预期 true）
+[M6Demo] 终态验证：flag chat_f2_01_seen = true（预期 true）
+[M6Demo] 终态验证：凯尔装备 weapon=iron_sword armor=leather_armor（预期 iron_sword/leather_armor）
+[M6Demo] 终态验证：背包={ "potion_s": 2 }（预期 小药瓶×2：用药后剩 1 + 飞蛾掉落 1）
+[M6Demo] 存档指纹：map=ruins_f2 position=[384.0, 40.0] story_phase=2（预期 ruins_f2 / 入图落位 (384,40) / 2）
+[M6Demo] 终态验证 PASS：五镜头全链路落地（P0/菜单/胜利/逃跑/两段聊天）
+[M6Demo] 本次运行前无用户存档：demo 存档已清除，恢复无档状态（SMK-12 纯净）
+[M6Demo] 演示时间轴累计 ≈ 121s（≈ 3626 帧 @30fps；Movie Maker ×1.3~1.6 慢放 ≈ 4713~5801 帧 ≈ 2.6~3.2 分钟）
+[M6Demo] 自动退出（Movie Maker 收尾写盘）
+--------------------------------------------------------------------------------
+Done recording movie at path: D://code//cordit//evidence//m6-gameplay.avi
+4743 frames at 30 FPS (movie length: 00:02:38:03), recorded in 00:01:35 (166% of real-time speed).
+CPU render time: 4.37 seconds (average: 0.92 ms/frame)
+GPU render time: 2.25 seconds (average: 0.47 ms/frame)
+Encoding time: 30.85 seconds (average: 6.50 ms/frame)
+--------------------------------------------------------------------------------

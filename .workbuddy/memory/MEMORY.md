@@ -23,11 +23,12 @@
 - **DEFEAT 读档**（E4-S7）：load_save() → last_loaded → 回存档点+免疫 0.5s；读档失败兜底回暂存图。
 - R1/R2 已落地：INITIAL_SCENE_PATH=town；town 南门栅栏已拆（gen_town.py 正本，verify_town L125 已反转）。
 
-## 进度（2026-09-04 快照⑤ T6 收口版，交接正本=sprint6-handoff.md）
+## 进度（2026-09-05 快照 T5 收口版，交接正本=sprint6-handoff.md，收口正本=evidence/m6-closeout.md）
 - **⚡ 新会话续跑入口：喂 `.workbuddy/memory/sprint6-handoff.md` 即可无损续接**（本节只留摘要）。
-- **Sprint 6**：T7 ✅ → T2 ✅ → T3 ✅ → T4 ✅ → **T6.1-6.5 全 ✅（E6-S5 剧情实写第一批收口：P0 51 条/P1 55 条/NPC 43/聊天润色/P0 孤儿接线）**。基线 **GUT 513/513**。demo dryrun FAIL=**T6.6 待修**（对话节奏变了、demo 驱动按键步数旧的，非回归；根因+开工卡在 handoff §六）。**下一步=T6.6（工程侧 demo 校准）→ T5（M6 收口）**。待拍板：phase 2 专属档（主理人倾向接受现两档）。
+- **Sprint 6**：T7 ✅ → T2 ✅ → T3 ✅ → T4 ✅ → T6.1-6.6 全 ✅ → **T5 进展：T5-1 ✅ GUT 513/513 复核（evidence/t5-m6-gut-run.log）→ T5-2 ✅ A8 行6 勾绿（EPIC-6 全框+战斗 GDD §8 三种结局项；回填 EPIC-4/5 验收框）→ T5-3 ✅ 视频 #6 录制完成（`evidence/m6-gameplay.avi` 4743 帧 2'38" 336MB，_m6_auto_demo 三件套走 main.tscn 正常入口，五镜头全拍，存档红线三段协议安全）→ ⏳ T5-4 tag m6 + push：**等用户验收视频后发话**。收口门1-4 PASS，门5 待批。
+- **⚠️ 程基岩新发现两处真实产品缺陷（demo 已补线，M7 修复，勿当已修）**：R4 road.tscn 敌人 return_map="road" 短名战后回图被拒；R5 road/f2 聊天点全局 executor 缺 runner 注入，正常入口聊天不开演（T4 验收走 demo 注入路径未覆盖正常入口）。
 - **T6 新裁决（勿翻案，详见 handoff §一）**：行宽口径 40 字/行（50 软/60 硬）；portrait 每条显式写（NPC/旁白=""）；branch_endpoint 只走 1 跳；42=总量预算口径（总 43）；set_story_phase 在事件层；T6.5 双守卫接线（not_flag story_p0_seen+phase==0+Main 场景+无存档）。
-- **Sprint 6 提交**：`65b524b`(E6-S2,S3) → `08a9bc7`(E6-S1,S4) → 9/4 晚新增三笔（E6-S5 内容/T6.5 接线/docs memory，hash 以 git log 实查）。tag m1–m5 已推远程；**tag m6 留 T5**。
+- **Sprint 6 提交**：`65b524b`(E6-S2,S3) → `08a9bc7`(E6-S1,S4) → 9/4 晚新增三笔（E6-S5 内容/T6.5 接线/docs memory）→ `f7f2a50`(T6.6 demo 驱动重校准，9/5 已推)。tag m1–m5 已推远程；**tag m6 留 T5**。
 - **Sprint 5 ✅ tag m5=b550126**：EPIC-5 收口 GUT 286→415。M5 demo 修复（勿翻案）：①Router 覆写暂存位 ②f3 runner 直取 ③桥哨兵直通。小债：tools/README.md、sfx 钩子、手感抽查。M7（15h）：数值平衡/剧情收尾/导出包。
 - **Sprint 6 计划（9/3 批准）**：T7→T2→T3→T4→T5，T6 剧情实写穿插。编号映射 T2=S3/T3=S1/T4=S4/T5=M6 收口/T6=S5/T7=S2。⚠️ GameData 加新字段须全测试文件补快照/还原对。
 - **⚠️ 外部试玩者是 M7 硬阻塞**：E7-S1 三问测试需 ≥1 名外部测试者，人选/档期未定，宜早锁定。
