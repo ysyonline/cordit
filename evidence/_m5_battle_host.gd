@@ -47,8 +47,10 @@ const BattleUnits := preload("res://scripts/data/battle_units.gd")
 
 ## 每次行动之间的停顿（秒）——保证弹字/闪白/HP 条变化可读
 const BEAT_TIME: float = 1.1
-## 结算画面展示时长（秒）
-const RESULT_HOLD: float = 2.6
+## 结算画面展示时长（秒）。E6-S2 T2.4：结算揭示为逐条弹出节奏（B5 载荷 =
+## exp1+lv1+skill2+drops1 共 5 行，里程碑行 0.6s/普通行 0.35s ≈ 2.6s 全弹完），
+## hold 取揭示总时长 + 1.4s 缓冲，保证收口视频里事件流完整弹出后再黑屏
+const RESULT_HOLD: float = 4.0
 ## 进战黑屏后的首个停顿（秒）
 const INTRO_HOLD: float = 0.7
 ## 出战黑屏时长（秒，与 BattleTransition.OUTRO_TIME 对应）
@@ -203,8 +205,12 @@ func _describe(command: Dictionary) -> String:
 
 func _on_battle_over(result: Dictionary) -> void:
 	_final_result = result
-	print("[M5Demo] 结局 -> %s（结算画面展示 %.1fs）—— VICTORY 教学剧本达成"
-			% [String(result.get("outcome", "?")), RESULT_HOLD])
+	# E6-S2 T2.4：结算揭示逐条弹出（表头即出 + 事件行节奏弹），揭示引擎
+	# 由 BattleUI._process 自驱（Movie Maker 固定帧步进照常跑 _process）；
+	# 此处只打印揭示状态供录制日志核对
+	print("[M5Demo] 结局 -> %s（结算画面展示 %.1fs，揭示中=%s，待弹 %d 行）"
+			% [String(result.get("outcome", "?")), RESULT_HOLD,
+			str(ui.is_revealing()), ui.get_reveal_remaining()])
 
 
 func _sleep(t: float) -> void:

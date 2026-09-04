@@ -69,6 +69,11 @@ const DMG_LABEL_Y := 96.0
 const RES_W := 360.0
 const RES_H := 200.0
 
+# E6-S2 T2.2 揭示节奏（§4.7"EXP 逐条弹出"两档停顿）：
+#   经验/掉落行快出，升级/习得行是里程碑、多停一拍强化仪式感
+const REVEAL_DWELL_PLAIN := 0.35
+const REVEAL_DWELL_MILE := 0.60
+
 # ==============================================================
 # 模型引用与子节点
 # ==============================================================
@@ -104,6 +109,13 @@ var _float_layer: Control = null
 var _result_panel: Control = null
 var _result_label: Label = null
 
+# E6-S2 T2.2 揭示引擎状态：show_result 立即出表头（结局+party_state），
+# 结算三区（exp/level_up/skill/drops）行入队，_process 按停顿逐条弹出
+var _reveal_queue: Array[String] = []   # 待弹出的完整行文本
+var _reveal_dwell_queue: Array[float] = []  # 与行一一对应的停顿秒数
+var _reveal_timer: float = 0.0
+var _reveal_running: bool = false
+
 # E3-S5 层：背景 / 打击反馈 / 进战转场（均纯视图、脱离场景树可建）
 # 注：三脚本均无 class_name，引用需为 Variant（动态分发），避免 headless 类型解析失败
 var _battle_bg: Variant = null
@@ -122,6 +134,7 @@ var _built: bool = false
 # 生命周期
 # ==============================================================
 func _ready() -> void:
+	set_process(true)
 	ensure_built()
 
 
@@ -652,22 +665,159 @@ func spawn_damage_number(pos: Vector2, amount: int, kind: String) -> void:
 
 
 # ==============================================================
-# 结算画面（§4.7）
+# 结算画面（§4.7 / E6-S2）
 # ==============================================================
+## 结算画面升级流（E6-S2 GDD §4.7：EXP 逐条事件流 / 升级提示 / 掉落图标 / 
+##   技能习得一次性列出）。
+##
+## 【数据协议】result 可选键（E2 BattleResult 基础字段之外的 E6-S2 扩展，
+##   全部可缺省——旧调用方 show_result({outcome, party_state}) 行为不变）：
+##   exp_events   → Array，逐条事件流：
+##                  {"kind":"exp","enemy":String,"amount":int}             经验行
+##                  {"kind":"level_up","name":String,"level":int}          升级行
+##                  {"kind":"skill","name":String,"skills":Array[String]}  习得行
+##   drops        → Array[Dictionary]，掉落行：
+##                  {"item_id":String,"count":int}（显示名查 ITEMS 表，查无显示 id）
+##
+## 【纯视图】只按协议渲染文本，不做经验计算、不写 GameData（A1 铁律 3）——
+##   数值与写回属结算器（battle_command 侧），本函数保证旧协议零回归。
+##
+## 【T2.2 揭示节奏】表头（结局行 + party_state）立即显示；结算三区行入队，
+##   _process 按 dwell 停顿逐条弹出（经验/掉落 0.35s、升级/习得 0.60s）。
+##   手动步进/跳过：step_reveal() 立即弹下一条、finish_reveal() 全部立即出。
+##   测试可用 is_revealing()/get_reveal_remaining() 确定性断言。
 func show_result(result: Dictionary) -> void:
 	_result_panel.visible = true
+	_reset_reveal()
 	var lines := PackedStringArray()
 	lines.append("—— 战斗结算 ——")
 	match String(result.get("outcome", "")):
 		BattleCommand.OUTCOME_VICTORY: lines.append("胜利！")
-		BattleCommand.OUTCOME_DEFEAT: lines.append("全灭……")
-		BattleCommand.OUTCOME_ESCAPE: lines.append("成功撤退")
+		BattleCommand.OUTCOME_DEFEAT:
+			# E6-S3（战斗 GDD §3.5）：失败 = "残响中断"画面 → 自动读档至
+			# 进图存档点，无额外惩罚。第二行交代去向，避免玩家困惑黑屏去哪了。
+			lines.append("残响中断……")
+			lines.append("队伍被召回进入此地时的存档点")
+		BattleCommand.OUTCOME_ESCAPE:
+			# E6-S3（§3.5）：逃跑成功敌人精灵保留（可绕行可再战）——
+			# 结算画面明示保留语义，与数据行为（不写 cleared 集合）对表
+			lines.append("成功撤退——敌人仍在原地徘徊")
 	for ps in result.get("party_state", []):
 		var d: Dictionary = ps as Dictionary
 		lines.append("%s  HP %d/%d  MP %d/%d" % [String(d.get("name", "")),
 				int(d.get("hp", 0)), int(d.get("max_hp", 0)),
 				int(d.get("mp", 0)), int(d.get("max_mp", 0))])
+	# E6-S2 三区：EXP 逐条事件流 → 升级/习得 → 掉落（缺省键零影响）。
+	# 行文本组装与 T2.1 相同；区别只在入队揭示而非直接拼接。
+	var reveal_rows: Array[String] = []
+	var reveal_dwells: Array[float] = []
+	var exp_events: Array = result.get("exp_events", [])
+	for ev: Variant in exp_events:
+		var e: Dictionary = ev
+		match String(e.get("kind", "")):
+			"exp":
+				reveal_rows.append("击败%s  获得 %d EXP" % [
+						String(e.get("enemy", "?")), int(e.get("amount", 0))])
+				reveal_dwells.append(REVEAL_DWELL_PLAIN)
+			"level_up":
+				reveal_rows.append("%s Lv%d！" % [
+						String(e.get("name", "?")), int(e.get("level", 1))])
+				reveal_dwells.append(REVEAL_DWELL_MILE)
+			"skill":
+				# 习得行：一次列出多个技能，格式按 GDD D-附 8.11 修订
+				# （"莉娜 Lv2！习得【冰锥】【雷爆】"，升序由结算器保证）
+				var names := PackedStringArray()
+				for sid: Variant in e.get("skills", []):
+					var sk: Variant = DataTables.get_skill(String(sid))
+					names.append("【%s】" % (sk.name if sk != null else String(sid)))
+				if not names.is_empty():
+					reveal_rows.append("%s 习得 %s" % [String(e.get("name", "?")),
+							"".join(names)])
+					reveal_dwells.append(REVEAL_DWELL_MILE)
+	var drops: Array = result.get("drops", [])
+	for dp: Variant in drops:
+		var dr: Dictionary = dp
+		var item: Variant = DataTables.get_item(String(dr.get("item_id", "")))
+		var label: String = item.name if item != null else String(dr.get("item_id", "?"))
+		reveal_rows.append("获得 %s ×%d" % [label, int(dr.get("count", 1))])
+		reveal_dwells.append(REVEAL_DWELL_PLAIN)
 	_result_label.text = "\n".join(lines)
+	# 无待弹行（旧协议 / DEFEAT/ESCAPE）：保持 T2.1 行为，不启动计时
+	if reveal_rows.is_empty():
+		return
+	_reveal_queue = reveal_rows
+	_reveal_dwell_queue = reveal_dwells
+	_reveal_timer = 0.0
+	_reveal_running = true
+
+
+func _process(delta: float) -> void:
+	if not _reveal_running:
+		return
+	_reveal_timer += delta
+	if _reveal_timer < _reveal_dwell_queue[0]:
+		return
+	step_reveal()
+
+
+## 弹出队首行（追加到结算文本尾）。测试/玩家可手动调用跳过等待。
+func step_reveal() -> void:
+	if _reveal_queue.is_empty():
+		_reveal_running = false
+		return
+	_reveal_timer = 0.0
+	var row: String = _reveal_queue.pop_front()
+	_reveal_dwell_queue.pop_front()
+	_result_label.text += "\n" + row
+	if _reveal_queue.is_empty():
+		_reveal_running = false
+
+
+## 跳过：全部剩余行立即弹出（连按确认键的口径，T2.3 接输入）
+func finish_reveal() -> void:
+	while not _reveal_queue.is_empty():
+		step_reveal()
+	_reveal_running = false
+
+
+## 输入路由（T2.3：结算揭示期间按 interact 键 → 跳过剩余行）。
+## 【先例】dialogue_runner.gd 同款 _unhandled_input + InputEventAction 注入
+## 语义等价（"收真实 InputEventKey，InputEventAction 走同一 is_action_pressed
+## 判定"）；仅揭示进行中消费按键，其余状态不拦截（指令菜单按钮走焦点系统）。
+func _unhandled_input(event: InputEvent) -> void:
+	if not _reveal_running:
+		return
+	if event.is_action_pressed("interact"):
+		finish_reveal()
+		# headless 测试不入树时 viewport 为 null，守卫跳过（消费语义仅生产路径需要）
+		var vp: Viewport = get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
+
+
+## 测试注入口（dialogue_runner.inject_interact_press 同款手法）
+func inject_interact_press() -> void:
+	var ev := InputEventAction.new()
+	ev.action = "interact"
+	ev.pressed = true
+	_unhandled_input(ev)
+
+
+## 揭示进行中？（含队列非空但计时未到）
+func is_revealing() -> bool:
+	return _reveal_running
+
+
+## 剩余待弹行数（测试确定性断言用）
+func get_reveal_remaining() -> int:
+	return _reveal_queue.size()
+
+
+func _reset_reveal() -> void:
+	_reveal_queue = []
+	_reveal_dwell_queue = []
+	_reveal_timer = 0.0
+	_reveal_running = false
 
 
 # ==============================================================

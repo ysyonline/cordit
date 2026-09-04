@@ -35,12 +35,19 @@ extends Resource
 @export var mp: int = 1
 ## 当前 MP 上限
 @export var max_mp: int = 1
+## 已装备武器 id（E6-S1 T3.3；空串=未装备。值域=DataTables.EQUIPMENTS 键）
+@export var weapon_id: String = ""
+## 已装备防具 id（同上；空串=未装备）
+@export var armor_id: String = ""
 
 
-## 便捷构造器（字段全量传入，避免逐属性赋值的样板代码）
+## 便捷构造器（字段全量传入，避免逐属性赋值的样板代码）。
+## 装备两字段（T3.3）带默认空串：旧调用点零改动（向后兼容），
+## 存档回灌走全参形态。
 func _init(p_id: String = "", p_name: String = "", p_job: String = "",
 		p_level: int = 1, p_hp: int = 1, p_max_hp: int = 1,
-		p_mp: int = 1, p_max_mp: int = 1) -> void:
+		p_mp: int = 1, p_max_mp: int = 1,
+		p_weapon_id: String = "", p_armor_id: String = "") -> void:
 	id = p_id
 	name = p_name
 	job = p_job
@@ -49,3 +56,5 @@ func _init(p_id: String = "", p_name: String = "", p_job: String = "",
 	max_hp = p_max_hp
 	mp = p_mp
 	max_mp = p_max_mp
+	weapon_id = p_weapon_id
+	armor_id = p_armor_id

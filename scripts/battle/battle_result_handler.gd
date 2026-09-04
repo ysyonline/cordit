@@ -62,6 +62,10 @@ func _on_battle_finished(result: Dictionary) -> void:
 	# 1) 队伍态覆写（VICTORY 写战后值；DEFEAT 下方读档会整体回滚，此处
 	#    幂等覆写无害——读档失败兜底路径也保持队伍态自洽）
 	_apply_party_state(result.get("party_state", []) as Array)
+	# 1.5) 掉落写回（E6-S2 T2.4：D-附 8.10 掉落按只结算 → I2 队伍共享背包，
+	#    与宝箱 give_item 同入口同口径）。DEFEAT 不写——下方读档整体回滚，
+	#    写了也会被覆盖，白写；ESCAPE 无 drops 键（空数组，循环零次，天然幂等）。
+	_apply_drops(result.get("drops", []) as Array)
 	# 2) 胜利登记击破（数据驱动防复活：敌人 _ready 自查自删）
 	var outcome: String = String(result.get("outcome", ""))
 	if outcome == "VICTORY":
@@ -149,6 +153,22 @@ func _apply_party_state(party_state: Array) -> void:
 				break
 		if not matched:
 			push_warning("[BattleResultHandler] party_state 含队伍外 id \"%s\"，跳过" % rec.get("id", "<空>"))
+
+
+## 掉落写回（E6-S2 T2.4）：result.drops（结算器产物，同 id 已累计）逐条
+## 并入 GameData.inventory——I2 口径：与宝箱 give_item 同入口
+## （GameData.inventory[id] += count），无独立战斗背包层。
+func _apply_drops(drops: Array) -> void:
+	for dp: Variant in drops:
+		var d: Dictionary = dp
+		var iid: String = String(d.get("item_id", ""))
+		if iid.is_empty():
+			continue
+		var count: int = int(d.get("count", 0))
+		if count <= 0:
+			continue
+		GameData.inventory[iid] = int(GameData.inventory.get(iid, 0)) + count
+		print("[BattleResultHandler] 掉落入包 %s x%d（背包 %s）" % [iid, count, GameData.inventory])
 
 
 # ------------------------------------------------------------------

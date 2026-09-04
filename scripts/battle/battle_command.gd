@@ -646,6 +646,90 @@ func _new_round() -> void:
 # 结果组装 / 事件工具
 # ==================================================================
 
+## 【E6-S2 升级流结算器】胜利时把经验/掉落/升级算成"结算协议"数据。
+##
+## 【职责边界】（I4：结算把 exp 写回走角色成长模块，探索/对话侧零感知）：
+##   本函数只算数、组事件流（纯函数，零场景依赖、不写 GameData）——
+##   调用方（battle_over 消费侧）负责把 party_state 写回 GameData（既有
+##   BattleResultHandler._apply_party_state 链路），exp_events/drops 随
+##   result 透传给结算画面（BattleUI.show_result 协议，见 battle_ui.gd）。
+##
+## 【口径正本】
+##   经验：队伍共享经验池（GDD §6 D7 修订——三人同步升级），按击破敌人
+##         逐个累加（enemy_data.exp 字段，§7 数值初值）；
+##   升级：exp_thresholds 累计阈值表（GrowthCurve.level_for_exp 纯函数），
+##         支持一次跨多级（I4"多角色多级连升"→ 全队池口径下即"一次战斗
+##         跨多级"，三人同步）；
+##   习得：跨过的新等级上 skills_by_level 新增的技能 id（升序由键序保证，
+##         同级按建卡顺序——GDD D-附 8.11"一次列出多个"格式）；
+##   掉落：每只敌人独立结算一次自己的掉落表（GDD D-附 8.10），切片内
+##         恒 100% 单一道具（DropData.is_single_full_drop 形态），按 count
+##         累计同 id。
+##
+## 【确定性】无随机项（掉落全 100%），结果只由 encounter_id 决定——
+##   可在 GUT 中对同一编组断言精确事件序列。
+func build_settlement() -> Dictionary:
+	var exp_events: Array = []
+	var drops_acc: Dictionary = {}   # item_id -> count（同 id 掉落累计）
+	var total_exp: int = 0
+	var grp: Variant = DataTables.get_encounter(encounter_id)
+	if grp == null:
+		push_warning("[BattleCommand] 结算失败：编组不存在 %s" % encounter_id)
+		return {"exp_events": [], "drops": []}
+	# ① 经验逐条 + 掉落逐只（按展开序，与生成槽位序一致）
+	for eid: String in grp.expand_enemy_ids():
+		var ed: Variant = DataTables.get_enemy(eid)
+		if ed == null:
+			continue
+		total_exp += ed.exp
+		exp_events.append({"kind": "exp", "enemy": ed.name, "amount": ed.exp})
+		var drop: Variant = DataTables.get_drop(ed.drop_id)
+		if drop == null:
+			continue
+		for entry: Dictionary in drop.items:
+			if float(entry.get("probability", 0.0)) < 1.0:
+				continue   # 切片恒 1.0；防御分支：概率掉落属未来扩展
+			var iid: String = String(entry.get("item_id", ""))
+			if iid.is_empty():
+				continue
+			drops_acc[iid] = int(drops_acc.get(iid, 0)) + int(entry.get("count", 1))
+	# ② 升级判定（全队共享池：三人同步，D7 修订口径）。
+	# 【切片口径】无累计经验字段（见下），开局等级即队伍当前等级——
+	#   "战后等级 = level_for_exp(本战总经验) 与开局等级取大"。
+	# 【已知限制（接受）】本战总经验从零计，非"累计池跨战累加"完整语义：
+	#   GameData/CharacterRecord 均无经验字段，存档协议（v2）亦无。切片内
+	#   §7 五场 B1→B5 的等级由探索侧按预期等级推进（demo host 传
+	#   PARTY_LEVEL），结算只需判定"本战经验是否再升一级"。跨战累计池
+	#   与存档 v3 扩展待产品裁定后再做——届时本函数只改 before/after 两行。
+	var before_lv: int = int(party[0].get("level", 1)) if not party.is_empty() else 1
+	var after_lv: int = maxi(before_lv, DataTables.GROWTH.level_for_exp(total_exp))
+	if after_lv > before_lv:
+		exp_events.append({"kind": "level_up", "name": "队伍", "level": after_lv})
+		# ③ 技能习得：跨过的每个新等级上新增的技能（before_lv < lv <= after_lv）
+		#    三人逐个查，同级按 PARTY 建卡顺序（kyle→lina→mona）
+		for lv: int in range(before_lv + 1, after_lv + 1):
+			for u: Dictionary in party:
+				var cd: Variant = DataTables.get_character(String(u.get("unit_id", "")))
+				if cd == null:
+					continue
+				var gained: Array[String] = []
+				var lv_keys: Array = cd.skills_by_level.keys()
+				lv_keys.sort()
+				for key: int in lv_keys:
+					if key == lv:
+						for sid: String in cd.skills_by_level[key]:
+							gained.append(sid)
+				if not gained.is_empty():
+					exp_events.append({"kind": "skill", "name": cd.name,
+							"level": lv, "skills": gained})
+	# ④ 掉落行组装（drops_acc 迭代序 = 插入序 = 敌人展开序，稳定）
+	var drops: Array = []
+	for iid: String in drops_acc:
+		drops.append({"item_id": iid, "count": int(drops_acc[iid])})
+	return {"exp_events": exp_events, "drops": drops, "total_exp": total_exp,
+			"level_before": before_lv, "level_after": after_lv}
+
+
 func _build_result() -> Dictionary:
 	var party_state: Array = []
 	for u: Dictionary in party:
@@ -657,6 +741,10 @@ func _build_result() -> Dictionary:
 			"mp": int(u.get("mp", 0)),
 			"max_mp": int(u.get("max_mp", 0)),
 		})
+	# E6-S2：VICTORY 时组装升级流协议（exp_events/drops）；DEFEAT/ESCAPE 空协议
+	var settlement: Dictionary = {"exp_events": [], "drops": []}
+	if outcome == OUTCOME_VICTORY:
+		settlement = build_settlement()
 	return {
 		"outcome": outcome,
 		"party_state": party_state,
@@ -664,6 +752,8 @@ func _build_result() -> Dictionary:
 		"exp_gained": [],
 		"gold_gained": 0,
 		"items_used": [],
+		"exp_events": settlement["exp_events"],
+		"drops": settlement["drops"],
 	}
 
 
