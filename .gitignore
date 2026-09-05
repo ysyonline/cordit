@@ -9,11 +9,11 @@ desktop.ini
 
 # Godot 4 缓存与用户专属文件（首次用编辑器打开项目后生成）
 .godot/
+.godot_user_tmp/
 *.tmp
 
-# Godot 导出包与导出配置密钥
+# Godot 导出包与导出配置密钥（导出预设 export_presets.cfg 入库以复现导出）
 export/
-export_presets.cfg
 *.translation
 
 # 存档类运行时文件不进仓库（user:// 映射到本机目录，防御性排除）
