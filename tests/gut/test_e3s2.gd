@@ -665,12 +665,12 @@ func test_编组展开槽位序与members一致() -> void:
 	# §3.1：敌方之间按生成槽位序——编组表 members 的数组顺序即槽位序，
 	# 所以改 members 顺序就能调同速敌人的先后（调序即调节奏）
 	var enemies: Array = BattleUnits.build_encounter("b3_ruin_mix")
-	assert_eq(enemies.size(), 4, "B3 = 火蜥 + 冰晶 + 飞蛾×2")
+	assert_eq(enemies.size(), 5, "B3 = 火蜥 + 冰晶 + 飞蛾×3")
 	var ids: Array[String] = []
 	for u: Dictionary in enemies:
 		ids.append(String(u["unit_id"]))
 		assert_eq(String(u["side"]), BattleLogic.SIDE_ENEMY, "敌方单位阵营")
-	assert_eq(ids, ["salamander", "crystal", "moth", "moth"], "槽位 0..3 按 members 顺序")
+	assert_eq(ids, ["salamander", "crystal", "moth", "moth", "moth"], "槽位 0..4 按 members 顺序")
 	for i: int in enemies.size():
 		assert_eq(int(enemies[i]["slot"]), i, "槽位下标连续")
 

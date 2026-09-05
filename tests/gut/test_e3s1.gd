@@ -368,7 +368,7 @@ func test_B1至B5编组全部建卡且配置对齐GDD_7() -> void:
 	var expected: Array = [
 		["b1_moth", "road", 1, false],
 		["b2_beetles", "road", 2, false],
-		["b3_ruin_mix", "ruin_f1", 4, false],
+		["b3_ruin_mix", "ruin_f1", 5, false],
 		["b4_guardian", "ruin_f2", 1, false],
 		["b5_core", "ruin_f3", 1, true],
 	]
@@ -383,10 +383,10 @@ func test_B1至B5编组全部建卡且配置对齐GDD_7() -> void:
 		assert_false(g.expected_level.is_empty(), "%s 应记录预期等级（§7）" % gid)
 
 
-func test_B3混编成员为火蜥冰晶加飞蛾两只() -> void:
-	# §7：火蜥(弱冰)×1 + 冰晶(弱火)×1 + 飞蛾×2
+func test_B3混编成员为火蜥冰晶加飞蛾三只() -> void:
+	# §7 M7 调校：火蜥(弱冰)×1 + 冰晶(弱火)×1 + 飞蛾×3
 	var ids: Array[String] = DataTables.get_encounter("b3_ruin_mix").expand_enemy_ids()
-	assert_eq(ids, ["salamander", "crystal", "moth", "moth"], "B3 编组展开顺序")
+	assert_eq(ids, ["salamander", "crystal", "moth", "moth", "moth"], "B3 编组展开顺序")
 
 
 func test_只有B5禁用逃跑() -> void:

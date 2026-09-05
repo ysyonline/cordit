@@ -1,6 +1,8 @@
-; B3 遗迹混编 ── GDD §7：火蜥(弱冰)×1 + 冰晶(弱火)×1 + 飞蛾×2
+; B3 遗迹混编 ── GDD §7：火蜥(弱冰)×1 + 冰晶(弱火)×1 + 飞蛾×3
 ; 位置：遗迹一层 | 教学意图：资源压力 | 预期等级 Lv2
 ; 成员顺序 = 生成槽位序 = 同 SPD 时的行动序（火蜥 SPD12 最快，飞蛾 SPD6 殿后）
+; M7 E7-S1 调校：飞蛾 2→3（原 2 只下 NORMAL 2 回合全队近满血，无消耗感；
+;   加 1 只杂兵使敌方行动轮次+1，凯尔血线压力增大，逼莫娜开治疗）
 
 [gd_resource type="Resource" script_class="EncounterGroup" load_steps=2 format=3]
 
@@ -10,7 +12,7 @@
 script = ExtResource("1_ggd")
 id = "b3_ruin_mix"
 name = "遗迹混编"
-members = [{"count": 1, "enemy_id": "salamander"}, {"count": 1, "enemy_id": "crystal"}, {"count": 2, "enemy_id": "moth"}]
+members = [{"count": 1, "enemy_id": "salamander"}, {"count": 1, "enemy_id": "crystal"}, {"count": 3, "enemy_id": "moth"}]
 is_boss = false
 location = "ruin_f1"
 teaching_intent = "资源压力：三层连续推进的第一次消耗战，弱点各异，雷爆在这里显出价值"

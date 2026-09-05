@@ -10,7 +10,7 @@ extends GutTest
 ##      的分支逻辑，用真表 B4=140/Lv3→Lv4、B5 累计推演跨级）；
 ##   C. 技能习得一次性列出（GDD D-附 8.11）：升 2 级时新增技能逐条列出，
 ##      莉娜 Lv2 一次习得【冰锥】【雷爆】（同级按建卡顺序）；
-##   D. 掉落按只结算（D-附 8.10）：B3 飞蛾×2 → 小药瓶 ×2（同 id 累计）；
+##   D. 掉落按只结算（D-附 8.10）：B3 飞蛾×3 → 小药瓶 ×3（同 id 累计）；
 ##   E. _build_result 集成：VICTORY 带协议 / DEFEAT 空协议（向后兼容）；
 ##   F. show_result 渲染：exp/level_up/skill/drops 四类行文本 + 旧协议
 ##      （无 exp_events/drops 键）零回归；
@@ -218,18 +218,18 @@ func test_习得行按等级升序_跨级时低级在前() -> void:
 
 # =============== D. 掉落按只结算（D-附 8.10）===============
 
-func test_B3飞蛾两只_小药瓶累计x2() -> void:
-	# B3 = 火蜥×1 + 冰晶×1 + 飞蛾×2：ether_s/antidote 各 1 + potion_s×2
+func test_B3飞蛾三只_小药瓶累计x3() -> void:
+	# B3 = 火蜥×1 + 冰晶×1 + 飞蛾×3：ether_s/antidote 各 1 + potion_s×3
 	var bc := _ready_bc("b3_ruin_mix", ["kyle", "lina", "mona"], [2, 2, 2])
 	var s: Dictionary = bc.build_settlement()
-	assert_eq(int(s["total_exp"]), 26 + 26 + 15 + 15, "B3 总经验 = 26+26+15×2=82")
+	assert_eq(int(s["total_exp"]), 26 + 26 + 15 + 15 + 15, "B3 总经验 = 26+26+15×3=97")
 	var drops: Array = s["drops"]
 	assert_eq(drops.size(), 3, "B3 应恰 3 种掉落（同 id 已累计）")
 	var by_id: Dictionary = {}
 	for dp: Variant in drops:
 		var d: Dictionary = dp
 		by_id[String(d["item_id"])] = int(d["count"])
-	assert_eq(int(by_id.get("potion_s", 0)), 2, "飞蛾×2 → 小药瓶累计 ×2（按只结算）")
+	assert_eq(int(by_id.get("potion_s", 0)), 3, "飞蛾×3 → 小药瓶累计 ×3（按只结算）")
 	assert_eq(int(by_id.get("ether_s", 0)), 1, "火蜥掉 ether_s×1")
 	assert_eq(int(by_id.get("antidote", 0)), 1, "冰晶掉 antidote×1")
 

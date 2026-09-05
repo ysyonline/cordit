@@ -76,8 +76,8 @@ res://tests/gut/test_e2s2.gd
 * test_返回图回退链_导出值优先_路由簿记兜底
 [VisibleEnemy] 就绪：e_fb（编组 g1）巡逻点 0 个 初始态 GUARD
 Godot_v4.7.2-stable_win64_console.exe : WARNING: [VisibleEnemy] e_fb：return_map 为空（导出值与 Router 簿记皆空），载荷将被 Router 拒绝
-At line:15 char:3451
-+ ... V_EXCL="*"; & "C:\Users\weixufeng\AppData\Local\Microsoft\WinGet\Pack ...
+At line:15 char:3421
++ ... _user_tmp"; & "C:\Users\weixufeng\AppData\Local\Microsoft\WinGet\Pack ...
 +                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (WARNING: [Visib...，载荷将被 Router 拒绝:String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
@@ -322,7 +322,7 @@ res://tests/gut/test_e3s1.gd
 * test_道具表字段与交叉约束
 * test_解毒道具在B4之前可得
 * test_B1至B5编组全部建卡且配置对齐GDD_7
-* test_B3混编成员为火蜥冰晶加飞蛾两只
+* test_B3混编成员为火蜥冰晶加飞蛾三只
 * test_只有B5禁用逃跑
 * test_stats_at逐级定值累加
 * test_stats_at等级越界钳制
@@ -414,34 +414,34 @@ res://tests/gut/test_e3s3.gd
 res://tests/gut/test_e3s4.gd
 [0m* test_八要素逐项在场
 [33m    628 Orphans[0m
-[33m        * [<Control#389617291746>(battle_ui.gd)] + 627[0m
+[33m        * [<Control#389516628450>(battle_ui.gd)] + 627[0m
 * test_击退后预告条立即刷新
 [33m    628 Orphans[0m
-[33m        * [<Control#410924356031>(battle_ui.gd)] + 627[0m
+[33m        * [<Control#410823692735>(battle_ui.gd)] + 627[0m
 * test_9slice_边条平铺不拉伸
 [33m    628 Orphans[0m
-[33m        * [<Control#432667630515>(battle_ui.gd)] + 627[0m
+[33m        * [<Control#432566967219>(battle_ui.gd)] + 627[0m
 * test_指令菜单_攻击防御永远可用
 [33m    634 Orphans[0m
-[33m        * [<Control#453907587236>(battle_ui.gd)] + 633[0m
+[33m        * [<Control#453773369508>(battle_ui.gd)] + 633[0m
 * test_B1锁技能_技能按钮置灰
 [33m    628 Orphans[0m
-[33m        * [<Control#475298538911>(battle_ui.gd)] + 627[0m
+[33m        * [<Control#475164321183>(battle_ui.gd)] + 627[0m
 * test_Boss战_逃跑按钮置灰
 [33m    628 Orphans[0m
-[33m        * [<Control#496538495631>(battle_ui.gd)] + 627[0m
+[33m        * [<Control#496404277903>(battle_ui.gd)] + 627[0m
 * test_预估伤害区间格式
 [33m    614 Orphans[0m
-[33m        * [<Control#517728120702>(battle_ui.gd)] + 613[0m
+[33m        * [<Control#517593902974>(battle_ui.gd)] + 613[0m
 * test_predict_for_与真值一致
 [33m    628 Orphans[0m
-[33m        * [<Control#538531869779>(battle_ui.gd)] + 627[0m
+[33m        * [<Control#538364097619>(battle_ui.gd)] + 627[0m
 * test_浮动数字_生成
 [33m    616 Orphans[0m
-[33m        * [<Control#559771826498>(battle_ui.gd)] + 615[0m
+[33m        * [<Control#559604054338>(battle_ui.gd)] + 615[0m
 * test_结算画面_显示
 [33m    628 Orphans[0m
-[33m        * [<Control#580676238875>(battle_ui.gd)] + 627[0m
+[33m        * [<Control#580474912283>(battle_ui.gd)] + 627[0m
 [33m6260 orphans[0m
 [1m10/10 passed.
 [0m[4m
@@ -449,19 +449,19 @@ res://tests/gut/test_e3s4.gd
 res://tests/gut/test_e3s5.gd
 [0m* test_背景层存在且提供截图接口
 [33m    614 Orphans[0m
-[33m        * [<Control#602201408282>(battle_ui.gd)] + 613[0m
+[33m        * [<Control#601966527258>(battle_ui.gd)] + 613[0m
 * test_进战转场黑屏触发
 [33m    614 Orphans[0m
-[33m        * [<Control#622988366299>(battle_ui.gd)] + 613[0m
+[33m        * [<Control#622753485275>(battle_ui.gd)] + 613[0m
 * test_受击闪白与浮动数字
 [33m    629 Orphans[0m
-[33m        * [<Control#643792129212>(battle_ui.gd)] + 628[0m
+[33m        * [<Control#643523693756>(battle_ui.gd)] + 628[0m
 * test_克制弹字与跨战斗记忆写入
 [33m    629 Orphans[0m
-[33m        * [<Control#665367630254>(battle_ui.gd)] + 628[0m
+[33m        * [<Control#665099194798>(battle_ui.gd)] + 628[0m
 * test_真实流程_火球命中甲虫触发弱点三步
 [33m    636 Orphans[0m
-[33m        * [<Control#686943131296>(battle_ui.gd)] + 635[0m
+[33m        * [<Control#686641141408>(battle_ui.gd)] + 635[0m
 [33m3122 orphans[0m
 [1m5/5 passed.
 [0m[4m
@@ -473,7 +473,7 @@ res://tests/gut/test_e3s6.gd
 * test_边缘4_MP不足技能不可用_攻击防御可用
 * test_边缘5_道具耗尽置灰
 [33m    634 Orphans[0m
-[33m        * [<Control#709911134997>(battle_ui.gd)] + 633[0m
+[33m        * [<Control#709542036245>(battle_ui.gd)] + 633[0m
 * test_边缘6_击退后死者在行动前被移除
 * test_边缘7_我方全灭在敌方结算途中中断
 * test_边缘8_中毒行动前扣血致死跳过本回合
@@ -543,22 +543,22 @@ WARNING: SaveManager: 存档版本 99 高于当前支持 3，拒绝读入
 res://tests/gut/test_e4s2.gd
 [0m* test_01_场景可装载且根脚本正确
 [33m    40 Orphans[0m
-[33m        * [Map_Road:<Node2D#739019612381>(road_map.gd)] + 39[0m
+[33m        * [Map_Road:<Node2D#738314969309>(road_map.gd)] + 39[0m
 * test_02_四层齐备且tileset引用有效
 [33m    40 Orphans[0m
-[33m        * [Map_Road:<Node2D#740261126366>(road_map.gd)] + 39[0m
+[33m        * [Map_Road:<Node2D#739556483294>(road_map.gd)] + 39[0m
 * test_03_三个敌人实体导出量正确
 [33m    40 Orphans[0m
-[33m        * [Map_Road:<Node2D#741536194783>(road_map.gd)] + 39[0m
+[33m        * [Map_Road:<Node2D#740747665638>(road_map.gd)] + 39[0m
 * test_04_点位锚点对表
 [33m    40 Orphans[0m
-[33m        * [Map_Road:<Node2D#742895149280>(road_map.gd)] + 39[0m
+[33m        * [Map_Road:<Node2D#742106620084>(road_map.gd)] + 39[0m
 * test_05_断桥封边碰撞体存在
 [33m    40 Orphans[0m
-[33m        * [Map_Road:<Node2D#744136663265>(road_map.gd)] + 39[0m
+[33m        * [Map_Road:<Node2D#743264248045>(road_map.gd)] + 39[0m
 * test_06_地图脚本限区与落位
 [33m    40 Orphans[0m
-[33m        * [Map_Road:<Node2D#745361400034>(road_map.gd)] + 39[0m
+[33m        * [Map_Road:<Node2D#744488984810>(road_map.gd)] + 39[0m
 [33m40 orphans[0m
 [1m6/6 passed.
 [0m[4m
@@ -566,44 +566,44 @@ res://tests/gut/test_e4s2.gd
 res://tests/gut/test_e4s3.gd
 [0m* test_01_三层场景可装载且根脚本正确
 [33m    81 Orphans[0m
-[33m        * [Ruins_F1:<Node2D#748112863407>(ruins_f1_map.gd)] + 33
-        * [Ruins_F2:<Node2D#749069164775>(ruins_f2_map.gd)] + 25
-        * [Ruins_F3:<Node2D#749874471262>(ruins_f3_map.gd)] + 20[0m
+[33m        * [Ruins_F1:<Node2D#747173339433>(ruins_f1_map.gd)] + 33
+        * [Ruins_F2:<Node2D#748129640751>(ruins_f2_map.gd)] + 25
+        * [Ruins_F3:<Node2D#748934947211>(ruins_f3_map.gd)] + 20[0m
 * test_02_四层齐备且共享tileset有效
 [33m    81 Orphans[0m
-[33m        * [Ruins_F2:<Node2D#753783562421>(ruins_f2_map.gd)] + 25
-        * [Ruins_F1:<Node2D#752827261279>(ruins_f1_map.gd)] + 33
-        * [Ruins_F3:<Node2D#754588868975>(ruins_f3_map.gd)] + 20[0m
+[33m        * [Ruins_F2:<Node2D#752844038450>(ruins_f2_map.gd)] + 25
+        * [Ruins_F1:<Node2D#751887737228>(ruins_f1_map.gd)] + 33
+        * [Ruins_F3:<Node2D#753649344924>(ruins_f3_map.gd)] + 20[0m
 * test_03_三层点位数量对表
 [33m    81 Orphans[0m
-[33m        * [Ruins_F3:<Node2D#758699286847>(ruins_f3_map.gd)] + 20
-        * [Ruins_F1:<Node2D#756937679216>(ruins_f1_map.gd)] + 33
-        * [Ruins_F2:<Node2D#757893980561>(ruins_f2_map.gd)] + 25[0m
+[33m        * [Ruins_F3:<Node2D#757759762796>(ruins_f3_map.gd)] + 20
+        * [Ruins_F1:<Node2D#755998155165>(ruins_f1_map.gd)] + 33
+        * [Ruins_F2:<Node2D#756954456510>(ruins_f2_map.gd)] + 25[0m
 * test_04_敌人数量与形态对表
 [33m    81 Orphans[0m
-[33m        * [Ruins_F2:<Node2D#761903735000>(ruins_f2_map.gd)] + 25
-        * [Ruins_F1:<Node2D#760947433792>(ruins_f1_map.gd)] + 33
-        * [Ruins_F3:<Node2D#762709041538>(ruins_f3_map.gd)] + 20[0m
+[33m        * [Ruins_F2:<Node2D#760964210904>(ruins_f2_map.gd)] + 25
+        * [Ruins_F1:<Node2D#760007909741>(ruins_f1_map.gd)] + 33
+        * [Ruins_F3:<Node2D#761769517487>(ruins_f3_map.gd)] + 20[0m
 * test_05_f2精英定守无巡逻点
 [33m    81 Orphans[0m
-[33m        * [Ruins_F3:<Node2D#766668464466>(ruins_f3_map.gd)] + 20
-        * [Ruins_F1:<Node2D#764906856835>(ruins_f1_map.gd)] + 33
-        * [Ruins_F2:<Node2D#765863158156>(ruins_f2_map.gd)] + 25[0m
+[33m        * [Ruins_F2:<Node2D#764923633906>(ruins_f2_map.gd)] + 25
+        * [Ruins_F3:<Node2D#765728940415>(ruins_f3_map.gd)] + 20
+        * [Ruins_F1:<Node2D#763967332784>(ruins_f1_map.gd)] + 33[0m
 * test_06_f1敌人巡逻态对表
 [33m    81 Orphans[0m
-[33m        * [Ruins_F3:<Node2D#770611110201>(ruins_f3_map.gd)] + 20
-        * [Ruins_F1:<Node2D#768849502547>(ruins_f1_map.gd)] + 33
-        * [Ruins_F2:<Node2D#769805803929>(ruins_f2_map.gd)] + 25[0m
+[33m        * [Ruins_F3:<Node2D#769671586021>(ruins_f3_map.gd)] + 20
+        * [Ruins_F2:<Node2D#768866279680>(ruins_f2_map.gd)] + 25
+        * [Ruins_F1:<Node2D#767909978496>(ruins_f1_map.gd)] + 33[0m
 * test_07_f3_boss前厅构图
 [33m    81 Orphans[0m
-[33m        * [Ruins_F1:<Node2D#772876034405>(ruins_f1_map.gd)] + 33
-        * [Ruins_F3:<Node2D#774637642108>(ruins_f3_map.gd)] + 20
-        * [Ruins_F2:<Node2D#773832335774>(ruins_f2_map.gd)] + 25[0m
+[33m        * [Ruins_F2:<Node2D#772892811525>(ruins_f2_map.gd)] + 25
+        * [Ruins_F1:<Node2D#771936510354>(ruins_f1_map.gd)] + 33
+        * [Ruins_F3:<Node2D#773698118057>(ruins_f3_map.gd)] + 20[0m
 * test_08_三层限区与落位导出量
 [33m    81 Orphans[0m
-[33m        * [Ruins_F3:<Node2D#778563510604>(ruins_f3_map.gd)] + 20
-        * [Ruins_F1:<Node2D#776801902966>(ruins_f1_map.gd)] + 33
-        * [Ruins_F2:<Node2D#777758204323>(ruins_f2_map.gd)] + 25[0m
+[33m        * [Ruins_F2:<Node2D#776818680074>(ruins_f2_map.gd)] + 25
+        * [Ruins_F3:<Node2D#777623986553>(ruins_f3_map.gd)] + 20
+        * [Ruins_F1:<Node2D#775862378915>(ruins_f1_map.gd)] + 33[0m
 [33m81 orphans[0m
 [1m8/8 passed.
 [0m[4m
@@ -1678,6 +1678,8 @@ WARNING: [SchemaValidator] 条目 start 文本 66 字（>60，渲染层折行）
        [7] test_b2_battle哨兵载荷供桥接识别 (res://tests/gut/test_e5s5.gd:155)
        [8] _run_test (res://addons/gut/gut.gd:622)
        [9] _test_the_scripts (res://addons/gut/gut.gd:835)
+       [10] _run_test (res://addons/gut/gut.gd:650)
+       [11] test_b1_battle动作挂起簿记与暂停闸 (res://tests/gut/test_e5s5.gd:148)
 [DialogueRunner] 开演：story_p3_boss_front（2 条目）
 [SceneRouter] 事件战斗载荷经桥转发处理，本端跳过（防双切换竞态）
 [EventExecutor] battle b5_core（story_boss_pre）：payload 已发，事件流自下标 2 起挂起（胜利续行段 3 动作）
@@ -2140,7 +2142,7 @@ res://tests/gut/test_e6s2.gd
 * test_低经验_不升级
 * test_莉娜Lv2_一次习得冰锥雷爆
 * test_习得行按等级升序_跨级时低级在前
-* test_B3飞蛾两只_小药瓶累计x2
+* test_B3飞蛾三只_小药瓶累计x3
 * test_VICTORY结果带结算协议
 * test_DEFEAT结果空协议_向后兼容
 * test_ESCAPE结果空协议
@@ -2477,12 +2479,12 @@ WARNING: [BattleResultHandler] 无回图目标（result/staged 均缺 return_map
        [1] test_smk04_emit_参数原样送达 (res://tests/gut/test_smk_migration.gd:102)
        [2] _run_test (res://addons/gut/gut.gd:622)
        [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+* test_smk05_EventBus_无状态越界
 WARNING: [BattleResultHandler] 回置失败：Main/World 无当前场景（GUT/无 Main 环境）
    at: push_warning (core/variant/variant_utility.cpp:1033)
    GDScript backtrace (most recent call first):
        [0] _pos_return_immediate (res://scripts/battle/battle_result_handler.gd:207)
        [1] _do_return (res://scripts/battle/battle_result_handler.gd:190)
-* test_smk05_EventBus_无状态越界
 * test_smk06_GameData_字段齐全且带类型标注
 [1m6/6 passed.
 [0m[4m
@@ -2579,39 +2581,39 @@ res://tests/gut/test_t65.gd
 [33m==============================================[0m
 test_e3s4.gd
     - test_八要素逐项在场
-[33m        * [<Control#389617291746>(battle_ui.gd)] + 627[0m
+[33m        * [<Control#389516628450>(battle_ui.gd)] + 627[0m
     - test_击退后预告条立即刷新
-[33m        * [<Control#410924356031>(battle_ui.gd)] + 627[0m
+[33m        * [<Control#410823692735>(battle_ui.gd)] + 627[0m
     - test_9slice_边条平铺不拉伸
-[33m        * [<Control#432667630515>(battle_ui.gd)] + 627[0m
+[33m        * [<Control#432566967219>(battle_ui.gd)] + 627[0m
     - test_指令菜单_攻击防御永远可用
-[33m        * [<Control#453907587236>(battle_ui.gd)] + 633[0m
+[33m        * [<Control#453773369508>(battle_ui.gd)] + 633[0m
     - test_B1锁技能_技能按钮置灰
-[33m        * [<Control#475298538911>(battle_ui.gd)] + 627[0m
+[33m        * [<Control#475164321183>(battle_ui.gd)] + 627[0m
     - test_Boss战_逃跑按钮置灰
-[33m        * [<Control#496538495631>(battle_ui.gd)] + 627[0m
+[33m        * [<Control#496404277903>(battle_ui.gd)] + 627[0m
     - test_预估伤害区间格式
-[33m        * [<Control#517728120702>(battle_ui.gd)] + 613[0m
+[33m        * [<Control#517593902974>(battle_ui.gd)] + 613[0m
     - test_predict_for_与真值一致
-[33m        * [<Control#538531869779>(battle_ui.gd)] + 627[0m
+[33m        * [<Control#538364097619>(battle_ui.gd)] + 627[0m
     - test_浮动数字_生成
-[33m        * [<Control#559771826498>(battle_ui.gd)] + 615[0m
+[33m        * [<Control#559604054338>(battle_ui.gd)] + 615[0m
     - test_结算画面_显示
-[33m        * [<Control#580676238875>(battle_ui.gd)] + 627[0m
+[33m        * [<Control#580474912283>(battle_ui.gd)] + 627[0m
 test_e3s5.gd
     - test_背景层存在且提供截图接口
-[33m        * [<Control#602201408282>(battle_ui.gd)] + 613[0m
+[33m        * [<Control#601966527258>(battle_ui.gd)] + 613[0m
     - test_进战转场黑屏触发
-[33m        * [<Control#622988366299>(battle_ui.gd)] + 613[0m
+[33m        * [<Control#622753485275>(battle_ui.gd)] + 613[0m
     - test_受击闪白与浮动数字
-[33m        * [<Control#643792129212>(battle_ui.gd)] + 628[0m
+[33m        * [<Control#643523693756>(battle_ui.gd)] + 628[0m
     - test_克制弹字与跨战斗记忆写入
-[33m        * [<Control#665367630254>(battle_ui.gd)] + 628[0m
+[33m        * [<Control#665099194798>(battle_ui.gd)] + 628[0m
     - test_真实流程_火球命中甲虫触发弱点三步
-[33m        * [<Control#686943131296>(battle_ui.gd)] + 635[0m
+[33m        * [<Control#686641141408>(battle_ui.gd)] + 635[0m
 test_e3s6.gd
     - test_边缘5_道具耗尽置灰
-[33m        * [<Control#709911134997>(battle_ui.gd)] + 633[0m
+[33m        * [<Control#709542036245>(battle_ui.gd)] + 633[0m
 
 
 [33m==============================================
@@ -2623,9 +2625,9 @@ Totals
 Scripts              31
 Tests               514
 Passing Tests       514
-Asserts            8376
+Asserts            8378
 Orphans           10016
-Time              82.102s
+Time              44.934s
 
 
 [32m---- All tests passed! ----

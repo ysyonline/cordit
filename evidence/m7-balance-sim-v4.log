@@ -1,0 +1,70 @@
+﻿Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+
+======================================================================
+  B1  encounter=b1_moth  party Lv1
+======================================================================
+
+[敌方]
+  道路飞蛾  HP=50 ATK=8 DEF=3 SPD=6 weak= resist=
+
+── NORMAL（正常玩）──
+  结局: VICTORY  | 回合数: 2
+  [我方剩余]
+    ✓ 凯尔  HP 114/120  MP 10/10
+    ✓ 莉娜  HP 80/80  MP 30/30
+    ✓ 莫娜  HP 95/95  MP 20/24
+
+── BRAINDEAD（全员防御）──
+  结局:   | 回合数: 54
+  [我方剩余]
+    ✗ 凯尔  HP 0/120  MP 10/10
+    ✓ 莉娜  HP 15/80  MP 30/30
+    ✓ 莫娜  HP 95/95  MP 24/24
+
+======================================================================
+  B2  encounter=b2_beetles  party Lv1
+======================================================================
+
+[敌方]
+  雷壳甲虫  HP=45 ATK=9 DEF=6 SPD=8 weak=fire resist=
+  雷壳甲虫  HP=45 ATK=9 DEF=6 SPD=8 weak=fire resist=
+
+── NORMAL（正常玩）──
+  结局: VICTORY  | 回合数: 2
+  [我方剩余]
+    ✓ 凯尔  HP 112/120  MP 4/10
+    ✓ 莉娜  HP 80/80  MP 22/30
+    ✓ 莫娜  HP 95/95  MP 20/24
+
+── BRAINDEAD（全员防御）──
+  结局: DEFEAT  | 回合数: 30
+  [我方剩余]
+    ✗ 凯尔  HP 0/120  MP 10/10
+    ✗ 莉娜  HP 0/80  MP 30/30
+    ✗ 莫娜  HP 0/95  MP 24/24
+
+======================================================================
+  B3  encounter=b3_ruin_mix  party Lv2
+======================================================================
+
+[敌方]
+  火蜥  HP=100 ATK=13 DEF=8 SPD=12 weak=ice resist=fire
+  冰晶  HP=95 ATK=13 DEF=9 SPD=5 weak=fire resist=ice
+  道路飞蛾  HP=50 ATK=8 DEF=3 SPD=6 weak= resist=
+  道路飞蛾  HP=50 ATK=8 DEF=3 SPD=6 weak= resist=
+  道路飞蛾  HP=50 ATK=8 DEF=3 SPD=6 weak= resist=
+
+── NORMAL（正常玩）──
+  结局: VICTORY  | 回合数: 5
+  [我方剩余]
+    ✓ 凯尔  HP 96/160  MP 1/13
+    ✓ 莉娜  HP 113/113  MP 18/38
+    ✓ 莫娜  HP 127/127  MP 31/31
+
+── BRAINDEAD（全员防御）──
+  结局: DEFEAT  | 回合数: 15
+  [我方剩余]
+    ✗ 凯尔  HP 0/160  MP 13/13
+    ✗ 莉娜  HP 0/113  MP 38/38
+    ✗ 莫娜  HP 0/127  MP 31/31
