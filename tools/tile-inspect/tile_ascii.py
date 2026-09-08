@@ -39,10 +39,11 @@ def px_char(r, g, b, a):
 
 def load(name):
     # E4-S3 选型扩充：classical_temple 图集接入（64×48 网格，1024×768）
+    # M7-A2 装饰选型扩充：16oga 图集（10×5 网格，160×80）
     fname = {"town": "town_tiles", "forest": "forest_tiles",
-             "temple": "classical_temple_tiles"}[name]
+             "temple": "classical_temple_tiles", "oga": "16oga"}[name]
     W = {"town": (512, 512), "forest": (240, 160),
-         "temple": (1024, 768)}[name]
+         "temple": (1024, 768), "oga": (160, 80)}[name]
     px = open(os.path.join(RGBA_DIR, f"{fname}.rgba"), "rb").read()
     return W[0], W[1], px
 

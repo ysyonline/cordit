@@ -178,15 +178,19 @@ check("tres: sources/0、sources/1 注册", 'sources/0 = SubResource("TileSetAtl
 check("tres: 门洞 tile (0,6,1) 已声明", "\n6:1/0 = 0" in tres_text)
 check("tres: 门洞 tile (0,6,1) 无碰撞行", "\n6:1/0/physics" not in tres_text)
 # Y Sort Origin=8 的 tile 数量
+# M7-A2：25 → 27——旧 T_FIREPLACE/T_SAVEPOINT/T_BOOKSHELF 同键 (0,16,12) 计
+# 1 次，替换后壁炉 (2,2,0)+存档点 (3,6,4) 拆为独立键各计 1 次（+2，派单批准
+# 的替换行为的算术必然，回传报备）
 ysort_cnt = len(re.findall(r'y_sort_origin = 8', tres_text))
-check("tres: 25 个 y_sort_origin=8 tile", ysort_cnt == 25, f"实际 {ysort_cnt}")
+check("tres: 27 个 y_sort_origin=8 tile", ysort_cnt == 27, f"实际 {ysort_cnt}")
 # 四层用到的每个 (src,ax,ay) 都在 tres 声明
 def tiles_used(layer, src_id):
     return {(ax, ay) for (s, ax, ay) in layer.values() if s == src_id}
-for src_id, atlas in [(0, "town"), (1, "forest")]:
+SRC_NAMES = {0: "town", 1: "forest", 2: "temple", 3: "oga"}
+for src_id, atlas in [(0, "town"), (1, "forest"), (2, "temple"), (3, "oga")]:
     used = tiles_used(ground, src_id) | tiles_used(deco, src_id) | tiles_used(walls, src_id) | tiles_used(above, src_id)
     missing = [t for t in used if not re.search(r'(?m)^%d:%d/0 = 0$' % t, tres_text)]
-    check(f"tres: {'town' if src_id==0 else 'forest'} 图集覆盖全部用到的 tile", not missing, str(missing[:5]))
+    check(f"tres: {SRC_NAMES[src_id]} 图集覆盖全部用到的 tile", not missing, str(missing[:5]))
     # Walls 层用到的 tile 必须有 physics 行（属性行独立成行，精确前缀匹配）
     wall_used = tiles_used(walls, src_id)
     no_phys = []
@@ -196,6 +200,52 @@ for src_id, atlas in [(0, "town"), (1, "forest")]:
     # 门洞 (6,1) 是 walls 层唯一无碰撞 tile
     no_phys = [p for p in no_phys if p != (6, 1)]
     check(f"tres: Walls 层用到的 tile 均挂碰撞(门洞除外)", not no_phys, str(no_phys[:5]))
+
+print("== 7. M7-A2 装饰与占位件替换（净增段，不动旧断言） ==")
+# ① 占位件替换：壁炉/存档点新选型（temple 红纹柱 / oga 祭坛蓝晶）
+check("M7-A2 壁炉 (81,12) = temple (2,2,0)", walls.get((81, 12)) == (2, 2, 0),
+      str(walls.get((81, 12))))
+check("M7-A2 存档点 (89,12) = oga (3,6,4)", walls.get((89, 12)) == (3, 6, 4),
+      str(walls.get((89, 12))))
+check("M7-A2 旧占位深棕柜键不再用于壁炉/存档位",
+      walls.get((81, 12)) != (0, 16, 12) and walls.get((89, 12)) != (0, 16, 12))
+check("M7-A2 tres: temple/oga 图集注册",
+      'sources/2 = SubResource("TileSetAtlasSource_temple")' in tres_text
+      and 'sources/3 = SubResource("TileSetAtlasSource_oga")' in tres_text)
+check("M7-A2 tres: 壁炉 tile (2,0) 挂碰撞", bool(re.search(r'(?m)^2:0/0/physics_layer_0', tres_text)))
+check("M7-A2 tres: 存档 tile (6,4) 挂碰撞", bool(re.search(r'(?m)^6:4/0/physics_layer_0', tres_text)))
+# ② 装饰散点抽验（与 gen_town.py M7-A2 段固定锚点对表——丛簇/石堆为定值坐标）
+deco_m7a2_expect = [
+    ((18, 24), (3, 5, 1)),   # 丛簇1 左上：灌木A
+    ((50, 23), (3, 5, 1)),   # 丛簇2 左上：灌木A
+    ((37, 40), (3, 5, 1)),   # 丛簇3 左上：灌木A
+    ((55, 25), (3, 6, 2)),   # 石堆：井旁
+    ((14, 44), (3, 6, 2)),   # 石堆：南门旁
+    ((17, 25), (3, 6, 2)),   # 石堆：B3/B7 民居间草格
+    ((51, 21), (3, 6, 2)),   # 石堆：草甸小径边草格
+]
+for (pos, tile) in deco_m7a2_expect:
+    check(f"M7-A2 装饰锚点 {pos} = oga {tile[1], tile[2]}",
+          deco.get(pos) == (tile[0], tile[1], tile[2]), str(deco.get(pos)))
+# 装饰规模档：40-80 格（含丛簇 12 + 石堆 4 = 16 固定 + 24-64 随机散点）
+m7a2_count = sum(1 for v in deco.values() if v[0] == 3)
+check("M7-A2 装饰格数在 40-80 档", 40 <= m7a2_count <= 80, f"实际 {m7a2_count}")
+# ③ 哨兵：装饰不压内容点位（27 处 = 宝箱 1 + 调查点 6 + NPC 12 + 传送门 4 +
+# 出生格 + 告示板/调查点同格去重后有效集；point_catalog.gd town 节对表）
+_m7a2_content_points = [
+    (59, 22),                                              # 宝箱 chest_town_01
+    (25, 26), (30, 10), (20, 33), (39, 16), (44, 30), (16, 22),  # 调查点×6
+    (30, 18), (85, 15), (23, 30), (31, 27), (44, 18), (14, 20),  # NPC×12
+    (24, 9), (32, 8), (52, 18), (16, 35), (50, 34), (12, 24),
+    (29, 18), (12, 18), (85, 18), (85, 30),                # 传送门×4
+    (12, 40),                                              # 玩家出生格（P0 锚点同格）
+]
+_bad = [p for p in _m7a2_content_points if p in deco and deco[p][0] == 3]
+check("M7-A2 装饰不压内容点位（22 处哨兵遍历）", not _bad, str(_bad))
+# 出生区 3×3 与南门通道哨兵
+_bad2 = [(x, y) for x in range(11, 14) for y in range(39, 42) if deco.get((x, y), (9,))[0] == 3]
+_bad2 += [(x, y) for x in range(12, 14) for y in range(45, 48) if deco.get((x, y), (9,))[0] == 3]
+check("M7-A2 装饰不压出生区 3×3 与南门通道", not _bad2, str(_bad2))
 
 print("== 6. 汇总 ==")
 print(f"PASS {passed} / FAIL {len(failures)}")
