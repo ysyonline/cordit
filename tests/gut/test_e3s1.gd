@@ -257,11 +257,11 @@ func test_敌人表GDD_7给定值对齐() -> void:
 	assert_eq(beetle.atk, 9, "甲虫 ATK（§7）")
 	assert_eq(beetle.weakness, "fire", "甲虫弱火（§7）")
 	var guardian: Resource = DataTables.get_enemy("guardian")
-	assert_eq(guardian.hp, 240, "守卫 HP（§7）")
+	assert_eq(guardian.hp, 360, "守卫 HP（§7，M7 调校 240→360）")
 	assert_eq(guardian.atk, 16, "守卫 ATK（§7）")
 	assert_eq(guardian.weakness, "thunder", "守卫弱雷（§7）")
 	var core: Resource = DataTables.get_enemy("core")
-	assert_eq(core.hp, 480, "核心 HP（§7）")
+	assert_eq(core.hp, 600, "核心 HP（§7，M7 调校 480→600）")
 	assert_eq(core.atk, 18, "核心 ATK（§7）")
 	assert_eq(core.weakness, "fire", "核心弱火（§7）")
 	# B3 的火蜥/冰晶 §7 只给了弱点

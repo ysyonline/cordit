@@ -173,10 +173,11 @@ func test_c1_三切换点时序0123单向推进() -> void:
 	# 切换点1：0→1（对白开演 + 置 phase）
 	_executor.execute_event("story_quest_accept", _loader.get_event("story_quest_accept"))
 	assert_eq(GameData.story_phase, 1, "切换点1推进 0→1")
-	# 切换点1重放：重置后必须能再次触发（数据驱动可重入，门闸在切换点2/3侧）
+	# 切换点1重放：story_quest_accept 现有 phase==0 守卫（M7-R6 落地），
+	# 重放前显式回置 phase=0 以命中守卫，验证数据驱动下 0→1 仍可幂等重入
 	GameData.story_phase = 0
 	_executor.execute_event("story_quest_accept", _loader.get_event("story_quest_accept"))
-	assert_eq(GameData.story_phase, 1, "切换点1无门闸可重入（0→1 幂等）")
+	assert_eq(GameData.story_phase, 1, "切换点1重放命中 phase==0 守卫后 0→1 幂等重入")
 	# 切换点2：1→2
 	_executor.execute_event("story_ruin_enter", _loader.get_event("story_ruin_enter"))
 	assert_eq(GameData.story_phase, 2, "切换点2推进 1→2")
