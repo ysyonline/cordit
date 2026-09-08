@@ -1,3 +1,0 @@
-﻿OK  castle_tiles.png
-OK  town_tiles.png
-OK  forest_tiles.png
