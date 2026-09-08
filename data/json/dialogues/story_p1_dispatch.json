@@ -8,13 +8,13 @@
     },
     "fio_brief": {
       "speaker": "菲奥拉",
-      "portrait": "",
+      "portrait": "fiona_normal",
       "text": "早。清单和地图——说好的。",
       "next": "fio_content"
     },
     "fio_content": {
       "speaker": "菲奥拉",
-      "portrait": "",
+      "portrait": "fiona_normal",
       "text": "委托内容：镇外那座遗迹，一层有异常亮光。查清它是什么，回来报告。",
       "next": "kyle_ask"
     },
@@ -26,7 +26,7 @@
     },
     "fio_rule": {
       "speaker": "菲奥拉",
-      "portrait": "",
+      "portrait": "fiona_normal",
       "text": "调查委托。看见什么记什么，别逞能——协会不缺一枚勋章，缺一份写得清楚的报告。",
       "next": "lina_prev"
     },
@@ -38,7 +38,7 @@
     },
     "fio_pause": {
       "speaker": "菲奥拉",
-      "portrait": "",
+      "portrait": "fiona_normal",
       "text": "（她停了一瞬。）……是。",
       "next": "mona_where"
     },
@@ -50,7 +50,7 @@
     },
     "fio_gone": {
       "speaker": "菲奥拉",
-      "portrait": "",
+      "portrait": "fiona_normal",
       "text": "交完报告的第二天就走了。搭货车走的，说是调去别的支部。",
       "next": "lina_report"
     },
@@ -62,7 +62,7 @@
     },
     "fio_map": {
       "speaker": "菲奥拉",
-      "portrait": "",
+      "portrait": "fiona_normal",
       "text": "（她把地图推过来。）出南门，一条路走到底，半天路程。天黑前进不去，就回来。",
       "next": "kyle_ok"
     },
@@ -74,13 +74,13 @@
     },
     "fio_paper": {
       "speaker": "菲奥拉",
-      "portrait": "",
+      "portrait": "fiona_normal",
       "text": "（她从抽屉里拿出半张纸，边缘是焦的。）这个，前天有人塞在我门缝里。",
       "next": "fio_words"
     },
     "fio_words": {
       "speaker": "菲奥拉",
-      "portrait": "",
+      "portrait": "fiona_normal",
       "text": "上面只剩三个字还认得出：「别应声」。前面还缺了一截，不知是谁的笔迹。",
       "next": "lina_smell"
     },
@@ -90,7 +90,6 @@
       "text": "（她接过纸闻了闻。）……烧过。和昨天傍晚那阵风一个味道——从镇外飘来的。",
       "next": "narr_leave"
     },
-
     "narr_leave": {
       "speaker": "",
       "portrait": "",
@@ -99,7 +98,7 @@
     },
     "kid_call": {
       "speaker": "追风的小孩",
-      "portrait": "",
+      "portrait": "kid_normal",
       "text": "花卷——出来——花卷——",
       "next": "mona_what"
     },
@@ -111,13 +110,13 @@
     },
     "kid_morning": {
       "speaker": "追风的小孩",
-      "portrait": "",
+      "portrait": "kid_normal",
       "text": "不知道。从今天早上就躲着，怎么叫都不出来。",
       "next": "kid_dried"
     },
     "kid_dried": {
       "speaker": "追风的小孩",
-      "portrait": "",
+      "portrait": "kid_normal",
       "text": "昨天它还往房顶上跑呢。今天连鱼干都不吃了。",
       "next": "kyle_reach"
     },
@@ -147,7 +146,7 @@
     },
     "kid_going": {
       "speaker": "追风的小孩",
-      "portrait": "",
+      "portrait": "kid_normal",
       "text": "……你们要去镇外吗？",
       "next": "kyle_back"
     },
@@ -159,11 +158,10 @@
     },
     "kid_warn": {
       "speaker": "追风的小孩",
-      "portrait": "",
+      "portrait": "kid_normal",
       "text": "那你们别学花卷。它盯了一整天那边，看完就躲起来了，再也不敢看。",
       "next": "narr_road"
     },
-
     "narr_road": {
       "speaker": "",
       "portrait": "",
@@ -206,7 +204,6 @@
       "text": "（路在这里分了岔。往南那条继续走，右边夹着石柱的旧路通向遗迹。）",
       "next": "mona_again"
     },
-
     "mona_again": {
       "speaker": "莫娜",
       "portrait": "mona_normal",
@@ -260,8 +257,14 @@
       "portrait": "kyle_normal",
       "text": "（凯尔盯着那三个人影。）",
       "choices": [
-        { "text": "「喂——！」", "next": "kyle_shout" },
-        { "text": "「（按住剑柄，别出声）」", "next": "kyle_silent" }
+        {
+          "text": "「喂——！」",
+          "next": "kyle_shout"
+        },
+        {
+          "text": "「（按住剑柄，别出声）」",
+          "next": "kyle_silent"
+        }
       ]
     },
     "kyle_shout": {

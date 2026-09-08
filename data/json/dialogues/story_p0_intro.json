@@ -30,7 +30,6 @@
       "text": "看就看。反正委托板上不会自己长出字来。",
       "next": "b_narr1"
     },
-
     "b_narr1": {
       "speaker": "",
       "portrait": "",
@@ -39,7 +38,7 @@
     },
     "b_kana1": {
       "speaker": "主妇卡娜",
-      "portrait": "",
+      "portrait": "kana_normal",
       "text": "生面孔啊。买菜往东街去，今早刚上的货。客栈的莉安做饭比我还咸，晚饭别点她的汤。",
       "next": "b_narr2"
     },
@@ -51,7 +50,7 @@
     },
     "b_kid1": {
       "speaker": "追风的小孩",
-      "portrait": "",
+      "portrait": "kid_normal",
       "text": "让开让开——花卷又跑啦！今天第三次上房顶了！",
       "next": "b_mona1"
     },
@@ -67,7 +66,6 @@
       "text": "比起名字，我更在意它为什么一天要上三回房顶。",
       "next": "c_narr1"
     },
-
     "c_narr1": {
       "speaker": "",
       "portrait": "",
@@ -76,7 +74,7 @@
     },
     "c_guard1": {
       "speaker": "镇口守卫",
-      "portrait": "",
+      "portrait": "guard_normal",
       "text": "外乡人？镇上没什么要紧事——别往镇外的老林子里钻就行。",
       "next": "c_kyle_q"
     },
@@ -85,13 +83,19 @@
       "portrait": "kyle_normal",
       "text": "（镇外？他把这两个字在心里过了一遍。）",
       "choices": [
-        { "text": "「镇外那座遗迹，是什么样的地方？」", "next": "c_ka1" },
-        { "text": "「……记下了。多谢提醒。」", "next": "c_ka2" }
+        {
+          "text": "「镇外那座遗迹，是什么样的地方？」",
+          "next": "c_ka1"
+        },
+        {
+          "text": "「……记下了。多谢提醒。」",
+          "next": "c_ka2"
+        }
       ]
     },
     "c_ka1": {
       "speaker": "镇口守卫",
-      "portrait": "",
+      "portrait": "guard_normal",
       "text": "老石头堆，谁也说不清是哪年头留下的。会跑的人进去过，没人往深处走。",
       "next": "c_elder1"
     },
@@ -103,13 +107,13 @@
     },
     "c_elder1": {
       "speaker": "村中长老",
-      "portrait": "",
+      "portrait": "elder_normal",
       "text": "别听他的，那地方没那么凶。老辈人管它叫「会记声音的石头」。",
       "next": "c_elder2"
     },
     "c_elder2": {
       "speaker": "村中长老",
-      "portrait": "",
+      "portrait": "elder_normal",
       "text": "说是风对了的时候，能听见从前的人在那儿说话。哄小孩的，别当真。",
       "next": "c_lina1"
     },
@@ -125,7 +129,6 @@
       "text": "莉娜，你把人家的故事拆开来验算的样子，有点吓人呢。",
       "next": "d_narr1"
     },
-
     "d_narr1": {
       "speaker": "",
       "portrait": "",
@@ -134,7 +137,7 @@
     },
     "d_mel1": {
       "speaker": "神官梅尔",
-      "portrait": "",
+      "portrait": "priest_normal",
       "text": "外乡的客人。愿女神的辉光，也照着你们要走的路。",
       "next": "d_lina1"
     },
@@ -146,11 +149,10 @@
     },
     "d_mel2": {
       "speaker": "神官梅尔",
-      "portrait": "",
+      "portrait": "priest_normal",
       "text": "上个月换的。旧的那张自己掉了——纸脆了，年头到了，仅此而已。",
       "next": "e_narr1"
     },
-
     "e_narr1": {
       "speaker": "",
       "portrait": "",
@@ -159,7 +161,7 @@
     },
     "e_lian1": {
       "speaker": "莉安大婶",
-      "portrait": "",
+      "portrait": "lian_normal",
       "text": "打尖还是住店？……手上都有茧，是拿剑和拿笔的手——住店，对吧。",
       "next": "e_mona1"
     },
@@ -171,11 +173,10 @@
     },
     "e_lian2": {
       "speaker": "莉安大婶",
-      "portrait": "",
+      "portrait": "lian_normal",
       "text": "拿笔的手上有墨，拿剑的手上有茧。你嘛——你的手上有药味。",
       "next": "f_narr1"
     },
-
     "f_narr1": {
       "speaker": "",
       "portrait": "",
@@ -184,7 +185,7 @@
     },
     "f_fio1": {
       "speaker": "菲奥拉",
-      "portrait": "",
+      "portrait": "fiona_normal",
       "text": "游击士协会，里瓦镇委托所。我是前台菲奥拉。三位的推荐信，给我吧。",
       "next": "f_kyle1"
     },
@@ -196,7 +197,7 @@
     },
     "f_fio2": {
       "speaker": "菲奥拉",
-      "portrait": "",
+      "portrait": "fiona_normal",
       "text": "（她把信看了两遍，又抬头看了你们三个。）……三个人一起派到边境镇，少见。",
       "next": "f_lina1"
     },
@@ -208,19 +209,19 @@
     },
     "f_fio3": {
       "speaker": "菲奥拉",
-      "portrait": "",
+      "portrait": "fiona_normal",
       "text": "都有一点。报酬照协会标准，一个铜板不少——先把委托听完，再谈钱。",
       "next": "f_fio4"
     },
     "f_fio4": {
       "speaker": "菲奥拉",
-      "portrait": "",
+      "portrait": "fiona_normal",
       "text": "（她从木板底下抽出一张单子，推到台面上。）这张压了十一天，没人接。",
       "next": "f_fio5"
     },
     "f_fio5": {
       "speaker": "菲奥拉",
-      "portrait": "",
+      "portrait": "fiona_normal",
       "text": "镇外那座遗迹，近一个月夜里有人看见亮光。报的人越来越多，谁也说不清是什么。",
       "next": "f_lina2"
     },
@@ -232,7 +233,7 @@
     },
     "f_fio6": {
       "speaker": "菲奥拉",
-      "portrait": "",
+      "portrait": "fiona_normal",
       "text": "告示是三个月前贴的，亮光是一个月前开始的。两件事不一定有关系。",
       "next": "f_kyle_q"
     },
@@ -241,8 +242,14 @@
       "portrait": "kyle_normal",
       "text": "（凯尔盯着那张单子看了两秒。）",
       "choices": [
-        { "text": "「交给我们吧。」", "next": "f_ka1" },
-        { "text": "「先问一句：之前有人去查过吗？」", "next": "f_ka2" }
+        {
+          "text": "「交给我们吧。」",
+          "next": "f_ka1"
+        },
+        {
+          "text": "「先问一句：之前有人去查过吗？」",
+          "next": "f_ka2"
+        }
       ]
     },
     "f_ka1": {
@@ -259,11 +266,10 @@
     },
     "g1": {
       "speaker": "菲奥拉",
-      "portrait": "",
+      "portrait": "fiona_normal",
       "text": "上一批走到半路就折回来了。报告上写「道路状况不佳」，一个字没提亮光。",
       "next": "g2"
     },
-
     "g2": {
       "speaker": "莉娜",
       "portrait": "rina_normal",
@@ -272,7 +278,7 @@
     },
     "g3": {
       "speaker": "菲奥拉",
-      "portrait": "",
+      "portrait": "fiona_normal",
       "text": "我不催你们。明早来拿清单和地图——天亮出发，正好一天走到。",
       "next": "g4"
     },

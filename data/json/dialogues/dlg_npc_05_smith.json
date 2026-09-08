@@ -2,13 +2,13 @@
   "dlg_npc_05_smith": {
     "start": {
       "speaker": "铁匠老葛",
-      "portrait": "",
+      "portrait": "smith_normal",
       "text": "叮叮当当——哟，让让火钳。刀剑要养，人要吃饭，都是一样磨人的营生。",
       "next": "info"
     },
     "info": {
       "speaker": "铁匠老葛",
-      "portrait": "",
+      "portrait": "smith_normal",
       "text": "新来的？把剑给我看看。……嗯，养得不错。别拿去砍石头就行。",
       "next": "END"
     }

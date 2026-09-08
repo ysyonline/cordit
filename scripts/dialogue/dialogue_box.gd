@@ -21,20 +21,23 @@ extends Control
 ##   已完成按 = 翻页/确认——"按键 1/按键 2"在单键动作下自然合并（最小版
 ##   既有行为，GDD §4 节奏目标不变；X/返回键按规格"对话不可跳回"不接线）。
 ##
-## 【头像窗】48×48 原生零缩放（UI 规格冻结：64×64 非整数放大禁）；portrait
-##   字段缺省 = 沿用上一条（GDD §3.1），由 runner 侧记忆并只在变化时调
+## 【头像窗】48×48 区域 2× 整数放大到 96×96 显示（2026-09-05 用户拍板推翻
+##   "48 原生零缩放"旧冻结；Nearest 采样整数倍无糊化，见 PORTRAIT_DISPLAY_SIZE）；
+##   portrait 字段缺省 = 沿用上一条（GDD §3.1），由 runner 侧记忆并只在变化时调
 ##   set_portrait；未知/空 id → 隐藏头像窗，文本区左移补位（旁白无头像）。
-
-const PortraitCatalog := preload("res://scripts/dialogue/portrait_catalog.gd")
 
 ## 继续箭头闪烁周期（UI 规格 §2.1：0.5s 周期闪烁）
 const CONTINUE_BLINK_PERIOD: float = 0.5
 
 ## UI 规格冻结坐标（§2.1）：主体窗 (16,244,608,108)（锚点布局见 tscn）、
-## 名字栏 (24,224,96,20)、头像窗 (24,252,88,88) 内嵌 48×48 居中、
+## 名字栏 (24,224,96,20)、头像窗 (22,250,96,96) 内嵌 48×48 区域 2× 整数放大、
 ## 文本区 x∈[128,612]、选项窗 (448,168,176,68)
+## 【版式修订（2026-09-05，用户拍板）】头像窗 88×88 内嵌 48 原生 → 96×96 内嵌
+## 2× 整数放大；48 小头像视觉上"等于没头像"是试玩反馈根因之一（另一根因 =
+## 集散图网格错位，见 portrait_catalog.gd）。
 const NAME_BAR_RECT := Rect2(8, -20, 96, 20)      # 相对主体窗 (24,224) - (16,244)
-const PORTRAIT_BOX_RECT := Rect2(8, 8, 88, 88)    # 相对主体窗 (24,252) - (16,244)
+const PORTRAIT_BOX_RECT := Rect2(6, 6, 96, 96)    # 相对主体窗 (22,250) - (16,244)
+const PORTRAIT_DISPLAY_SIZE: int = 96             # 48×48 区域 × 2 整数倍（禁非整数倍缩放）
 const TEXT_RECT := Rect2(112, 12, 484, 84)        # 相对主体窗：x=128-16, 宽 484
 const CHOICES_WINDOW_RECT := Rect2(448, -76, 176, 68)  # 主体窗上沿 244−8−68=168 → 相对 -76
 
@@ -64,9 +67,9 @@ func _ready() -> void:
 	visible = false
 	_choices_window.visible = false
 	_continue_hint.visible = false
-	# 头像 48×48 原生零缩放（禁 64×64 非整数放大，UI 规格冻结口径）
-	_portrait_rect.custom_minimum_size = Vector2(PortraitCatalog.CELL_SIZE, PortraitCatalog.CELL_SIZE)
-	_portrait_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	# 头像 48×48 区域 2× 整数放大显示（Nearest 采样无糊化；2026-09-05 版式修订）
+	_portrait_rect.custom_minimum_size = Vector2(PORTRAIT_DISPLAY_SIZE, PORTRAIT_DISPLAY_SIZE)
+	_portrait_rect.stretch_mode = TextureRect.STRETCH_SCALE
 
 
 func _process(_delta: float) -> void:
@@ -115,7 +118,8 @@ func set_text(p_text: String) -> void:
 	_text_label.text = p_text
 
 
-## 逐字完成回调（runner 通知）：显示"▼ 可继续"提示
+## 逐字完成回调（runner 通知）：显示"Z/E ▼ 可继续"键位提示（M7-R6：文本与
+## 几何在 dialogue_box.tscn 侧，本层只管 visible 时机——逻辑零改动）
 func on_text_completed() -> void:
 	_continue_hint.visible = true
 
