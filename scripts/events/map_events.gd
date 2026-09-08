@@ -26,8 +26,14 @@ const InvestigateScript := preload("res://scripts/events/investigate_point.gd")
 ## 装配一张图的全部点位（宝箱 + 调查点）。
 ## p_map_root：地图场景根（含 YSorted 结构）；p_map_name：目录键
 ## （PointCatalog.SPAWNS/CHESTS/INVESTIGATES 的 map 字段值）。
+## 【M7-R6 可选事件层注入】p_event_loader/p_event_executor/p_dialogue_runner
+##   三件套齐备时注入全部调查点（investigate_point.setup_events）——启用
+##   "事件已登记 → 事件路径优先"的交互分派（town 告示板剧情接线用例）；
+##   未传（其余四图无事件层装配/旧测试）= 行为零变化。
 ## 返回 { "chests": Array[Node], "investigates": Array[Node] }（测试对表用）。
-static func assemble(p_map_root: Node, p_map_name: String) -> Dictionary:
+static func assemble(p_map_root: Node, p_map_name: String,
+		p_event_loader: Variant = null, p_event_executor: Variant = null,
+		p_dialogue_runner: Node = null) -> Dictionary:
 	var ysorted: Node = p_map_root.get_node("YSorted")
 	var chests: Array = []
 	var investigates: Array = []
@@ -41,6 +47,10 @@ static func assemble(p_map_root: Node, p_map_name: String) -> Dictionary:
 		if String(spec["map"]) != p_map_name:
 			continue
 		var inv: StaticBody2D = _build_investigate(spec)
+		# M7-R6：事件层注入（可选；注入后交互分派规则见 investigate_point.gd
+		# 头注——事件已登记走事件路径，未登记/条件不满足回落 flavor 零回归）
+		if p_event_loader != null and p_event_executor != null:
+			inv.setup_events(p_event_loader, p_event_executor, p_dialogue_runner)
 		_place(ysorted, inv, spec["tile"])
 		investigates.append(inv)
 	print("[MapEvents] %s 装配完成：宝箱 %d + 调查 %d" % [
