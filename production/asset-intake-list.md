@@ -68,6 +68,8 @@ assets/
 |---|---|---|---|---|
 | R1 | charsets_12_m-f_antifarea_bright.png | 源 #5 | 角色层轻提亮一档（预混色、保持整数色值，见第 5 节步骤 4 脚本）；逐帧对齐原网格 | 入库当晚 |
 | R2 | faces_32x32/<角色名>_battle.png | 源 #6 | 48×48 **裁**眉眼区 32×32，禁缩放（48→32 非整数倍）；每角色一件 | 角色定稿后（M3 前） |
+| R4 | charsets_12_m-f_antifarea_bright_alpha.png | R1 提亮件 | 背景色 (251,220,126)→alpha0 逐色转写（GIF 扁平化无透明通道）；帧网实测：男带 y180 / 女带 y306，6 列 x=16+48c，每块 48×72 = 16×18×3帧×4向，行序 up/left/down/right、帧序 walkA/idle/walkB；参考文档 assets/characters/charset_frames.md | R2-CHARSPRITE（2026-09-06 已产出） |
+| R5 | charsets_12_m-f_antifarea_bright_alpha_v1~v4_*.png | R4 透明转写件 | 调色板变体 ×4（V1 长者袍 F6 / V2 搬运工 M1 / V3 铁匠 M2 / V4 牧羊人 F2）——原生男形 6 不足以覆盖 9 名男性角色；CC-BY 允许派生，仅改色不改网格/像素结构；分配正本 production/npc-sprite-assignment.md | R2-CHARSPRITE（2026-09-06 已产出） |
 | R3 | enemies/<敌名>_portrait_32.png | 缺口 D3 战斗精灵 | 敌头像 = 战斗精灵 16×16 头部 **×2 整数放大**（Nearest）+ 1px #4A3B52 描边 | 敌人选型后（M2 前） |
 
 ### 2.3 不入库（7 件，留档 _src 不动）
