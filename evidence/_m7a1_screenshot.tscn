@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://evidence/_m7a1_screenshot.gd" id="1_m7a1shot"]
+
+[node name="M7A1Screenshot" type="Node"]
+script = ExtResource("1_m7a1shot")

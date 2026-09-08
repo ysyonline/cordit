@@ -1,0 +1,22 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 - Build 31.0.101.2137 - Compatibility - Using Device: Intel - Intel(R) UHD Graphics
+
+Movie Maker mode enabled, recording movie in 640×360 @ 30 FPS...
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] 非生产启动语境（current_scene=M7A1Screenshot），P0 锚点不接线
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+[M7A1Shot] 摆位完成 mode=square pos=(448.0, 520.0)（其余交给 MovieWriter 逐帧落盘）
+--------------------------------------------------------------------------------
+Done recording movie at path: D:/code/cordit/evidence/_m7a1_sq/f.png
+90 frames at 30 FPS (movie length: 00:00:03:00), recorded in 00:00:05 (60% of real-time speed).
+CPU render time: 0.07 seconds (average: 0.77 ms/frame)
+GPU render time: 0.05 seconds (average: 0.51 ms/frame)
+Encoding time: 1.89 seconds (average: 21.00 ms/frame)
+--------------------------------------------------------------------------------

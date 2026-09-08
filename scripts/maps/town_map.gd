@@ -2,6 +2,10 @@ extends Node2D
 ## town_map.gd —— E1-S5 小镇地图根脚本：简版门传送（切位置 + 切相机限区）
 ## 施工依据：design/gdd/e1-s5-town-build-sheet.md 第 4/5 节
 ##
+## 【R2-CHARSPRITE 增量（2026-09-06）】NPC 形象分配表 NPC_CHARSET：锚点
+##   实体化时按表覆盖 npc.charset_id/facing（12 NPC → Antifarea 十六像）。
+##   分配依据与用户目检流程见 production/npc-sprite-assignment.md。
+##
 ## 【E1-S6 增量】对话系统装配（交互 + 对话框 + 触发器，架构 A7）：
 ##   本脚本 _ready 时装配 DialogueRunner（挂 UILayer 跨场景常驻，A4）+
 ##   InteractionController（挂本地图，随图生灭），并把锚点 NPCs 实例化为
@@ -17,6 +21,16 @@ extends Node2D
 ##   2. 进图自动存档：_ready 尾部 AutosaveNotifier.announce_ready()
 ##      （广播 map_ready → SaveManager.save()，§3.4"过传送点存"时序）。
 ##   3. 相机 limit 三组数值保留本脚本 export（正式版迁事件动作参数，布局勿动）。
+##
+## 【M7-A1 增量（2026-09-06）】2.5D 视觉升级 A 路线 A1 档：光照层接线。
+##   _ready 尾部新增 _assemble_lighting(player)：把 LIGHTING_CONFIG（本文件
+##   常量区正本）交给 scripts/maps/map_lighting.gd 静态装配器，产出
+##   CanvasModulate（白天暖色调）+ 7 处静态 PointLight2D（喷泉/炉火/存档点/
+##   烛光/封印门/南门路灯/客栈门灯，前两者呼吸闪烁）+ 玩家随身提灯光
+##   （运行时挂 Player 子节点，player.tscn 冻结零改动）。装配全部增量集中
+##   于 _assemble_lighting()，容器 Lighting 挂地图根（y_sort 之外），其余
+##   E1-S5 起已验收行为零触碰。范围红线：仅 town；遗迹/road 不接；零新素材
+##   （光斑纹理 GradientTexture2D 代码生成）。详见 map_lighting.gd 头注。
 
 ## 相机限区。注意：Rect2i 前两位 = 左上角坐标，后两位 = 宽高（不是 right/bottom）。
 ## 室内限区取"黑幕框"640×360（= 视口尺寸），房间在框内居中，相机实际静止。
@@ -58,6 +72,10 @@ const MenuPanelScript := preload("res://scripts/ui/menu_panel.gd")
 ## E6-S1 主菜单实例（UILayer 常驻装配产物；公开供测试树定位/断言）
 var menu_panel: Control = null
 
+## M7-A1 光照层装配产物（Lighting 容器；测试对表用——断言 Tint/Lights/坐标）。
+## 室内挂图例外说明见 LIGHTING_CONFIG 注。
+var lighting: Node2D = null
+
 ## 本 Story 实体化的 NPC 锚点名（E5-S3 起全量 12 个：6 个配额 NPC 带阶段
 ## 增量事件，其余 6 个单阶段事件——文案占位，S4 剧情线补正稿）。
 ## E1-S6 冒烟对 NPC 实体数的断言只点 npc_01/npc_04 两个（在位判定），扩到
@@ -67,6 +85,26 @@ const SPAWN_NPC_IDS: Array[String] = [
 	"npc_05_smith", "npc_06_peddler", "npc_07_priest", "npc_08_prayer_woman",
 	"npc_09_shepherd", "npc_10_housewife", "npc_11_porter", "npc_12_elder",
 ]
+
+## R2-CHARSPRITE 形象分配表（初排，2026-09-06）：npc_id → [charset_id, facing]。
+## 形象 id 对应 char_anim.gd SHEET_BY_ID（m1..m6 男像 / f1..f6 女像 /
+## v1..v4 调色板变体）；分配依据（气质/身份/色调对位）与逐条理由见
+## production/npc-sprite-assignment.md（分配正本，用户游戏内目检后定稿）。
+## 面向：默认 down（面向玩家/街道）；守卫面西拦门，牧童面东望坡。
+const NPC_CHARSET: Dictionary = {
+	"npc_01_innkeeper":    ["f2", "down"],   # 莉安大婶：金发围裙暖色（F2 HEALER 紫裙金发）
+	"npc_02_traveler":     ["m6", "down"],   # 神秘旅行者：褐衣兜帽感（M6 ROGUE）
+	"npc_03_chase_kid":    ["m5", "down"],   # 追风的小孩：绿衣利落小童（M5 NINJA）
+	"npc_04_guard":        ["m4", "left"],   # 镇口守卫：灰白重甲（M4 FIGHTER），面西拦路
+	"npc_05_smith":        ["v3_smith", "down"],  # 铁匠老葛：炭灰衣（V3=M2 紫衣改炭灰）
+	"npc_06_peddler":      ["m2", "down"],   # 货郎阿六：紫衣花哨（M2 KNIGHT 原生紫）
+	"npc_07_priest":       ["m3", "down"],   # 神官梅尔：银白法袍（M3 WIZARD）
+	"npc_08_prayer_woman": ["f4", "down"],   # 祈祷的大婶：褐裙红腰带（F4 DARK）
+	"npc_09_shepherd":     ["v4_shepherd", "right"],  # 牧羊少年：土褐短打（V4=F2 改褐），面东望坡
+	"npc_10_housewife":    ["f1", "down"],   # 主妇卡娜：橙发粉裙家常（F1 PRINCESS）
+	"npc_11_porter":       ["v2_porter", "down"],  # 搬运工老壮：深棕（V2=M1 改深棕裤）
+	"npc_12_elder":        ["v1_elder", "down"],   # 村中长老：灰白长者袍（V1=F6 兜帽袍改灰白）
+}
 
 ## T6.5 开局剧情（P0）事件 id（data/json/events/story_intro.json 同名顶层事件；
 ## 动作序列 = dialogue story_p0_intro → set_flag story_p0_seen → save_point，
@@ -79,6 +117,40 @@ const OPENING_ANCHOR_PATH: String = "YSorted/P0_Anchor"
 
 ## T6.5 开局触发器实体名（Triggers 容器内；测试对表用）
 const OPENING_TRIGGER_NAME: String = "Evt_P0_Opening"
+
+## M7-R6 剧情链告示板接线：点位 id → 剧情事件 id（点位 id 与事件表键不一致，
+## 由 investigate_point.quest_event_id 覆盖属性承载映射；事件数据/守卫在
+## data/json/events/story_quest_accept.json 侧）
+const QUEST_ACCEPT_INV_ID: String = "inv_town_02"
+const QUEST_ACCEPT_EVENT_ID: String = "story_quest_accept"
+
+## M7-A1 光照装配器（preload 常量——项目纪律：不用全局 class_name）
+const MapLighting := preload("res://scripts/maps/map_lighting.gd")
+
+## M7-A1 town 光照配置（正本；结构与语义见 map_lighting.gd 头注）。
+## 坐标口径：tile×16+8 取格中心（TileMap 原点 (0,0)）；range_tiles = 光斑
+## 半径（格）。调色原则：整体压暗 ≤10%，白天暖基调。
+const LIGHTING_CONFIG: Dictionary = {
+	"tint": {"color": Color(0.94, 0.90, 0.82)},
+	"lights": [
+		{"id": "FountainWater", "position": Vector2(448, 448),
+			"color": Color(0.75, 0.88, 1.0), "energy": 0.7, "range_tiles": 3.0, "flicker": true},
+		{"id": "InnFireplace", "position": Vector2(1304, 200),
+			"color": Color(1.0, 0.62, 0.3), "energy": 1.2, "range_tiles": 2.5, "flicker": true},
+		{"id": "InnSavepoint", "position": Vector2(1432, 200),
+			"color": Color(0.85, 0.95, 1.0), "energy": 0.6, "range_tiles": 2.0},
+		{"id": "HouseCandle", "position": Vector2(1368, 440),
+			"color": Color(1.0, 0.78, 0.45), "energy": 0.8, "range_tiles": 2.0, "flicker": true},
+		{"id": "TempleSeal", "position": Vector2(504, 120),
+			"color": Color(0.6, 0.55, 1.0), "energy": 0.9, "range_tiles": 2.5},
+		{"id": "SouthGateLamp", "position": Vector2(208, 744),
+			"color": Color(1.0, 0.92, 0.78), "energy": 0.8, "range_tiles": 2.5},
+		{"id": "InnDoorLamp", "position": Vector2(472, 296),
+			"color": Color(1.0, 0.92, 0.78), "energy": 0.7, "range_tiles": 2.0},
+	],
+	"flicker": {"enabled": true, "base": 0.85, "period": 0.9},
+	"player_light": {"color": Color(1.0, 0.95, 0.85), "energy": 0.5, "range_tiles": 2.0},
+}
 
 
 func _ready() -> void:
@@ -96,11 +168,22 @@ func _ready() -> void:
 	AutosaveNotifier.announce_ready(self, "town")
 	# E6-S1：主菜单装配（UILayer 常驻 + C 键呼出；town 首装，跨图复用）
 	_assemble_menu()
+	# M7-A1：光照层装配（CanvasModulate + PointLight2D + 玩家随身光，A1 档）
+	_assemble_lighting(player)
 
 
 func _assemble_content_points() -> void:
 	const MapEvents := preload("res://scripts/events/map_events.gd")
-	content_points = MapEvents.assemble(self, "town")
+	# M7-R6：透传事件层三件套（本图 _assemble_dialogue_system 装配产物）——
+	# 调查点交互启用"事件路径优先"分派（告示板 inv_town_02 phase==0 交互
+	# 开演 story_quest_accept；phase>=1 条件不满足回落 flavor 风味文本）。
+	# 事件数据守卫在 data/json/events/story_quest_accept.json 侧，本层零语义。
+	content_points = MapEvents.assemble(self, "town",
+			event_loader, event_executor, dialogue_runner)
+	# 告示板剧情事件映射（点位 id ≠ 事件键，覆盖属性见 investigate_point.gd）
+	for inv: Node in (content_points["investigates"] as Array):
+		if String(inv.call("get_event_id")) == QUEST_ACCEPT_INV_ID:
+			inv.quest_event_id = QUEST_ACCEPT_EVENT_ID
 
 
 ## E1-S6：对话系统装配（全部增量集中于此，E1-S5 已验收行为零触碰）。
@@ -118,6 +201,12 @@ func _assemble_dialogue_system(player: CharacterBody2D) -> void:
 				npc.name = anchor_name + "_entity"
 				npc.npc_id = anchor_name
 				npc.position = anchor.position
+				# R2-CHARSPRITE：形象/朝向按分配表覆盖（无表项走 npc.tscn
+				# 默认 m1/down；分配正本 production/npc-sprite-assignment.md）
+				if NPC_CHARSET.has(anchor_name):
+					var look: Array = NPC_CHARSET[anchor_name]
+					npc.charset_id = String(look[0])
+					npc.facing = String(look[1])
 				get_node("YSorted").add_child(npc)
 	# ② 对话框（UILayer 常驻层；无 Main 时兜底挂本地图根）
 	var box: Control = DialogueBoxScene.instantiate()
@@ -243,3 +332,16 @@ func _assemble_menu() -> void:
 	if is_temp:
 		panel.set_meta("temp_menu_panel", true)  # 标记：测试树释放时随图销毁
 	menu_panel = panel
+
+
+## M7-A1：光照层装配（全部增量集中于此，既有验收行为零触碰）。
+## 层位归属：Lighting 容器挂本地图根（TileMapLayer 平级、y_sort 之外），
+## 随图生灭零全局状态；玩家随身光运行时挂 $YSorted/Player 子节点
+## （player.tscn 冻结场景，代码挂不进场景文件）。防御：player 为 null
+## （异常场景）只跳过随身光不炸图；_ready 重入时装配器复用既有容器。
+## 例外（intentional deviation，2026-09-06）：室内A/B 光源按派单像素坐标
+## 挂主图 Lighting 容器（同 CanvasModulate，跨图一层 Tint）——不注册
+## TeleportCatalog 室内条目、不改 Arena 类型；A2 评估时再收口，理由见
+## town_map.gd 头注 M7-A1 段。
+func _assemble_lighting(player: Node2D = null) -> void:
+	lighting = MapLighting.assemble(self, LIGHTING_CONFIG, player)
