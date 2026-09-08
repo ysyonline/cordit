@@ -5,13 +5,19 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_feet"]
 size = Vector2(12, 6)
 
-; ── 玩家角色装配（E1-S4，架构 A6）────────────────────────────────
+; ── 玩家角色装配（E1-S4，架构 A6；R2-CHARSPRITE 换装 2026-09-06）────
 ; 结构约定（全项目复用，改动须同步 player.gd 头注释）：
 ;   根节点 (0,0) = 脚底触地点（y-sort 排序基准）
-;   ├── Body          Sprite2D          16x18 占位矩形载体，位置 (-8,-9)
-;                                       ——绘制范围 x∈[-8,8] y∈[-18,0]，脚踩原点。
-;                                         正式精灵（美术线 R2/R3）到位后仅替换本节点
-;                                         纹理，保持"脚底贴原点"约定不变。
+;   ├── Body          AnimatedSprite2D  凯尔行走图（Antifarea 十六像 M1，帧网
+;                                       实测见 assets/characters/charset_frames.md）；
+;                                       position (0,-9)：单帧 16x18 居中锚，
+;                                       绘制范围 x∈[-8,8] y∈[-18,0]，脚踩原点不变
+;                                       （E1 占位矩形同规格——只换载体类型，
+;                                       脚底原点/y-sort 规则零触碰）。
+;                                       SpriteFrames 由 char_anim.gd 构建注入
+;                                       （player.gd _ready 装配，8 动画）；
+;                                       过滤 Nearest（project.godot 项目级）、
+;                                       z_index 默认 0（y-sort 三条件）。
 ;   ├── Collision     CollisionShape2D  12x6 矩形，中心 (0,-3)：只框"脚"。
 ;                                       俯视惯例——墙挡脚不挡头，头部可与墙缘重叠。
 ;   ├── InteractRay   RayCast2D         交互射线：起点胸口 (0,-10)，E1-S6 消费；
@@ -44,13 +50,8 @@ script = ExtResource("1_player")
 collision_layer = 16
 collision_mask = 9
 
-[node name="Body" type="Sprite2D" parent="."]
-position = Vector2(-8, -9)
-
-[node name="BodyRect" type="ColorRect" parent="Body"]
-offset_right = 16.0
-offset_bottom = 18.0
-color = Color(0.9, 0.75, 0.3, 1)
+[node name="Body" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -9)
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)

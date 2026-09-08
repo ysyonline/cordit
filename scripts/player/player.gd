@@ -5,10 +5,20 @@ extends CharacterBody2D
 ##   CharacterBody2D + move_and_slide()；原点在脚底；移速 4-5 tile/s（本实现
 ##   4.5 tile/s = 72px/s，16px tile 基准）；0.15s 转向缓冲；Camera2D 跟随。
 ##
+## 【R2-CHARSPRITE 增量（2026-09-06）】占位矩形 → 正式行走图（Antifarea
+##   十六像 M1，帧网实测 assets/characters/charset_frames.md）：
+##   - Body 节点 Sprite2D+ColorRect → AnimatedSprite2D，position (0,-9)，
+##     绘制范围仍 x∈[-8,8] y∈[-18,0]（脚底原点规格不变）；
+##   - 本脚本仅增：_ready 注入共享 SpriteFrames（char_anim.gd 构建，全树
+##     一份）+ _update_facing 尾部接 facing→动画名映射（物理/交互/输入
+##     逻辑零改动）；
+##   - 动画名约定（char_anim.gd）：idle_down/up/left/right 单帧静止，
+##     walk_down/up/left/right 4 拍循环 8FPS（walkA→idle→walkB→idle）。
+##
 ## ■■■ 全项目复用规则一：脚底原点（本节点已按此装配，勿破坏）■■■
 ##   player 根节点 (0,0) = 双脚触地点。视觉/交互/碰撞全部相对脚底上移：
-##     - 占位矩形 16x18：rect position (-8, -18)（正式精灵到位后按此规格替换，
-##       美术线 R2/R3 交付后只换 Sprite2D，本脚本与场景结构零改动）；
+##     - Body 载体 AnimatedSprite2D：单帧 16x18，position (0,-9)（R2 换装，
+##       只换载体与纹理，规格沿 E1 占位件不变）；
 ##     - 物理碰撞体 12x6：center (0, -3)，只框"脚"，墙可挡脚不挡头（俯视惯例）；
 ##     - 交互射线 InteractRay：从胸口 (0, -10) 指向面朝方向 20px；
 ##   y-sort 排序取节点自身 y（= 脚底），这是遮挡正确的根基。
@@ -47,9 +57,10 @@ const INTERACT_RAY_LENGTH: float = 20.0
 ## 遮挡自检节流间隔（秒）：人眼无感的定时自检，非热路径
 const OCCLUSION_CHECK_INTERVAL: float = 0.5
 
-## 占位件规格（px）：16x18 竖版二头身角色占位；正式精灵到位后整体替换
-const PLACEHOLDER_BODY_WIDTH: int = 16
-const PLACEHOLDER_BODY_HEIGHT: int = 18
+## 帧规格（px）：16x18 竖版二头身（R2-CHARSPRITE 起为正式行走图帧网实测值，
+## charset_frames.md；原"占位件规格"常量退役——全项目无引用）
+const FRAME_WIDTH: int = 16
+const FRAME_HEIGHT: int = 18
 
 # ------------------------------------------------------------------
 # 运行时状态
@@ -75,6 +86,9 @@ var _input_override: Vector2 = Vector2.ZERO
 ## 默认 false——E1-S4/E1-S5 全部断言在解锁态下运行，行为零变化。
 var is_input_locked: bool = false
 
+## R2-CHARSPRITE：facing → 动画方向词映射表（主轴归一在 _facing_dir_name）
+const CharAnim := preload("res://scripts/core/char_anim.gd")
+
 ## 遇敌免疫剩余秒数（E2-S4）：>0 期间接触判定放行（敌我互穿不触发战斗）。
 ## 探索 GDD §3.2 战后回置保护——0.5s 计时器由 BattleResultHandler 经
 ## start_encounter_immunity() 启动；E2-S2 的敌人接触判定消费本状态。
@@ -91,10 +105,16 @@ func _ready() -> void:
 	# 顶层运动模式：俯视必须 FLOATING（默认 GROUNDED 是平台器语义，
 	# 会引入地板吸附/单向判定，俯视下表现为莫名卡顿与斜坡滑落）
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
+	# R2-CHARSPRITE：注入共享 SpriteFrames 并落 idle 待机帧（char_anim.gd
+	# 单例缓存，玩家/NPC 全树一份；Animatable 无自主播放，由 facing 映射驱动）
+	var body: AnimatedSprite2D = get_node_or_null("Body") as AnimatedSprite2D
+	if body != null:
+		body.sprite_frames = CharAnim.get_frames()
+		body.play("idle_down")
 	var cam: Camera2D = get_node_or_null("Camera2D") as Camera2D
 	if cam != null:
 		cam.make_current()
-	print("[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位")
+	print("[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1")
 
 
 func _physics_process(delta: float) -> void:
@@ -127,6 +147,8 @@ func _get_move_vector() -> Vector2:
 
 ## 转向缓冲：有输入 → 立即转朝向并清缓冲；无输入 → 缓冲期内保持原朝向，
 ## 超时复位。保证 E1-S6 交互"面前 1 格"判定不因松键抖动而漂移。
+## R2-CHARSPRITE：尾部接 facing→动画名映射（walk 播帧 / idle 定帧）；
+## 斜向按主轴归一到四向（8 向移动，精灵只有 4 向帧，主轴优先级：|x|>|y| 取横向）。
 func _update_facing(dir: Vector2, delta: float) -> void:
 	if dir != Vector2.ZERO:
 		facing = dir.normalized()
@@ -135,6 +157,26 @@ func _update_facing(dir: Vector2, delta: float) -> void:
 		_facing_buffer = maxf(_facing_buffer - delta, 0.0)
 		if _facing_buffer == 0.0:
 			facing = Vector2.DOWN
+	_update_body_anim()
+
+
+## R2-CHARSPRITE：facing + is_moving() → Body 动画名（最小映射，无状态机）。
+## 移动中播 walk_<dir>，静止播 idle_<dir>；Body 缺席（裸脚本测试实例）静默跳过。
+func _update_body_anim() -> void:
+	var body: AnimatedSprite2D = get_node_or_null("Body") as AnimatedSprite2D
+	if body == null or body.sprite_frames == null:
+		return
+	var dir_name: String = _facing_dir_name()
+	var anim: String = ("walk_" if is_moving() else "idle_") + dir_name
+	if body.animation != anim:
+		body.play(anim)
+
+
+## facing 向量 → 方向词（主轴归一：|x|>|y| 取横向，否则纵向；恰好相等偏横）。
+func _facing_dir_name() -> String:
+	if absf(facing.x) >= absf(facing.y):
+		return "right" if facing.x >= 0.0 else "left"
+	return "down" if facing.y >= 0.0 else "up"
 
 
 # ------------------------------------------------------------------

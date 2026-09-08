@@ -8,17 +8,21 @@ size = Vector2(12, 6)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_interact"]
 size = Vector2(16, 16)
 
-; ── NPC 实体装配（E1-S6，架构 A7 触发器薄壳前置件）─────────────────
+; ── NPC 实体装配（E1-S6，架构 A7 触发器薄壳前置件；R2-CHARSPRITE 换装）──
 ; 根节点 (0,0) = 脚底触地点（y-sort 排序基准，规则同 player.tscn 头注释）。
-;   ├── BodyRect      Sprite2D 载体     位置 (-8,-9)，绘制 x∈[-8,8] y∈[-18,0]，
-;                                       ColorRect 占位矩形（与 player 同风格，
-;                                       颜色区分：NPC 青灰，玩家金黄）。
-;                                       美术线 R2/R3 到位后仅替换纹理。
+;   ├── BodyRect      Sprite2D 载体     位置 (0,-9)（单帧 16x18 centered），
+;                                       绘制 x∈[-8,8] y∈[-18,0]，脚踩原点不变
+;                                       （E1 占位矩形同规格，只换载体纹理）。
+;                                       纹理由 npc.gd _ready 注入：
+;                                       char_anim.gd get_idle_texture(charset_id,
+;                                       facing)，共享整图 AtlasTexture 零复制；
+;                                       过滤 Nearest（项目级）、z_index 默认 0。
 ;   ├── Collision     CollisionShape2D  12x6 @ (0,-3) 层 1：挡玩家脚（与墙同性质）
 ;   └── InteractBody  StaticBody2D      16x16 @ (0,-8) 层 2：交互判定体，
 ;                                       被 player InteractRay 命中即"面前可交互"。
 ; 层位约定（沿 player.tscn 头注释）：1=世界墙体 2=交互物 4=遮挡物。
-; 唯一导出量：npc_id（架构 A7"NPC 节点只带 npc_id"）。
+; 导出量：npc_id（架构 A7"NPC 节点只带 npc_id"）+ charset_id/facing
+; （R2-CHARSPRITE 形象与朝向，默认 m1/down；分配初排 town_map.gd NPC_CHARSET）。
 ;
 ; 【工程注记 4.7.2 实测】交互判定体不用 Area2D：Godot 4.7.2 headless 实测
 ; （tests/smoke 交付前探针矩阵 11 组）Area2D 形状对 intersect_ray /
@@ -31,12 +35,7 @@ size = Vector2(16, 16)
 script = ExtResource("1_npcgd")
 
 [node name="BodyRect" type="Sprite2D" parent="."]
-position = Vector2(-8, -9)
-
-[node name="BodyColor" type="ColorRect" parent="BodyRect"]
-offset_right = 16.0
-offset_bottom = 18.0
-color = Color(0.55, 0.65, 0.7, 1)
+position = Vector2(0, -9)
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)
