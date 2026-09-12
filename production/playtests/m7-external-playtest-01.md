@@ -16,7 +16,7 @@
 | kit 版本（发放时） | `production/qa/m7-playtest-kit.md` @ 修订日期：**2026-09-12**（§7.4 更正版，commit `4b9d49d`） |
 | 试玩者标识（化名即可） | __________ |
 | 是否**非开发机** / 操作系统版本 | __________（要求：Windows 10/11 64 位） |
-| 发放日期 | __________ |
+| 发放日期 | **2026-09-12**（用户确认已发给试玩者） |
 | 回收日期 | __________ |
 | 发放包的导出时间（`ls -l --time-style=full-iso export/win/`） | exe：**2026-09-12 06:05:30** ｜ pck：**2026-09-12 06:05:30** |
 | **发放包 SHA256**（PowerShell `Get-FileHash -Algorithm SHA256`） | exe：**`01F7DCF08A63F2B11874F286A4D8A1D7802FB0A8FAFFE0EE46170934CAA70AF8`** ｜ pck：**`BAA778C5C07057C104E7780BAF2C1F451ABF7C36C268B879623974D49B2CB94F`** ｜ zip：**`25BF07E919FA6F97827176F48020D87821EB9D723677DC3D56CE60CCD3E8CD94`** |
