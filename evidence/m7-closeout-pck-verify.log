@@ -1,0 +1,103 @@
+==============================================================================
+M7-CLOSE-01 · 包侧收尾 —— 综合核验记录
+生成时间: 2026-09-12 06:06:46
+说明: 本文件由脚本直接以 UTF-8 落盘；导出日志中的 ANSI 转义序列已被剥离（1740 处）。
+==============================================================================
+
+[1] 产物指纹
+  NEW exe  2026-09-12(署名真值)         109132800 bytes  2026-09-12 06:05:30
+                                 sha256=01F7DCF08A63F2B11874F286A4D8A1D7802FB0A8FAFFE0EE46170934CAA70AF8
+  NEW pck  2026-09-12                 3404804 bytes  2026-09-12 06:05:30
+                                 sha256=BAA778C5C07057C104E7780BAF2C1F451ABF7C36C268B879623974D49B2CB94F
+  PREV exe 2026-09-05               109132288 bytes  2026-09-05 19:56:58
+                                 sha256=2C682FC782C2800740B7BA7BFE816A61EF0E7369FF956C29EA5CDDAE20B6427C
+  PREV pck 2026-09-05                 3200408 bytes  2026-09-05 19:56:58
+                                 sha256=A35F35091CAA303964B994A91336CB8FA2A9A8AF76F41FD0C4490E1FC7E57DC6
+  ZIP 分发包 (含松动许可件)                   42020129 bytes  2026-09-12 06:06:23
+                                 sha256=25BF07E919FA6F97827176F48020D87821EB9D723677DC3D56CE60CCD3E8CD94
+
+[2] 打包清单（来源：Godot 导出日志 savepack 段）
+  入包文件总数: 338
+    data                   111
+    scripts                108
+    .godot                 68
+    assets                 27
+    scenes                 12
+    autoload               8
+    .gutconfig.json        1
+    icon.svg               1
+    icon.svg.import        1
+    project.binary         1
+
+[3] D2 许可/署名 是否真正入包
+  命中条目数: 12
+    res://assets/CREDITS.md
+    res://assets/licenses/CC-BY-3.0.txt
+    res://assets/licenses/CC-BY-4.0.txt
+    res://assets/licenses/CC0-1.0.txt
+    res://assets/licenses/OFL-1.1.txt
+    res://assets/licenses/notices/48x48-faces.txt
+    res://assets/licenses/notices/antifarea-sprites.txt
+    res://assets/licenses/notices/classical-temple-tiles.txt
+    res://assets/licenses/notices/forest-tiles.txt
+    res://assets/licenses/notices/fusion-pixel-font.txt
+    res://assets/licenses/notices/town-remix.txt
+    res://assets/licenses/notices/town-tiles.txt
+
+[4] 排除规则实效（应为 0 泄漏）
+  res://tests/             packed_hits=0  OK
+  res://evidence/          packed_hits=0  OK
+  res://tools/             packed_hits=0  OK
+  res://docs/              packed_hits=0  OK
+  res://design/            packed_hits=0  OK
+  res://production/        packed_hits=0  OK
+  res://addons/            packed_hits=0  OK
+  res://export/            packed_hits=0  OK
+  export_presets.cfg       packed_hits=0  OK
+  res://.workbuddy/        packed_hits=0  OK
+
+[5] 键位表（project.binary 内嵌 InputEventKey keycode；证明旧包亦有方向键）
+  KEY      keycode    PREV     NEW     
+  LEFT     4194319    FOUND    FOUND   
+  UP       4194320    FOUND    FOUND   
+  RIGHT    4194321    FOUND    FOUND   
+  DOWN     4194322    FOUND    FOUND   
+  ENTER    4194309    FOUND    FOUND   
+  ESC      4194305    FOUND    FOUND   
+  A        65         FOUND    FOUND   
+  W        87         FOUND    FOUND   
+  D        68         FOUND    FOUND   
+  S        83         FOUND    FOUND   
+  Z        90         FOUND    FOUND   
+  E        69         FOUND    FOUND   
+  SPACE    32         FOUND    FOUND   
+  X        88         FOUND    FOUND   
+
+[6] 9/5 20:00 之后的内容是否已进新包（bytes 命中数）
+  charsets_12_m-f_antifarea_bright_alpha_v4_shepherd PREV=0    NEW=6   
+  alpha_v1_elder                                 PREV=0    NEW=6   
+  char_anim                                      PREV=0    NEW=4   
+  光照装配完成                                         PREV=0    NEW=0   
+  town_map_tileset                               PREV=6    NEW=6   
+  备注：GDScript 发布态为编译 token(.gdc)，部分字符串常量不以明文出现；
+        "光照装配完成" 命中 0 不构成缺失证据 —— M7-A1 已由运行期实测证实，
+        见 evidence/m7-closeout-smoke.log 的 [MapLighting] 行，且清单含 map_lighting.gdc。
+
+[7] 禁止物（bart 城堡件素材）
+  raw 'castle' bytes  PREV=2 NEW=4
+  → 均为 assets/CREDITS.md 正文中的"已于 ad2efa2 移除"说明文字，非随包素材。
+
+[8] 历史指纹链（逐步演进，供追溯）
+  exe : 8B4E09AA…（占位署名）→ 01F7DCF0…（署名真值）  —— 体积恒为 109,132,800
+  pck : 0B206AE1…（01B，旧 CREDITS）→ BAA778C5…（01D，新 CREDITS）—— 体积 3,403,476 → 3,404,804
+  zip : D6582F44…（01，仅 exe+pck）→ C1C2187B…（01B，+松动件/旧 CREDITS）→ 25BF07E9…（01D，新 CREDITS）
+
+[9] 松动件 ⇄ pck 一致性（本轮最关键的一致性检查）
+  assets/CREDITS.md 源文件: 11865 bytes  sha256=760E06651D761AD5D4535BF747E6D4948AA9A9ADFC119FE543C06894F307BDCE
+  → 是否出现在 pck 内            : YES ✓
+  zip 内 CREDITS.txt        : 12596 bytes
+  → 是否包含同一段 CREDITS.md 原文: YES ✓
+  zip 内 轨迹残响.pck        : 3404804 bytes  sha256=BAA778C5C07057C104E7780BAF2C1F451ABF7C36C268B879623974D49B2CB94F
+  → 与 export/win 的 pck 是否逐字节一致: YES ✓
+  结论: pck 与松动件同为【修订后】致谢文本，不存在"包内旧、松动件新"的新不一致 ✓
+==============================================================================

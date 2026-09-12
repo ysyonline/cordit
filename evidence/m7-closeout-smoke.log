@@ -1,0 +1,39 @@
+===== RUN 1 · 默认 APPDATA（读档路径） · 2026-09-12 06:06:10 =====
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[MainController] 常驻根就绪：Main / World / UILayer(CanvasLayer) + FadeMask —— 架构 A4
+[SceneRouter] 受理切换 -> res://scenes/maps/town.tscn
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] 已有存档（has_save=true），P0 锚点不接线（GDD 首次启动口径）
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+[SceneRouter] 装载完成 -> res://scenes/maps/town.tscn
+SMOKE_RUN1_EXIT=0
+
+===== RUN 2 · 干净 APPDATA（首启 / P0 路径） · 2026-09-12 06:06:10 =====
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[MainController] 常驻根就绪：Main / World / UILayer(CanvasLayer) + FadeMask —— 架构 A4
+[SceneRouter] 受理切换 -> res://scenes/maps/town.tscn
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] P0 开局锚点装配完成：Evt_P0_Opening → 事件 story_p0_intro（踩踏@(192.0, 640.0)）
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+[SceneRouter] 装载完成 -> res://scenes/maps/town.tscn
+[DialogueRunner] 开演：story_p0_intro（51 条目）
+[EventExecutor] set_flag story_p0_seen（flags={ "story_p0_seen": true }）
+[EventExecutor] save_point：已发存档请求（story_p0_intro）
+[TriggerEventShell] Evt_P0_Opening 已发射事件 story_p0_intro
+SMOKE_RUN2_EXIT=0

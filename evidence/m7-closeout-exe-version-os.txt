@@ -1,0 +1,16 @@
+﻿==========================================================================
+M7-CLOSE-01B · exe 属性验证（方法二：Windows Shell / OS VersionInfo）
+生成时间: 2026-09-12 05:46:05
+==========================================================================
+path            : D:\code\cordit\export\win\轨迹残响.exe
+size_bytes      : 109132800
+last_write_time : 2026-09-12 05:45:28
+sha256          : 01F7DCF08A63F2B11874F286A4D8A1D7802FB0A8FAFFE0EE46170934CAA70AF8
+FileVersion     : 0.1.0
+ProductVersion  : 0.1.0
+CompanyName     : 轨迹残响工作室
+ProductName     : 轨迹残响
+LegalCopyright  : Copyright (c) 2026 轨迹残响工作室
+FileDescription : 
+OriginalFilename: 
+Language        : 英语(美国)

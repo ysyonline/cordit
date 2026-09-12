@@ -1,0 +1,37 @@
+==========================================================================
+M7-CLOSE-01B · exe 属性验证（方法一：直接解析 PE VS_VERSIONINFO 资源）
+生成时间: 2026-09-12 05:45:47
+==========================================================================
+exe  size=109132800  mtime=2026-09-12 05:45:28
+     sha256=01F7DCF08A63F2B11874F286A4D8A1D7802FB0A8FAFFE0EE46170934CAA70AF8
+pck  size=3403476  mtime=2026-09-12 05:45:29
+     sha256=0B206AE11141A106EDB1C61618D34ED6A5ED657A4ADE6D2E827C486596626A01
+
+[PE 资源] VS_VERSION_INFO 区 UTF-16LE 字符串：
+  marker offset = 0x67b1bca
+    @067B1BCA  VS_VERSION_INFO
+    @067B1C26  StringFileInfo
+    @067B1C4A  040904b0
+    @067B1C62  FileVersion
+    @067B1C7C  0.1.0
+    @067B1C8E  ProductVersion
+    @067B1CAC  0.1.0
+    @067B1CBE  CompanyName
+    @067B1CEE  ProductName
+    @067B1D1A  LegalCopyright
+    @067B1D38  Copyright (c) 2026 
+    @067B1D76  VarFileInfo
+    @067B1D96  Translation
+
+[UTF-16LE 命中计数]（版本资源内的键与值 + 配置值）
+    FileVersion 键                          hits=1
+    ProductVersion 键                       hits=1
+    CompanyName 键                          hits=1
+    LegalCopyright 键                       hits=1
+    ProductName 键                          hits=2
+    值 0.1.0                                hits=2
+    值 轨迹残响工作室                              hits=2
+    值 Copyright (c) 2026 轨迹残响工作室           hits=1
+    值 轨迹残响                                 hits=3
+    旧占位 待确认-署名主体（应为 0）                     hits=0
+    旧占位 待确认-著作权人（应为 0）                     hits=0

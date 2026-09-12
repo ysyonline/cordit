@@ -49,6 +49,7 @@
 ## D. 致谢画面条目（credits-template 第三节四行式，按 A 区序生成）
 
 > **分发要求（2026-09-05 M7 收官批次补）**：游戏内无致谢画面。本节条目以 `CREDITS.txt` 随分发包附带，并与 `licenses/` 目录（4 份许可全文 + 7 份 notice）一同随 pck 分发——这是 CC-BY 署名义务与 OFL 保留许可全文义务在分发场景下的落点（`export_presets.cfg` include_filter 已配置）。
+> **2026-09-12 补**：自本版起，`CREDITS.txt`（由本文件渲染）与 `licenses/` 亦以**松动件**形式置于分发包 zip 的**根目录**，受包者**不解包 `.pck` 即可阅读**署名与许可全文。
 
 ```
 作品：Town Tiles
@@ -101,17 +102,22 @@ Town Remix 专属 notice 原文（亦存 licenses/notices/town-remix.txt）：
 | R2 | faces_32x32/<角色名>_battle.png | A6 · 48x48 Faces 1st Sheet | 48×48 **裁**眉眼区 32×32，禁缩放（48→32 非整数倍）；每角色一件 | 角色定稿后（M3 前） | **未产出**。现行实现直接取 48×48 原生格零缩放（`scripts/dialogue/portrait_catalog.gd`） |
 | R3 | enemies/<敌名>_portrait_32.png | D3 · 敌人战斗精灵（Ars Notoria，未取用） | 敌头像 = 战斗精灵 16×16 头部 **×2 整数放大**（Nearest）+ 1px #4A3B52 描边 | 敌人选型后（M2 前） | **未产出**。上游 D3 从未取用。敌人视觉现为 ColorRect 暗红占位色块（`scenes/enemies/visible_enemy.tscn`） |
 
-## F. M7 发布红线符合性声明（2026-09-05 收官批次）
+## F. M7 发布红线符合性声明（2026-09-05 收官批次；2026-09-12 计数复核更新）
 
 **分发包（`export/win/轨迹残响.exe` + `.pck`）**：
 
 | 红线 | 计数 | 核验方式 |
 |---|---|---|
-| CC-BY-SA 资产 | **0** | 逐个核对 A/B 区 8 条登记 + pck 二进制目录段 329 条路径（m7-credits-audit.md 第 3 节实查） |
+| CC-BY-SA 资产 | **0** | 逐个核对 A/B 区 **13 条**登记 + pck 打包清单 **338 条**路径（2026-09-12 复核；9/5 原版记 8 条登记 / 329 条路径） |
 | GPL-only 资产 | **0** | 同上 |
-| LPC 32×32 素材 | **0** | 全仓 39 个 png 按目录核对，游戏素材仅 7 件（瓦片 32×32/64×48/16×16、角色 16×18、头像 48×48） |
-| bart 城堡件 | **0** | 2 个文件已从仓库移除（commit `ad2efa2`），`exclude_filter` 亦含 `design/**` |
+| LPC 32×32 素材 | **0** | `assets/` 下游戏素材 **13 件**逐件按目录核对：瓦片 32×32 / 64×48 / 16×16、角色 16×18（原样 1 件 + 派生 6 件）、头像 48×48 —— 均非 LPC 32×32 规格 |
+| bart 城堡件 | **0** | `design/**` 已整体移出 HEAD 树与工作区（`ad2efa2` 移 castle 4 件、`4f3b717` 移 design 52 件），且 `exclude_filter` 亦含 `design/**`。详见下方"源码仓库" |
 
-**源码仓库**：bart 城堡件 2 件（`design/art-bible/mockup/_src/castle_tiles.png`、`castle_tiles2.png`）已于 commit `ad2efa2` 移除。⚠️ 注意：git 历史中仍可检出旧版本；若仓库计划公开发布且需彻底清除，须另行清理历史（`git filter-repo` / BFG），属用户拍板项。
+**源码仓库**（2026-09-12 更新）：bart 城堡件 2 件（`design/art-bible/mockup/_src/castle_tiles.png`、`castle_tiles2.png`）已从 **HEAD 树与工作区**移除（commit `ad2efa2`，2026-09-05 12:51）；实测 `git ls-tree -r HEAD` 中 `design/` 为 **0 条**。
+⚠️ **git 历史 blob 仍可达**（`git log --all -- '*castle*'` 仍能列出；`8af601f` 加入 / `ad2efa2` 删除）。
+**用户 2026-09-12 裁定：仓库保持私有、仅分发导出包、不清理 git 历史。** ⇒ 结论：**已知并接受**；对"公开仓库发布"路径**不适用**。
+> **口径纪律**：「选择不公开」**≠**「已技术性清理」。**不得对外声称该问题已解决**；若将来改变"仓库公开"的决定，须先清理历史（`git filter-repo` / BFG）再行评审。
 
-**账本**：A 区 7 件（3×CC0 + 3×CC-BY + 1×OFL）+ B 区 1 件派生（CC-BY 3.0）= 磁盘素材文件 8 个。0×SA + 0×GPL 保持完好。
+**账本**（2026-09-12 复核）：A 区 **7 件**（3×CC0 + 3×CC-BY + 1×OFL）+ B 区 **6 件**派生（均 CC-BY 3.0）= 磁盘素材文件 **13 个**。
+**双向自检**：登记 ⇄ 磁盘 **0 悬空**（无"有登记、无文件"）、**0 未登记**（无"有文件、未登记"）；`assets/faces/faces_32x32/` 与 `assets/enemies/` 均为空目录，与 E 区"未产出"一致。**0×SA + 0×GPL 保持完好。**
+> 9/5 原版账本记"B 区 1 件 / 共 8 个"，系 R7 换装（`bae5f11`，2026-09-06 新增 5 件派生）之前的时点值。
