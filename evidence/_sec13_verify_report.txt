@@ -1,0 +1,140 @@
+[EVIDENCE] _o6-gut-clean2.log size=186932
+    \x1b[1m6/6 passed.
+    \x1b[1m4/4 passed.
+    \x1b[1m6/6 passed.
+    \x1b[1m10/10 passed.
+    Totals
+    \x1b[32m---- All tests passed! ----
+    ERROR: 3 RID allocations of type 'PN13RendererDummy14TextureStorage12DummyTextureE' were leaked at exit.
+    ERROR: 544 RID allocations of type 'PN18TextServerAdvanced22ShapedTextDataAdvancedE' were leaked at exit.
+    ERROR: 1 RID allocations of type 'PN18TextServerAdvanced12FontAdvancedE' were leaked at exit.
+    ERROR: 7 resources still in use at exit (run with --verbose for details).
+[EVIDENCE] _o6-gut-clean.log size=196464
+    SCRIPT ERROR: Invalid call. Nonexistent 'String' constructor.
+    \x1b[1m0/6 passed.
+    \x1b[1m4/4 passed.
+    \x1b[1m6/6 passed.
+    \x1b[1m10/10 passed.
+    Totals
+    ERROR: 3 RID allocations of type 'PN13RendererDummy14TextureStorage12DummyTextureE' were leaked at exit.
+    ERROR: 544 RID allocations of type 'PN18TextServerAdvanced22ShapedTextDataAdvancedE' were leaked at exit.
+    ERROR: 1 RID allocations of type 'PN18TextServerAdvanced12FontAdvancedE' were leaked at exit.
+    ERROR: 7 resources still in use at exit (run with --verbose for details).
+[EVIDENCE] _o5-gut-clean.log size=187347
+    \x1b[1m6/6 passed.
+    \x1b[1m4/4 passed.
+    \x1b[1m6/6 passed.
+    \x1b[1m10/10 passed.
+    Totals
+    \x1b[32m---- All tests passed! ----
+    ERROR: 3 RID allocations of type 'PN13RendererDummy14TextureStorage12DummyTextureE' were leaked at exit.
+    ERROR: 544 RID allocations of type 'PN18TextServerAdvanced22ShapedTextDataAdvancedE' were leaked at exit.
+    ERROR: 1 RID allocations of type 'PN18TextServerAdvanced12FontAdvancedE' were leaked at exit.
+    ERROR: 7 resources still in use at exit (run with --verbose for details).
+[EVIDENCE] _o5-smoke-verify3.log size=2029
+    PASS: \u751f\u4ea7\u8bed\u5883\u5165\u53e3\u951a\u5df2\u88c5\u914d @(448.0, 56.0)
+    PASS: new_event_id = story_ruin_enter
+    PASS: collision_mask = 16
+    PASS: collision_layer = 0
+    PASS: ruin_enter_anchor \u6210\u5458\u5df2\u56de\u586b
+    PASS: \u4e8b\u4ef6\u8868\u5df2\u767b\u8bb0 story_ruin_enter
+    PASS: phase=0 \u95e8\u95f8\u62e6\u622a
+    PASS: phase=1 \u95e8\u95f8\u653e\u884c
+    SMOKE_RESULT: ALL PASS
+[EVIDENCE-GLOB] _o*.log
+    _o5-gut-clean.log
+    _o5-smoke-verify.log
+    _o5-smoke-verify2.log
+    _o5-smoke-verify3.log
+    _o6-gut-clean.log
+    _o6-gut-clean2.log
+[EXPORT-DIR]
+    \u8f68\u8ff9\u6b8b\u54cd.exe size=109132800
+    \u8f68\u8ff9\u6b8b\u54cd.pck size=3405028
+[HASH-EXE] size=109132800 sha256=01F7DCF08A63F2B11874F286A4D8A1D7802FB0A8FAFFE0EE46170934CAA70AF8
+[HASH-PCK] size=3405028 sha256=D6AC9B5E6C18A056003B4B34AFF9C64EAA4589ADFEA1D2EF3CA21C54CC832431
+[ZIP] \u8f68\u8ff9\u6b8b\u54cd-v0.1.0-slice-win64.zip size=42020129 mtime=2026-09-12 06:06
+[DOC] bytes=48601 crlf=False sections=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'] has13=False
+[DOC-TAIL-30]
+    
+    - 未跑 GUT（本轮不改逻辑代码）
+    - 未做非开发机实测（R-2，外部）
+    - 未做目标机中文字形目检（B3，外部）
+    - 未替换图标、未新增/删除任何美术资产（**U-6 裁定：门内保持现状**）；未解包 exe 图标资源目视确认
+    - **未 push、未打 tag**
+    - **未提交** `assets/CREDITS.md`、`production/**` 与 `evidence/**`（按要求留待主理人统一发话）
+    - 未清理 git 历史（D1 裁定：保持私有、不清历史）
+    - **未做 R7「NPC 形象分配」的用户游戏内目检定稿** —— `bae5f11` 交付时明确为**初排**；正本 `production/npc-sprite-assignment.md` 页首即写「本表为**初排**，最终以**用户游戏内目检拍板**为定稿（任务书第 6 条）」，文末亦标「**待用户目检定稿**」。当前状态 = **待用户目检**，属**用户侧待办**（不属本任务范围），但**在此留痕**以免从内部口径中消失（见 §8.4）。
+    - `m7-changelog.md` 处理状态：**C-1 / C-2 / C-3 / C-5 已修**、**C-4 实测复核后不改**、**C-6 已落笔**、**C-7 已修**（逐条见 §8.6 / §8.6.1 / §8.7）。
+    
+    > **本轮"已做"另须记明**：`assets/CREDITS.md` 已按 **U-5** 修订（F 区计数 + F 区 D1 裁定 + D 区分发形态），并**已重导包、重渲染 `CREDITS.txt`、重打 zip**——这不是"未做"。
+    > **C3（CREDITS 与实入库资产一致性）已由本轮修订 + 自检覆盖**：登记 13 条 ⇄ 磁盘 13 件，**0 悬空 / 0 未登记**；许可分布 **3×CC0 + 9×CC-BY + 1×OFL**，**0×SA、0×GPL**（见 §5.4）。
+    
+    ---
+    
+    ## 12. 下一步建议（按优先级）
+    
+    1. **【已办 · 01D】** ~~定 U-5~~ → **U-5 已定稿并执行完毕**：`assets/CREDITS.md` 修订 → 重导（EXIT=0）→ 冒烟（EXIT=0×2）→ `CREDITS.txt` 重渲染 → zip 重打 → 指纹全部更新（§5.4）。**现行发放件 = §7 的 zip `25BF07E9…`。**
+    2. **【用户 + quality-lead】** 走 **R-1/R-2**：锁定外部试玩者、非开发机实测；建议与试玩视频 #7 **合并为一次**（清单 §5.1 的合并建议仍有效）。发放用 **§7 的 zip**。
+    3. **【已办 · 01D】** ~~定 U-6~~ → **已裁定：门内保持现状**；"换正式图标"排为 **M7 之后 polish 首项**（§6）。届时美术交付 `.ico` 后我约 3 分钟完成重导 + 重打包 + 指纹更新。
+    4. **【用户】** 定 **U-7**（tag `m7` + `v0.1.0-slice`）——门控转 PASS 后执行；我不擅自打。
+    5. **【文档批次】** 等主理人统一发话，再把 `assets/CREDITS.md`、`production/release/*`、`production/qa/*`（quality 侧）与 `evidence/*` 一起提交（避开并行编辑冲突）。
+    6. **【已办 · 01C + 01E】** `m7-changelog.md` 过期表述补正：**01C 4 处**（`:4` 提交数、`:80` GUT 计数、`:95` 中文字体、`:106` 操作行）＋ **01E 4 处**（`C-1` :12/:19 五场→三场、`C-2` :94 敌人/NPC、`C-3` :108 时长口径、`C-5` :64 受击措辞）。**`C-4` 实测复核后不改**（202 条正确）。
+       **`C-6` 已于 01F 落笔**（新增「画面与角色」一节，全文见 §8.8）；**`C-7` / `C-8` 已修**（见 §8.7 / §8.7 处理结果）。逐条见 §8.6 / §8.6.1 / §8.7 / §8.8。
+    7. **【用户侧待办】** **R7 NPC 形象分配的"游戏内目检定稿"** —— 正本 `production/npc-sprite-assignment.md` 明写"初排…最终以用户游戏内目检拍板为定稿"，状态 = **待用户目检**。属用户侧，非本任务范围，但已在 §8.4 / §11 留痕。
+    
+    ---
+    
+    *本报告所有结论均可按文中"证据"列复算；凡未实证之处均已显式标注"未验证/未做"。*
+[FINGERPRINT-REFS]
+    production\\playtests\\m7-external-playtest-01.md :: | **\u53d1\u653e\u5305 SHA256**\uff08PowerShell `Get-FileHash -Algorithm SHA256`\uff09 | exe\uff1a**`01F7DCF08A63F2B11874F286A4D8A1D7802FB0A8FAFFE0EE4
+    production\\release\\m7-package-closeout.md :: | `\u8f68\u8ff9\u6b8b\u54cd.exe` | 2026-09-12 06:05:30 | `01F7DCF08A63F2B11874F286A4D8A1D7802FB0A8FAFFE0EE46170934CAA70AF8` |
+    production\\release\\m7-package-closeout.md :: | `\u8f68\u8ff9\u6b8b\u54cd.pck` | 2026-09-12 06:05:30 | `BAA778C5C07057C104E7780BAF2C1F451ABF7C36C268B879623974D49B2CB94F` |
+    production\\release\\m7-package-closeout.md :: | `\u8f68\u8ff9\u6b8b\u54cd-v0.1.0-slice-win64.zip` | 2026-09-12 06:06:24 | `25BF07E919FA6F97827176F48020D87821EB9D723677DC3D56CE60CCD3E8CD94` |
+    production\\release\\m7-package-closeout.md :: | \uff08\u53c2\u8003\uff099/5 \u65e7 exe | 2026-09-05 19:56:58 | `2C682FC782C2800740B7BA7BFE816A61EF0E7369FF956C29EA5CDDAE20B6427C` |
+    production\\release\\m7-package-closeout.md :: | \uff08\u53c2\u8003\uff099/5 \u65e7 pck | 2026-09-05 19:56:58 | `A35F35091CAA303964B994A91336CB8FA2A9A8AF76F41FD0C4490E1FC7E57DC6` |
+    production\\release\\m7-package-closeout.md :: | \uff08\u53c2\u8003\uff0901 \u9996\u8f6e exe\uff08\u5360\u4f4d\u7f72\u540d\uff09 | 2026-09-12 05:33:14 | `8B4E09AAB91527B441A588C003022384C8C66B38756
+    production\\release\\m7-package-closeout.md :: | \uff08\u53c2\u8003\uff0901B pck\uff08**\u65e7** CREDITS\uff09 | 2026-09-12 05:45:29 | `0B206AE11141A106EDB1C61618D34ED6A5ED657A4ADE6D2E827C486596626
+    production\\release\\m7-package-closeout.md :: | \uff08\u53c2\u8003\uff0901B zip\uff08\u65e7 CREDITS\uff09 | 2026-09-12 05:47:52 | `C1C2187BDEE55905FAAE9B438BB1E06CB1AEE18D3EDE7BAC7C128EB3E32CE738`
+    production\\release\\m7-package-closeout.md :: | SHA256 | `25BF07E919FA6F97827176F48020D87821EB9D723677DC3D56CE60CCD3E8CD94` |
+    total=10
+[GIT-STATUS] count=38
+     M .workbuddy/memory/2026-09-12.md
+     M .workbuddy/memory/MEMORY.md
+     M production/qa/m7-final-qa-gate.md
+     M scripts/battle/battle_command.gd
+     M scripts/battle/battle_scene.gd
+     M scripts/maps/ruins_f1_map.gd
+     M tests/gut/test_e2s3.gd
+    ?? .workbuddy/artifacts/
+    ?? evidence/_m7-r3-smoke-verify.log
+    ?? evidence/_o5-gut-clean.log
+    ?? evidence/_o5-smoke-verify.log
+    ?? evidence/_o5-smoke-verify2.log
+    ?? evidence/_o5-smoke-verify3.log
+    ?? evidence/_o5_smoke_main.gd
+    ?? evidence/_o5_smoke_main.gd.uid
+    ?? evidence/_o5_smoke_main.tscn
+    ?? evidence/_o5_smoke_verify.gd
+    ?? evidence/_o5_smoke_verify.gd.uid
+    ?? evidence/_o6-gut-clean.log
+    ?? evidence/_o6-gut-clean2.log
+    ?? evidence/_r3-frames/
+    ?? evidence/_r3-restore-command.txt
+    ?? evidence/_r3-save-after-recording-20260912-1047.json
+    ?? evidence/_r3-save-backup-20260912-0933-save.json
+    ?? evidence/_sec13_verify.py
+    ?? evidence/_t_e2s3_check.log
+    ?? evidence/_t_e2s3_check2.log
+    ?? evidence/_t_m6t41_check.log
+    ?? evidence/m7-gameplay.avi
+    ?? evidence/o6-export-smoke.log
+    ?? evidence/o6-export.log
+    ?? evidence/o6-export2.log
+    ?? evidence/o6-export3.log
+    ?? tests/gut/test_o6_real_battle.gd
+    ?? tests/gut/test_o6_real_battle.gd.uid
+    ?? tools/dev/_r3_preplant_save.py
+    ?? tools/dev/_r3_smoke_verify.gd
+    ?? tools/dev/_r3_smoke_verify.gd.uid
+[GIT-LOG] 4821c42 docs(memory): 09:08 R3 \u6267\u884c\u4ef6\u4ea4\u4ed8\u8bb0\u5f55\u4e0e M6 \u53e3\u5f84\u53d1\u73b0\n39ec692 feat(M7-R3): \u89c6\u9891#7 \u5f55\u5236\u6267\u884c\u4ef6\u2014\u2014record_m7_gameplay.bat \u4e00\u952e\u542f\u52a8\u5668\uff08main.tscn \u6b63\u5e38\u5165\u53e3+Movie Maker 30fps\uff0c\u65e0 quit-after \u7531\u73a9\u5bb6\u9000\u51fa\u6536\u76d8\uff09+ \u524d\u7f6e\u68c0\u67e5\u4e0e\u7528\u6237\u64cd\u4f5c\u5e8f\u5217\u5361\ne312acd docs(M7): \u8bd5\u73a9\u5df2\u53d1\u653e\u2014\u2014\u56de\u6536\u6863\u53d1\u653e\u65e5\u671f 2026-09-12 \u56de\u586b\uff0cR-1/R-2 \u8f6c\u5728\u9014

@@ -1,0 +1,88 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[PROBE2] === f3→f2 触发区候选配置探针 ===
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f3 装配完成：宝箱 1 + 调查 2
+[TeleportAssembler] ruins_f3 装配完成：传送触发器 1 处
+[AutosaveNotifier] ruins_f3 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[RuinsF3Map] Boss 锚点装配完成：story_boss_pre（交互键，事件 story_boss_pre）
+[PROBE2] 玩家 position=(320.0, 40.0)
+[PROBE2] 碰撞形状 Collision：RectangleShape2D offset=(0.0, -3.0) size=(12.0, 6.0)
+[PROBE2] 原始触发区：pos=(320.0, 8.0) size=(32.0, 16.0)
+[PROBE2] ---- 候选 C0 现状 tile0：区域 y∈[0.0, 16.0] ----
+[PROBE2]   落位 y40 防弹回             x=320.0 y=40.0 → fired=false OK
+[PROBE2]   门洞 y32(tile2)          x=320.0 y=32.0 → fired=false OK
+[PROBE2]   门洞 y28                 x=320.0 y=28.0 → fired=false 未触发
+[PROBE2]   门洞 y24(tile1中心)        x=320.0 y=24.0 → fired=false 未触发
+[PROBE2]   门洞 y20                 x=320.0 y=20.0 → fired=false 未触发
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2（受理=false）
+[PROBE2]   门洞 y16                 x=320.0 y=16.0 → fired=true OK(触发)
+[PROBE2]   贴墙 y40 x296            x=296.0 y=40.0 → fired=false OK
+[PROBE2]   贴墙 y36 x296            x=296.0 y=36.0 → fired=false OK
+[PROBE2]   贴墙 y32 x296            x=296.0 y=32.0 → fired=false OK
+[PROBE2]   贴墙 y32 x344            x=344.0 y=32.0 → fired=false OK
+[PROBE2] ---- 候选 C1 tile0~1：区域 y∈[0.0, 32.0] ----
+[PROBE2]   落位 y40 防弹回             x=320.0 y=40.0 → fired=false OK
+[PROBE2]   门洞 y32(tile2)          x=320.0 y=32.0 → fired=false OK
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2（受理=false）
+[PROBE2]   门洞 y28                 x=320.0 y=28.0 → fired=false 未触发
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2（受理=false）
+[PROBE2]   门洞 y24(tile1中心)        x=320.0 y=24.0 → fired=true OK(触发)
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2（受理=false）
+[PROBE2]   门洞 y20                 x=320.0 y=20.0 → fired=true OK(触发)
+[PROBE2]   门洞 y16                 x=320.0 y=16.0 → fired=false 未触发
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2（受理=false）
+[PROBE2]   贴墙 y40 x296            x=296.0 y=40.0 → fired=false OK
+[PROBE2]   贴墙 y36 x296            x=296.0 y=36.0 → fired=false OK
+[PROBE2]   贴墙 y32 x296            x=296.0 y=32.0 → fired=false OK
+[PROBE2]   贴墙 y32 x344            x=344.0 y=32.0 → fired=false OK
+[PROBE2] ---- 候选 C2 tile1 单格：区域 y∈[16.0, 32.0] ----
+[PROBE2]   落位 y40 防弹回             x=320.0 y=40.0 → fired=false OK
+[PROBE2]   门洞 y32(tile2)          x=320.0 y=32.0 → fired=false OK
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2（受理=false）
+[PROBE2]   门洞 y28                 x=320.0 y=28.0 → fired=true OK(触发)
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2（受理=false）
+[PROBE2]   门洞 y24(tile1中心)        x=320.0 y=24.0 → fired=true OK(触发)
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2（受理=false）
+[PROBE2]   门洞 y20                 x=320.0 y=20.0 → fired=false 未触发
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2（受理=false）
+[PROBE2]   门洞 y16                 x=320.0 y=16.0 → fired=false 未触发
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2（受理=false）
+[PROBE2]   贴墙 y40 x296            x=296.0 y=40.0 → fired=true ✗误触发
+[PROBE2]   贴墙 y36 x296            x=296.0 y=36.0 → fired=false OK
+[PROBE2]   贴墙 y32 x296            x=296.0 y=32.0 → fired=false OK
+[PROBE2]   贴墙 y32 x344            x=344.0 y=32.0 → fired=false OK
+[PROBE2] ---- 候选 C3 tile0~0.5格：区域 y∈[0.0, 24.0] ----
+[PROBE2]   落位 y40 防弹回             x=320.0 y=40.0 → fired=false OK
+[PROBE2]   门洞 y32(tile2)          x=320.0 y=32.0 → fired=false OK
+[PROBE2]   门洞 y28                 x=320.0 y=28.0 → fired=false 未触发
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2（受理=false）
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2（受理=false）
+[PROBE2]   门洞 y24(tile1中心)        x=320.0 y=24.0 → fired=true OK(触发)
+[PROBE2]   门洞 y20                 x=320.0 y=20.0 → fired=false 未触发
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2（受理=false）
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2（受理=false）
+[PROBE2]   门洞 y16                 x=320.0 y=16.0 → fired=true OK(触发)
+[PROBE2]   贴墙 y40 x296            x=296.0 y=40.0 → fired=false OK
+[PROBE2]   贴墙 y36 x296            x=296.0 y=36.0 → fired=false OK
+[PROBE2]   贴墙 y32 x296            x=296.0 y=32.0 → fired=false OK
+[PROBE2]   贴墙 y32 x344            x=344.0 y=32.0 → fired=false OK
+[PROBE2] === 探针结束（游戏数据未改动）===

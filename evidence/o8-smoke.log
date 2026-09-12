@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[O7-SMOKE] === 生产链冒烟：UI信号→战斗→胜利驻留→转发 ===
+[BattleScene] 就绪：编组=b1_moth 回图=res://scenes/maps/ruins_f1.tscn 队伍=3 人（真实战斗 O-6 接线）
+[O7-SMOKE] ① 战斗场景实例化，开始 UI 信号驱动（玩家链）
+[BattleScene] 玩家指令 attack（凯尔）
+[BattleScene] 玩家指令 attack（莫娜）
+[BattleScene] 玩家指令 attack（莉娜）
+[BattleScene] 玩家指令 attack（凯尔）
+[BattleScene] 结局 -> VICTORY（击破凭据=enemy_o7_smoke，驻留结算揭示后转交）
+[O7-SMOKE] ② 战斗结束 outcome=VICTORY，等驻留+黑屏+转发
+[BattleScene] 驻留结束（0.0s），发 battle_finished(VICTORY) -> 转交 BattleResultHandler
+[BattleResultHandler] 掉落入包 potion_s x1（背包 { "potion_s": 1 }）
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[BattleResultHandler] VICTORY 结算完成 -> 回图 res://scenes/maps/ruins_f1.tscn（回置 (384.0, 120.0)）
+[O7-SMOKE] ③ battle_finished 已转发 outcome=VICTORY 击破凭据=enemy_o7_smoke
+[O7-SMOKE] === PASS：UI信号→战斗→胜利→驻留→转发 全链通 ===

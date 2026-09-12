@@ -71,8 +71,15 @@ func set_inventory(inv: Array) -> void:
 ## 装配一场战斗（p_party / p_enemies 为 unit dict 数组，建议由 BattleUnits 构建）
 func setup(p_encounter_id: String, p_party: Array, p_enemies: Array) -> void:
 	encounter_id = p_encounter_id
-	party = p_party.duplicate(true)
-	enemies = p_enemies.duplicate(true)
+	# ⚠️ 无类型 Array.duplicate() 返回无类型 Array，直接赋给 Array[Dictionary]
+	# 成员会报 "Trying to assign an array of type Array to Array[Dictionary]"。
+	# 与 set_inventory 同款防御：逐元素 append 重建类型化数组（元素类型运行期校验）。
+	party = []
+	for u in p_party:
+		party.append(u)
+	enemies = []
+	for u in p_enemies:
+		enemies.append(u)
 	var grp: Variant = DataTables.get_encounter(p_encounter_id)
 	skills_locked = grp.skills_locked if grp != null else false
 	escape_forbidden = BattleUnits.is_escape_forbidden(p_encounter_id)

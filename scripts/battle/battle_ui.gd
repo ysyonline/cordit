@@ -167,10 +167,14 @@ func _build() -> void:
 	_battle_bg = BattleBackground.new()
 	_battle_bg.name = "BattleBg"
 	_battle_bg.ensure_built()
+	# O-9：非交互层一律放行鼠标（默认 STOP 会挡住下层控件命中的是"同矩形
+	# 更晚绘制者"——背景在最底层其实不挡，但统一规范防将来改 z 序踩坑）
+	_battle_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_battle_bg)
 
 	# §4.1 行动预告条
 	_pred_bar = _make_panel("PredBar", PRED_X, PRED_Y, PRED_W, PRED_H)
+	_pred_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	for i in 3:
 		var slot := Panel.new()
 		slot.name = "PredSlot%d" % i
@@ -209,12 +213,14 @@ func _build() -> void:
 
 	# §4.3 我方状态栏
 	_status_bar = _make_panel("StatusBar", STATUS_X0, STATUS_Y, VIEW_W - STATUS_X0 - 8.0, STATUS_H)
+	_status_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE   # O-9 非交互面板
 	_build_status_cards()
 
 	# §4.5 目标光标 + 预估伤害
 	_target_cursor = Panel.new()
 	_target_cursor.name = "TargetCursor"
 	_target_cursor.visible = false
+	_target_cursor.mouse_filter = Control.MOUSE_FILTER_IGNORE   # O-9 光标不挡点击
 	add_child(_target_cursor)
 	_dmg_label = Label.new()
 	_dmg_label.name = "DmgRange"
@@ -223,6 +229,7 @@ func _build() -> void:
 	_dmg_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_dmg_label.add_theme_font_size_override("font_size", 12)
 	_dmg_label.visible = false
+	_dmg_label.mouse_filter = Control.MOUSE_FILTER_IGNORE   # O-9 预估文字不挡点击
 	add_child(_dmg_label)
 
 	# §4.6 浮动数字层
@@ -240,6 +247,7 @@ func _build() -> void:
 	# §4.7 结算画面
 	_result_panel = _make_panel("ResultPanel", (VIEW_W - RES_W) / 2.0,
 			(VIEW_H - RES_H) / 2.0, RES_W, RES_H)
+	_result_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE   # O-9 结算无按钮不挡点击
 	_result_label = Label.new()
 	_result_label.name = "ResultLabel"
 	_result_label.position = Vector2(16, 16)
@@ -260,6 +268,8 @@ func _make_panel(p_name: String, x: float, y: float, w: float, h: float) -> Cont
 	p.name = p_name
 	p.position = Vector2(x, y)
 	p.size = Vector2(w, h)
+	# O-9：装饰面板自身默认仍为 STOP（CmdMenu/SubMenu 是按钮宿主必须保留
+	# 命中；其余面板在 _build 里逐个覆写 IGNORE）。此处不改默认值。
 	p.configure(C_BG, C_FACE, C_EDGE, C_EDGE_DK, C_HI)
 	p.build()
 	add_child(p)
@@ -781,18 +791,45 @@ func finish_reveal() -> void:
 
 
 ## 输入路由（T2.3：结算揭示期间按 interact 键 → 跳过剩余行）。
+## 【O-8 补接线】目标选择态键盘驱动（此前 move_cursor/confirm_target/
+##   cancel_targeting 生产零调用——点"攻击"进目标态后无键可确认，战斗
+##   走不通；GUT 直调函数又掩盖了断点）：
+##   - 目标选择中：←→↑↓ 移光标 / interact(Z/E/空格/Enter) 确认 /
+##     cancel(X/Esc) 取消回菜单；
+##   - 结算揭示中：interact 跳过剩余行（既有行为不变）；
+##   - 其余状态不拦截（指令菜单按钮走鼠标/焦点系统）。
 ## 【先例】dialogue_runner.gd 同款 _unhandled_input + InputEventAction 注入
 ## 语义等价（"收真实 InputEventKey，InputEventAction 走同一 is_action_pressed
-## 判定"）；仅揭示进行中消费按键，其余状态不拦截（指令菜单按钮走焦点系统）。
+## 判定"）。
 func _unhandled_input(event: InputEvent) -> void:
+	# ── 目标选择态（优先级最高：光标存在即消费方向/确认/取消）──
+	if not _targets.is_empty():
+		if event.is_action_pressed("move_left") or event.is_action_pressed("move_up"):
+			move_cursor(-1)
+			_consume(event)
+		elif event.is_action_pressed("move_right") or event.is_action_pressed("move_down"):
+			move_cursor(1)
+			_consume(event)
+		elif event.is_action_pressed("interact"):
+			confirm_target()
+			_consume(event)
+		elif event.is_action_pressed("cancel"):
+			cancel_targeting()
+			_consume(event)
+		return
+	# ── 结算揭示态：interact 跳过 ──
 	if not _reveal_running:
 		return
 	if event.is_action_pressed("interact"):
 		finish_reveal()
-		# headless 测试不入树时 viewport 为 null，守卫跳过（消费语义仅生产路径需要）
-		var vp: Viewport = get_viewport()
-		if vp != null:
-			vp.set_input_as_handled()
+		_consume(event)
+
+
+## 消费事件（headless 测试不入树时 viewport 为 null，守卫跳过）
+func _consume(event: InputEvent) -> void:
+	var vp: Viewport = get_viewport()
+	if vp != null:
+		vp.set_input_as_handled()
 
 
 ## 测试注入口（dialogue_runner.inject_interact_press 同款手法）

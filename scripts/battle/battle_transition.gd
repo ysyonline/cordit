@@ -34,6 +34,9 @@ func ensure_built() -> void:
 		return
 	custom_minimum_size = Vector2(VIEW_W, VIEW_H)
 	size = Vector2(VIEW_W, VIEW_H)
+	# O-9：全屏遮罩容器自身必须放行鼠标——默认 STOP 会吞掉整屏点击，
+	# 置顶层吃掉后指令菜单按钮永远收不到 pressed（玩家点按钮无响应）。
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_build()
 	_built = true
 

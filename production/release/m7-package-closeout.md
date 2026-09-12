@@ -278,6 +278,16 @@ res://assets/licenses/notices/town-tiles.txt
 | 体积 | **42,020,129 B（40.07 MiB）**，压缩率 37.3%（原始 107.32 MiB） |
 | SHA256 | `25BF07E919FA6F97827176F48020D87821EB9D723677DC3D56CE60CCD3E8CD94` |
 | 生成时间 | 2026-09-12 06:06:24 |
+| **⚠️ 02 批次(2026-09-12 14:40)**:因 O-6/O-5 修复重导出,上表 zip/pck **作废**;现行发放件改为下述 02 包 |
+| **02 批次 zip** | 2026-09-12 14:40 重打包 |
+| `轨迹残响-v0.1.0-slice-win64.zip`(02) | 2026-09-12 14:40 | `B8221BCBBE88BC61BC3540F45DD91AC2E878A653EDE14515E283B7E52FFD6FAB` |
+| `轨迹残响.pck`(02,含 O-6/O-5 修复) | 2026-09-12 14:08:46 | `D6AC9B5E6C18A056003B4B34AFF9C64EAA4589ADFEA1D2EF3CA21C54CC832431` |
+| (exe 与上表逐字节一致,指纹不变) | — | — |
+| **⚠️ 03 批次(2026-09-12 21:50)**:因 O-5~O-13 全套修复重导出,上表 02 行 zip/pck **作废**(02 旧 zip 已退役至 `export/_RETIRED-14-51-batch02.zip`);现行发放件改为下述 03 包 |
+| **03 批次 zip** | 2026-09-12 21:50 重打包 | |
+| `轨迹残响-v0.1.0-slice-win64.zip`(03) | 2026-09-12 21:50:56 | `D94C410E1C17B12ABCE8AC2F37EFF0FED9B40A963E275674A611E1EC429CEA26` |
+| `轨迹残响.pck`(03,含 O-5~O-13 全部修复) | 2026-09-12 21:49:57 | `B73F705DACA746BDA33DBF1CAA68B205DEE9FB993AA3F550BB48DF092AC07570` |
+| (exe 与上表逐字节一致,指纹不变) | — | — |
 | 校验 | `testzip` CRC **OK**；中文名逐字保留并带 **UTF-8 标志（0x800）** |
 | 条目数 | **14**（2 大件 + 12 松散文本） |
 
@@ -529,3 +539,66 @@ APPDATA='D:\code\cordit\.godot_user_tmp' MSYS2_ARG_CONV_EXCL='*' \
 ---
 
 *本报告所有结论均可按文中"证据"列复算；凡未实证之处均已显式标注"未验证/未做"。*
+
+---
+
+## 13. O-6 / O-5 修复重导出补录（2026-09-12）
+
+> **背景**：01D 包（§7）发放后、外部试玩启动前，按主理人拍板「**暂停试玩等新版**」，先行修复两项 QA gate 遗留缺陷并重导出。本节记录修复内容、重导出产物与指纹。**§7 表格维持 01D 口径不动**；zip 重打包与 §7 / playtest 档 §0 / QA gate R-0 的指纹回写，按计划**延后至 commit/tag 步骤统一执行**。
+
+### 13.1 修复内容
+
+| 项 | 缺陷 | 修复 |
+| --- | --- | --- |
+| **O-6** | 生产路由（跨图遭遇）接的是演示战斗路径，`test_e2s3.gd` 为占位绑定 | `battle_scene.gd` 重写接入 E3 真实战斗系统；`test_e2s3.gd` 重写为真实绑定。新用例当场揪出 `battle_command.setup()` 生产缺陷（无类型 `Array.duplicate()` 直接赋 `Array[Dictionary]` 成员报类型错）→ 改为逐元素 append 重建，全量回归通过 |
+| **O-5** | `story_ruin_enter` 有事件 JSON、无生产触发端，自然游玩 phase 无法 1→2（G-8，Major） | `ruins_f1_map.gd` 装配入口剧情锚 `Evt_Ruin_Enter`（双守卫装配，同 f3 Boss 锚族；位置 (448,56)、collision_mask=16；`new_event_id` → `story_ruin_enter`：对话 story_p2 → set_story_phase 2） |
+
+### 13.2 重导出产物与指纹（export/win/ 现货，2026-09-12）
+
+| 产物 | 大小 (B) | SHA256 |
+| --- | --- | --- |
+| `轨迹残响.exe` | 109,132,800 | `01F7DCF08A63F2B11874F286A4D8A1D7802FB0A8FAFFE0EE46170934CAA70AF8` |
+| `轨迹残响.pck` | 3,405,028 | `D6AC9B5E6C18A056003B4B34AFF9C64EAA4589ADFEA1D2EF3CA21C54CC832431` |
+
+- exe 与 §7 的 01D（`01F7DCF0…`）**逐字节一致**——符合预期：本轮改动面仅脚本/测试（归 pck），exe 壳未动。
+- pck 相对 §7 的 01D（`BAA778C5…`）**已变更** → 本表为含 O-6/O-5 修复的版本。
+- ✅ **02 批次已重打包(2026-09-12 14:40)**:zip 指纹 `25BF07E9…` → **`B8221BCB…2FFD6FAB`**(pck=14:08 修复版 `D6AC9B5E…`,exe 不变 `01F7DCF0…`);旧 zip 已退役至 `export/_RETIRED-06-06-old-package.zip`,**01D 全部指纹自本节起作废**。
+
+### 13.3 回归与冒烟证据
+
+| 证据 | 结论 |
+| --- | --- |
+| `evidence/_o6-gut-clean.log` | 首跑暴露 `battle_command.setup()` 类型缺陷（预期红，缺陷证据在案） |
+| `evidence/_o6-gut-clean2.log` | 修复后全量 GUT：Totals；------；Scripts              34；Tests               530；Passing Tests       530；Asserts            8472；Orphans           10016；Time              41.624s（APPDATA 重定向干净环境） |
+| `evidence/_o5-gut-clean.log` | O-5 装配后全量 GUT：Totals；------；Scripts              34；Tests               530；Passing Tests       530；Asserts            8472；Orphans           10016；Time              41.466s |
+| `evidence/_o5-smoke-verify3.log` | f1 入口锚生产语境冒烟 8/8 PASS（SMOKE_RESULT: ALL PASS；锚装配 @(448,56) / new_event_id / mask=16 / layer=0 / 事件表在册 / phase=0 拦截 / phase=1 放行，真实触发链发射日志在案） |
+| `evidence/o6-export3.log` + `evidence/o6-export-smoke.log` | 本轮重导出执行日志；导出包 headless 冒烟 EXIT=0（会话内捕获；该日志文件为启动/退出记录，无断言行） |
+
+### 13.4 延续待办
+
+- ~~zip 重打包 + §7 / playtest 档 §0 / QA gate R-0 指纹回写 → 与 commit/tag 同步执行~~ **02 批次部分已办（14:40）；03 批次指纹回写已办（2026-09-12 21:5x，见 §13.5）**。
+- 工作区未提交：`scripts/battle/battle_scene.gd`、`scripts/battle/battle_command.gd`、`scripts/maps/ruins_f1_map.gd`、`tests/gut/test_e2s3.gd`、`tests/gut/test_o6_real_battle.gd(+.uid)`、`production/qa/m7-final-qa-gate.md`、本节及 `evidence/` 日志。
+
+### 13.5 03 批次重导出与重打包（O-5~O-13，2026-09-12 21:50）
+
+> **背景**：02 批次发放前，O-7~O-13 六笔修复（UI 桥接回归用例 / 真实战斗输入桥 / 目标选择键盘 / 转场层吞鼠标 / O-10 三件套：f3 棺前提示+地图名 HUD+存档反馈条 / **O-13 四条顶部触发区加深**）进入工作区，主理人拍板重导出为 03 批次。**02 批次全部指纹自本节起作废**（旧 zip 已退役至 `export/_RETIRED-14-51-batch02.zip`）。
+
+**指纹（SHA256）**
+
+| 产物 | 大小 (B) | 时间戳 | SHA256 |
+| --- | --- | --- | --- |
+| `轨迹残响.exe` | 109,132,800 | 2026-09-12 21:49:55 | `01F7DCF08A63F2B11874F286A4D8A1D7802FB0A8FAFFE0EE46170934CAA70AF8`（逐字节不变） |
+| `轨迹残响.pck` | **3,412,416** | 2026-09-12 21:49:57 | `B73F705DACA746BDA33DBF1CAA68B205DEE9FB993AA3F550BB48DF092AC07570` |
+| `轨迹残响-v0.1.0-slice-win64.zip` | **40,861,491** | 2026-09-12 21:50:56 | `D94C410E1C17B12ABCE8AC2F37EFF0FED9B40A963E275674A611E1EC429CEA26` |
+
+**验证与证据**
+
+| 项 | 结论 |
+| --- | --- |
+| 导出 | EXIT=0，零 ERROR/WARNING（`evidence/_o13-batch03-export.log`；导出须带 `APPDATA=.godot_user_tmp`——模板在 `.godot_user_tmp/Godot/export_templates/`，勿再踩） |
+| GUT | 538/538 全绿，8504 断言（`evidence/_o13-gut-full.log`，含 test_e4s6 镜像锁 19/19） |
+| O-13 冒烟 | 触发阈值 y=16→32，SMOKE PASS（`evidence/_f3f2-smoke-after.log`） |
+| 主理人实机 | 返程传送 tp_f3_to_f2 ×2 / tp_f2_to_f1 / tp_f1_to_road / tp_road_to_town 全部受理=true，手感「好走」；全程零 ERROR |
+| 导出包启动冒烟 | 03 zip 内同款 exe 启动至清溪镇，画面正常（主理人目检） |
+| zip 校验 | `testzip` CRC OK；14 条目；中文名 UTF-8 标志（0x800）全部置位 |
+| 指纹回写 | §7（03 行）✅ · playtest 档 §0.2 ✅ · kit §7.4.3 ✅ |

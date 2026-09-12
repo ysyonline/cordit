@@ -1,0 +1,31 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[F3F2] === f3→f2 返程传送阈值冒烟 ===
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f3 装配完成：宝箱 1 + 调查 2
+[TeleportAssembler] ruins_f3 装配完成：传送触发器 1 处
+[AutosaveNotifier] ruins_f3 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[RuinsF3Map] Boss 锚点装配完成：story_boss_pre（交互键，事件 story_boss_pre）
+[F3F2] 玩家碰撞盒高 = 0.0 px（中心 y=40.0）
+[F3F2] 触发区中心 = (320.0, 16.0)，尺寸 = (32.0, 32.0) → y∈[0.0, 32.0]
+[F3F2] 位点 y=40.0 (tile 2.50) → 触发=false
+[F3F2] 位点 y=36.0 (tile 2.25) → 触发=false
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2（受理=false）
+[F3F2] 位点 y=32.0 (tile 2.00) → 触发=true
+[F3F2] 位点 y=28.0 (tile 1.75) → 触发=false
+[F3F2] 位点 y=24.0 (tile 1.50) → 触发=false
+[F3F2] 位点 y=20.0 (tile 1.25) → 触发=false
+[F3F2] 位点 y=16.0 (tile 1.00) → 触发=false
+[F3F2] 位点 y=12.0 (tile 0.75) → 触发=false
+[F3F2] 位点 y=8.0 (tile 0.50) → 触发=false
+[F3F2] 位点 y=4.0 (tile 0.25) → 触发=false
+[F3F2] 位点 y=0.0 (tile 0.00) → 触发=false
+[F3F2] ---- 结论 ----
+[F3F2] 首个触发位点 y=32.0（tile 2.00），玩家碰撞盒高 0.0
+[F3F2] 判定：门洞第 2 格（tile y=1）即可触发，通道可达性 OK
+[F3F2] SMOKE PASS

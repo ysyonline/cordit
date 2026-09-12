@@ -69,8 +69,14 @@ const EventExecutor := preload("res://scripts/events/event_executor.gd")
 ## E6-S1 主菜单（UILayer 常驻装配，C 键呼出）
 const MenuPanelScript := preload("res://scripts/ui/menu_panel.gd")
 
+## M7-O10 地图名 HUD（UILayer 常驻装配，map_ready 驱动；用户 2026-09-12 拍板③A）
+const MapNameHudScript := preload("res://scripts/ui/map_name_hud.gd")
+
 ## E6-S1 主菜单实例（UILayer 常驻装配产物；公开供测试树定位/断言）
 var menu_panel: Control = null
+
+## M7-O10 地图名 HUD 实例（UILayer 常驻装配产物；测试对表用）
+var map_name_hud: Control = null
 
 ## M7-A1 光照层装配产物（Lighting 容器；测试对表用——断言 Tint/Lights/坐标）。
 ## 室内挂图例外说明见 LIGHTING_CONFIG 注。
@@ -164,6 +170,10 @@ func _ready() -> void:
 	teleports = TeleportAssembler.assemble(self, "town", dialogue_runner)
 	# T6.5：开局剧情锚点装配（P0 接线；守卫见函数头注）
 	_assemble_opening_story()
+	# M7-O10：地图名 HUD 装配（UILayer 常驻；map_ready 驱动淡入淡出，
+	# town 首装后跨图复用同一实例。必须挂在 announce_ready【之前】——
+	# announce_ready 内即广播 map_ready，HUD 后装会漏接首次广播）
+	_assemble_map_name_hud()
 	# E4-S6：进图自动存档（map_ready 广播 + save + 图标，§3.4 时序收口）
 	AutosaveNotifier.announce_ready(self, "town")
 	# E6-S1：主菜单装配（UILayer 常驻 + C 键呼出；town 首装，跨图复用）
@@ -332,6 +342,33 @@ func _assemble_menu() -> void:
 	if is_temp:
 		panel.set_meta("temp_menu_panel", true)  # 标记：测试树释放时随图销毁
 	menu_panel = panel
+
+
+## M7-O10：地图名 HUD 装配（用户 2026-09-12 拍板③A）。
+## 层位归属与 _assemble_menu 同款：挂 Main/UILayer（跨场景常驻——HUD 自己
+## 监听 EventBus.map_ready，跨图自动续显，无需每图重装）；无 Main 结构
+## （测试直挂）时兜底挂本图随图生灭。已存在实例时跳过（防重复装配 +
+## 防重复连接 map_ready——HUD _ready 里 connect，双实例会双显示）。
+func _assemble_map_name_hud() -> void:
+	if not is_inside_tree():
+		return
+	var ui_host: Node = get_tree().root.get_node_or_null("Main/UILayer")
+	var is_temp: bool = false
+	if ui_host == null:
+		ui_host = self
+		is_temp = true
+	var existing: Node = ui_host.get_node_or_null("MapNameHud")
+	if existing != null and existing.get_script() == MapNameHudScript:
+		map_name_hud = existing
+		return
+	var hud: Control = Control.new()
+	hud.name = "MapNameHud"
+	hud.set_script(MapNameHudScript)
+	ui_host.add_child(hud)
+	if is_temp:
+		hud.set_meta("temp_map_name_hud", true)  # 标记：测试树释放时随图销毁
+	map_name_hud = hud
+	print("[TownMap] 地图名 HUD 装配完成（MapNameHud 常驻）")
 
 
 ## M7-A1：光照层装配（全部增量集中于此，既有验收行为零触碰）。

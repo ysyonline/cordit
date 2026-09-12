@@ -1,0 +1,1 @@
+cp 'evidence/_r3-save-backup-20260912-0933-save.json' '/c/Users/weixufeng/AppData/Roaming/Godot/app_userdata/轨迹残响/save.json'

@@ -35,6 +35,8 @@ func ensure_built() -> void:
 		return
 	custom_minimum_size = Vector2(VIEW_W, VIEW_H)
 	size = Vector2(VIEW_W, VIEW_H)
+	# O-9：全屏反馈容器自身放行鼠标（同 transition——默认 STOP 吞整屏点击）
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_build()
 	_built = true
 

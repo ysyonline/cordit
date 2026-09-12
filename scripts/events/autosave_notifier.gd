@@ -37,17 +37,23 @@ static func announce_ready(p_map_root: Node, p_map_name: String) -> bool:
 	var ok: bool = SaveManager.save(p_map_name, pos)
 	if not ok:
 		push_warning("[AutosaveNotifier] %s 自动存档写入失败（旧档保留）" % p_map_name)
-	_spawn_save_icon(p_map_root, ok)
+	_spawn_save_icon(p_map_root, ok, p_map_name)
 	return ok
 
 
-## 存档图标：右下角闪现 0.5s（探索 GDD §4；人工验收项，headless 下自动跳过）。
-## 挂地图根（随图销毁，无残留）；无 Main/UILayer 依赖，测试树同样安全。
-static func _spawn_save_icon(p_map_root: Node, p_ok: bool) -> void:
+## 存档反馈条：右下角"已存档 · <图名>"闪现 1.6s（M7-O11 升级：原 12×12
+## 色块闪 0.5s——用户试玩反馈④"存档后没有反馈存到哪"。协议不变：挂地图
+## 根（随图销毁，无残留）；无 Main/UILayer 依赖，测试树同样安全。
+## headless 下自动跳过（未入树））。
+static func _spawn_save_icon(p_map_root: Node, p_ok: bool, p_map_name: String = "") -> void:
 	if p_map_root.get_tree() == null:
 		return   # 未入树（纯数据构造期），跳过
 	var icon := Control.new()
 	icon.set_script(SaveIconScene)
 	icon.name = "SaveIconFlash"
 	p_map_root.add_child(icon)
-	icon.flash(p_ok)
+	# 带图名变体（反馈文案含"已存档 · 遗迹第二层"）；兼容签名 flash 由 save_icon 内部兜底
+	if p_map_name.is_empty():
+		icon.flash(p_ok)
+	else:
+		icon.flash_map(p_ok, p_map_name)

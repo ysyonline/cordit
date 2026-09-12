@@ -34,7 +34,19 @@ const CROSS_MAP_SAVE: bool = true
 ##   id        全局唯一传送 id（= JSON 镜像主键 / 实体节点名后缀）
 ##   map       触发区所在图（PointCatalog.SPAWNS 同款图名键）
 ##   tile      触发区左上角 tile（Vector2i）
-##   size      触发区格数（Vector2i，1×1 或 2×1；转像素 = *16）
+##   size      触发区格数（Vector2i，1×1 / 2×1 / 2×2；转像素 = *16）
+##              【O-13 顶部触发区不对称】玩家碰撞盒是 12×6 的小矩形、挂在
+##              脚底原点**上方**（CollisionShape2D offset=(0,-3)），往北（屏幕
+##              上方）走时碰撞盒滞后于脚底半格：踩"地图最顶行"的触发区
+##              （tile y=0，size 2×1 → 像素 y∈[0,16]）实测要求角色中心走到
+##              y≤16 才触发，站在门洞第 2 格中心（y=24）毫无反应——这就是
+##              "贴着门洞走却不切图"的手感根因。底部触发区（tile y=max）
+##              方向相反、碰撞盒先接触，天然有两格宽容度，故无此病。
+##              修法：4 条顶部触发区（road_to_town / f1_to_road / f2_to_f1 /
+##              f3_to_f2）size 加深为 2×2（覆盖 tile y=0~1），触发阈值放宽到
+##              中心 y≤32；落位分别距触发下沿 24/24/8/8 px，均不弹回。
+##              ⚠️ 勿改回 2×1：会重现返程门失灵。勿整块下移到 tile y=1
+##              （探针实测贴墙位 x=296,y=40 会误触发）。
 ##   kind      "same_map"（同图位置传送）/ "cross_map"（跨图切换）
 ##   target    同图传送落位 tile（仅 kind=same_map 时消费；tile 中心像素）
 ##   to_map    目标图名（仅 kind=cross_map 时消费）
@@ -77,10 +89,11 @@ const TELEPORTS: Array[Dictionary] = [
 	},   # town 南门 (12-13,47) → road 北门南下；落位 road (23.5,3.5)=既有 from_town 参考格
 	{
 		"id": "tp_road_to_town", "map": "road",
-		"tile": Vector2i(23, 0), "size": Vector2i(2, 1),
+		"tile": Vector2i(23, 0), "size": Vector2i(2, 2),
 		"kind": "cross_map", "target": Vector2.ZERO,
 		"to_map": "town", "to_spawn": Vector2(12.5, 45.5),
 	},   # road 北门 (23-24,0) → town 南门内一格 (12-13,45 之间中缝)；栅栏已拆（R1），45 行安全
+	#     ↑ O-13：顶部触发区加深至 tile0~1（详见 TELEPORTS 头注「顶部触发区不对称」）
 	{
 		"id": "tp_road_to_f1", "map": "road",
 		"tile": Vector2i(23, 63), "size": Vector2i(2, 1),
@@ -89,10 +102,11 @@ const TELEPORTS: Array[Dictionary] = [
 	},   # road 南门 (23-24,63) → f1 南门南下；落位 f1 (27.5,3)=pos_from_road 同位（verify_ruins 锚定）
 	{
 		"id": "tp_f1_to_road", "map": "ruins_f1",
-		"tile": Vector2i(27, 0), "size": Vector2i(2, 1),
+		"tile": Vector2i(27, 0), "size": Vector2i(2, 2),
 		"kind": "cross_map", "target": Vector2.ZERO,
 		"to_map": "road", "to_spawn": Vector2(23.5, 61.5),
 	},   # f1 北口 (27-28,0) → road 南门内（H6 路面 (23-24,61) 中缝）；落位距 y=63 触发区 2 行防弹回
+	#     ↑ O-13：顶部触发区加深至 tile0~1（落位 y=56，距触发下沿 24px 不弹回）
 	{
 		"id": "tp_f1_to_f2", "map": "ruins_f1",
 		"tile": Vector2i(27, 43), "size": Vector2i(2, 1),
@@ -101,10 +115,11 @@ const TELEPORTS: Array[Dictionary] = [
 	},   # f1 北口楼梯厅 (27-28,43) → f2 南门南下；落位 f2 (23.5,2)=pos_from_f1 同位（verify_ruins 锚定）
 	{
 		"id": "tp_f2_to_f1", "map": "ruins_f2",
-		"tile": Vector2i(23, 0), "size": Vector2i(2, 1),
+		"tile": Vector2i(23, 0), "size": Vector2i(2, 2),
 		"kind": "cross_map", "target": Vector2.ZERO,
 		"to_map": "ruins_f1", "to_spawn": Vector2(27.5, 41.5),
 	},   # f2 北口 (23-24,0) → f1 楼梯走道 (27-28,41 中缝)；落位距 y=43 北口触发区 2 行防弹回
+	#     ↑ O-13：顶部触发区加深至 tile0~1（落位 y=40，距触发下沿 8px 不弹回）
 	{
 		"id": "tp_f2_to_f3", "map": "ruins_f2",
 		"tile": Vector2i(23, 47), "size": Vector2i(2, 1),
@@ -113,10 +128,11 @@ const TELEPORTS: Array[Dictionary] = [
 	},   # f2 北口楼梯厅 (23-24,47) → f3 南门南下；落位 f3 (19.5,2)=pos_from_f2 同位（verify_ruins 锚定）
 	{
 		"id": "tp_f3_to_f2", "map": "ruins_f3",
-		"tile": Vector2i(19, 0), "size": Vector2i(2, 1),
+		"tile": Vector2i(19, 0), "size": Vector2i(2, 2),
 		"kind": "cross_map", "target": Vector2.ZERO,
 		"to_map": "ruins_f2", "to_spawn": Vector2(23.5, 45.5),
 	},   # f3 南门 (19-20,0)（双用途：f2→f3 的入口门 + 返程触发区）；返程落位 f2 (23.5,45.5)=北口楼梯走道中缝，距 y=47 触发区 2 行防弹回
+	#     ↑ O-13：顶部触发区加深至 tile0~1（落位 y=40，距触发下沿 8px 不弹回）
 	]     # ↑ f3 无北口（Boss 门封死构图）：f3→f2 返程走南门，触发区与入口同位复用
 
 ## ------------------------------------------------------------------
@@ -142,6 +158,23 @@ const MAP_SCENE_PATHS: Dictionary = {
 	"ruins_f2": "res://scenes/maps/ruins_f2.tscn",
 	"ruins_f3": "res://scenes/maps/ruins_f3.tscn",
 }
+
+## 五图显示名（M7-O10 地图名 HUD / 存档摘要共用正本；未登记图名回退短名）。
+## 命名口径：town 用剧情语"清溪镇"（story_p0_intro 通篇只称"镇上"，取通用
+## 意象名，后续剧情统稿若定 official 名在此一处改）；road 是镇→遗迹的林道；
+## 遗迹三层按探索深度编号（用户 2026-09-12 拍板"遗迹第一层/第二层/第三层"）。
+const MAP_DISPLAY_NAMES: Dictionary = {
+	"town": "清溪镇",
+	"road": "林间小道",
+	"ruins_f1": "遗迹第一层",
+	"ruins_f2": "遗迹第二层",
+	"ruins_f3": "遗迹第三层",
+}
+
+
+## 地图短名 → 显示名（未登记回退短名本身——新图落地即有合理文案）
+static func display_name(map_name: String) -> String:
+	return String(MAP_DISPLAY_NAMES.get(map_name, map_name))
 
 ## 室内限区（同图传送落位后的相机限区；town_map.gd @export 三组正本镜像）。
 ## 同图传送 kind=same_map 时按落位所在区域查此表应用限区（door_inn/house_a

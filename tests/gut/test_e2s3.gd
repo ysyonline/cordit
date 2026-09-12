@@ -24,14 +24,15 @@ extends GutTest
 const BATTLE_SCENE_PATH: String = "res://scenes/battle/battle.tscn"
 const BATTLE_SCRIPT_PATH: String = "res://scripts/battle/battle_scene.gd"
 
-## 合法 BattlePayload 样板（A5 四字段，与 E2-S2 发射侧同构）
+## 合法 BattlePayload 样板（A5 四字段，与 E2-S2 发射侧同构）。
+## 【O-6 改造】编组 id 从占位时代的表外 id slime_01 换为表内真实编组
+##   b1_moth——战斗场景已真实装配，接线用例实例化的将是真实战斗。
 const VALID_PAYLOAD: Dictionary = {
-	"enemy_group_id": "slime_01",
+	"enemy_group_id": "b1_moth",
 	"return_map": "res://tests/smoke/fixtures/map_e2s2.tscn",
 	"return_position": Vector2(64, 32),
 	"defeat_enemy_uid": "enemy_road_01",
 }
-
 ## 接线用例的假 Main 骨架（after_each 拆除）
 var _fake_main: Node = null
 
@@ -152,102 +153,13 @@ func test_接线_非法载荷被拒_世界不动() -> void:
 	assert_ne(SceneRouter.current_scene_path, SceneRouter.BATTLE_SCENE_PATH,
 			"非法载荷不得切换")
 	assert_eq(world.get_child_count(), 0, "拒绝时 World 不得被换装")
-
-
-# =============== C. 战斗场景（实例化 / 方块阵 / 队伍显示 / 按钮） ===============
-
-func test_战斗场景可实例化_空载荷防御态() -> void:
-	# 无暂存载荷：group_id 为空 → 9 格灰阵（防御式显示，暴露异常而非空白）
-	var battle := _spawn_battle()
-	assert_not_null(battle, "战斗场景应可实例化")
-	var blocks: Node = battle.get_node("EnemyBlocks")
-	assert_eq(blocks.get_child_count(), 9, "空载荷应显示 9 格灰阵")
-	var first: ColorRect = blocks.get_child(0) as ColorRect
-	assert_eq(first.color, Color(0.35, 0.35, 0.35), "空载荷方块应为灰色")
-
-
-func test_方块阵_同编组恒同阵_数量在界内() -> void:
-	# 纯函数可复现性：同一 group_id 两次实例化阵型/颜色一致；数量恒 3~9
-	var battle1 := _spawn_battle(VALID_PAYLOAD)
-	var battle2 := _spawn_battle(VALID_PAYLOAD)
-	var c1: int = battle1.get_block_count("slime_01")
-	var c2: int = battle2.get_block_count("slime_01")
-	assert_eq(c1, c2, "同编组方块数应稳定可复现")
-	assert_true(c1 >= 3 and c1 <= 9, "方块数应在 3~9（3 格基础 + 最多 6 格派生）")
-	assert_eq(battle1.get_node("EnemyBlocks").get_child_count(), c1,
-			"实际摆放数应与规则数一致")
-	assert_almost_eq(battle1.get_block_hue("slime_01"),
-			battle2.get_block_hue("slime_01"), 0.0001, "同编组色相应稳定")
-	assert_true(battle1.get_block_hue("slime_01") >= 0.0
-			and battle1.get_block_hue("slime_01") < 1.0, "色相应在 [0,1)")
-
-
-func test_战斗场景直读GameData队伍初始态() -> void:
-	# A5：战斗场景从 GameData 读队伍初始态——占位 UI 文本应含 3 角色与数值
-	var battle := _spawn_battle(VALID_PAYLOAD)
-	var label: Label = battle.get_node("PartyState")
-	for c: Resource in GameData.party:
-		assert_true(String(label.text).contains(c.name),
-				"队伍显示应含角色 %s" % c.name)
-		assert_true(String(label.text).contains(str(c.hp)),
-				"队伍显示应含 %s 的 HP %d" % [c.name, c.hp])
-		assert_true(String(label.text).contains(str(c.mp)),
-				"队伍显示应含 %s 的 MP %d" % [c.name, c.mp])
-
-
-func test_胜利按钮发BattleResult_VICTORY带队伍快照() -> void:
-	EventBus.battle_finished.connect(_on_battle_finished)
-	var battle := _spawn_battle(VALID_PAYLOAD)
-	var btn: Button = battle.get_node("BtnVictory")
-	btn.pressed.emit()
-	EventBus.battle_finished.disconnect(_on_battle_finished)
-	assert_not_null(_recv_result, "胜利按钮应发 battle_finished")
-	if _recv_result == null:
-		return
-	var r: Dictionary = _recv_result
-	assert_eq(r.get("outcome"), "VICTORY", "outcome 应为 VICTORY")
-	var ps: Array = r.get("party_state", []) as Array
-	assert_eq(ps.size(), GameData.party.size(), "party_state 应覆盖全体角色")
-	if ps.size() == GameData.party.size():
-		for i: int in GameData.party.size():
-			var snap: Dictionary = ps[i]
-			var c: Resource = GameData.party[i]
-			assert_eq(snap.get("id"), c.id, "快照 %d id 应一致" % i)
-			assert_eq(snap.get("hp"), c.hp, "快照 %d hp 应与当前队伍态一致" % i)
-			assert_eq(snap.get("mp"), c.mp, "快照 %d mp 应与当前队伍态一致" % i)
-
-
-func test_失败按钮发BattleResult_DEFEAT() -> void:
-	EventBus.battle_finished.connect(_on_battle_finished)
-	var battle := _spawn_battle(VALID_PAYLOAD)
-	var btn: Button = battle.get_node("BtnDefeat")
-	btn.pressed.emit()
-	EventBus.battle_finished.disconnect(_on_battle_finished)
-	assert_not_null(_recv_result, "失败按钮应发 battle_finished")
-	if _recv_result != null:
-		assert_eq((_recv_result as Dictionary).get("outcome"), "DEFEAT",
-				"outcome 应为 DEFEAT")
-
-
-# =============== D. A3 边界守门（只发不写） ===============
-
-func test_按钮触发后GameData零变化() -> void:
-	# 本 Story 只发结果：GameData 覆写属 E2-S4——按钮前后队伍态逐字段不变
-	var battle := _spawn_battle(VALID_PAYLOAD)
-	var before: Array = []
-	for c: Resource in GameData.party:
-		before.append([c.id, c.level, c.hp, c.max_hp, c.mp, c.max_mp])
-	EventBus.battle_finished.connect(_on_battle_finished)
-	(battle.get_node("BtnVictory") as Button).pressed.emit()
-	(battle.get_node("BtnDefeat") as Button).pressed.emit()
-	EventBus.battle_finished.disconnect(_on_battle_finished)
-	assert_not_null(_recv_result, "前置：按钮已发结果")
-	for i: int in GameData.party.size():
-		var c: Resource = GameData.party[i]
-		var b: Array = before[i]
-		assert_eq(c.id, b[0], "按钮后 %s id 不得变" % c.name)
-		assert_eq(c.level, b[1], "按钮后 %s level 不得变" % c.name)
-		assert_eq(c.hp, b[2], "按钮后 %s hp 不得变（覆写属 E2-S4）" % c.name)
-		assert_eq(c.max_hp, b[3], "按钮后 %s max_hp 不得变" % c.name)
-		assert_eq(c.mp, b[4], "按钮后 %s mp 不得变" % c.name)
-		assert_eq(c.max_mp, b[5], "按钮后 %s max_mp 不得变" % c.name)
+# =====================================================================
+# 【C/D 区退役声明】（O-6 改造，2026-09-12）
+# 下列 6 条占位用例随 battle_scene.gd 重写为真实战斗而退役：
+#   test_战斗场景可实例化_空载荷防御态 / test_方块阵_同编组恒同阵_数量在界内
+#   test_战斗场景直读GameData队伍初始态 / test_胜利按钮发BattleResult_VICTORY
+#   test_失败按钮发BattleResult_DEFEAT / test_按钮触发后GameData零变化
+# 场景节点（EnemyBlocks/PartyState/BtnVictory/BtnDefeat）不复存在，
+# 属 sprint3-qa-plan §5.4"预期红"到期兑现条款。
+# 接棒验证 → tests/gut/test_o6_real_battle.gd（真实战斗全链路 6 用例）。
+# =====================================================================

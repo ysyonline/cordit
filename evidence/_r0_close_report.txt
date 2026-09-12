@@ -1,0 +1,17 @@
+[SEC13-REFS]
+    _o5-gut-clean.log            EXISTS
+    _o5-smoke-verify3.log        EXISTS
+    _o6-gut-clean.log            EXISTS
+    _o6-gut-clean2.log           EXISTS
+    o6-export-smoke.log          EXISTS
+    o6-export3.log               EXISTS
+R0-ROW-FOUND=True
+O-5-ROW-FOUND=True
+O-6-ROW-FOUND=True
+GATE-WRITTEN CHANGED=True
+R0-CLOSED-MARK=True
+FIX-MARK-COUNT=2
+[FINAL-ROWS]
+    | **R-0** | \u2705 **\u5df2\u9500\u9879\uff082026-09-12\uff09**\uff1aO-6 \u4fee\u590d + O-5 \u4fee\u590d\u843d\u5730\u2014\u2014\u751f\u4ea7\u8def\u7531\u63a5\u5165\u771f\u5b9e\u6218\u6597\uff08battle_scene.gd \u91cd\u5199\uff09\u3001f1 \u5165\u53e3\u951a\u88c5\u914d\uff08ruins_f1_map.gd\uff0c\u53cc\u5b88\u536b\uff09\uff1bGUT \u5168\u7eff 530/530\uff08`evidence/_o6-gut-clean2.log`\u3001`_o5-gut-clean.log`\uff0cAPPDATA \u91cd\u5b9a\u5411\uff09\uff1b\u91cd\u65b0\u5bfc\u51fa\u5b8c\u6210\uff08exe `01F7DCF0\u2026`\u3001pck `D6AC9B5E\u2026`\uff0c\u73b0\u8d27\u6307\u7eb9\u89c1 `m7-package-closeout.md
+    | **O-5** | \u2705 \u4fee\u590d\u843d\u5730 2026-09-12\uff08ruins_f1_map.gd \u5165\u53e3\u951a\u88c5\u914d + GUT 530/530 + \u5192\u70df 8/8\uff09\u2192 \u6458\u8981\u5982\u4e0b\uff08\u5386\u53f2\u539f\u6587\u4fdd\u7559\uff09\uff1a  **Major\uff08\u5bf9\u6e38\u620f\u6d41\u7a0b\u800c\u8a00\uff09** | **`story_ruin_enter`\uff08P2 \u8fdb\u9057\u8ff9\u5267\u60c5\uff09\u751f\u4ea7\u4fa7\u96f6\u89e6\u53d1\u7aef**\uff1a\u5168\u5e93\u68c0\u7d22 `scripts/`\u3001`scenes/`\u3001`gen_ruins.py` \u5747\u65e0\u8be5\u4e8b\u4ef6 ID \u7684\u88c5\u914d\uff08\u4e8b\u4ef6\u6570\u636e\u5728 `story_anchor.json` \u4e14 
+    | **O-6** | \u2705 \u4fee\u590d\u843d\u5730 2026-09-12\uff08battle_scene.gd \u91cd\u5199\u63a5\u771f\u5b9e\u6218\u6597 + battle_command.setup() \u7c7b\u578b\u7f3a\u9677\u4fee\u590d + GUT 530/530 + \u91cd\u5bfc\u51fa\uff09\u2192 \u6458\u8981\u5982\u4e0b\uff08\u5386\u53f2\u539f\u6587\u4fdd\u7559\uff09\uff1a  **\U0001f534 Blocker\uff082026-09-12 \u73a9\u5bb6\u5b9e\u8bc1 + \u4ee3\u7801\u8003\u53e4\u5750\u5b9e\uff09** | **\u300c\u78b0\u602a\u65e0\u6218\u6597\u300d\u2014\u2014\u751f\u4ea7\u8def\u7531 17 \u5929\u524d\u8d77\u5c31\u6307\u5411\u5360\u4f4d\u6218\u6597\u573a\u666f\uff0c\u771f\u5b9e\u6218\

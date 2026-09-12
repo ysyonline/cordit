@@ -144,6 +144,8 @@ const EquipmentData := preload("res://scripts/data/equipment_data.gd")
 const BattleUnits := preload("res://scripts/data/battle_units.gd")
 ## T4.1 存档接线：地图路径 → 短名反查表（_current_map_name 消费）
 const TeleportCatalog := preload("res://scripts/events/teleport_catalog.gd")
+## M7-O11 存档反馈条（手动存档路径复用自动存档同款视觉）
+const SaveIcon := preload("res://scripts/ui/save_icon.gd")
 
 # ==============================================================
 # 运行时状态
@@ -293,18 +295,37 @@ func confirm_current() -> void:
 ## 地图名取 SceneRouter.current_scene_path（当前探索图正本，与自动存档
 ## 侧"map 字段=图名"一致；仅探索图可开菜单，故恒有值——战斗中/转场中
 ## 被 try_open 三门闸拦截，进不到确认动作）。
-## 成功后关菜单（存档动作收束，回地图交互）。
+## 成功后关菜单（存档动作收束，回地图交互）+ 右下角"已存档 · <图名>"反馈条
+## （M7-O11：用户拍板④——手动存档与自动存档同款可见反馈，世界层挂载）。
 func _confirm_save_item() -> void:
 	var map_name := _current_map_name()
 	var pos := _current_player_position()
 	var ok := SaveManager.save(map_name, pos)
 	if ok:
 		print("[MenuPanel] 存档完成：%s @ %s" % [map_name, pos])
+		_spawn_save_toast(map_name)
 		close()
 	else:
 		# 写盘失败（磁盘/权限）：旧档保留（SaveManager 原子写语义），
 		# 菜单保持打开——玩家可重试或另行操作，不静默假成功。
 		push_warning("[MenuPanel] 存档写入失败，旧档保留（菜单保持打开）")
+		_spawn_save_toast("", false)
+
+
+## M7-O11 存档反馈条（菜单手动存档路径）：复用 save_icon.gd 视觉，挂
+## UILayer（菜单属常驻 UI 层，挂本面板随开合销毁会闪断——挂 ui_host 根，
+## 动画自毁协议与地图侧一致）。无树（headless 直驱）时跳过。
+func _spawn_save_toast(map_name: String, p_ok: bool = true) -> void:
+	if not is_inside_tree():
+		return
+	var icon := Control.new()
+	icon.set_script(SaveIcon)
+	icon.name = "SaveIconFlash"
+	get_parent().add_child(icon)
+	if map_name.is_empty():
+		icon.flash(p_ok)
+	else:
+		icon.flash_map(p_ok, map_name)
 
 
 ## 读档项确认（T4.1）：复用 DEFEAT 读档路径（E4-S7 已落地链路）——

@@ -1,0 +1,56 @@
+{
+	"chests_opened": [],
+	"cleared_enemy_set": [],
+	"discovered_weakness_set": [],
+	"equipment": [
+		"iron_sword",
+		"leather_armor"
+	],
+	"flags": [],
+	"inventory": {},
+	"map": "ruins_f1",
+	"party": [
+		{
+			"armor_id": "",
+			"hp": 120,
+			"id": "kyle",
+			"job": "swordsman",
+			"level": 1,
+			"max_hp": 120,
+			"max_mp": 10,
+			"mp": 10,
+			"name": "凯尔",
+			"weapon_id": ""
+		},
+		{
+			"armor_id": "",
+			"hp": 80,
+			"id": "lina",
+			"job": "sorcerer",
+			"level": 1,
+			"max_hp": 80,
+			"max_mp": 30,
+			"mp": 30,
+			"name": "莉娜",
+			"weapon_id": ""
+		},
+		{
+			"armor_id": "",
+			"hp": 95,
+			"id": "mona",
+			"job": "support",
+			"level": 1,
+			"max_hp": 95,
+			"max_mp": 24,
+			"mp": 24,
+			"name": "莫娜",
+			"weapon_id": ""
+		}
+	],
+	"position": [
+		448.0,
+		56.0
+	],
+	"story_phase": 0,
+	"version": 3
+}

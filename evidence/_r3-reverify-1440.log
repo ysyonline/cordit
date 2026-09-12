@@ -1,0 +1,30 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[R3-SMOKE] === 预置存档验档冒烟开始 ===
+[R3-SMOKE] ① 读档成功: map=ruins_f2 pos=[384.0, 40.0] phase=2
+[BattleResultHandler] DEFEAT 读档成功 -> 回到存档点 ruins_f2 @ (384.0, 40.0)
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[BattleResultHandler] DEFEAT 结算完成 -> 回图 res://scenes/maps/ruins_f2.tscn（回置 (384.0, 40.0)）
+[VisibleEnemy] 就绪：ruins_f2_guardian（编组 b4_guardian）巡逻点 0 个 初始态 GUARD
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f2 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] ruins_f2 装配完成：传送触发器 2 处
+[AutosaveNotifier] ruins_f2 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] ruins_f2 装配完成：聊天点 1 处
+[R3-SMOKE] ③' （-s 模式 Router 不可用）直接实例化 f2 场景替代验证
+[R3-SMOKE] ③ 当前场景: res://scenes/maps/ruins_f2.tscn
+[R3-SMOKE] ④ 玩家落位: (384.0, 40.0)
+[R3-SMOKE] ⑤ B4 守卫在场: uid=ruins_f2_guardian
+[R3-SMOKE] ⑥ phase=2 flags=["story_p0_seen"]
+[R3-SMOKE] ⑥ 凯尔 Lv3 HP200/200 武器=iron_sword 防具=leather_armor
+[R3-SMOKE] ⑦ 存档文件仍是预置档: true
+[R3-SMOKE] === PASS：读档落位 f2 南门 / phase=2 / B4 在场 / 档未覆盖 ===
+WARNING: [BattleResultHandler] 回置失败：Main/World 无当前场景（GUT/无 Main 环境）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _pos_return_immediate (res://scripts/battle/battle_result_handler.gd:207)
+       [1] _do_return (res://scripts/battle/battle_result_handler.gd:190)

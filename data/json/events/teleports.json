@@ -6,13 +6,13 @@
     { "id": "tp_town_inn_exit", "map": "town", "tile": [85, 18], "size": [1, 1], "kind": "same_map", "target": [29, 19], "to_map": "", "to_spawn": [0, 0] },
     { "id": "tp_town_house_a_exit", "map": "town", "tile": [85, 30], "size": [1, 1], "kind": "same_map", "target": [12, 19], "to_map": "", "to_spawn": [0, 0] },
     { "id": "tp_town_to_road", "map": "town", "tile": [12, 47], "size": [2, 1], "kind": "cross_map", "target": [0, 0], "to_map": "road", "to_spawn": [23.5, 3.5] },
-    { "id": "tp_road_to_town", "map": "road", "tile": [23, 0], "size": [2, 1], "kind": "cross_map", "target": [0, 0], "to_map": "town", "to_spawn": [12.5, 45.5] },
+    { "id": "tp_road_to_town", "map": "road", "tile": [23, 0], "size": [2, 2], "kind": "cross_map", "target": [0, 0], "to_map": "town", "to_spawn": [12.5, 45.5] },
     { "id": "tp_road_to_f1", "map": "road", "tile": [23, 63], "size": [2, 1], "kind": "cross_map", "target": [0, 0], "to_map": "ruins_f1", "to_spawn": [27.5, 3] },
-    { "id": "tp_f1_to_road", "map": "ruins_f1", "tile": [27, 0], "size": [2, 1], "kind": "cross_map", "target": [0, 0], "to_map": "road", "to_spawn": [23.5, 61.5] },
+    { "id": "tp_f1_to_road", "map": "ruins_f1", "tile": [27, 0], "size": [2, 2], "kind": "cross_map", "target": [0, 0], "to_map": "road", "to_spawn": [23.5, 61.5] },
     { "id": "tp_f1_to_f2", "map": "ruins_f1", "tile": [27, 43], "size": [2, 1], "kind": "cross_map", "target": [0, 0], "to_map": "ruins_f2", "to_spawn": [23.5, 2] },
-    { "id": "tp_f2_to_f1", "map": "ruins_f2", "tile": [23, 0], "size": [2, 1], "kind": "cross_map", "target": [0, 0], "to_map": "ruins_f1", "to_spawn": [27.5, 41.5] },
+    { "id": "tp_f2_to_f1", "map": "ruins_f2", "tile": [23, 0], "size": [2, 2], "kind": "cross_map", "target": [0, 0], "to_map": "ruins_f1", "to_spawn": [27.5, 41.5] },
     { "id": "tp_f2_to_f3", "map": "ruins_f2", "tile": [23, 47], "size": [2, 1], "kind": "cross_map", "target": [0, 0], "to_map": "ruins_f3", "to_spawn": [19.5, 2] },
-    { "id": "tp_f3_to_f2", "map": "ruins_f3", "tile": [19, 0], "size": [2, 1], "kind": "cross_map", "target": [0, 0], "to_map": "ruins_f2", "to_spawn": [23.5, 45.5] }
+    { "id": "tp_f3_to_f2", "map": "ruins_f3", "tile": [19, 0], "size": [2, 2], "kind": "cross_map", "target": [0, 0], "to_map": "ruins_f2", "to_spawn": [23.5, 45.5] }
   ],
   "entry_spawns": {
     "town": [12.5, 45.5],

@@ -27,3 +27,5 @@ save.json
 !evidence/*.log
 *.bak
 *~
+
+.workbuddy/artifacts/

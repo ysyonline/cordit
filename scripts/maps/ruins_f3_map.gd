@@ -144,9 +144,40 @@ func _assemble_boss_anchor() -> void:
 		trigger.add_child(shape_node)
 		trigger.position = (anchor as Node2D).position
 		anchors.add_child(trigger)
+		# M7-O12：交互提示标签（用户拍板①B"现在就给锚点加提示"）——
+		# 锚点上方 12px 处浮动"❗Z"（金色 12px，脉冲呼吸）。玩家实测不知道
+		# 棺前按 Z 可触发 Boss（引导缺口），此标签即最小可用引导；打磨期
+		# 可换美术感叹号图标帧（只换本子树，锚点协议不变）。
+		_attach_interact_hint(trigger)
 		if boss_anchor == null:
 			boss_anchor = trigger            # 双锚同规格；测试对表取首个
 	print("[RuinsF3Map] Boss 锚点装配完成：%s（交互键，事件 story_boss_pre）" % BOSS_EVENT_ID)
+
+
+## M7-O12：Boss 锚点交互提示（"❗Z"浮动标签，用户拍板①B）。
+## 标签挂场景根直铺（非 YSorted）：y-sort 只认 Node2D.position.y，锚点
+## （y=568）小于石棺墙件（y=584）会把它挂的子 Label 压到棺画之下；Control
+## 不参与 y-sort，根直子节点渲染序在 TileMap/YSorted 之后（= 画在其上），
+## 恒可见。未入树（headless 装配面）兜底挂锚点——断言只查节点存在，渲染
+## 由生产路径（入树 current_scene 分支）保证。脉冲 = 引擎时隙 tween 循环
+## （同 dialogue_box 箭头闪烁手法，不自建 Timer）。
+func _attach_interact_hint(p_anchor: Area2D) -> void:
+	var hint := Label.new()
+	hint.name = "InteractHint"
+	hint.text = "❗Z"
+	hint.add_theme_font_size_override("font_size", 12)
+	hint.add_theme_color_override("font_color", Color(0.850980, 0.662745, 0.305882))  # D9A94E 金
+	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var host: Node = self
+	if is_inside_tree() and get_tree().current_scene != null:
+		host = get_tree().current_scene
+	# 标签左缘 -8px 容 2 字符，上移 28px 露出棺面上方
+	hint.position = (p_anchor as Node2D).position + Vector2(-8, -28)
+	host.add_child(hint)
+	# 呼吸脉冲：0.6s 周期透明度 0.55~1.0 往返（吸引注视但不吵）
+	var tw := hint.create_tween().set_loops()
+	tw.tween_property(hint, "modulate:a", 0.55, 0.6)
+	tw.tween_property(hint, "modulate:a", 1.0, 0.6)
 
 
 func _apply_limits(cam: Camera2D, rect: Rect2i) -> void:
