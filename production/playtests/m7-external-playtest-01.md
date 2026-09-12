@@ -13,16 +13,16 @@
 | 项 | 值 |
 |---|---|
 | 档号 | m7-external-playtest-01 |
-| kit 版本（发放时） | `production/qa/m7-playtest-kit.md` @ 修订日期：__________ |
+| kit 版本（发放时） | `production/qa/m7-playtest-kit.md` @ 修订日期：**2026-09-12**（§7.4 更正版，commit `4b9d49d`） |
 | 试玩者标识（化名即可） | __________ |
 | 是否**非开发机** / 操作系统版本 | __________（要求：Windows 10/11 64 位） |
 | 发放日期 | __________ |
 | 回收日期 | __________ |
-| 发放包的导出时间（`ls -l --time-style=full-iso export/win/`） | exe：__________ ｜ pck：__________ |
-| **发放包 SHA256**（PowerShell `Get-FileHash -Algorithm SHA256`） | exe：__________ ｜ pck：__________ ｜ zip：__________ |
-| **是否已核对 SHA256 = `production/release/m7-package-closeout.md` §2 最终值**（§7.1-A 硬检查，**一票否决**） | [ ] 是，**相符** ｜ [ ] 否 / 不符 —— **不得发放** |
-| 发放包大小（旁证：新 pck ≈3.25 MiB / 旧 ≈3.2 MiB） | exe：__________ ｜ pck：__________ ｜ zip：__________ |
-| 发放形式 | [ ] zip ｜ [ ] exe+pck+文本 |
+| 发放包的导出时间（`ls -l --time-style=full-iso export/win/`） | exe：**2026-09-12 06:05:30** ｜ pck：**2026-09-12 06:05:30** |
+| **发放包 SHA256**（PowerShell `Get-FileHash -Algorithm SHA256`） | exe：**`01F7DCF08A63F2B11874F286A4D8A1D7802FB0A8FAFFE0EE46170934CAA70AF8`** ｜ pck：**`BAA778C5C07057C104E7780BAF2C1F451ABF7C36C268B879623974D49B2CB94F`** ｜ zip：**`25BF07E919FA6F97827176F48020D87821EB9D723677DC3D56CE60CCD3E8CD94`** |
+| **是否已核对 SHA256 = `production/release/m7-package-closeout.md` §2 最终值**（§7.1-A 硬检查，**一票否决**） | [x] 是，**相符**（2026-09-12 09:01 主理人三件实测核对，逐字节一致） |
+| 发放包大小（旁证：新 pck ≈3.25 MiB / 旧 ≈3.2 MiB） | exe：**109,132,800 B** ｜ pck：**3,404,804 B** ｜ zip：**42,020,129 B（40.07 MiB）** |
+| 发放形式 | [x] zip ｜ [ ] exe+pck+文本 |
 | 实际耗时（试玩者自报） | 约 __________ 分钟 |
 
 **发放前红线自检**：§6 / §7 是否**未**发给试玩者？ [ ] 已确认未发 ｜ [ ] 有泄漏（本次作废）
