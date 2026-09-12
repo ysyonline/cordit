@@ -1,0 +1,5 @@
+local HEAD = dcee4d6f454bf4c9b8917788476906ed9380b9f6
+local tag  = dcee4d6f454bf4c9b8917788476906ed9380b9f6
+remote:
+  dcee4d6f454bf4c9b8917788476906ed9380b9f6	refs/heads/main
+  dcee4d6f454bf4c9b8917788476906ed9380b9f6	refs/tags/m7

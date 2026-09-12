@@ -72,11 +72,21 @@ const MenuPanelScript := preload("res://scripts/ui/menu_panel.gd")
 ## M7-O10 地图名 HUD（UILayer 常驻装配，map_ready 驱动；用户 2026-09-12 拍板③A）
 const MapNameHudScript := preload("res://scripts/ui/map_name_hud.gd")
 
+## M7-B01 任务目标 HUD（UILayer 常驻装配，story_phase_changed 驱动；
+## R-1 试玩 B-01 引导缺位修复②——玩家任何时候可见「当前该做什么」）
+const QuestObjectiveHudScript := preload("res://scripts/ui/quest_objective_hud.gd")
+
 ## E6-S1 主菜单实例（UILayer 常驻装配产物；公开供测试树定位/断言）
 var menu_panel: Control = null
 
 ## M7-O10 地图名 HUD 实例（UILayer 常驻装配产物；测试对表用）
 var map_name_hud: Control = null
+
+## M7-B01 任务目标 HUD 实例（UILayer 常驻装配产物；测试对表用）
+var quest_objective_hud: Control = null
+
+## M7-B01 告示板「!」提示标签实例（场景根直铺；phase>=1 隐藏，测试对表用）
+var billboard_hint: Label = null
 
 ## M7-A1 光照层装配产物（Lighting 容器；测试对表用——断言 Tint/Lights/坐标）。
 ## 室内挂图例外说明见 LIGHTING_CONFIG 注。
@@ -174,6 +184,10 @@ func _ready() -> void:
 	# town 首装后跨图复用同一实例。必须挂在 announce_ready【之前】——
 	# announce_ready 内即广播 map_ready，HUD 后装会漏接首次广播）
 	_assemble_map_name_hud()
+	# M7-B01：任务目标 HUD 装配（UILayer 常驻；story_phase_changed 驱动 +
+	# _ready 直读 GameData 初始同步。无"首帧广播依赖"，与 announce_ready
+	# 顺序无关，紧跟地图名 HUD 之后装配保持 UI 装配聚合）
+	_assemble_quest_objective_hud()
 	# E4-S6：进图自动存档（map_ready 广播 + save + 图标，§3.4 时序收口）
 	AutosaveNotifier.announce_ready(self, "town")
 	# E6-S1：主菜单装配（UILayer 常驻 + C 键呼出；town 首装，跨图复用）
@@ -194,6 +208,9 @@ func _assemble_content_points() -> void:
 	for inv: Node in (content_points["investigates"] as Array):
 		if String(inv.call("get_event_id")) == QUEST_ACCEPT_INV_ID:
 			inv.quest_event_id = QUEST_ACCEPT_EVENT_ID
+			# M7-B01：告示板「!」提示（引导缺位修复①——R-1 试玩者从未发现
+			# 告示板可交互；npc.gd:45「"!"气泡属后续 Story」的提前兑现）
+			_attach_billboard_hint(inv as Node2D)
 
 
 ## E1-S6：对话系统装配（全部增量集中于此，E1-S5 已验收行为零触碰）。
@@ -371,6 +388,33 @@ func _assemble_map_name_hud() -> void:
 	print("[TownMap] 地图名 HUD 装配完成（MapNameHud 常驻）")
 
 
+## M7-B01：任务目标 HUD 装配（R-1 试玩 B-01 引导缺位修复②）。
+## 层位归属与 _assemble_map_name_hud 同款：挂 Main/UILayer（跨场景常驻——
+## HUD 自己监听 EventBus.story_phase_changed，跨图自动续显，无需每图重装）；
+## 无 Main 结构（测试直挂）时兜底挂本图随图生灭。已存在实例时跳过
+## （防重复装配 + 防重复连接信号——双实例会双显示）。
+func _assemble_quest_objective_hud() -> void:
+	if not is_inside_tree():
+		return
+	var ui_host: Node = get_tree().root.get_node_or_null("Main/UILayer")
+	var is_temp: bool = false
+	if ui_host == null:
+		ui_host = self
+		is_temp = true
+	var existing: Node = ui_host.get_node_or_null("QuestObjectiveHud")
+	if existing != null and existing.get_script() == QuestObjectiveHudScript:
+		quest_objective_hud = existing
+		return
+	var hud: Control = Control.new()
+	hud.name = "QuestObjectiveHud"
+	hud.set_script(QuestObjectiveHudScript)
+	ui_host.add_child(hud)
+	if is_temp:
+		hud.set_meta("temp_quest_objective_hud", true)  # 标记：测试树释放时随图销毁
+	quest_objective_hud = hud
+	print("[TownMap] 任务目标 HUD 装配完成（QuestObjectiveHud 常驻）")
+
+
 ## M7-A1：光照层装配（全部增量集中于此，既有验收行为零触碰）。
 ## 层位归属：Lighting 容器挂本地图根（TileMapLayer 平级、y_sort 之外），
 ## 随图生灭零全局状态；玩家随身光运行时挂 $YSorted/Player 子节点
@@ -382,3 +426,45 @@ func _assemble_map_name_hud() -> void:
 ## town_map.gd 头注 M7-A1 段。
 func _assemble_lighting(player: Node2D = null) -> void:
 	lighting = MapLighting.assemble(self, LIGHTING_CONFIG, player)
+
+
+## M7-B01：告示板「!」提示标签（R-1 试玩 B-01 引导缺位修复①）。
+## 【视觉】告示板上方 12px 处金色「❗Z」脉冲标签（O-12 f3 Boss 提示同款
+##   手法——玩家已实证该样式可发现；「Z」直接教会交互键）。
+## 【挂载位】场景根直铺（非 YSorted）：O-12 教训——y-sort 只认 Node2D.
+##   position.y，挂 YSorted 内会被墙体件压到画下；Control 根直子节点渲染序
+##   恒最上。未入树（headless 装配面）兜底挂告示板自身。
+## 【门控】接取委托（story_quest_accept 成功 → phase 1）后隐藏——事件仍在
+##   （再交互回落风味文本），但「!」的语义是"这里有新委托"，接取后即撤。
+##   监听 EventBus.story_phase_changed 实现， phase 回 0（不可能但防御）
+##   会重新显示；隐藏/显示随图生灭（标签挂本场景根，跨图重进 town 时
+##   _assemble_content_points 重跑重建，与 GameData 现状同步）。
+func _attach_billboard_hint(p_billboard: Node2D) -> void:
+	var hint := Label.new()
+	hint.name = "BillboardHint"
+	hint.text = "❗Z"
+	hint.add_theme_font_size_override("font_size", 12)
+	hint.add_theme_color_override("font_color", Color(0.850980, 0.662745, 0.305882))  # D9A94E 金
+	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var host: Node = self
+	if is_inside_tree() and get_tree().current_scene != null:
+		host = get_tree().current_scene
+	# 告示板格中心上方：标签左缘 -8px 容 2 字符，上移 28px 露出告示板顶
+	hint.position = p_billboard.position + Vector2(-8, -28)
+	host.add_child(hint)
+	billboard_hint = hint
+	# 脉冲呼吸：0.6s 周期透明度 0.55~1.0 往返（同 O-12 手法，不自建 Timer）
+	var tw := hint.create_tween().set_loops()
+	tw.tween_property(hint, "modulate:a", 0.55, 0.6)
+	tw.tween_property(hint, "modulate:a", 1.0, 0.6)
+	# phase 门控：接取（phase>=1）即隐藏；重进 town 按现状重建
+	if GameData.story_phase >= 1:
+		hint.visible = false
+	else:
+		EventBus.story_phase_changed.connect(_on_billboard_phase_changed)
+
+
+## M7-B01：告示板「!」门控回调（phase>=1 隐藏接取后的过期指引）
+func _on_billboard_phase_changed(n: int) -> void:
+	if billboard_hint != null and n >= 1:
+		billboard_hint.visible = false

@@ -24,24 +24,29 @@
 - **DEFEAT 读档**:load_save() → last_loaded → 回存档点+免疫 0.5s;失败兜底回暂存图。
 - R1/R2 已落地:INITIAL_SCENE_PATH=town;town 南门栅栏已拆。
 
-## 当前状态(2026-09-12 20:15 快照 · 归档版,新窗口续跑入口)
-- **阶段:Phase 7 · 发布门,QA 门 🔴 FAIL 维持**(production/qa/m7-final-qa-gate.md 正本)。tag 止于 m6;HEAD `4821c42`。
-- **本日已修六笔(O-5~O-10),全部在工作区未提交**:O-5 f1 入口剧情锚装配;O-6 碰怪无战斗(battle_scene.gd 接真实输入桥+敌方 0.9s 驱动+结算驻留 15s 护栏);O-8 目标选择键盘(battle_ui.gd _unhandled_input);O-9 转场层吞鼠标(全屏 Control 补 IGNORE,CmdMenu/SubMenu 留 STOP);O-10 三件套=①f3 棺前「❗Z」提示(ruins_f3_map.gd _attach_interact_hint,挂场景根防 y-sort 遮盖)②地图名 HUD(新 map_name_hud.gd,UILayer 常驻 town 首装跨图复用,显示名正本=teleport_catalog.MAP_DISPLAY_NAMES:清溪镇/林间小道/遗迹一二三层)③存档反馈条(save_icon.gd 重写为「已存档 · <图名>」文字条 1.6s,flash 兼容+flash_map 新口;autosave_notifier 透传图名;menu_panel 手动存档同款反馈)。
-- **测试**:GUT **538/538 全绿**;O-10 冒烟 tools/dev/_o10_smoke_verify.gd **4/4 PASS**;O-7 冒烟 _o7_smoke_verify.gd PASS;O-7/O-10 回归用例=test_o7_ui_bridge.gd(8 用例)+test_o6_real_battle.gd(适配版)。
-- **✅ O-13 已修并实机验证闭环(2026-09-12 21:45)**:顶部触发区不对称——玩家碰撞盒 size(12,6) offset(0,-3) 挂脚底**上方**,顶部触发区(tile y=0,size 2×1→y∈[0,16])实测需中心 y≤16 才触发,门洞第 2 格中心 y=24 无反应;底部触发区方向相反天然宽容。**修法=4 条顶部触发区 size 改 (2,2)**(tp_road_to_town/tp_f1_to_f1→f1_to_road/tp_f2_to_f1/tp_f3_to_f2),catalog+json 两处同步,阈值放宽到 y≤32;落位余量 f1/road 24px、f2/f3 8px 均不弹回。**勿改回 2×1**;**勿整块下移到 tile y=1**(贴墙位 x=296,y=40 误触发)。
-- **新坑两则(O-10 入册)**:①-s 模式解析错误会被 debugger 断点轰炸成亿级日志——headless 跑测先查日志体积再 grep;②Control 用 PRESET_FULL_RECT 后赋 size 触发引擎告警→GUT Unexpected Errors 假红,须等值锚点+直设 position/size。
-- **⚠️ 新坑:GUT 不隔离用户存档**——真实 save.json 泄入测试造成 12 条假红;**跑测正本命令自此必须带 APPDATA=D:/code/cordit/.godot_user_tmp/gut-sandbox 重定向**。
-- **待办(新窗口按序执行,等用户发话)**:①~~修 f3→f2 触发区~~ **已完成并实机验证(O-13)**→②③~~03 批次导出+zip~~ **已完成(21:50,zip=D94C410E1C17B12A…/pck=B73F705DACA746BD…/exe 不变 01F7DCF0…;启动验证过=清溪镇;02 退役 _RETIRED-14-51-batch02.zip)**→④~~指纹回写三文档~~ **已完成(closeout §7+§13.5/playtest §0.2/kit §7.4.3)**→⑤工作区变更 commit(O-5~O-13 套件+production 文档+记忆)+tag m7→⑥R-1 外部试玩/R-2 非开发机/R-3 重录视频均在 03 批次上回收。
-- **R-3 时序实证(存档)**:10:47 首录视频早于战斗修复,已作废;m7-gameplay.avi 须重录(经 m7-gameplay 实证 R-3 时序)。
-- **M6 已收口**:commit e5ad6a0 + tag m6 + push 三方一致;收口正本=evidence/m6-closeout.md。
-- **M7 前情**:E7-S1 数值调校、E7-S2 剧情统稿、头像修复(2× 整数放大)、R6 告示板接线、R7 角色换装(char_anim.gd 工厂,分配表待用户目检)——细节见 09-05~09-12 日志。
-- **design/ 正本只在 git 历史**(4f3b717 删除入库,取回 `git show 4f3b717^:design/<path>`)→ M8 周期前必须恢复,否则无数值参照。
-- **工作区未提交清单(git status 20:15 实盘)**:M 18 文件(.workbuddy 记忆×2 + production 文档×4[qa-gate/playtest-kit/playtest-01/package-closeout] + scripts×11 + test_e2s3) + ?? 新增(map_name_hud.gd+.uid / test_o6_real_battle+.uid / test_o7_ui_bridge+.uid / tools/dev 冒烟 4 件 / evidence 取证日志约 40 件含 _r3-frames 与 m7-gameplay.avi[LFS 作废视频])。commit 惯例:evidence/ 取证件入库,.workbuddy/artifacts/ 不入库。
+## 当前状态(2026-09-13 02:45 快照 · **B-01 已真人验证 PASS,工作区未提交**,新窗口续跑入口)
+- **阶段:Phase 7 · 发布门,commit/tag/push 三方一致 = `dcee4d6f454bf4c9b8917788476906ed9380b9f6`**(local HEAD = local tag m7 = remote main = remote tag m7)。tag 止于 m7。
+- **✅ R-1 断点诊断已实锤(2026-09-13 凌晨)**:headless 全链路复现 `evidence/_story_chain_repro.log` ALL PASS——**代码链零断点**,R-1 story_phase=0 属引导缺位(玩家未接取任务;告示板无「!」+ 无任务目标 HUD)。回收档 m7-external-playtest-01.md §2(三问/B-2/结尾钩子全未过)+§3(B-01 Blocker~B-06)+§4(草稿🟡 CONCERNS)+§5 已填。待用户拍板 M7 门判定。
+- **✅ B-01 引导缺位修复已落地(2026-09-13 00:55,用户拍板「按建议执行」,工作区未提交)**:
+  - 新 `scripts/ui/quest_objective_hud.gd`(+uid):常驻任务目标 HUD,story_phase_changed 驱动+_ready 直读 GameData 初始同步;文案 0=查看告示板接取委托/1=前往遗迹一层/2=深入遗迹第三层石棺/≥3 隐藏;左上 (8,32)。
+  - `town_map.gd` 三增量:_assemble_quest_objective_hud(脚本判重守卫)/_attach_billboard_hint(告示板「❗Z」金色脉冲,O-12 同款,phase>=1 门控隐藏)/billboard_hint+quest_objective_hud 实例变量。
+  - 新 `tests/gut/test_b01_guide.gd` 13 用例(A 纯逻辑5/B 信号4/C 装配4);新 `tools/dev/_b01_smoke_verify.gd`+`.tscn` 生产装配冒烟 4/4 PASS(`evidence/_b01-smoke.log`)。
+  - **测试:GUT 551/551 全绿**(`evidence/_b01-gut-full.log`;538 存量零回归+13 新增)。
+- **⚠️ 未提交(等用户发话)**:B-01 套件(上述 6 文件)+ m7-external-playtest-01.md + evidence 四件(_story_chain_repro.log/_b01-smoke.log/_b01-gut-full.log/r1-playtest-01-answered)+ 记忆×2。m7-gameplay.avi(124MB 作废)留磁盘不入库。
+- **下一步(按序,等用户)**:①~~实机目检~~✅(用户已亲历)→②~~04 批次~~✅已导出→③R-3 重录(等复测)→④复测后 M7 门判定+commit。
+- **✅ B-01 真人端到端验证 PASS(2026-09-13 02:4x)**:用户完整走链——告示板接委托(0→1)→road 甲虫 VICTORY→f1 自动 P2(1→2)→f3 棺前 Boss 战开打。**Boss 战 DEFEAT**(kyle Lv1 阵亡,数值预期内);读档回 f3(320,40) phase=2,簿记清空可重触发;DEFEAT 读档语义实战验证通过。R-1 根因修复实证闭环,四环节引导全命中。重试建议已给(f2 B4 练级/防御/药)。
+- **⑤ M7 收口前情**:dcee4d6「O-5~O-13 全套修复+03 批次」112 文件。R-1 已发出(22:37)并回收归档(23:00)。
+- **✅ O-13 顶部触发区已锁死**:4 条返程 size (2,2),阈值 y≤32,实机验证闭环;**勿改回 2×1、勿下移 tile y=1**。
+- **✅ 04 批次已重导出（2026-09-13 02:1x,用户拍板②不等①）**:exe `01F7DCF0…` 逐字节不变;pck `BFDD4722F46D162F…` 3,416,012 B(含 B-01);zip `F584BB5128730A79…69B19BA4` 42,029,052 B(14 条目顶层目录结构,CRC OK,内件与 win/ 逐字节一致);03 zip 退役 _RETIRED-21-50-batch03.zip。导出包冒烟 PASS(QuestObjectiveHud 常驻装配日志+零 SCRIPT ERROR,evidence/_b01-batch04-smoke.log)。回收档 §0.3 已回写指纹。**待:用户实机目检→发试玩者复测→M7 门判定→commit**。
+- **新坑三则(全项目永久有效)**:①GUT 存档隔离坑**变体**——沙盒 APPDATA 自身残留旧 save.json 也会泄入(DEFEAT 用例 load_save 回滚 GameData 造成假红);**跑测前必须清沙盒存档**,仅重定向 APPDATA 不够。②-s 模式解析错误被 debugger 轰炸成亿级日志——先查体积再 grep。③Control 禁 PRESET_FULL_RECT+赋 size(假红),等值锚点+直设 position/size。④**pck 内容判定禁字节扫中文**(编译后 token 流,中文非明文=假阴性;03 已验证串也搜不到);ASCII 路径串可信,最可靠=运行级冒烟。⑤导出产物落名走 {preset_name} 占位符,导出后须手动归位;zip 顶层目录结构须对齐历史批次。
+- **R-3 时序实证**:m7-gameplay.avi(10:47 录)早于 O-6 修复已作废,须在含 B-01 修复的新包上重录。
+- **M6/M7 前情**:M6=e5ad6a0;O-5~O-13 修复明细见 09-12 日志。**design/ 正本只在 git 历史**(4f3b717 删除,`git show 4f3b717^:design/<path>` 取回)→ M8 前必须恢复。
 
 ## 验证纪律(O-6/O-7 教训,全项目永久有效)
 - 「GUT 全绿+demo 走通」≠ 生产链路成立——**必须区分"被测对象走的链"与"玩家走的链"是否同一条**;里程碑验收须在**生产入口**(Router 路由目标)做集成级实证(headless 冒烟断言生产侧日志),不能只靠直驱单测。
 - **O-7 追加**:UI 信号→状态机的"玩家驱动链"必须有专门回归用例(test_o7_ui_bridge 模式:从 command_selected.emit 开始驱动);demo 的 _autoplay / 测试的直驱 submit_command 都会掩盖接线缺失。
 - **O-10 追加**:headless 跑测日志**先查体积再 grep**(-s 模式解析错误会被 debugger 断点轰炸成亿级字符);Control 布局禁"PRESET_FULL_RECT+赋 size"组合(引擎告警→GUT Unexpected Errors 假红),用等值锚点+直设 position/size。
+- **B-01 追加(存档隔离坑完整口径)**:APPDATA 重定向只隔离真实用户档,**沙盒自身残留旧 save.json 也会经 DEFEAT→load_save 链泄入**(e5s5 test_d1 假红实证);跑测正本命令 = 重定向 + **跑前清沙盒存档**两步缺一不可。
 
 ## 环境与坑(精简版)
 - Godot=winget 装于 `C:\Users\weixufeng\AppData\Local\Microsoft\WinGet\Packages\GodotEngine.GodotEngine_…\Godot_v4.7.2-stable_win64_console.exe`;GUT 9.7.1;headless 跑测 `MSYS2_ARG_CONV_EXCL="*"`+Windows 反斜杠路径+**APPDATA=gut-sandbox 沙盒重定向(防真实存档泄入)**;demo dryrun 加 `--fixed-fps 30 --quit-after 5400`。
