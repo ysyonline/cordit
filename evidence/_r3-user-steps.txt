@@ -1,0 +1,24 @@
+=== 关键事实 ===
+1. scenes/main.tscn 存在 = project.godot run/main_scene 正本，bat 场景路径正确
+2. project.godot 无 movie_writer 配置 = 用 Godot 默认 AVI JPEG writer（与 m3/m4/m5 同款，无额外配置需求）
+3. 用户存档现状: map=ruins_f1, story_phase=0, party Lv1 —— 是 9/8 的旧档，未到 B4
+   => 方案 A 的"玩到遗迹二层 B4 前"需要从 ruins_f1 真打上去（约 10-15 分钟，正常）
+   => 赶路段不录屏，打完 B1-B3 到 B4 前手动存档后，才用本 bat 开录
+=== 用户操作序列（打印这张）===
+[阶段一 · 不录屏] 双击运行游戏（或 F5），从当前档继续：
+  - ruins_f1 打穿 B1-B3（别全逃，保证等级）
+  - 上二层，走到 B4（遗像守卫）前
+  - C 菜单 -> 存档
+[阶段二 · 开始录] 退出游戏 -> 双击 tools\record_m7_gameplay.bat：
+  - 按提示按任意键 -> 游戏启动
+  - 主菜单选"继续"（读档）-> 落在遗迹二层
+  - 打 B4（拍: 群击抬血/中毒/预告后防御）
+  - 上三层打 B5（拍: 交互键开战/目标切换/火系弱点!/蓄力防御/逃跑置灰）
+  - 一路玩到结尾（拍: "第一个，还有五个。" 停 2 秒以上）
+  - 打完从菜单退出（或 Alt+F4）-> Movie Maker 自动写盘
+[阶段三 · 收尾] 回到 bat 的控制台窗口：
+  - 标题栏右键 -> 全选 -> 回车（复制全部文本）
+  - 粘贴保存为 evidence\m7-recording.log（UTF-8）
+  - 确认有 "Done recording movie" 行、无 ERROR
+[交给我] 说一声"录好了"，我做验收：时长/镜头三要素/日志零 ERROR，然后在 QA 门勾绿 R-3
+
