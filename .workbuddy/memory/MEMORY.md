@@ -24,16 +24,17 @@
 - **DEFEAT 读档**:load_save() → last_loaded → 回存档点+免疫 0.5s;失败兜底回暂存图。
 - R1/R2 已落地:INITIAL_SCENE_PATH=town;town 南门栅栏已拆。
 
-## 当前状态(2026-09-13 02:45 快照 · **B-01 已真人验证 PASS,工作区未提交**,新窗口续跑入口)
-- **阶段:Phase 7 · 发布门,commit/tag/push 三方一致 = `dcee4d6f454bf4c9b8917788476906ed9380b9f6`**(local HEAD = local tag m7 = remote main = remote tag m7)。tag 止于 m7。
+## 当前状态(2026-09-13 02:50 快照 · **B-01 已 commit+push `1b5b925`,等试玩复测回收**,新窗口续跑入口)
+- **阶段:Phase 7 · 发布门。HEAD = remote main = `1b5b925`**(B-01 修复+证据+回收档+记忆);tag 止于 m7(dcee4d6)。**04 批次 zip 已发放试玩者**(02:44 用户拍板);用户真人端到端验证 PASS(Boss DEFEAT 一次即止,不打第二次)。
+- **push 坑(新)**:代理 7892 关闭时 git push 走 SSH 代理配置会 errno=10061 → 用 `git -c core.sshCommand="ssh -o ConnectTimeout=8" push origin main` **直连成功**。
 - **✅ R-1 断点诊断已实锤(2026-09-13 凌晨)**:headless 全链路复现 `evidence/_story_chain_repro.log` ALL PASS——**代码链零断点**,R-1 story_phase=0 属引导缺位(玩家未接取任务;告示板无「!」+ 无任务目标 HUD)。回收档 m7-external-playtest-01.md §2(三问/B-2/结尾钩子全未过)+§3(B-01 Blocker~B-06)+§4(草稿🟡 CONCERNS)+§5 已填。待用户拍板 M7 门判定。
 - **✅ B-01 引导缺位修复已落地(2026-09-13 00:55,用户拍板「按建议执行」,工作区未提交)**:
   - 新 `scripts/ui/quest_objective_hud.gd`(+uid):常驻任务目标 HUD,story_phase_changed 驱动+_ready 直读 GameData 初始同步;文案 0=查看告示板接取委托/1=前往遗迹一层/2=深入遗迹第三层石棺/≥3 隐藏;左上 (8,32)。
   - `town_map.gd` 三增量:_assemble_quest_objective_hud(脚本判重守卫)/_attach_billboard_hint(告示板「❗Z」金色脉冲,O-12 同款,phase>=1 门控隐藏)/billboard_hint+quest_objective_hud 实例变量。
   - 新 `tests/gut/test_b01_guide.gd` 13 用例(A 纯逻辑5/B 信号4/C 装配4);新 `tools/dev/_b01_smoke_verify.gd`+`.tscn` 生产装配冒烟 4/4 PASS(`evidence/_b01-smoke.log`)。
   - **测试:GUT 551/551 全绿**(`evidence/_b01-gut-full.log`;538 存量零回归+13 新增)。
-- **⚠️ 未提交(等用户发话)**:B-01 套件(上述 6 文件)+ m7-external-playtest-01.md + evidence 四件(_story_chain_repro.log/_b01-smoke.log/_b01-gut-full.log/r1-playtest-01-answered)+ 记忆×2。m7-gameplay.avi(124MB 作废)留磁盘不入库。
-- **下一步(按序,等用户)**:①~~实机目检~~✅(用户已亲历)→②~~04 批次~~✅已导出→③R-3 重录(等复测)→④复测后 M7 门判定+commit。
+- **⚠️ 未提交 → 已清**:B-01 套件+evidence+回收档+记忆已全部进 `1b5b925`(22 文件);m7-gameplay.avi(124MB 作废)留磁盘不入库。
+- **下一步(等复测回收)**:①试玩者复测问卷回收(04 批次)→②R-3 重录 m7-gameplay.avi(须在含 B-01 的新包上)→③M7 门最终判定;M8 前恢复 design/(git 历史 4f3b717)。
 - **✅ B-01 真人端到端验证 PASS(2026-09-13 02:4x)**:用户完整走链——告示板接委托(0→1)→road 甲虫 VICTORY→f1 自动 P2(1→2)→f3 棺前 Boss 战开打。**Boss 战 DEFEAT**(kyle Lv1 阵亡,数值预期内);读档回 f3(320,40) phase=2,簿记清空可重触发;DEFEAT 读档语义实战验证通过。R-1 根因修复实证闭环,四环节引导全命中。重试建议已给(f2 B4 练级/防御/药)。
 - **⑤ M7 收口前情**:dcee4d6「O-5~O-13 全套修复+03 批次」112 文件。R-1 已发出(22:37)并回收归档(23:00)。
 - **✅ O-13 顶部触发区已锁死**:4 条返程 size (2,2),阈值 y≤32,实机验证闭环;**勿改回 2×1、勿下移 tile y=1**。
