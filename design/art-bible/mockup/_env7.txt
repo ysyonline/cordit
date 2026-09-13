@@ -1,0 +1,7 @@
+﻿OK  forest_tiles.png
+OK  classical_temple_tiles.png
+OK  castle_tiles2.png
+OK  faces_preview.png
+OK  temple_mockup.png
+OK  town_preview.png
+OK  chars_preview.png

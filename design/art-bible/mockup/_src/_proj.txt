@@ -1,0 +1,8 @@
+charsets_12_m-f_complete_by_antifarea.png empty-row-runs: 
+charsets_12_m-f_complete_by_antifarea.png empty-col-runs: 
+48x48_Faces_1st_Sheet_Update_CharlesGabriel_OGA.png empty-row-runs: 
+48x48_Faces_1st_Sheet_Update_CharlesGabriel_OGA.png empty-col-runs: 
+16oga.png empty-row-runs: 
+16oga.png empty-col-runs: 156-159
+castle_tiles2.png empty-row-runs: 
+castle_tiles2.png empty-col-runs: 
