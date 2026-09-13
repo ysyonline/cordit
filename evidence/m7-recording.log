@@ -1,0 +1,237 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 - Build 31.0.101.2137 - Compatibility - Using Device: Intel - Intel(R) UHD Graphics
+
+Movie Maker mode enabled, recording movie in 640×360 @ 30 FPS...
+[R3Drive] 启动：M7 R-3 自动录制驱动器（mode=RECORD seed=1 APPDATA 沙盒协议）
+[MainController] 常驻根就绪：Main / World / UILayer(CanvasLayer) + FadeMask —— 架构 A4
+[SceneRouter] 受理切换 -> res://scenes/maps/town.tscn
+[R3Drive] 正常入口已挂载：res://scenes/main.tscn（current_scene 已指向）
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] 已有存档（has_save=true），P0 锚点不接线（GDD 首次启动口径）
+[TownMap] 地图名 HUD 装配完成（MapNameHud 常驻）
+[TownMap] 任务目标 HUD 装配完成（QuestObjectiveHud 常驻）
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+[SceneRouter] 装载完成 -> res://scenes/maps/town.tscn
+[R3Drive] 沙盒档已读：map=ruins_f2 pos=[384.0, 40.0] phase=2
+[SceneRouter] 受理切换 -> res://scenes/maps/ruins_f2.tscn
+[VisibleEnemy] 就绪：ruins_f2_guardian（编组 b4_guardian）巡逻点 0 个 初始态 GUARD
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f2 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] ruins_f2 装配完成：传送触发器 2 处
+[AutosaveNotifier] ruins_f2 无存档意图（启动装载/同图传送），跳过写盘
+[ChatPointAssembler] 全局 executor 已注入 runner（R5 修复）
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] ruins_f2 装配完成：聊天点 1 处
+[SceneRouter] 装载完成 -> res://scenes/maps/ruins_f2.tscn
+[R3Drive][PASS] A1 读档落位 (384.0, 40.0)
+[R3Drive][PASS] A1 phase=2
+[R3Drive][PASS] A1 凯尔 Lv4
+[R3Drive][PASS] A1 凯尔装备代穿
+[R3Drive][walk] -> (384.0, 376.0)（起点 (384.0, 40.0)）
+[EventExecutor] party_chat_f2_01 条件不满足，跳过
+[TriggerEventShell] chat_point_chat_f2_01 已发射事件 party_chat_f2_01
+[R3Drive][walk] 卡墙兜底直落 -> (384.0, 376.0)
+[R3Drive][walk] 到位 (384.0, 376.0)（历时 2.1s）
+[SceneRouter] 受理切换 -> res://scenes/battle/battle.tscn
+[VisibleEnemy] ruins_f2_guardian 接触遇敌 -> b4_guardian（回置点 (376.0, 376.0)）
+[R3Drive] 守卫接触兜底直驱：ruins_f2_guardian
+[BattleScene] 就绪：编组=b4_guardian 回图=res://scenes/maps/ruins_f2.tscn 队伍=3 人（真实战斗 O-6 接线）
+[SceneRouter] 装载完成 -> res://scenes/battle/battle.tscn
+[R3Drive][PASS] A2 b4 战斗进入
+[R3Drive][PASS] A2 编组=b4_guardian
+[R3Director] 导演就绪：b4（round1 队列 4 项）
+[R3Director] R1 kyle → { "type": "skill", "skill_id": "heavy_slash", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（凯尔）
+[R3Director] R1 mona → { "type": "skill", "skill_id": "group_heal", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（莫娜）
+[R3Director] R1 lina → { "type": "skill", "skill_id": "fireball", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（莉娜）
+[R3Director] R1 敌拍已播种 seed=10（窗口内钉死 roll）
+[R3Director] R2 kyle → { "type": "skill", "skill_id": "heavy_slash", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（凯尔）
+[R3Director] R2 mona → { "type": "skill", "skill_id": "group_heal", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（莫娜）
+[R3Director] R2 lina → { "type": "skill", "skill_id": "fireball", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（莉娜）
+[R3Director] R2 敌拍已播种 seed=4（窗口内钉死 roll）
+[R3Director] R3 kyle → { "type": "defend" }
+[BattleScene] 玩家指令 defend（凯尔）
+[R3Director] R3 mona → { "type": "skill", "skill_id": "heal", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（莫娜）
+[R3Director] R3 lina → { "type": "skill", "skill_id": "ice_shard", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（莉娜）
+[R3Director] R3 敌拍已播种 seed=1（窗口内钉死 roll）
+[R3Director] R4 kyle → { "type": "skill", "skill_id": "heavy_slash", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（凯尔）
+[BattleScene] 结局 -> VICTORY（击破凭据=ruins_f2_guardian，驻留结算揭示后转交）
+[R3Director] 结局 outcome=VICTORY rounds=4 事件=20 提交=10
+[R3Drive][PASS] A3 b4 VICTORY（rounds=4）
+[R3Drive][PASS] A3 b4：群愈/治疗回复事件在场
+[R3Drive][PASS] A3 b4 守卫群击在场（教学要素①；damage+sweep 元数据）
+[R3Drive][PASS] A3 b4：守卫毒击在场（教学要素②）
+[R3Drive][PASS] A3 b4：凯尔防御姿态在场（威胁应对）
+[R3Drive][PASS] A3 凯尔毒 tick 结算可见（下轮行动前扣血）
+[R3Drive] b4 战斗收束（事件 0 → 20）
+[BattleScene] 驻留结束（0.0s），发 battle_finished(VICTORY) -> 转交 BattleResultHandler
+[BattleResultHandler] 掉落入包 potion_m x1（背包 { "potion_s": 3, "potion_m": 3, "ether_s": 2, "antidote": 1 }）
+[SceneRouter] 受理切换 -> res://scenes/maps/ruins_f2.tscn
+[BattleResultHandler] VICTORY 结算完成 -> 回图 res://scenes/maps/ruins_f2.tscn（回置 (376.0, 376.0)）
+[VisibleEnemy] ruins_f2_guardian 已在击破集合，装载即移除（不复活）
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f2 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] ruins_f2 装配完成：传送触发器 2 处
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] ruins_f2 装配完成：聊天点 1 处
+[SceneRouter] 装载完成 -> res://scenes/maps/ruins_f2.tscn
+[BattleResultHandler] 玩家回置 -> (376.0, 376.0)，免疫 0.5s 启动
+[R3Drive] 战后回图完成（0.8s）
+[R3Drive][PASS] A4 击破登记 ruins_f2_guardian
+[R3Drive][PASS] A4 已回图 ruins_f2
+[R3Drive][PASS] A5 战后全队 Lv4（修复② level 写回链路）
+[R3Drive][walk] -> (376.0, 760.0)（起点 (376.0, 376.0)）
+[R3Drive][walk] 卡墙兜底直落 -> (376.0, 760.0)
+[R3Drive][walk] 到位 (376.0, 760.0)（历时 1.6s）
+[SceneRouter] 受理切换 -> res://scenes/maps/ruins_f3.tscn
+[TriggerTeleport] 跨图传送 tp_f2_to_f3 -> ruins_f3（受理=true）
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f3 装配完成：宝箱 1 + 调查 2
+[TeleportAssembler] ruins_f3 装配完成：传送触发器 1 处
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[RuinsF3Map] Boss 锚点装配完成：story_boss_pre（交互键，事件 story_boss_pre）
+[SceneRouter] 装载完成 -> res://scenes/maps/ruins_f3.tscn
+[R3Drive] 期望：f2→f3 跨图：tp_f2_to_f3（落位 320,40）
+[R3Drive][walk] -> (320.0, 540.0)（起点 (320.0, 40.0)）
+[R3Drive][walk] 卡墙兜底直落 -> (320.0, 540.0)
+[R3Drive][walk] 到位 (320.0, 540.0)（历时 1.7s）
+[R3Drive][walk] -> (316.0, 552.0)（起点 (320.0, 540.0)）
+[R3Drive][walk] 到位 (316.9642, 549.1074)（历时 0.1s）
+[DialogueRunner] 开演：story_p3_boss_front（2 条目）
+[SceneRouter] 事件战斗载荷经桥转发处理，本端跳过（防双切换竞态）
+[SceneRouter] 受理切换 -> res://scenes/battle/battle.tscn
+[BattleEventBridge] 事件战斗转发：group=b5_core 回程 res://scenes/maps/ruins_f3.tscn @ (320.0, 576.0)（胜利续行待 battle_finished）
+[EventExecutor] battle b5_core（story_boss_pre）：payload 已发，事件流自下标 2 起挂起（胜利续行段 3 动作）
+[TriggerEventShell] boss_anchor_Boss_ruins_f3_trigger_01 已发射事件 story_boss_pre
+[R3Drive] 对话开演：story_p3_boss_front（0.0s）
+[DialogueRunner] 强制收束（读档安全，边缘 5）：弃 story_p3_boss_front → IDLE
+[BattleScene] 就绪：编组=b5_core 回图=res://scenes/maps/ruins_f3.tscn 队伍=3 人（真实战斗 O-6 接线）
+[SceneRouter] 装载完成 -> res://scenes/battle/battle.tscn
+[R3Drive] 对话经 0 按收束
+[R3Drive] 对话收束：story_p3_boss_front（0.0s）
+[R3Drive][PASS] A6 事件战斗进入（b5_core）
+[R3Drive][PASS] A6 编组=b5_core
+[R3Director] 导演就绪：b5（round1 队列 4 项）
+[R3Director] R1 kyle → { "type": "item", "item_id": "ether_s", "target_slot": 0 }
+[BattleScene] 玩家指令 item（凯尔）
+[R3Director] R1 mona → { "type": "skill", "skill_id": "group_heal", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（莫娜）
+[R3Director] R1 lina → { "type": "item", "item_id": "ether_s", "target_slot": 1 }
+[BattleScene] 玩家指令 item（莉娜）
+[R3Director] R1 敌拍已播种 seed=10（窗口内钉死 roll）
+[R3Director] R2 kyle → { "type": "attack", "target_slot": 0 }
+[BattleScene] 玩家指令 attack（凯尔）
+[R3Director] R2 mona → { "type": "skill", "skill_id": "group_heal", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（莫娜）
+[R3Director] R2 lina → { "type": "skill", "skill_id": "fireball", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（莉娜）
+[R3Director] R2 敌拍已播种 seed=1（窗口内钉死 roll）
+[R3Director] R3 kyle → { "type": "defend" }
+[BattleScene] 玩家指令 defend（凯尔）
+[R3Director] R3 mona → { "type": "defend" }
+[BattleScene] 玩家指令 defend（莫娜）
+[R3Director] R3 lina → { "type": "skill", "skill_id": "fireball", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（莉娜）
+[R3Director] R3 敌拍已播种 seed=32（窗口内钉死 roll）
+[R3Director] R4 kyle → { "type": "defend" }
+[BattleScene] 玩家指令 defend（凯尔）
+[R3Director] R4 mona → { "type": "skill", "skill_id": "group_heal", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（莫娜）
+[R3Director] R4 lina → { "type": "skill", "skill_id": "fireball", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（莉娜）
+[R3Director] R4 敌拍=release（强制，免播种）
+[R3Director] R5 kyle → { "type": "skill", "skill_id": "heavy_slash", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（凯尔）
+[R3Director] R5 mona → { "type": "defend" }
+[BattleScene] 玩家指令 defend（莫娜）
+[R3Director] R5 lina → { "type": "skill", "skill_id": "fireball", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（莉娜）
+[R3Director] R5 敌拍已播种 seed=2（窗口内钉死 roll）
+[R3Director] R6 kyle → { "type": "skill", "skill_id": "heavy_slash", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（凯尔）
+[R3Director] R6 mona → { "type": "attack", "target_slot": 0 }
+[BattleScene] 玩家指令 attack（莫娜）
+[R3Director] R6 lina → { "type": "skill", "skill_id": "fireball", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（莉娜）
+[R3Director] R6 敌拍已播种 seed=1（窗口内钉死 roll）
+[R3Director] R7 kyle → { "type": "skill", "skill_id": "heavy_slash", "target_slot": 0 }
+[BattleScene] 玩家指令 skill（凯尔）
+[BattleScene] 结局 -> VICTORY（击破凭据=，驻留结算揭示后转交）
+[R3Director] 结局 outcome=VICTORY rounds=7 事件=57 提交=19
+[R3Drive][PASS] A7 b5 VICTORY（rounds=7）
+[R3Drive][PASS] A7 b5：群愈/治疗回复事件在场
+[R3Drive][PASS] A7 b5：核心蓄力预告在场（telegraph 教学）
+[R3Drive][PASS] A7 b5：防御应对 release（减伤 ×0.5）
+[R3Drive][PASS] A7 b5：火球打核心弹「弱点！」
+[R3Drive][PASS] A7 charge_release 兑现（伤害事件在场）
+[R3Drive] b5 战斗收束（事件 20 → 57）
+[BattleScene] 驻留结束（0.0s），发 battle_finished(VICTORY) -> 转交 BattleResultHandler
+[BattleResultHandler] 掉落入包 potion_l x1（背包 { "potion_s": 3, "potion_m": 3, "ether_s": 2, "antidote": 1, "potion_l": 1 }）
+WARNING: [BattleResultHandler] VICTORY 但击破凭据为空（result 与暂存载荷均无 defeat_enemy_uid），敌人将保留
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _on_battle_finished (res://scripts/battle/battle_result_handler.gd:74)
+       [1] _on_battle_over (res://scripts/battle/battle_scene.gd:170)
+[SceneRouter] 受理切换 -> res://scenes/maps/ruins_f3.tscn
+[BattleResultHandler] VICTORY 结算完成 -> 回图 res://scenes/maps/ruins_f3.tscn（回置 (320.0, 576.0)）
+[BattleEventBridge] VICTORY：恢复事件流 → 战后续行段
+[EventExecutor] 胜利续行 story_boss_pre：自下标 2 / 共 5 动作
+[DialogueRunner] 开演：story_p3_finale（2 条目）
+[EventExecutor] set_story_phase -> 3（story_boss_pre）
+[EventExecutor] save_point：已发存档请求（story_boss_pre）
+[R3Drive] 对话开演：story_p3_finale（0.5s）
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f3 装配完成：宝箱 1 + 调查 2
+[TeleportAssembler] ruins_f3 装配完成：传送触发器 1 处
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[RuinsF3Map] Boss 锚点装配完成：story_boss_pre（交互键，事件 story_boss_pre）
+[SceneRouter] 装载完成 -> res://scenes/maps/ruins_f3.tscn
+[BattleResultHandler] 玩家回置 -> (320.0, 576.0)，免疫 0.5s 启动
+[DialogueRunner] 对话结束：story_p3_finale → IDLE
+[R3Drive] 对话收束：story_p3_finale（0.0s）
+[R3Drive] 末条文本长度 52 字（菲奥拉「第一个，还有五个。」）
+[R3Drive][PASS] A8 set_story_phase(3) 已落地
+[R3Drive][PASS] A8 结尾存档：意图在位或已被胜利回图当场兑现（实测正本=兑现 phase=3）
+[R3Drive] A9 指纹：map=ruins_f3 pos=[320.0, 40.0] phase=3
+[R3Drive][PASS] A9 胜利落盘 map=ruins_f3
+[R3Drive][PASS] A9 胜利落盘 phase∈{2,3}（save_point/map_ready 竞速二态）
+[R3Drive] A9 队伍指纹：kyle Lv4 HP165/240 MP1/19
+[R3Drive] A9 队伍指纹：lina Lv4 HP179/179 MP34/54
+[R3Drive] A9 队伍指纹：mona Lv4 HP191/191 MP6/45
+[R3Drive][PASS] A9 存档队伍 Lv4+（修复②跨战写回证据链）
+[R3Drive][PASS] A9 potion_l 入包（drop_core 100% 掉落 → B5 结算凭证）
+[R3Drive] 期望：save_point 意图按 §3.4 时序留给玩家下次过图兑现（生产正确行为）
+--------------------------------------------------------------------------------
+Done recording movie at path: D:/code/cordit/evidence/m7-gameplay.avi
+3004 frames at 30 FPS (movie length: 00:01:40:04), recorded in 00:02:06 (79% of real-time speed).
+CPU render time: 3.53 seconds (average: 1.18 ms/frame)
+GPU render time: 1.57 seconds (average: 0.52 ms/frame)
+Encoding time: 18.93 seconds (average: 6.30 ms/frame)
+--------------------------------------------------------------------------------

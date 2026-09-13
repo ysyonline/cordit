@@ -643,7 +643,13 @@ func _new_round() -> void:
 	for i: int in enemies.size():
 		enemies[i] = BattleLogic.reset_round_flags(enemies[i])
 	_cover_map = {}
-	_charging = {}
+	# 【M7-R3 修复】_charging 不在轮末清空——蓄力是跨轮 telegraph 状态：
+	#   §5/core.tres 钉定"本回合蓄力、下回合必放 charge_release"。单敌编组
+	#   下敌人恒为轮末行动者（SPD 最低且同值 side_rank 靠后），charge 标记
+	#   若随 _new_round 清空，release 分支（enemy_action ②）永远不可达——
+	#   B5 蓄力预告→防御应对的教学循环在生产链从未兑现过。防御/掩护才是
+	#   轮末瞬时 flag（reset_round_flags 已处理）；_charging 的生命周期由
+	#   enemy_action ② 自身消费置 false、battle 结束随状态机整体丢弃。
 	queue = BattleLogic.build_queue(party, enemies)
 	cursor = 0
 	round_num += 1
@@ -739,21 +745,32 @@ func build_settlement() -> Dictionary:
 
 func _build_result() -> Dictionary:
 	var party_state: Array = []
+	# 【M7-R3 修复】VICTORY 且结算判定升级时，把 level_after 落到快照 level——
+	#   修复前 exp_events 的"队伍 LvN！"只是 UI 展示，party_state.level 仍取
+	#   战斗单位战前值，BattleResultHandler._apply_party_state 写回后
+	#   GameData 与结算画面自相矛盾（菜单 Lv1 但"已习得"的技能放不出）。
+	#   HP/MP 保持战斗内现值不回满（升级补给的数值口径归产品侧裁定，切片
+	#   不扩权）；下一场战斗 _build_party_from_gamedata 用新 level 重建六维，
+	#   习得技能自然解锁。
+	var settlement: Dictionary = {"exp_events": [], "drops": []}
+	var outcome_now := outcome
+	if outcome_now == OUTCOME_VICTORY:
+		settlement = build_settlement()
+	var new_level: int = int(settlement.get("level_after", 0))
 	for u: Dictionary in party:
+		var lv: int = int(u.get("level", 1))
+		if new_level > lv:
+			lv = new_level
 		party_state.append({
 			"id": u.get("unit_id", ""),
-			"level": int(u.get("level", 1)),
+			"level": lv,
 			"hp": int(u.get("hp", 0)),
 			"max_hp": int(u.get("max_hp", 1)),
 			"mp": int(u.get("mp", 0)),
 			"max_mp": int(u.get("max_mp", 0)),
 		})
-	# E6-S2：VICTORY 时组装升级流协议（exp_events/drops）；DEFEAT/ESCAPE 空协议
-	var settlement: Dictionary = {"exp_events": [], "drops": []}
-	if outcome == OUTCOME_VICTORY:
-		settlement = build_settlement()
 	return {
-		"outcome": outcome,
+		"outcome": outcome_now,
 		"party_state": party_state,
 		"encounter_id": encounter_id,
 		"exp_gained": [],

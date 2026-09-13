@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tools/dev/_m7_r3_autodrive.gd" id="1_r3drv"]
+
+[node name="M7R3Autodrive" type="Node"]
+script = ExtResource("1_r3drv")
