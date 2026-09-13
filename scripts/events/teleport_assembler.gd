@@ -17,6 +17,13 @@ extends RefCounted
 ##   town_map.gd 的 _routes 分派退役，触发器统一挂 trigger_teleport 薄壳。
 ##   【实现取舍】不在 tscn 内换脚本引用（避免 gen 工具链二次维护），
 ##   而是装配器按目录"同位重建"触发器并移除旧 Area2D（详见 assemble）。
+##
+## 【M8-A1 增量 —— 装载期落位】assemble 除装配触发器外，还负责在【装载期】
+##   消费 SceneRouter 的跨图落位意图并落位玩家（_apply_pending_spawn）：
+##   跨图传送受理方在 change_scene 前登记 to_spawn 像素位，目标图 _ready 的
+##   本装配器在此把它写给 YSorted/Player。必须在 announce_ready 读位置存档
+##   之前完成（§3.4「过传送点存」，存档坐标=玩家实际落位）；无意图（启动装载/
+##   同图传送/战斗回图）则不动作。详见 _apply_pending_spawn 头注。
 
 const TeleportCatalog := preload("res://scripts/events/teleport_catalog.gd")
 const TriggerScript := preload("res://scripts/events/trigger_teleport.gd")
@@ -27,6 +34,10 @@ const TriggerScript := preload("res://scripts/events/trigger_teleport.gd")
 ## p_map_name：目录键；p_runner：对话运行器引用（无则 null）。
 ## 返回装配的触发器数组（测试对表用）。
 static func assemble(p_map_root: Node, p_map_name: String, p_runner: Node = null) -> Array:
+	# 【M8-A1】先消费跨图落位意图（无论本图有无 Triggers 容器都要消费，防意图
+	# 残留跨装载污染）。落位在 announce_ready 读位置存档之前完成——这是跨图传送
+	# to_spawn 落位与自动存档坐标正确性的关键时序（§3.4）。
+	_apply_pending_spawn(p_map_root)
 	var container: Node = p_map_root.get_node_or_null("Triggers")
 	if container == null:
 		push_warning("[TeleportAssembler] %s 无 Triggers 容器，跳过传送装配" % p_map_name)
@@ -64,3 +75,25 @@ static func _build_trigger(spec: Dictionary, p_runner: Node) -> Area2D:
 	trigger.add_child(shape_node)
 	trigger.position = TeleportCatalog.trigger_pixel_pos(spec)
 	return trigger
+
+
+## 装载期落位（M8-A1）：消费 SceneRouter 的跨图落位意图并把玩家摆到位。
+## 【为什么在此】assemble 是五图 _ready 的第一环（先于 announce_ready），而
+##   announce_ready 会【同步】广播 map_ready 并立即读玩家位置存档（§3.4）——
+##   落位若非在此完成，自动存档会记成目标图 tscn 硬编码入口位（本缺陷病灶）。
+## 【无意图】consume 返回 null（启动装载 / 同图室内传送 / 战斗回图）→ 静默跳过，
+##   玩家保持场景自身落位（五图 tscn 的 Player 初始位 / 战斗回图由处理器另行回置）。
+## 【玩家缺失】即便无 YSorted/Player 也已 consume（consume-on-read）——防意图残留
+##   污染下一次装载，仅 push_warning 告警（GUT 直挂白盒图等无正式玩家树的场景）。
+## 【静态可用性】SceneRouter 为 Autoload（全局标识符），static 函数可直接访问
+##   （同 autosave_notifier 里对 EventBus/SaveManager 的用法）。
+static func _apply_pending_spawn(p_map_root: Node) -> void:
+	var pending: Variant = SceneRouter.consume_pending_spawn()
+	if pending == null:
+		return
+	var player: Node2D = p_map_root.get_node_or_null("YSorted/Player") as Node2D
+	if player == null:
+		push_warning("[TeleportAssembler] 有跨图落位意图 %s，但 %s 无 YSorted/Player，意图已消费丢弃" % [pending, p_map_root.name])
+		return
+	player.global_position = pending
+	print("[TeleportAssembler] 装载期落位 -> %s @ %s（跨图传送 to_spawn）" % [p_map_root.name, pending])

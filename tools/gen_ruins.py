@@ -402,8 +402,10 @@ def tscn_for(floor_key, m):
     out.append('script = ExtResource("1_mapgd")')
     out.append('')
 
-    def layer_node(nm, z, cells, ysort=False):
-        lines = [f'[node name="{nm}" type="TileMapLayer" parent="."]',
+    def layer_node(nm, z, cells, ysort=False, parent="."):
+        # 【M8-A③】新增 parent 参数：WallsObjects 归位 YSorted 子树（y-sort 生效
+        # 充要条件：参与排序的节点须同父——ADR A6 / 施工单 293）。其余层仍挂根。
+        lines = [f'[node name="{nm}" type="TileMapLayer" parent="{parent}"]',
                  'tile_set = ExtResource("3_tileset")',
                  f'z_index = {z}']
         if ysort:
@@ -445,7 +447,7 @@ def tscn_for(floor_key, m):
     out += ['[node name="Player" parent="YSorted" instance=ExtResource("2_player")]',
             f'position = Vector2({m["spawn_px"][0]}, {m["spawn_px"][1]})',
             '']
-    out += layer_node("WallsObjects", 0, m["walls"], ysort=True)
+    out += layer_node("WallsObjects", 0, m["walls"], ysort=True, parent="YSorted")
     out.append('')
     out += layer_node("Above", 10, m["above"])
     out.append('')

@@ -29,7 +29,7 @@
   - [x] UILayer 跨场景切换不销毁（放一个 Label 验证存活）
 
 ### E1-S4 玩家移动/碰撞/相机 · 2.5h
-- 需求依据：架构 A6（CharacterBody2D + move_and_slide、原点在脚底、移速 4-5 tile/s、0.15s 转向缓冲、Camera2D smoothing 开 + snap 关的取舍实测）。
+- 需求依据：架构 A6（CharacterBody2D + move_and_slide、原点在脚底、移速 4-5 tile/s、松键保持末次朝向（不复位）、Camera2D smoothing 开 + snap 关的取舍实测）。
 - 做什么：player.tscn 八向移动 + TileSet 物理碰撞 + Camera2D 跟随；花半天把 y-sort 原点规则调对（全项目复用的一次性投入）。
 - 验收标准：
   - [x] 撞墙正常、无穿模；4.5 tile/s 移速手感确认

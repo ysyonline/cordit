@@ -52,17 +52,49 @@ const ENTRY_EXPORTS: Dictionary = {
 
 const TEST_PATH: String = "user://e4s6_test_save.json"
 
+## M8-A1：战后处理器脚本 + 真图路径（缺陷 2 回图存档坐标实证/回归用）
+const HANDLER_SCRIPT: GDScript = preload("res://scripts/battle/battle_result_handler.gd")
+const ROAD_MAP_PATH: String = "res://scenes/maps/road.tscn"
+
+## 五图 Player 在 tscn 里的硬编码初始位（缺陷 1/2 的辨识锚：正确落位值应≠硬编码位）
+const HARDCODED_PLAYER_PX: Dictionary = {
+	"town": Vector2(192, 640),
+	"road": Vector2(384, 64),
+	"ruins_f1": Vector2(448, 56),
+	"ruins_f2": Vector2(384, 40),
+	"ruins_f3": Vector2(320, 40),
+}
+
 var _maps: Array[Node] = []
+
+## 假 Main 骨架（缺陷 2 用例经 Router 真装载目标图；after_each 拆除）
+var _fake_main: Node = null
+
+## GameData 快照（缺陷 2 VICTORY 用例真写全局单例，测后还原防泄漏）
+var _cleared_backup: Array = []
+var _phase_backup: int = 0
+
+
+## 跨用例隔离：清 Router 跨图落位意图位（M8-A1 新增字段；按方法存在性防御，
+## 使本文件在缺陷修复前后都能运行——修复前为 no-op）。
+func _reset_pending_spawn() -> void:
+	if SceneRouter.has_method("consume_pending_spawn"):
+		SceneRouter.consume_pending_spawn()
 
 
 func before_all() -> void:
 	SaveManager.save_path = SaveManager.SAVE_PATH
+	_cleared_backup = (GameData.cleared_enemy_set as Array).duplicate()
+	_phase_backup = GameData.story_phase
 
 
 func after_all() -> void:
 	SaveManager.save_path = SaveManager.SAVE_PATH
 	SaveManager.save_requested_pending = false
 	SaveManager.last_loaded = {}
+	_reset_pending_spawn()
+	GameData.cleared_enemy_set = _cleared_backup.duplicate()
+	GameData.story_phase = _phase_backup
 	_cleanup_test_files()
 
 
@@ -70,6 +102,12 @@ func before_each() -> void:
 	SaveManager.save_path = TEST_PATH
 	SaveManager.save_requested_pending = false
 	SaveManager.last_loaded = {}
+	# M8-A1：Router 簿记隔离（假 Main / 暂存 payload / 切换标志 / 落位意图）
+	SceneRouter._staged_payload = {}
+	SceneRouter.current_scene_path = ""
+	SceneRouter._switching = false
+	_reset_pending_spawn()
+	_fake_main = null
 	_cleanup_test_files()
 
 
@@ -79,6 +117,14 @@ func after_each() -> void:
 			m.queue_free()
 	_maps.clear()
 	SaveManager.save_requested_pending = false
+	# M8-A1：假 Main 拆除 + GameData 还原（缺陷 2 VICTORY 用例）
+	if _fake_main != null and is_instance_valid(_fake_main):
+		_fake_main.free()
+	_fake_main = null
+	_reset_pending_spawn()
+	GameData.cleared_enemy_set = _cleared_backup.duplicate()
+	GameData.story_phase = _phase_backup
+	_cleanup_test_files()
 
 
 func _cleanup_test_files() -> void:
@@ -387,3 +433,147 @@ func test_19_跨图传送目录场景路径闭环() -> void:
 		assert_true(ResourceLoader.exists(path, "PackedScene"),
 				"%s 目标场景应存在：%s" % [spec["id"], path])
 	assert_eq(cross_count, 8, "跨图应 8 处")
+
+
+# =============== J. 跨图落位（缺陷 1 修复锚） ===============
+# 【修复语义】跨图传送的落位（to_spawn）由目标图 _ready 的 TeleportAssembler
+# 消费 SceneRouter 的落位意图完成——必须在 announce_ready 读位置存档【之前】，
+# 否则自动存档记成目标图 tscn 硬编码入口位（§3.4「过传送点存」的坐标口径）。
+# 【测试策略】直接登记落位意图 + 装载目标图（instantiate 直驱，同本文件纪律），
+# 断言玩家落位与随后存档坐标均为 to_spawn 像素位。
+
+func test_20_跨图落位_装配器消费pending落到to_spawn() -> void:
+	for spec: Dictionary in TeleportCatalog.TELEPORTS:
+		if String(spec["kind"]) != "cross_map":
+			continue
+		var tid: String = String(spec["id"])
+		var to_map: String = String(spec["to_map"])
+		var expected: Vector2 = TeleportCatalog.tile_to_pixel(spec["to_spawn"])
+		SceneRouter.set_pending_spawn(expected)
+		var map: Node = _load_map(to_map)
+		var player: Node2D = map.get_node("YSorted/Player")
+		assert_eq(player.global_position, expected,
+				"%s：目标图 %s 玩家应落在 to_spawn %s" % [tid, to_map, expected])
+
+
+func test_21_跨图落位后存档坐标为落位值() -> void:
+	# f3→f2 返程最佳辨识锚：目标图 ruins_f2 硬编码 (384,40) 与落位 (384,736) 显著不同
+	var spec: Dictionary = TeleportCatalog.by_id("tp_f3_to_f2")
+	var expected: Vector2 = TeleportCatalog.tile_to_pixel(spec["to_spawn"])
+	assert_ne(expected, HARDCODED_PLAYER_PX["ruins_f2"],
+			"前置：落位应≠ruins_f2 tscn 硬编码位")
+	SceneRouter.set_pending_spawn(expected)
+	SaveManager.save_requested_pending = true   # 模拟跨图传送受理后的存档意图
+	_load_map("ruins_f2")
+	assert_true(FileAccess.file_exists(TEST_PATH), "有落位+存档意图应落盘")
+	assert_true(SaveManager.load_save(), "落盘内容应可读回")
+	assert_eq(SaveManager.last_loaded["map"], "ruins_f2", "存档 map = 目标图名")
+	var pos: Array = SaveManager.last_loaded["position"]
+	assert_eq(Vector2(pos[0], pos[1]), expected,
+			"存档坐标应为 to_spawn 落位值（非 ruins_f2 tscn 硬编码 (384,40)）")
+
+
+func test_22_无落位意图时装配器不动玩家位置() -> void:
+	# 启动装载 / 同图室内传送 / 战斗回图：无意图 → 玩家保持 tscn 硬编码位
+	var map: Node = _load_map("ruins_f2")
+	var player: Node2D = map.get_node("YSorted/Player")
+	assert_eq(player.global_position, HARDCODED_PLAYER_PX["ruins_f2"],
+			"无 pending 时玩家应保持 tscn 初始位")
+
+
+func test_23_传送被拒时落位意图回滚() -> void:
+	# GUT 直挂环境无 Main/World → change_scene 必拒（结构检查）→ 落位意图须 consume 回滚
+	var trigger := Area2D.new()
+	trigger.set_script(TriggerScript)
+	trigger.teleport_id = "tp_f3_to_f2"
+	SceneRouter.set_pending_spawn(Vector2(999, 999))
+	trigger._do_cross_map(TeleportCatalog.by_id("tp_f3_to_f2"))
+	assert_eq(SceneRouter.consume_pending_spawn(), null,
+			"被拒后落位意图应已回滚（consume 返回 null）")
+	trigger.free()
+
+
+func test_24_跨图传送真实链路_f3南门踩踏落位与存档() -> void:
+	# 【玩家驱动链】不直驱落位簿记：玩家踩 f3 南门触发区 → _on_body_entered
+	# → _do_cross_map → Router change_scene → 目标图 f2 _ready → 装配器消费
+	# 落位意图 → announce_ready 存档。断言落位与存档坐标一致且为目标落位。
+	# 【为何带 FadeMask】生产 main.tscn 有 UILayer/FadeMask → change_scene 异步
+	# 淡出后才装载目标图（存档意图在装载前已发出）；本用例造同款骨架复刻该
+	# 时序，避免"无遮罩同步装载"使存档意图晚于装载的测试失真。
+	_make_fake_main(true)
+	var f3: Node = _load_map("ruins_f3")
+	var player: CharacterBody2D = f3.get_node("YSorted/Player")
+	var trigger: Area2D = f3.get_node("Triggers/Evt_tp_f3_to_f2")
+	SaveManager.save_requested_pending = false
+	_cleanup_test_files()
+	var spec: Dictionary = TeleportCatalog.by_id("tp_f3_to_f2")
+	var expected: Vector2 = TeleportCatalog.tile_to_pixel(spec["to_spawn"])
+	trigger._on_body_entered(player)   # 玩家踩踏（经对话闸门/冷却/层过滤后分派）
+	# 淡出 0.2s + 淡入 0.2s：等足够时间让目标图装载与自动存档完成
+	await get_tree().create_timer(0.6).timeout
+	var world: Node = _fake_main.get_node("World")
+	assert_true(world.get_child_count() > 0, "Router 应已装入目标图")
+	var target: Node = world.get_child(world.get_child_count() - 1)
+	assert_eq(String(target.name), "Ruins_F2", "应装入 ruins_f2 场景")
+	var tplayer: Node2D = target.get_node("YSorted/Player")
+	assert_eq(tplayer.global_position, expected,
+			"f3→f2 返程应落在 f2 北口楼梯走道 to_spawn %s" % expected)
+	assert_true(SaveManager.load_save(), "跨图传送应自动存档")
+	var spos: Array = SaveManager.last_loaded["position"]
+	assert_eq(Vector2(spos[0], spos[1]), expected, "跨图存档坐标 = to_spawn 落位值")
+
+
+# =============== K. VICTORY 回图存档坐标（缺陷 2 实证 + 回归锚） ===============
+
+## 造假 Main/World 骨架（缺陷 2：让 Router.change_scene 真装载目标图）
+## with_fade_mask=true 时附带 UILayer/FadeMask，复刻生产"异步淡出后装载"的时序。
+func _make_fake_main(with_fade_mask: bool = false) -> Node:
+	var main := Node2D.new()
+	main.name = "Main"
+	var world := Node2D.new()
+	world.name = "World"
+	main.add_child(world)
+	if with_fade_mask:
+		var ui := CanvasLayer.new()
+		ui.name = "UILayer"
+		var mask := ColorRect.new()
+		mask.name = "FadeMask"
+		mask.color = Color(0, 0, 0)
+		mask.modulate = Color(1, 1, 1, 0)
+		ui.add_child(mask)
+		main.add_child(ui)
+	get_tree().root.add_child(main)
+	_fake_main = main
+	return main
+
+
+func test_25_VICTORY回图存档坐标应为回置后的return_position() -> void:
+	# 【缺陷 2 实证 / 回归锚】真图（road，含 announce_ready 自动存档）经 Router
+	# 装入假 Main。road tscn 里 Player 硬编码 (384,64)；VICTORY 的 return_position
+	# 取 (400,640)（显著不同于硬编码位）。断言：自动存档坐标 = return_position
+	# （回置后的战前位），而非 tscn 硬编码入口位。修复前本用例红（存档记成
+	# (384,64)——回置经 map_ready 后 deferred 执行，晚于 announce_ready 的同步读位）。
+	_make_fake_main()
+	var handler: Node = HANDLER_SCRIPT.new()
+	add_child_autofree(handler)
+	var return_pos := Vector2(400, 640)
+	assert_ne(return_pos, HARDCODED_PLAYER_PX["road"],
+			"前置：return_position 应不同于 road tscn 硬编码位")
+	SaveManager.save_requested_pending = false
+	_cleanup_test_files()
+	handler._on_battle_finished({
+		"outcome": "VICTORY",
+		"party_state": [],
+		"drops": [],
+		"return_map": ROAD_MAP_PATH,
+		"return_position": return_pos,
+		"defeat_enemy_uid": "enemy_m8a1_probe",
+	})
+	# 假 Main 无 FadeMask → change_scene 同步装载 road → announce_ready 同步落盘
+	assert_true(FileAccess.file_exists(TEST_PATH), "VICTORY 回图应触发自动存档")
+	assert_true(SaveManager.load_save(), "落盘内容应可读回")
+	assert_eq(SaveManager.last_loaded["map"], "road", "存档 map 应为回图图名")
+	var pos: Array = SaveManager.last_loaded["position"]
+	assert_eq(Vector2(pos[0], pos[1]), return_pos,
+			"VICTORY 存档坐标应为回置后的 return_position（非 tscn 硬编码 (384,64)）")
+	handler._pending_return = {}

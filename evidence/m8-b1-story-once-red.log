@@ -1,0 +1,180 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [D:/code/cordit/.godot_user_tmp/gut-sandbox/Godot/app_userdata/轨迹残响] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+[4m
+
+res://tests/gut/test_m8a4_story_once.gd
+[0m* test_g1_ruin_enter一次性防重播
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[DialogueRunner] 开演：story_p2_ruin_enter（2 条目）
+[EventExecutor] set_story_phase -> 2（story_ruin_enter）
+[31m    [Failed]:  [0m首次触发应置一次性标志（not_flag 的判据）
+      at line 83
+[DialogueRunner] 强制收束（读档安全，边缘 5）：弃 story_p2_ruin_enter → IDLE
+[DialogueRunner] 开演：story_p2_ruin_enter（2 条目）
+[EventExecutor] set_story_phase -> 2（story_ruin_enter）
+[31m    [Failed]:  [0m["story_p2_ruin_enter"] expected to equal [""]:  重触发被 not_flag 拒绝 → 不再开演（证明无二次开演，而非只是 phase 未变）
+      at line 89
+* test_g2_boss_pre胜利后一次性防重播
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[DialogueRunner] 开演：story_p3_boss_front（2 条目）
+[SceneRouter] 事件战斗载荷经桥转发处理，本端跳过（防双切换竞态）
+[EventExecutor] battle b5_core（story_boss_pre）：payload 已发，事件流自下标 2 起挂起（胜利续行段 3 动作）
+[DialogueRunner] 强制收束（读档安全，边缘 5）：弃 story_p3_boss_front → IDLE
+WARNING: [BattleResultHandler] VICTORY 但击破凭据为空（result 与暂存载荷均无 defeat_enemy_uid），敌人将保留
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _on_battle_finished (res://scripts/battle/battle_result_handler.gd:79)
+       [1] test_g2_boss_pre胜利后一次性防重播 (res://tests/gut/test_m8a4_story_once.gd:99)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+       [4] test_scripts (res://addons/gut/gut.gd:1045)
+       [5] run_tests (res://addons/gut/gui/GutRunner.gd:198)
+       [6] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+       [7] main (res://addons/gut/cli/gut_cli.gd:297)
+       [8] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: [BattleResultHandler] 无回图目标（result/staged 均缺 return_map），停留当前场景
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _on_battle_finished (res://scripts/battle/battle_result_handler.gd:114)
+       [1] test_g2_boss_pre胜利后一次性防重播 (res://tests/gut/test_m8a4_story_once.gd:99)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+       [4] test_scripts (res://addons/gut/gut.gd:1045)
+       [5] run_tests (res://addons/gut/gui/GutRunner.gd:198)
+       [6] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+       [7] main (res://addons/gut/cli/gut_cli.gd:297)
+       [8] _init (res://addons/gut/gut_cmdln.gd:39)
+[EventExecutor] 胜利续行 story_boss_pre：自下标 2 / 共 5 动作
+[DialogueRunner] 开演：story_p3_finale（2 条目）
+[EventExecutor] set_story_phase -> 3（story_boss_pre）
+[EventExecutor] save_point：已发存档请求（story_boss_pre）
+[31m    [Failed]:  [0m胜利续行末尾应置一次性标志
+      at line 102
+[DialogueRunner] 强制收束（读档安全，边缘 5）：弃 story_p3_finale → IDLE
+[DialogueRunner] 开演：story_p3_boss_front（2 条目）
+[SceneRouter] 事件战斗载荷经桥转发处理，本端跳过（防双切换竞态）
+[EventExecutor] battle b5_core（story_boss_pre）：payload 已发，事件流自下标 2 起挂起（胜利续行段 3 动作）
+[31m    [Failed]:  [0m["story_p3_boss_front"] expected to equal [""]:  胜利后重触发被 not_flag 拒绝 → 不再开演
+      at line 106
+* test_g3_战败不置位可重试_胜利后才一次性
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[DialogueRunner] 开演：story_p3_boss_front（2 条目）
+[SceneRouter] 事件战斗载荷经桥转发处理，本端跳过（防双切换竞态）
+[EventExecutor] battle b5_core（story_boss_pre）：payload 已发，事件流自下标 2 起挂起（胜利续行段 3 动作）
+WARNING: [BattleResultHandler] DEFEAT 读档失败（无档/损坏），兜底回暂存图 ——存档链路需排查
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _on_battle_finished (res://scripts/battle/battle_result_handler.gd:107)
+       [1] test_g3_战败不置位可重试_胜利后才一次性 (res://tests/gut/test_m8a4_story_once.gd:116)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+       [4] test_scripts (res://addons/gut/gut.gd:1045)
+       [5] run_tests (res://addons/gut/gui/GutRunner.gd:198)
+       [6] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+       [7] main (res://addons/gut/cli/gut_cli.gd:297)
+       [8] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: [BattleResultHandler] 无回图目标（result/staged 均缺 return_map），停留当前场景
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _on_battle_finished (res://scripts/battle/battle_result_handler.gd:114)
+       [1] test_g3_战败不置位可重试_胜利后才一次性 (res://tests/gut/test_m8a4_story_once.gd:116)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+       [4] test_scripts (res://addons/gut/gut.gd:1045)
+       [5] run_tests (res://addons/gut/gui/GutRunner.gd:198)
+       [6] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+       [7] main (res://addons/gut/cli/gut_cli.gd:297)
+       [8] _init (res://addons/gut/gut_cmdln.gd:39)
+[DialogueRunner] 强制收束（读档安全，边缘 5）：弃 story_p3_boss_front → IDLE
+[DialogueRunner] 开演：story_p3_boss_front（2 条目）
+[SceneRouter] 事件战斗载荷经桥转发处理，本端跳过（防双切换竞态）
+[EventExecutor] battle b5_core（story_boss_pre）：payload 已发，事件流自下标 2 起挂起（胜利续行段 3 动作）
+WARNING: [BattleResultHandler] VICTORY 但击破凭据为空（result 与暂存载荷均无 defeat_enemy_uid），敌人将保留
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _on_battle_finished (res://scripts/battle/battle_result_handler.gd:79)
+       [1] test_g3_战败不置位可重试_胜利后才一次性 (res://tests/gut/test_m8a4_story_once.gd:125)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+       [4] test_scripts (res://addons/gut/gut.gd:1045)
+       [5] run_tests (res://addons/gut/gui/GutRunner.gd:198)
+       [6] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+       [7] main (res://addons/gut/cli/gut_cli.gd:297)
+       [8] _init (res://addons/gut/gut_cmdln.gd:39)
+WARNING: [BattleResultHandler] 无回图目标（result/staged 均缺 return_map），停留当前场景
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _on_battle_finished (res://scripts/battle/battle_result_handler.gd:114)
+       [1] test_g3_战败不置位可重试_胜利后才一次性 (res://tests/gut/test_m8a4_story_once.gd:125)
+       [2] _run_test (res://addons/gut/gut.gd:622)
+       [3] _test_the_scripts (res://addons/gut/gut.gd:835)
+       [4] test_scripts (res://addons/gut/gut.gd:1045)
+       [5] run_tests (res://addons/gut/gui/GutRunner.gd:198)
+       [6] _run_tests (res://addons/gut/cli/gut_cli.gd:239)
+       [7] main (res://addons/gut/cli/gut_cli.gd:297)
+       [8] _init (res://addons/gut/gut_cmdln.gd:39)
+[EventExecutor] 胜利续行 story_boss_pre：自下标 2 / 共 5 动作
+[DialogueRunner] 拒绝：状态机非 IDLE（当前 PLAYING），忽略触发
+[EventExecutor] dialogue "story_p3_finale" 被拒（story_boss_pre）
+[EventExecutor] set_story_phase -> 3（story_boss_pre）
+[EventExecutor] save_point：已发存档请求（story_boss_pre）
+[31m    [Failed]:  [0m胜利续行末尾置一次性标志
+      at line 128
+[DialogueRunner] 强制收束（读档安全，边缘 5）：弃 story_p3_boss_front → IDLE
+[DialogueRunner] 开演：story_p3_boss_front（2 条目）
+[SceneRouter] 事件战斗载荷经桥转发处理，本端跳过（防双切换竞态）
+[EventExecutor] battle b5_core（story_boss_pre）：payload 已发，事件流自下标 2 起挂起（胜利续行段 3 动作）
+[31m    [Failed]:  [0m["story_p3_boss_front"] expected to equal [""]:  胜利后重触发被 not_flag 拒绝 → 不再开播
+      at line 132
+[1m0/3 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m[4m
+res://tests/gut/test_m8a4_story_once.gd
+[0m- test_g1_ruin_enter一次性防重播
+[31m    [Failed]:  [0m首次触发应置一次性标志（not_flag 的判据）
+          at line 83
+[31m    [Failed]:  [0m["story_p2_ruin_enter"] expected to equal [""]:  重触发被 not_flag 拒绝 → 不再开演（证明无二次开演，而非只是 phase 未变）
+          at line 89
+- test_g2_boss_pre胜利后一次性防重播
+[31m    [Failed]:  [0m胜利续行末尾应置一次性标志
+          at line 102
+[31m    [Failed]:  [0m["story_p3_boss_front"] expected to equal [""]:  胜利后重触发被 not_flag 拒绝 → 不再开演
+          at line 106
+- test_g3_战败不置位可重试_胜利后才一次性
+[31m    [Failed]:  [0m胜利续行末尾置一次性标志
+          at line 128
+[31m    [Failed]:  [0m["story_p3_boss_front"] expected to equal [""]:  胜利后重触发被 not_flag 拒绝 → 不再开播
+          at line 132
+
+Totals
+------
+Scripts               1
+Tests                 3
+Passing Tests      none
+Failing Tests         3
+Asserts           14/20
+Time              0.604s
+
+
+Ran Scripts matching "m8a4_story_once"
+[31m---- 3 failing tests ----
+[0m

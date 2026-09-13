@@ -76,6 +76,9 @@ const MapNameHudScript := preload("res://scripts/ui/map_name_hud.gd")
 ## R-1 试玩 B-01 引导缺位修复②——玩家任何时候可见「当前该做什么」）
 const QuestObjectiveHudScript := preload("res://scripts/ui/quest_objective_hud.gd")
 
+## M8-A②（rev2）：世界空间「❗Z」提示工厂（统一手法 + 层位铁律 z_index>Above）
+const WorldHint := preload("res://scripts/ui/world_hint.gd")
+
 ## E6-S1 主菜单实例（UILayer 常驻装配产物；公开供测试树定位/断言）
 var menu_panel: Control = null
 
@@ -430,36 +433,25 @@ func _assemble_lighting(player: Node2D = null) -> void:
 
 ## M7-B01：告示板「!」提示标签（R-1 试玩 B-01 引导缺位修复①）。
 ## 【视觉】告示板上方 12px 处金色「❗Z」脉冲标签（O-12 f3 Boss 提示同款
-##   手法——玩家已实证该样式可发现；「Z」直接教会交互键）。
-## 【挂载位】场景根直铺（非 YSorted）：O-12 教训——y-sort 只认 Node2D.
-##   position.y，挂 YSorted 内会被墙体件压到画下；Control 根直子节点渲染序
-##   恒最上。未入树（headless 装配面）兜底挂告示板自身。
-## 【门控】接取委托（story_quest_accept 成功 → phase 1）后隐藏——事件仍在
-##   （再交互回落风味文本），但「!」的语义是"这里有新委托"，接取后即撤。
-##   监听 EventBus.story_phase_changed 实现， phase 回 0（不可能但防御）
-##   会重新显示；隐藏/显示随图生灭（标签挂本场景根，跨图重进 town 时
-##   _assemble_content_points 重跑重建，与 GameData 现状同步）。
+##   手法——玩家已实证该样式可发现；「Z」直接教会交互键）。M8-A② 起统一经
+##   scripts/ui/world_hint.gd 工厂产出（保留节点名 BillboardHint 与文案 ❗Z，
+##   兼容 test_b01_guide / dev 冒烟对 `billboard_hint.text` 的依赖）。
+## 【挂载位】【rev2 修】挂**本地图根（self）**——旧写法挂 get_tree().current_scene
+##   (Main)（跨场景常驻），离开 town 后标签仍悬在 Main 下继续渲染（用户实机见
+##   "没 NPC 的地方也有 ❗"）且反复进出叠影。挂 self 随图生灭；z_index=12>Above(10)
+##   由工厂保证恒浮最上，**不再需要借 current_scene 求"渲染序最上"**。
+## 【门控】（rev2 保留）接取委托（story_quest_accept 成功 → phase 1）后隐藏——
+##   事件仍在（再交互回落风味文本），但「!」的语义是"这里有新委托"，接取后即撤。
+##   监听 EventBus.story_phase_changed 实现，phase 回 0（不可能但防御）会重新显示；
+##   隐藏/显示随图生灭（标签挂本场景根，跨图重进 town 时 _assemble_content_points
+##   重跑重建，与 GameData 现状同步）。
 func _attach_billboard_hint(p_billboard: Node2D) -> void:
-	var hint := Label.new()
-	hint.name = "BillboardHint"
-	hint.text = "❗Z"
-	hint.add_theme_font_size_override("font_size", 12)
-	hint.add_theme_color_override("font_color", Color(0.850980, 0.662745, 0.305882))  # D9A94E 金
-	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var host: Node = self
-	if is_inside_tree() and get_tree().current_scene != null:
-		host = get_tree().current_scene
 	# 告示板格中心上方：标签左缘 -8px 容 2 字符，上移 28px 露出告示板顶
-	hint.position = p_billboard.position + Vector2(-8, -28)
-	host.add_child(hint)
-	billboard_hint = hint
-	# 脉冲呼吸：0.6s 周期透明度 0.55~1.0 往返（同 O-12 手法，不自建 Timer）
-	var tw := hint.create_tween().set_loops()
-	tw.tween_property(hint, "modulate:a", 0.55, 0.6)
-	tw.tween_property(hint, "modulate:a", 1.0, 0.6)
+	billboard_hint = WorldHint.attach(self,
+			p_billboard.position + Vector2(-8, -28), "❗Z", "BillboardHint")
 	# phase 门控：接取（phase>=1）即隐藏；重进 town 按现状重建
 	if GameData.story_phase >= 1:
-		hint.visible = false
+		billboard_hint.visible = false
 	else:
 		EventBus.story_phase_changed.connect(_on_billboard_phase_changed)
 

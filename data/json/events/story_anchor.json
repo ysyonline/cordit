@@ -1,20 +1,22 @@
 {
   "events": {
     "story_ruin_enter": {
-      "conditions": { "story_phase": [">=", 1] },
+      "conditions": { "story_phase": [">=", 1], "not_flag": "story_ruin_enter_seen" },
       "actions": [
         { "type": "dialogue", "id": "story_p2_ruin_enter" },
-        { "type": "set_story_phase", "phase": 2 }
+        { "type": "set_story_phase", "phase": 2 },
+        { "type": "set_flag", "flag": "story_ruin_enter_seen" }
       ]
     },
     "story_boss_pre": {
-      "conditions": { "story_phase": [">=", 2] },
+      "conditions": { "story_phase": [">=", 2], "not_flag": "story_boss_pre_seen" },
       "actions": [
         { "type": "dialogue", "id": "story_p3_boss_front" },
         { "type": "battle", "group": "b5_core" },
         { "type": "dialogue", "id": "story_p3_finale" },
         { "type": "set_story_phase", "phase": 3 },
-        { "type": "save_point" }
+        { "type": "save_point" },
+        { "type": "set_flag", "flag": "story_boss_pre_seen" }
       ]
     }
   }

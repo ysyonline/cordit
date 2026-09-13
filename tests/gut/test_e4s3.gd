@@ -57,13 +57,15 @@ func test_02_四层齐备且共享tileset有效() -> void:
 	for i in FLOORS.size():
 		var key: String = FLOORS[i]
 		var m: Node = _maps[i]
-		for layer_name in ["Ground", "GroundDeco", "WallsObjects", "Above"]:
-			var layer: TileMapLayer = m.get_node_or_null(layer_name)
-			assert_not_null(layer, "ruins_%s/%s 应存在" % [key, layer_name])
+		# 【M8-A③】WallsObjects 归位 YSorted 子树（同父是 y-sort 生效充要条件），
+		# 路径变为 YSorted/WallsObjects；Ground/GroundDeco/Above 仍挂根。
+		for layer_path in ["Ground", "GroundDeco", "YSorted/WallsObjects", "Above"]:
+			var layer: TileMapLayer = m.get_node_or_null(layer_path)
+			assert_not_null(layer, "ruins_%s/%s 应存在" % [key, layer_path])
 			if layer != null:
-				assert_not_null(layer.tile_set, "%s 的 tile_set 不应为 null" % layer_name)
+				assert_not_null(layer.tile_set, "%s 的 tile_set 不应为 null" % layer_path)
 				assert_eq(layer.tile_set.resource_path, TILESET_PATH,
-					"ruins_%s/%s 应挂共享 TileSet" % [key, layer_name])
+					"ruins_%s/%s 应挂共享 TileSet" % [key, layer_path])
 
 
 ## 用例3：三层点位数量参数化对表（宝箱 3/2/1、调查 4/3/2——GDD §3.1 正本）
@@ -128,7 +130,8 @@ func test_07_f3_boss前厅构图() -> void:
 	if boss_triggers != null:
 		assert_eq(boss_triggers.get_child_count(), 2, "Boss 触发器锚点应 ×2（棺前 2 格）")
 	# 构件抽验：石棺 2×1 挂 Walls 层（tile 9:16 / 10:16，verify_ruins §7 已复核坐标）
-	var walls: TileMapLayer = _maps[2].get_node("WallsObjects")
+	# 【M8-A③】WallsObjects 归位 YSorted 子树 → 取节点路径为 YSorted/WallsObjects
+	var walls: TileMapLayer = _maps[2].get_node("YSorted/WallsObjects")
 	assert_true(walls.get_used_rect().size.x > 0, "f3 Walls 层应有内容（石棺/灰石门所在层）")
 
 

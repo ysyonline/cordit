@@ -129,9 +129,15 @@ func test_b2_切换点2_ruin_enter带条件置phase2() -> void:
 	assert_true(conds.has("story_phase"), "切换点2应有 story_phase 门闸")
 	assert_eq(int((conds["story_phase"] as Array)[1]), 1, "门闸 >=1（防重复触发回跳）")
 	var actions: Array = ev.get("actions", [])
-	var last: Dictionary = actions[actions.size() - 1]
-	assert_eq(String(last.get("type")), "set_story_phase", "切换点2末动作应为 set_story_phase")
-	assert_eq(int(last.get("phase")), 2, "切换点2目标 phase=2（1→2）")
+	var types: Array[String] = []
+	for a: Variant in actions:
+		types.append(String((a as Dictionary).get("type")))
+	var phase_idx: int = types.find("set_story_phase")
+	assert_true(phase_idx >= 0, "切换点2应含 set_story_phase")
+	assert_eq(int((actions[phase_idx] as Dictionary).get("phase")), 2, "切换点2目标 phase=2（1→2）")
+	# M8-B①：末尾追加 set_flag（一次性标志，防重播）——末动作不再是 set_story_phase
+	assert_eq(String((actions[actions.size() - 1] as Dictionary).get("type")), "set_flag",
+			"切换点2末动作应为 set_flag（M8-B① 一次性标志）")
 	assert_eq(String((actions[0] as Dictionary).get("id")), "story_p2_ruin_enter",
 			"切换点2对白=P2 调查拍")
 
@@ -181,9 +187,10 @@ func test_c1_三切换点时序0123单向推进() -> void:
 	# 切换点2：1→2
 	_executor.execute_event("story_ruin_enter", _loader.get_event("story_ruin_enter"))
 	assert_eq(GameData.story_phase, 2, "切换点2推进 1→2")
-	# 切换点2重放于 phase=2：门闸 >=1 放行但动作重置 phase=2（不回跳不越界）
+	# 切换点2重放于 phase=2：M8-B① 起带 not_flag(story_ruin_enter_seen)，
+	# 首触已置位 → 本次重放被条件拒绝 → 停在 2（不再重演）
 	_executor.execute_event("story_ruin_enter", _loader.get_event("story_ruin_enter"))
-	assert_eq(GameData.story_phase, 2, "切换点2重放停在 2（重触发不越权）")
+	assert_eq(GameData.story_phase, 2, "切换点2重放被 not_flag 拒绝 → 停在 2")
 	# 切换点3：2→3 + save_requested。E5-S5 起 story_boss_pre 升级为 I5 全序列：
 	# 战前拍→battle（挂起）→战后段（phase/save_point 在胜利续行段内）。
 	# 测试模拟战斗胜利回传以驱动战后段（同 test_e5s5 c1 口径）；
@@ -194,8 +201,9 @@ func test_c1_三切换点时序0123单向推进() -> void:
 	EventBus.battle_finished.emit({"outcome": "VICTORY"})
 	_executor.resolve_victory()
 	assert_eq(GameData.story_phase, 3, "切换点3推进 2→3（切片终态）")
-	assert_signal_emit_count(EventBus, "story_phase_changed", 5,
-			"五次 set_story_phase 动作各广播一次（两次条件拒绝零广播）")
+	assert_signal_emit_count(EventBus, "story_phase_changed", 4,
+			"四次 set_story_phase 动作各广播一次（切换点2 重放被 not_flag 拒绝 → 少一次；"
+			+ "两次低 phase 条件拒绝亦零广播）")
 
 
 func test_c2_切换点3战段发存档请求() -> void:

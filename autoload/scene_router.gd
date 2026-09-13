@@ -9,6 +9,11 @@ extends Node
 ##      逐条报告"缺字段 / 类型错"，供 change_scene 与冒烟测试直接调用。
 ##   ③ 载荷暂存：合法切换时把 payload 深拷贝暂存，战斗场景装载后经
 ##      get_staged_payload() 取回（A3"载荷暂存"职责的落地，地图与战斗零互引）。
+##   ④ 跨图落位意图簿记（M8-A1）：跨图传送受理方在 change_scene 之前调
+##      set_pending_spawn() 登记目标图落位，目标图装载期由
+##      TeleportAssembler.assemble() 经 consume_pending_spawn() 取回并落位。
+##      语义与消费时序见 _pending_spawn 声明处——它不是游戏状态，是
+##      "下一次地图装载该把玩家摆哪"的路由元数据（同 current_scene_path 类）。
 ##
 ## 【边界】（A3："不知道任何具体场景的内容，只管切"）：
 ##   - 不 import / 不引用任何具体地图、战斗场景；
@@ -88,6 +93,23 @@ var _staged_payload: Dictionary = {}
 
 ## 切换进行中标志（防重入：淡入淡出期间再调 change_scene 一律拒绝并打日志）
 var _switching: bool = false
+
+## 跨图落位意图（M8-A1 缺陷修复）：类型 Vector2 或 null（无意图）。与
+## SaveManager.save_requested_pending 同款"意图位"风格，但它承载的是坐标而非布尔：
+##   - set_pending_spawn(p)：跨图传送受理方（trigger_teleport._do_cross_map）在
+##     change_scene 之前登记目标图落位（像素坐标 = TeleportCatalog.tile_to_pixel
+##     产物；含 .5 半格门中缝口径）；
+##   - consume_pending_spawn()：目标图装载期由 TeleportAssembler.assemble() 消费
+##     （consume-on-read，返回后清零），据此把 YSorted/Player 摆到该位。
+## 【为何必须紧贴装载】探索 GDD §3.4「过传送点存」：目标图 _ready 尾部的
+##   AutosaveNotifier.announce_ready 会【同步】读玩家当前位置存档——落位必须在
+##   announce_ready（乃至更早的 assemble）这一环完成，绝不可挪到 map_ready 之后
+##   延迟回置（那样自动存档会记成目标图 tscn 硬编码入口位，即本缺陷的病灶）。
+## 【无意图即 null】启动装载 / 同图室内传送 / 战斗回图（走各自落位路径）不登记，
+##   装配器消费到 null 静默跳过、不做任何动作。
+## 【被拒回滚】change_scene 返回 false（结构缺失/切换中）时受理方须 consume 回滚，
+##   防意图残留污染下一次装载（consume-on-read 清零）。
+var _pending_spawn: Variant = null
 
 
 ## 全局事件执行器（E5-S5 单实例；BattleEventBridge 与地图装配共用——
@@ -209,6 +231,22 @@ func validate_payload(payload: Dictionary) -> bool:
 ## 消费方：战斗场景装载后读取 BattlePayload（A3 载荷暂存职责的唯一读取口）。
 func get_staged_payload() -> Dictionary:
 	return _staged_payload.duplicate(true)
+
+
+## 登记跨图落位意图（M8-A1）。跨图传送受理方在 change_scene 之前调用；
+## 目标图装载期由 TeleportAssembler.consume_pending_spawn 消费。覆盖式赋值
+## （同一帧只会有一次传送在途）；语义与消费时序见 _pending_spawn 声明处。
+func set_pending_spawn(p: Vector2) -> void:
+	_pending_spawn = p
+
+
+## 消费跨图落位意图（consume-on-read：返回后清零）。返回 Vector2（有意图）
+## 或 null（无意图：启动装载/同图传送/战斗回图）。
+## 被拒回滚亦走本方法（受理方 change_scene 返回 false 时调用即清零）。
+func consume_pending_spawn() -> Variant:
+	var pending: Variant = _pending_spawn
+	_pending_spawn = null
+	return pending
 
 
 # ------------------------------------------------------------------

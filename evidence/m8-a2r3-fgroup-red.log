@@ -1,0 +1,114 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [D:/code/cordit/.godot_user_tmp/gut-sandbox/Godot/app_userdata/轨迹残响] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+[4m
+
+res://tests/gut/test_m8a2_npc_hint.gd
+[0m* test_a1_提示随NPC建立且样式合规并默认隐藏
+* test_b1_仅当玩家面朝NPC且命中才亮
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+* test_b2_对话锁定中提示收起_借玩家锁
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+* test_c1_无玩家环境提示恒隐不炸
+* test_c2_裸脚本NPC未入树零副作用
+* test_d1_town12NPC各持提示且挂地图子树内不泄根
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] 非生产启动语境（current_scene=<null>），P0 锚点不接线
+[TownMap] 地图名 HUD 装配完成（MapNameHud 常驻）
+[TownMap] 任务目标 HUD 装配完成（QuestObjectiveHud 常驻）
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+* test_d2_提示随宿主释放而销毁不叠影
+* test_e1_town提示随地图不挂current_scene
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] 非生产启动语境（current_scene=FakeScene），P0 锚点不接线
+[TownMap] 地图名 HUD 装配完成（MapNameHud 常驻）
+[TownMap] 任务目标 HUD 装配完成（QuestObjectiveHud 常驻）
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+* test_e2_f3提示为地图根直接子节点不挂current_scene
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f3 装配完成：宝箱 1 + 调查 2
+[TeleportAssembler] ruins_f3 装配完成：传送触发器 1 处
+[AutosaveNotifier] ruins_f3 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[RuinsF3Map] Boss 锚点装配完成：story_boss_pre（交互键，事件 story_boss_pre）
+* test_e3_释放地图后提示随之消亡不残留
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] 非生产启动语境（current_scene=FakeScene），P0 锚点不接线
+[TownMap] 地图名 HUD 装配完成（MapNameHud 常驻）
+[TownMap] 任务目标 HUD 装配完成（QuestObjectiveHud 常驻）
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+* test_f1_松键后保持朝向不误亮提示_回归红线
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[31m    [Failed]:  [0m[VECTOR2(0.0, 1.0)] expected to equal [VECTOR2(0.0, -1.0)]:  松键后朝向应保持 UP（不得复位 DOWN，否则引向正南误判）
+      at line 355
+[31m    [Failed]:  [0m面朝背离（UP，NPC 在正南）→ 提示不得因朝向复位而误亮
+      at line 357
+[31m    [Failed]:  [0mExpected [InteractBody:<StaticBody2D#456742936989>] to be NULL:  同源锚：此刻按 Z 亦无目标（提示亮灭与分派判据一致）
+      at line 359
+* test_f2_面朝NPC时提示常亮且松键后保持
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+* test_f3_瞬时命中不足去抖不亮
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[31m    [Failed]:  [0m瞬时命中（≤2 帧）不足去抖阈值（3 帧）→ 提示全程不亮
+      at line 401
+[1m11/13 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m[4m
+res://tests/gut/test_m8a2_npc_hint.gd
+[0m- test_f1_松键后保持朝向不误亮提示_回归红线
+[31m    [Failed]:  [0m[VECTOR2(0.0, 1.0)] expected to equal [VECTOR2(0.0, -1.0)]:  松键后朝向应保持 UP（不得复位 DOWN，否则引向正南误判）
+          at line 355
+[31m    [Failed]:  [0m面朝背离（UP，NPC 在正南）→ 提示不得因朝向复位而误亮
+          at line 357
+[31m    [Failed]:  [0mExpected [InteractBody:<StaticBody2D#456742936989>] to be NULL:  同源锚：此刻按 Z 亦无目标（提示亮灭与分派判据一致）
+          at line 359
+- test_f3_瞬时命中不足去抖不亮
+[31m    [Failed]:  [0m瞬时命中（≤2 帧）不足去抖阈值（3 帧）→ 提示全程不亮
+          at line 401
+
+Totals
+------
+Scripts               1
+Tests                13
+Passing Tests        11
+Failing Tests         2
+Asserts           50/54
+Time              3.772s
+
+
+Ran Scripts matching "m8a2_npc_hint"
+[31m---- 2 failing tests ----
+[0m

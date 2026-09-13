@@ -1,0 +1,75 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [D:/code/cordit/.godot_user_tmp/gut-sandbox/Godot/app_userdata/轨迹残响] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+[4m
+
+res://tests/gut/test_o7_ui_bridge.gd
+[0m* test_输入桥已接线
+[BattleScene] 就绪：编组=b1_moth 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人（真实战斗 O-6 接线）
+* test_信号驱动_攻击指令被消费_队列推进
+[BattleScene] 就绪：编组=b1_moth 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人（真实战斗 O-6 接线）
+[BattleScene] 玩家指令 attack（凯尔）
+* test_防越权_非我方回合信号被忽略
+[BattleScene] 就绪：编组=b1_moth 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人（真实战斗 O-6 接线）
+* test_UI信号驱动至胜利并驻留转发
+[BattleScene] 就绪：编组=b1_moth 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人（真实战斗 O-6 接线）
+[BattleScene] 玩家指令 attack（凯尔）
+[BattleScene] 玩家指令 attack（莫娜）
+[BattleScene] 玩家指令 attack（莉娜）
+[BattleScene] 玩家指令 attack（凯尔）
+[BattleScene] 结局 -> VICTORY（击破凭据=enemy_road_01，驻留结算揭示后转交）
+[BattleScene] 驻留结束（0.0s），发 battle_finished(VICTORY) -> 转交 BattleResultHandler
+* test_逃跑经信号驱动转发
+[BattleScene] 就绪：编组=b1_moth 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人（真实战斗 O-6 接线）
+[BattleScene] 玩家指令 escape（凯尔）
+[31m    [Failed]:  [0m战斗应已结束
+      at line -1
+[31m    [Failed]:  [0m逃跑应立即结束战斗
+      at line 222
+[31m    [Failed]:  [0m[""] expected to equal ["ESCAPE"]:  outcome 应为 ESCAPE（roll 随机但 80% 成功率下首拍即检定）
+      at line 223
+[31m    [Failed]:  [0mExpected [<null>] to be anything but NULL:  battle_finished 应已转发
+      at line 224
+* test_O8_键盘目标选择_确认后信号带槽位
+[BattleScene] 就绪：编组=b1_moth 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人（真实战斗 O-6 接线）
+[BattleScene] 玩家指令 attack（凯尔）
+* test_O8_键盘取消目标_回菜单不发信号
+[BattleScene] 就绪：编组=b1_moth 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人（真实战斗 O-6 接线）
+* test_O9_顶层容器不拦截鼠标
+[BattleScene] 就绪：编组=b1_moth 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人（真实战斗 O-6 接线）
+[1m7/8 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m[4m
+res://tests/gut/test_o7_ui_bridge.gd
+[0m- test_逃跑经信号驱动转发
+[31m    [Failed]:  [0m战斗应已结束
+          at line -1
+[31m    [Failed]:  [0m逃跑应立即结束战斗
+          at line 222
+[31m    [Failed]:  [0m[""] expected to equal ["ESCAPE"]:  outcome 应为 ESCAPE（roll 随机但 80% 成功率下首拍即检定）
+          at line 223
+[31m    [Failed]:  [0mExpected [<null>] to be anything but NULL:  battle_finished 应已转发
+          at line 224
+
+Totals
+------
+Scripts               1
+Tests                 8
+Passing Tests         7
+Failing Tests         1
+Asserts           26/30
+Time              17.925s
+
+
+Ran Scripts matching "test_o7_ui_bridge"
+[31m---- 1 failing tests ----
+[0m

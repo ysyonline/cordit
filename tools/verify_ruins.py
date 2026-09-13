@@ -36,10 +36,11 @@ def check(name, cond, detail=""):
 tres_text = open(TRES, encoding="utf-8").read()
 
 
-def parse_layer(text, layer_name):
+def parse_layer(text, layer_name, parent=r"\."):
+    # 【M8-A③】parent 参数：WallsObjects 归位 YSorted 子树（其余层仍挂根）。
     m = re.search(
-        r'\[node name="%s" type="TileMapLayer" parent="\."\]\n(.*?)(?=\n\[node|\Z)'
-        % layer_name, text, re.S)
+        r'\[node name="%s" type="TileMapLayer" parent="%s"\]\n(.*?)(?=\n\[node|\Z)'
+        % (layer_name, parent), text, re.S)
     if not m:
         return None
     body = m.group(1)
@@ -116,6 +117,9 @@ for key in ("f1", "f2", "f3"):
     check(f"[{key}] y_sort: YSorted/WallsObjects",
           re.search(r'\[node name="YSorted"[^\]]*\]\ny_sort_enabled = true', tscn_text)
           and re.search(r'\[node name="WallsObjects"[^\]]*\]\ntile_set[^\n]*\nz_index = 0\ny_sort_enabled = true', tscn_text))
+    # 【M8-A③】WallsObjects 归位 YSorted 子树（y-sort 生效充要条件：同父，ADR A6）
+    check(f"[{key}] 结构: WallsObjects 为 YSorted 子节点【M8-A③】",
+          '[node name="WallsObjects" type="TileMapLayer" parent="YSorted"]' in tscn_text)
     check(f"[{key}] z_index: Ground=-10 / Deco=-9 / Above=+10",
           "z_index = -10" in tscn_text and "z_index = -9" in tscn_text and "z_index = 10" in tscn_text)
     check(f"[{key}] 四层挂共享 ruins TileSet",
@@ -139,7 +143,7 @@ for key in ("f1", "f2", "f3"):
     print(f"-- {key} · 3. 层内容抽验 --")
     ground = parse_layer(tscn_text, "Ground")
     deco = parse_layer(tscn_text, "GroundDeco")
-    walls = parse_layer(tscn_text, "WallsObjects")
+    walls = parse_layer(tscn_text, "WallsObjects", parent="YSorted")
     above = parse_layer(tscn_text, "Above")
     for nm, layer in [("Ground", ground), ("GroundDeco", deco), ("WallsObjects", walls), ("Above", above)]:
         check(f"[{key}] {nm} 可解析且非空", layer is not None and len(layer) > 0)

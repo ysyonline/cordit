@@ -48,7 +48,7 @@ position = Vector2(232, 664)
 [node name="Player" parent="YSorted" instance=ExtResource("2_player")]
 position = Vector2(384, 40)
 
-[node name="WallsObjects" type="TileMapLayer" parent="."]
+[node name="WallsObjects" type="TileMapLayer" parent="YSorted"]
 tile_set = ExtResource("3_tileset")
 z_index = 0
 y_sort_enabled = true

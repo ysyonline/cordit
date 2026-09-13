@@ -454,8 +454,12 @@ tres.append('sources/3 = SubResource("TileSetAtlasSource_oga")')
 TRES_TEXT = "\n".join(tres) + "\n"
 
 # ================================================================ tscn 文本
-def layer_node(name, z, cells, y_sort=False):
-    lines = [f'[node name="{name}" type="TileMapLayer" parent="."]',
+def layer_node(name, z, cells, y_sort=False, parent="."):
+    # 【M8-A③】新增 parent 参数：WallsObjects 归位 YSorted 子树。
+    # y-sort 生效充要条件（ADR A6 / 施工单 293）：父节点 y_sort_enabled=true 且
+    # 所有参与排序的节点（含 WallsObjects 的每个 tile）在**同一父节点**下。
+    # 其余层（Ground/GroundDeco/Above）不参与 y-sort，仍挂根（parent="."）。
+    lines = [f'[node name="{name}" type="TileMapLayer" parent="{parent}"]',
              'tile_set = ExtResource("3_tileset")',
              f'z_index = {z}']
     if y_sort:
@@ -507,7 +511,7 @@ tscn.append('')
 tscn += ['[node name="YSorted" type="Node2D" parent="."]',
          'y_sort_enabled = true',
          '']
-tscn += layer_node("WallsObjects", 0, walls_cells, y_sort=True)
+tscn += layer_node("WallsObjects", 0, walls_cells, y_sort=True, parent="YSorted")
 tscn.append('')
 tscn += layer_node("Above", 10, above)
 tscn.append('')

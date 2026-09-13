@@ -26,6 +26,18 @@ var _runner: Node = null
 var _event_loader: Variant = null
 var _event_executor: Variant = null
 
+## M8-A②（rev2）：当前高亮的交互提示实体（脏引用守卫；无高亮为 null）。
+## 提示显隐由本控制器每物理帧统一驱动，见 _update_interact_hint()。
+var _hint_target: Node = null
+
+## M8-A②（rev3）去抖阈值：点亮新目标需**连续命中的物理帧数**；熄灭则即时（非对称
+##   迟滞）。3 帧 ≈50ms——足以滤掉"转身/走动经过瞄准线"的单帧噪声，又无可感迟滞。
+const HINT_SETTLE_FRAMES: int = 3
+
+## M8-A②（rev3）：当前"候选目标"及其已连续命中帧数（未达阈值前不点亮）。
+var _candidate: Node = null
+var _candidate_frames: int = 0
+
 
 ## 装配注入（地图根脚本或测试包装器调用）
 func setup(p_player: CharacterBody2D, p_runner: Node) -> void:
@@ -130,3 +142,78 @@ func inject_interact() -> void:
 	ev.action = INTERACT_ACTION
 	ev.pressed = true
 	_unhandled_input(ev)
+
+
+# ------------------------------------------------------------------
+# M8-A②（rev2/rev3）：交互提示显隐驱动（NPC 头顶「❗Z」）
+# ------------------------------------------------------------------
+
+## 每物理帧读取玩家当前交互目标 → 仅点亮该实体、其余全灭。
+## 【判据同源】复用 player.get_interact_target()（面朝 + InteractRay 20px 命中），
+##   与 Z 键分派 _try_interact() 完全同一判据 → 保证"提示亮 ⇔ 按 Z 有目标"，
+##   修 rev2 缺陷①（原按脚底距离判定会"亮起但按 Z 无目标"）。
+## 【rev3 去抖】点亮需连续 HINT_SETTLE_FRAMES 帧稳定命中，熄灭即时——修用户实机
+##   残留缺陷"正后方/其他角度会亮一下 ❗ 然后不亮"中的单帧假亮（配合 player.gd
+##   松键朝向保持，二者共同消除朝向抖动引发的脉冲）。
+## 【开销】每帧一次射线（非 12 NPC 各一次），可忽略。
+func _physics_process(_delta: float) -> void:
+	_update_interact_hint()
+
+
+## 切换提示高亮（rev3 增去抖）：记住上一帧实体，脏引用安全地先熄灭旧的、再点亮新的。
+## 【非对称迟滞（rev3）】
+##   · 熄灭**即时**（≤1 帧）：无稳定目标立刻收起——不产生"残留亮帧"；
+##   · 点亮**需连续 HINT_SETTLE_FRAMES 帧稳定命中**：滤掉单帧噪声假亮。
+## 无变化（含"始终无目标"）则清候选、跳过，避免冗余调用与误计数。
+func _update_interact_hint() -> void:
+	var next: Node = _resolve_hint_target()
+	if next == _hint_target:
+		_candidate = null
+		_candidate_frames = 0
+		return
+	if next == null:
+		# 熄灭即时（非对称迟滞的"快灭"侧）
+		_set_hint(_hint_target, false)
+		_hint_target = null
+		_candidate = null
+		_candidate_frames = 0
+		return
+	# next 为新的非空目标：需连续命中 HINT_SETTLE_FRAMES 帧才点亮
+	if next == _candidate:
+		_candidate_frames += 1
+	else:
+		_candidate = next
+		_candidate_frames = 1
+	if _candidate_frames >= HINT_SETTLE_FRAMES:
+		_set_hint(_hint_target, false)   # 先灭旧（脏引用守卫在 _set_hint）
+		_set_hint(next, true)
+		_hint_target = next
+		_candidate = null
+		_candidate_frames = 0
+
+
+## 解析"玩家当前交互目标对应的提示实体"：无玩家 / 对话锁定 / 无命中 → null。
+## 命中体沿父链上溯至首个暴露 set_interact_hint_visible 的实体根
+## （NPC 根即其 get_npc_id 持有者，与 _try_interact 的父链解析同款手法）；
+## 非提示实体（墙 / 宝箱 / Boss 壳）不暴露该协议 → null（不抢提示）。
+## 对话/演出锁定（player.is_input_locked）时一律不提示（保持收起，rev2 保留）。
+func _resolve_hint_target() -> Node:
+	if _player == null:
+		return null
+	if _player.get("is_input_locked") == true:
+		return null
+	if not _player.has_method("get_interact_target"):
+		return null
+	var node: Node = _player.get_interact_target() as Node
+	while node != null:
+		if node.has_method("set_interact_hint_visible"):
+			return node
+		node = node.get_parent()
+	return null
+
+
+## 落显隐（脏引用安全：目标实体可能已随图释放 → is_instance_valid 守卫）
+func _set_hint(p_node: Node, p_visible: bool) -> void:
+	if p_node != null and is_instance_valid(p_node) \
+			and p_node.has_method("set_interact_hint_visible"):
+		p_node.set_interact_hint_visible(p_visible)

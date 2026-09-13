@@ -114,7 +114,7 @@ Map（Node2D）
 要点：
 - **碰撞不是一层独立图层**，直接在 TileSet 资源里给物理层配置 collision shape（多层各自可挂）。
 - y-sort 生效的充要条件：父节点 `y_sort_enabled=true` 且**所有参与排序的节点在同一个父节点下**；角色节点原点必须在脚底（sprite 偏移上移），墙 tile 的原点在其底部——这是 2.5D 纵深感 80% 的来源，花半天调对一次，之后全项目复用。
-- 玩家移动用 `CharacterBody2D + move_and_slide()`，16x16 tile、移动速度建议 4-5 tiles/s，带一个 0.15s 的转向缓冲避免"按两下方向原地抖"。
+- 玩家移动用 `CharacterBody2D + move_and_slide()`，16x16 tile、移动速度建议 4-5 tiles/s，松键后保持末次朝向（不复位；原"0.15s 转向缓冲"方案已退役）以避免"按两下方向原地抖"。
 
 ### A7. 对话事件系统：数据驱动的最小完整方案
 

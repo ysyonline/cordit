@@ -29,6 +29,18 @@ extends StaticBody2D
 ## 【层位约定】（沿 player.tscn 头注释）：1=世界墙体 2=交互物 4=遮挡物。
 ##   NPC 脚部挡路（层1）+ 可交互（层2）两个身份用两个碰撞体分别表达——
 ##   InteractRay mask=3（层1|2）会先命中脚部碰撞体，见 get_npc_id() 说明。
+##
+## 【M8-A② 增量（NPC 交互引导）】NPC 是玩家**当前可交互目标**时，头顶浮出金色
+##   「❗Z」脉冲标签，否则隐藏——把「可交互」这一隐含状态变得可见（此前玩家须盲猜
+##   站位与按键）。标签由 scripts/ui/world_hint.gd 工厂产出（复用 B-01 告示板 /
+##   O-12 Boss 锚点已验收样式），挂本 NPC 自身为子节点（随宿主生灭、不叠影）+
+##   z_index=12>Above(10)（不被建筑层/树冠掩）。
+##   【rev2 判据对齐】显隐**不再由本脚本按距离判定**（原 24px 脚底距离会出现"提示亮
+##   但按 Z 无目标"——用户实机反馈"要到某个特殊位置才对话"）。改由
+##   InteractionController 每物理帧按**与 Z 键分派同源**的判据（player.
+##   get_interact_target()：面朝 + InteractRay 命中）统一驱动，经
+##   set_interact_hint_visible() 落显隐。交互协议零触碰：get_npc_id() /
+##   InteractBody / 层位 / 对话分派全部原样。
 
 ## R2-CHARSPRITE：形象 id（char_anim.gd SHEET_BY_ID 键：m1..m6/f1..f6/
 ## v1_elder/v2_porter/v3_smith/v4_shepherd）；分配初排见 town_map.gd
@@ -42,11 +54,21 @@ extends StaticBody2D
 ## 命名与 town.tscn 的 E1-S5 锚点对齐（如锚点 npc_01_innkeeper -> npc_01_innkeeper）。
 @export var npc_id: String = ""
 
-## 交互提示来源（调试用日志观察；"!"气泡属后续 Story）
+## 交互提示来源（调试用日志观察）。M8-A②：头顶「❗Z」交互提示已落地（见 _hint）。
 var _display_name: String = ""
 
 ## R2-CHARSPRITE：动画帧工厂（core 静态工具，preload 常量沿项目规范）
 const CharAnim := preload("res://scripts/core/char_anim.gd")
+
+## M8-A②：交互提示标签工厂（世界空间「❗Z」脉冲；层位铁律 = z_index>Above 见其头注）
+const WorldHint := preload("res://scripts/ui/world_hint.gd")
+
+## M8-A②：提示相对 NPC 脚底原点的摆放偏移（左缘 -8px 容 2 字符，上移 28px 露出
+##   头顶）——与既有告示板/Boss 锚点提示同款偏移。
+const HINT_OFFSET: Vector2 = Vector2(-8, -28)
+
+## M8-A②：头顶交互提示标签（NPC 自身子节点，随宿主生灭；显隐由交互轮询器驱动）
+var _hint: Label = null
 
 
 func _ready() -> void:
@@ -60,6 +82,23 @@ func _ready() -> void:
 	var body: Sprite2D = get_node_or_null("BodyRect") as Sprite2D
 	if body != null:
 		body.texture = CharAnim.get_idle_texture(charset_id, facing)
+	# M8-A②（rev2）：头顶交互提示（❗Z 脉冲，默认隐藏）。
+	# 挂本 NPC 自身子节点 → 随 NPC/地图生灭（重进 town 不叠影，规避告示板
+	# 提示挂 current_scene 的反例）；z_index 由工厂置 HINT_Z_INDEX(12) >
+	# Above(10)，保证恒浮于建筑层/树冠之上不被掩。
+	# **显隐由 InteractionController 每物理帧统一驱动**（判据与 Z 键分派同源），
+	# 本脚本只暴露 set_interact_hint_visible()；裸脚本实例（GUT e5s3/e5s4
+	# 建而不入树）_ready 不触发 → _hint 保持 null，开关调用零副作用。
+	_hint = WorldHint.attach(self, HINT_OFFSET, "❗Z", "InteractHint")
+	_hint.visible = false
+
+
+## M8-A②（rev2）：交互提示开关——由交互轮询器（唯一显隐驱动方）调用。
+## 本 NPC 为玩家当前可交互目标时置 true，否则 false（含无目标/对话锁定中）。
+## 提示节点私有不外泄；外部一律经本方法控制，避免"距离判定 vs 射线判定"两套判据漂移。
+func set_interact_hint_visible(p_visible: bool) -> void:
+	if _hint != null:
+		_hint.visible = p_visible
 
 
 ## 对话发起入口：被玩家交互时由 trigger_dialogue 侧调用（薄壳约定，A7）。

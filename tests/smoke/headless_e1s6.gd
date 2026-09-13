@@ -75,11 +75,12 @@ func _ready() -> void:
 # ------------------------------------------------------------------
 
 ## 把玩家放到 guard 东侧 1 格并面朝西（射线 20px 覆盖面前 1 格）。
-## 朝向重建时序（生产路径等价：移动键定朝向 → 0.15s 缓冲期内按键交互）：
+## 朝向重建时序（生产路径等价：移动键定朝向 → 按键交互）：
 ##   set_input_override(LEFT) → 2 物理帧（_update_facing 生效）→ 松键当帧
-##   （facing 仍 =LEFT，缓冲计时中）→ 调用方立刻注入交互键。
-## 注意：此后任何 create_timer 等待超 0.15s 都会让 facing 复位为 DOWN——
-##   本函数不承担"保持朝向"职责，交互注入必须由调用方紧随其后执行。
+##   （facing 仍 =LEFT）→ 调用方随即注入交互键。
+## 【M8-A② rev3】facing 松键后**保持末次朝向、不再复位**（原 0.15s 缓冲超时复位
+##   DOWN 已退役，见 player.gd 头注）——"此后超 0.15s 会复位"的旧约束不再成立。
+##   本函数仍紧接注入交互键，以贴合生产按键时序（非因复位约束）。
 func _place_player_facing_guard() -> void:
 	_player.position = Vector2(GUARD_FACE_TILE) * 16.0 + Vector2(8, 8)
 	_player.velocity = Vector2.ZERO

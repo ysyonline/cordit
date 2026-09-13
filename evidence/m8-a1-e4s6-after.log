@@ -1,0 +1,398 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+---  GUT  ---
+[1m[INFO]:  [0musing [D:/code/cordit/.godot_user_tmp/gut-sandbox/Godot/app_userdata/轨迹残响] for temporary output.
+Godot version:  4.7.2
+GUT version:  9.7.1
+[4m
+
+res://tests/gut/test_e4s6.gd
+[0m* test_01_目录12处传送齐备且分类正确
+* test_02_静态辅助函数协议
+* test_03_目录与JSON镜像同构
+* test_04_五图装配触发器计数与命名
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] 非生产启动语境（current_scene=<null>），P0 锚点不接线
+[TownMap] 地图名 HUD 装配完成（MapNameHud 常驻）
+[TownMap] 任务目标 HUD 装配完成（QuestObjectiveHud 常驻）
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+[VisibleEnemy] 就绪：road_moth_01（编组 b1_moth）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_01（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_02（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] road 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] road 装配完成：传送触发器 2 处
+[AutosaveNotifier] road 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] road 装配完成：聊天点 1 处
+[VisibleEnemy] 就绪：ruins_f1_salamander（编组 b3_ruin_mix）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：ruins_f1_crystal（编组 b3_ruin_mix）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f1 装配完成：宝箱 3 + 调查 4
+[TeleportAssembler] ruins_f1 装配完成：传送触发器 2 处
+[AutosaveNotifier] ruins_f1 无存档意图（启动装载/同图传送），跳过写盘
+[RuinsF1Map] 非生产启动语境（current_scene=<null>），入口锚不接线
+[VisibleEnemy] 就绪：ruins_f2_guardian（编组 b4_guardian）巡逻点 0 个 初始态 GUARD
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f2 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] ruins_f2 装配完成：传送触发器 2 处
+[AutosaveNotifier] ruins_f2 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] ruins_f2 装配完成：聊天点 1 处
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f3 装配完成：宝箱 1 + 调查 2
+[TeleportAssembler] ruins_f3 装配完成：传送触发器 1 处
+[AutosaveNotifier] ruins_f3 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[RuinsF3Map] Boss 锚点装配完成：story_boss_pre（交互键，事件 story_boss_pre）
+* test_05_town旧门Area2D已退役_同帧以计数与命名判定
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] 非生产启动语境（current_scene=<null>），P0 锚点不接线
+[TownMap] 地图名 HUD 装配完成（MapNameHud 常驻）
+[TownMap] 任务目标 HUD 装配完成（QuestObjectiveHud 常驻）
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+* test_06_town四门同位重建像素一致
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] 非生产启动语境（current_scene=<null>），P0 锚点不接线
+[TownMap] 地图名 HUD 装配完成（MapNameHud 常驻）
+[TownMap] 任务目标 HUD 装配完成（QuestObjectiveHud 常驻）
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+* test_07_全部落位与触发区零重合
+* test_08_同图落位为整数格中心
+* test_09_限区镜像_目录SAME_MAP_LIMITS对表
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] 非生产启动语境（current_scene=<null>），P0 锚点不接线
+[TownMap] 地图名 HUD 装配完成（MapNameHud 常驻）
+[TownMap] 任务目标 HUD 装配完成（QuestObjectiveHud 常驻）
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+* test_10_跨图首入落位与各图export一致
+[VisibleEnemy] 就绪：road_moth_01（编组 b1_moth）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_01（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_02（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] road 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] road 装配完成：传送触发器 2 处
+[AutosaveNotifier] road 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] road 装配完成：聊天点 1 处
+[VisibleEnemy] 就绪：ruins_f1_salamander（编组 b3_ruin_mix）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：ruins_f1_crystal（编组 b3_ruin_mix）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f1 装配完成：宝箱 3 + 调查 4
+[TeleportAssembler] ruins_f1 装配完成：传送触发器 2 处
+[AutosaveNotifier] ruins_f1 无存档意图（启动装载/同图传送），跳过写盘
+[RuinsF1Map] 非生产启动语境（current_scene=<null>），入口锚不接线
+[VisibleEnemy] 就绪：ruins_f2_guardian（编组 b4_guardian）巡逻点 0 个 初始态 GUARD
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f2 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] ruins_f2 装配完成：传送触发器 2 处
+[AutosaveNotifier] ruins_f2 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] ruins_f2 装配完成：聊天点 1 处
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f3 装配完成：宝箱 1 + 调查 2
+[TeleportAssembler] ruins_f3 装配完成：传送触发器 1 处
+[AutosaveNotifier] ruins_f3 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[RuinsF3Map] Boss 锚点装配完成：story_boss_pre（交互键，事件 story_boss_pre）
+* test_11_薄壳同图传送_改位置与换限区
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] 非生产启动语境（current_scene=<null>），P0 锚点不接线
+[TownMap] 地图名 HUD 装配完成（MapNameHud 常驻）
+[TownMap] 任务目标 HUD 装配完成（QuestObjectiveHud 常驻）
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+[TriggerTeleport] 同图传送 tp_town_door_inn -> (85.0, 17.0)
+* test_12_薄壳碰撞层位_E2S2回归修复
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] 非生产启动语境（current_scene=<null>），P0 锚点不接线
+[TownMap] 地图名 HUD 装配完成（MapNameHud 常驻）
+[TownMap] 任务目标 HUD 装配完成（QuestObjectiveHud 常驻）
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+* test_13_body过滤_非玩家与对话期不触发
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] 非生产启动语境（current_scene=<null>），P0 锚点不接线
+[TownMap] 地图名 HUD 装配完成（MapNameHud 常驻）
+[TownMap] 任务目标 HUD 装配完成（QuestObjectiveHud 常驻）
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+* test_14_无意图装载地图不落盘
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] 非生产启动语境（current_scene=<null>），P0 锚点不接线
+[TownMap] 地图名 HUD 装配完成（MapNameHud 常驻）
+[TownMap] 任务目标 HUD 装配完成（QuestObjectiveHud 常驻）
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+* test_15_意图置位后map_ready消费落盘
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] 非生产启动语境（current_scene=<null>），P0 锚点不接线
+[TownMap] 地图名 HUD 装配完成（MapNameHud 常驻）
+[TownMap] 任务目标 HUD 装配完成（QuestObjectiveHud 常驻）
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+* test_16_意图位consume_on_read语义
+* test_17_save_requested信号置位意图
+* test_18_通知器返回值语义
+[VisibleEnemy] 就绪：road_moth_01（编组 b1_moth）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_01（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_02（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] road 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] road 装配完成：传送触发器 2 处
+[AutosaveNotifier] road 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] road 装配完成：聊天点 1 处
+[AutosaveNotifier] road_test 无存档意图（启动装载/同图传送），跳过写盘
+* test_19_跨图传送目录场景路径闭环
+* test_20_跨图落位_装配器消费pending落到to_spawn
+[VisibleEnemy] 就绪：road_moth_01（编组 b1_moth）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_01（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_02（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] road 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] 装载期落位 -> Map_Road @ (384.0, 64.0)（跨图传送 to_spawn）
+[TeleportAssembler] road 装配完成：传送触发器 2 处
+[AutosaveNotifier] road 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] road 装配完成：聊天点 1 处
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[MapEvents] town 装配完成：宝箱 1 + 调查 6
+[TeleportAssembler] 装载期落位 -> Map_Town @ (208.0, 736.0)（跨图传送 to_spawn）
+[TeleportAssembler] town 装配完成：传送触发器 5 处
+[TownMap] 非生产启动语境（current_scene=<null>），P0 锚点不接线
+[TownMap] 地图名 HUD 装配完成（MapNameHud 常驻）
+[TownMap] 任务目标 HUD 装配完成（QuestObjectiveHud 常驻）
+[AutosaveNotifier] town 无存档意图（启动装载/同图传送），跳过写盘
+[MapLighting] Map_Town 光照装配完成：Tint=有 + 静态光 7 处（呼吸 3）+ 随身光=有
+[VisibleEnemy] 就绪：ruins_f1_salamander（编组 b3_ruin_mix）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：ruins_f1_crystal（编组 b3_ruin_mix）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f1 装配完成：宝箱 3 + 调查 4
+[TeleportAssembler] 装载期落位 -> Ruins_F1 @ (448.0, 56.0)（跨图传送 to_spawn）
+[TeleportAssembler] ruins_f1 装配完成：传送触发器 2 处
+[AutosaveNotifier] ruins_f1 无存档意图（启动装载/同图传送），跳过写盘
+[RuinsF1Map] 非生产启动语境（current_scene=<null>），入口锚不接线
+[VisibleEnemy] 就绪：road_moth_01（编组 b1_moth）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_01（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_02（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] road 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] 装载期落位 -> @Node2D@9054 @ (384.0, 992.0)（跨图传送 to_spawn）
+[TeleportAssembler] road 装配完成：传送触发器 2 处
+[AutosaveNotifier] road 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] road 装配完成：聊天点 1 处
+[VisibleEnemy] 就绪：ruins_f2_guardian（编组 b4_guardian）巡逻点 0 个 初始态 GUARD
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f2 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] 装载期落位 -> Ruins_F2 @ (384.0, 40.0)（跨图传送 to_spawn）
+[TeleportAssembler] ruins_f2 装配完成：传送触发器 2 处
+[AutosaveNotifier] ruins_f2 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] ruins_f2 装配完成：聊天点 1 处
+[VisibleEnemy] 就绪：ruins_f1_salamander（编组 b3_ruin_mix）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：ruins_f1_crystal（编组 b3_ruin_mix）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f1 装配完成：宝箱 3 + 调查 4
+[TeleportAssembler] 装载期落位 -> @Node2D@9055 @ (448.0, 672.0)（跨图传送 to_spawn）
+[TeleportAssembler] ruins_f1 装配完成：传送触发器 2 处
+[AutosaveNotifier] ruins_f1 无存档意图（启动装载/同图传送），跳过写盘
+[RuinsF1Map] 非生产启动语境（current_scene=<null>），入口锚不接线
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f3 装配完成：宝箱 1 + 调查 2
+[TeleportAssembler] 装载期落位 -> Ruins_F3 @ (320.0, 40.0)（跨图传送 to_spawn）
+[TeleportAssembler] ruins_f3 装配完成：传送触发器 1 处
+[AutosaveNotifier] ruins_f3 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[RuinsF3Map] Boss 锚点装配完成：story_boss_pre（交互键，事件 story_boss_pre）
+[VisibleEnemy] 就绪：ruins_f2_guardian（编组 b4_guardian）巡逻点 0 个 初始态 GUARD
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f2 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] 装载期落位 -> @Node2D@9056 @ (384.0, 736.0)（跨图传送 to_spawn）
+[TeleportAssembler] ruins_f2 装配完成：传送触发器 2 处
+[AutosaveNotifier] ruins_f2 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] ruins_f2 装配完成：聊天点 1 处
+* test_21_跨图落位后存档坐标为落位值
+[VisibleEnemy] 就绪：ruins_f2_guardian（编组 b4_guardian）巡逻点 0 个 初始态 GUARD
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f2 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] 装载期落位 -> Ruins_F2 @ (384.0, 736.0)（跨图传送 to_spawn）
+[TeleportAssembler] ruins_f2 装配完成：传送触发器 2 处
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] ruins_f2 装配完成：聊天点 1 处
+* test_22_无落位意图时装配器不动玩家位置
+[VisibleEnemy] 就绪：ruins_f2_guardian（编组 b4_guardian）巡逻点 0 个 初始态 GUARD
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f2 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] ruins_f2 装配完成：传送触发器 2 处
+[AutosaveNotifier] ruins_f2 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] ruins_f2 装配完成：聊天点 1 处
+* test_23_传送被拒时落位意图回滚
+[SceneRouter] 拒绝切换：未找到常驻根 Main/World（Router 依赖 A4 结构；请从 res://scenes/main.tscn 启动）
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2 被拒（受理=false），落位意图已回滚
+* test_24_跨图传送真实链路_f3南门踩踏落位与存档
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f3 装配完成：宝箱 1 + 调查 2
+[TeleportAssembler] ruins_f3 装配完成：传送触发器 1 处
+[AutosaveNotifier] ruins_f3 无存档意图（启动装载/同图传送），跳过写盘
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[RuinsF3Map] Boss 锚点装配完成：story_boss_pre（交互键，事件 story_boss_pre）
+[SceneRouter] 受理切换 -> res://scenes/maps/ruins_f2.tscn
+[TriggerTeleport] 跨图传送 tp_f3_to_f2 -> ruins_f2（受理=true）
+[VisibleEnemy] 就绪：ruins_f2_guardian（编组 b4_guardian）巡逻点 0 个 初始态 GUARD
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] ruins_f2 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] 装载期落位 -> Ruins_F2 @ (384.0, 736.0)（跨图传送 to_spawn）
+[TeleportAssembler] ruins_f2 装配完成：传送触发器 2 处
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] ruins_f2 装配完成：聊天点 1 处
+[SceneRouter] 装载完成 -> res://scenes/maps/ruins_f2.tscn
+* test_25_VICTORY回图存档坐标应为回置后的return_position
+[VisibleEnemy] 就绪：road_moth_01（编组 b1_moth）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_01（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[VisibleEnemy] 就绪：road_beetle_02（编组 b2_beetles）巡逻点 2 个 初始态 PATROL
+[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1
+[MapEvents] road 装配完成：宝箱 2 + 调查 3
+[TeleportAssembler] road 装配完成：传送触发器 2 处
+[BattleResultHandler] 玩家回置 -> (400.0, 640.0)，免疫 0.5s 启动
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/chests.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/investigates.json
+[SchemaValidator] 跳过非事件 schema 文件（顶层无 events 键）：res://data/json/events/teleports.json
+[EventLoader] 加载完成：10 文件 / 23 事件（失败 0）
+[ChatPointAssembler] road 装配完成：聊天点 1 处
+[SceneRouter] 装载完成 -> res://scenes/maps/road.tscn
+[SceneRouter] 受理切换 -> res://scenes/maps/road.tscn
+[BattleResultHandler] VICTORY 结算完成 -> 回图 res://scenes/maps/road.tscn（回置 (400.0, 640.0)）
+[1m25/25 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Scripts               1
+Tests                25
+Passing Tests        25
+Asserts             313
+Time              10.945s
+
+
+Ran Scripts matching "test_e4s6"
+[32m---- All tests passed! ----
+[0m

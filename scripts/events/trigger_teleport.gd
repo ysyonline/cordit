@@ -94,17 +94,33 @@ func _do_same_map(spec: Dictionary, body: Node2D) -> void:
 ## 跨图传送：经 SceneRouter 换图（不带 payload，A5 只约束地图↔战斗）+ 存档请求。
 ## 存档语义：落位由目标图 _ready 完成（ENTRY_SPAWNS 一致性由目录保证），
 ## 目标图 map_ready 广播后由地图侧统一 save()（§3.4"过传送点存"时序）。
-## 本方法只负责：切图 + 发 save_requested（SaveManager 不在此刻写盘——
-## 写盘时点 = 目标图 map_ready，见 map_ready_notifier 侧）。
+## 本方法只负责：登记落位意图 + 切图 + 发 save_requested（SaveManager 不在此刻
+## 写盘——写盘时点 = 目标图 map_ready，见 map_ready_notifier 侧）。
+##
+## 【M8-A1 修复要点 —— to_spawn 落位】此前本方法只消费 spec["to_map"] 去换图，
+## 从未消费 spec["to_spawn"]，目标图玩家恒落在该图 tscn 硬编码的 Player 位置；
+## 8 条跨图目录里 f3→f2 的 to_spawn (23.5,45.5) 与 ruins_f2 硬编码 (384,40) 差之
+## 千里，即"跨图传送落位错误"的病灶。修法：把落位登记进 SceneRouter 的落位意图
+## 簿记，由目标图 _ready 的 TeleportAssembler.assemble 在【装载期】消费落位——
+## 绝不能等到 map_ready 之后延迟回置：目标图 announce_ready 会同步读玩家位置
+## 存档，落位晚了自动存档就记成硬编码入口位（§3.4 坐标口径）。
 func _do_cross_map(spec: Dictionary) -> void:
 	var to_map: String = String(spec["to_map"])
 	var path: String = TeleportCatalog.MAP_SCENE_PATHS.get(to_map, "")
 	if path.is_empty():
 		push_warning("[TriggerTeleport] 目标图 \"%s\" 无场景路径登记，取消传送" % to_map)
 		return
+	# 登记目标图落位意图（必须在 change_scene 之前——否则目标图 _ready 已跑完）。
+	# 落位 = to_spawn 的 tile→像素（tile_to_pixel，含 .5 半格门中缝口径）。
+	SceneRouter.set_pending_spawn(TeleportCatalog.tile_to_pixel(spec["to_spawn"]))
 	# 受理与否由 Router 校验决定（结构缺失/切换中会被拒，日志可见）
 	var accepted: bool = SceneRouter.change_scene(path, {}, false)
-	if accepted and TeleportCatalog.CROSS_MAP_SAVE:
+	if not accepted:
+		# 被拒：回滚落位意图，避免污染下一次装载（consume-on-read 清零）
+		SceneRouter.consume_pending_spawn()
+		print("[TriggerTeleport] 跨图传送 %s -> %s 被拒（受理=false），落位意图已回滚" % [teleport_id, to_map])
+		return
+	if TeleportCatalog.CROSS_MAP_SAVE:
 		# 存档请求先于换图完成发出：map_ready 时序由目标图侧兑现写盘，
 		# 此信号仅作"本次传送要存档"的意图登记（消费端见 autosave_notifier）
 		EventBus.save_requested.emit()

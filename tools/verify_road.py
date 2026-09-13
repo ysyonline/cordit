@@ -37,10 +37,11 @@ gd_text = open(GD, encoding="utf-8").read()
 tres_text = open(TRES, encoding="utf-8").read()
 
 # ---------- 解析 tile_map_data（同 verify_town） ----------
-def parse_layer(text, layer_name):
+def parse_layer(text, layer_name, parent=r"\."):
+    # 【M8-A③】parent 参数：WallsObjects 归位 YSorted 子树（其余层仍挂根）。
     m = re.search(
-        r'\[node name="%s" type="TileMapLayer" parent="\."\]\n(.*?)(?=\n\[node|\Z)'
-        % layer_name, text, re.S)
+        r'\[node name="%s" type="TileMapLayer" parent="%s"\]\n(.*?)(?=\n\[node|\Z)'
+        % (layer_name, parent), text, re.S)
     if not m:
         return None
     body = m.group(1)
@@ -82,6 +83,9 @@ check("Player 实例挂 YSorted", '[node name="Player" parent="YSorted" instance
 check("Player 出生位 (384,64)", "position = Vector2(384, 64)" in tscn_text)
 check("y_sort: YSorted", re.search(r'\[node name="YSorted"[^\]]*\]\ny_sort_enabled = true', tscn_text))
 check("y_sort: WallsObjects", re.search(r'\[node name="WallsObjects"[^\]]*\]\ntile_set[^\n]*\nz_index = 0\ny_sort_enabled = true', tscn_text))
+# 【M8-A③】WallsObjects 归位 YSorted 子树（y-sort 生效充要条件：参与排序的节点须同父，ADR A6）
+check("结构: WallsObjects 为 YSorted 子节点【M8-A③】",
+      '[node name="WallsObjects" type="TileMapLayer" parent="YSorted"]' in tscn_text)
 check("z_index: Ground=-10 / Deco=-9 / Above=+10", "z_index = -10" in tscn_text and "z_index = -9" in tscn_text and "z_index = 10" in tscn_text)
 check("四层挂共享 TileSet", tscn_text.count('tile_set = ExtResource("3_tileset")') == 4)
 check("ChasmBlocker 层1(mask 0)", re.search(r'\[node name="ChasmBlocker"[^\]]*\]\ncollision_layer = 1\ncollision_mask = 0', tscn_text))
@@ -96,7 +100,7 @@ check("gd: 无对话装配（道路 0 NPC）", "DialogueBoxScene" not in gd_text
 print("== 3. 层内容抽验 ==")
 ground = parse_layer(tscn_text, "Ground")
 deco = parse_layer(tscn_text, "GroundDeco")
-walls = parse_layer(tscn_text, "WallsObjects")
+walls = parse_layer(tscn_text, "WallsObjects", parent="YSorted")
 above = parse_layer(tscn_text, "Above")
 for nm, layer in [("Ground", ground), ("GroundDeco", deco), ("WallsObjects", walls), ("Above", above)]:
     check(f"{nm} 可解析且非空", layer is not None and len(layer) > 0)

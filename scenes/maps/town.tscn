@@ -33,7 +33,7 @@ tile_map_data = PackedByteArray(0, 0, 12, 0, 9, 0, 0, 0, 8, 0, 10, 0, 0, 0, 13, 
 [node name="YSorted" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="WallsObjects" type="TileMapLayer" parent="."]
+[node name="WallsObjects" type="TileMapLayer" parent="YSorted"]
 tile_set = ExtResource("3_tileset")
 z_index = 0
 y_sort_enabled = true

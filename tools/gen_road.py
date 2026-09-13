@@ -212,8 +212,10 @@ tscn.append('script = ExtResource("1_mapgd")')
 tscn.append('')
 
 
-def layer_node(name, z, cells, y_sort=False):
-    lines = [f'[node name="{name}" type="TileMapLayer" parent="."]',
+def layer_node(name, z, cells, y_sort=False, parent="."):
+    # 【M8-A③】新增 parent 参数：WallsObjects 归位 YSorted 子树（y-sort 生效充要
+    # 条件：参与排序的节点须同父——ADR A6 / 施工单 293）。其余层仍挂根。
+    lines = [f'[node name="{name}" type="TileMapLayer" parent="{parent}"]',
              'tile_set = ExtResource("3_tileset")',
              f'z_index = {z}']
     if y_sort:
@@ -235,7 +237,10 @@ for (nm, tx, ty, uid, gid, wps) in ENEMIES:
              f'position = Vector2({tx * 16 + 8}, {ty * 16 + 8})',
              f'enemy_uid = "{uid}"',
              f'group_id = "{gid}"',
-             'return_map = "road"',
+             # 【M8-A③ 生成器同步】原为短名 "road"，M6 演示期发现短名无法被
+             # SceneRouter.change_scene 解析（须 res:// 全路径），road.tscn 已手工
+             # 改为全路径但生成器未收编——重生成即回退。本次一并补齐（三敌一致）。
+             'return_map = "res://scenes/maps/road.tscn"',
              'waypoints = Array[Vector2]([Vector2(%d, %d), Vector2(%d, %d)])' % tuple(wps),
              '']
 # 点位锚点（宝箱/调查）
@@ -248,7 +253,7 @@ for (nm, tx, ty) in CHESTS + INVESTIGATE:
 tscn += ['[node name="Player" parent="YSorted" instance=ExtResource("2_player")]',
          f'position = Vector2({SPAWN_PX[0]}, {SPAWN_PX[1]})',
          '']
-tscn += layer_node("WallsObjects", 0, walls_cells, y_sort=True)
+tscn += layer_node("WallsObjects", 0, walls_cells, y_sort=True, parent="YSorted")
 tscn.append('')
 tscn += layer_node("Above", 10, above)
 tscn.append('')

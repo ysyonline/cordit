@@ -26,9 +26,14 @@ extends Node
 ##         读档失败（无档/损坏）→ 兜底回暂存 return_map + push_warning
 ##         （防御性：正常流程进图必有自动存档，失败兜底保流程不断）。
 ##   共通：经 SceneRouter 回图（不带 payload，p_has_payload=false——地图
-##         装载无 BattlePayload 协议），并在 map_ready 后把玩家回置到
-##         return_position + 启动 0.5s encounter_immunity（探索 GDD §3.2：
-##         回置点恰在敌人接触范围内时不秒进战斗，边缘情况 2）。
+##         装载无 BattlePayload 协议），并在 map_ready 回调内【同步】把玩家
+##         回置到 return_position + 启动 0.5s encounter_immunity（探索 GDD
+##         §3.2：回置点恰在敌人接触范围内时不秒进战斗，边缘情况 2）。
+##         【M8-A1 修复】原为 map_ready 后 call_deferred 回置——但 map_ready
+##         由 AutosaveNotifier.announce_ready 【同步】emit，emit 返回后
+##         announce_ready 立即读玩家位置存档（§3.4）；deferred 回置晚于该读位
+##         一帧，致 VICTORY 自动存档坐标记成目标图 tscn 硬编码入口位（非回置后
+##         的战前位）。现改为在 emit 回调内同步回置（见 _on_map_ready）。
 ##
 ## 【边界】（A5 解耦）：
 ##   - 地图与战斗零互相引用：本处理器只消费纯数据（result + Router 暂存
@@ -178,8 +183,15 @@ func _apply_drops(drops: Array) -> void:
 func _on_map_ready(_map_id: String) -> void:
 	if _pending_return.is_empty():
 		return
-	# 延迟一帧：地图 _ready 发 map_ready 时玩家挂载（TempPlayerMount 兄弟
-	# 节点）理论上已完成，deferred 保帧序确定性，不赌实现细节
+	# 【M8-A1 修复】同步回置：map_ready 由 AutosaveNotifier.announce_ready
+	# 【同步】emit，emit 返回后 announce_ready 立刻读玩家位置存档（§3.4）。
+	# 原 _do_return.call_deferred() 使回置晚于存档读位一帧 → 存档记成目标图
+	# tscn 硬编码入口位（本缺陷根因）。现于 emit 回调内同步回置：地图 _ready
+	# 发 map_ready 时玩家已在树（五图 YSorted/Player 为场景直子节点；
+	# TempPlayerMount 亦在兄弟 _ready 完成挂载），可即时定位。
+	# 仅当玩家确实未就绪（异常/异步挂载）时才退化为延迟一帧重试。
+	if _pos_return_immediate():
+		return
 	_do_return.call_deferred()
 
 
@@ -190,27 +202,32 @@ func _do_return() -> void:
 	_pos_return_immediate()
 
 
-## 回置实现（同步版）：供 deferred 调用与测试直驱共用。
-## get_tree() 为 null（节点未入树，如 GUT 直驱实例）时直接失败告警——
-## 回置依赖场景树定位玩家，无树环境没有可回置的对象。
-func _pos_return_immediate() -> void:
+## 回置实现（同步版）：供 map_ready 回调与测试直驱共用。
+## 返回 true = 簿记已了结（成功回置，或是"重试也无用"的环境：处理器未入树 /
+##   无 Main-World——重试只会徒增告警，故就地清空）；
+## 返回 false = 玩家暂未就绪（World 在但当前地图尚无 YSorted/Player，可能异步
+##   挂载），簿记保留，调用方（_on_map_ready）延迟一帧重试。
+func _pos_return_immediate() -> bool:
 	if _pending_return.is_empty():
-		return
+		return true
 	var pos: Vector2 = _pending_return["position"]
-	_pending_return = {}
 	var tree: SceneTree = get_tree()
 	if tree == null:
+		_pending_return = {}
 		push_warning("[BattleResultHandler] 回置失败：处理器不在场景树内（无 Main 环境），簿记已清空")
-		return
+		return true
 	var world: Node = tree.root.get_node_or_null(WORLD_NODE_PATH)
 	if world == null or world.get_child_count() == 0:
-		push_warning("[BattleResultHandler] 回置失败：Main/World 无当前场景（GUT/无 Main 环境）")
-		return
+		_pending_return = {}
+		push_warning("[BattleResultHandler] 回置失败：Main/World 无当前场景（GUT/无 Main 环境），簿记已清空")
+		return true
 	var player: Node2D = world.get_child(world.get_child_count() - 1).get_node_or_null(PLAYER_NODE_PATH) as Node2D
 	if player == null:
-		push_warning("[BattleResultHandler] 回置失败：当前地图无 " + PLAYER_NODE_PATH)
-		return
+		push_warning("[BattleResultHandler] 回置暂缓：当前地图无 " + PLAYER_NODE_PATH + "，簿记保留待重试")
+		return false
 	player.global_position = pos
 	if player.has_method("start_encounter_immunity"):
 		player.start_encounter_immunity(IMMUNITY_DURATION)
+	_pending_return = {}
 	print("[BattleResultHandler] 玩家回置 -> %s，免疫 %.1fs 启动" % [pos, IMMUNITY_DURATION])
+	return true

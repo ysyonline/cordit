@@ -195,9 +195,9 @@ func test_c2_victory续行含战后台词开演() -> void:
 
 
 func test_c3_victory后重触发被门闸拒绝() -> void:
-	# phase=3 后触发器再命中（薄壳会再调 execute_event）：门闸 >=2 仍真——
-	# 但数据侧无 flag 状态，事件会重放。契约：重放把 phase 重置 3（不越界），
-	# 与切换点 2 重放语义同构（e5s4 c1 口径）。
+	# phase=3 后触发器再命中（薄壳会再调 execute_event）：门闸 >=2 仍真，
+	# 但 M8-B① 起数据侧带 not_flag(story_boss_pre_seen)——胜利续行已置位，
+	# 本次重触发被条件拒绝、不再重放（phase 停 3）。标题「被门闸拒绝」名副其实。
 	_make_stack()
 	GameData.story_phase = 2
 	_executor.execute_event("story_boss_pre", _loader.get_event("story_boss_pre"))

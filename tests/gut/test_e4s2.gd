@@ -34,12 +34,14 @@ func test_01_场景可装载且根脚本正确() -> void:
 ## 用例2：四层 TileMapLayer 齐备且共享 TileSet 引用有效
 func test_02_四层齐备且tileset引用有效() -> void:
 	_road = (load(ROAD_SCENE_PATH) as PackedScene).instantiate()
-	for layer_name in ["Ground", "GroundDeco", "WallsObjects", "Above"]:
-		var layer: TileMapLayer = _road.get_node_or_null(layer_name)
-		assert_not_null(layer, "TileMapLayer %s 应存在" % layer_name)
+	# 【M8-A③】WallsObjects 归位 YSorted 子树（y-sort 生效充要条件：同父），
+	# 路径随之变为 YSorted/WallsObjects；Ground/GroundDeco/Above 仍挂根。
+	for layer_path in ["Ground", "GroundDeco", "YSorted/WallsObjects", "Above"]:
+		var layer: TileMapLayer = _road.get_node_or_null(layer_path)
+		assert_not_null(layer, "TileMapLayer %s 应存在" % layer_path)
 		if layer != null:
-			assert_not_null(layer.tile_set, "%s 的 tile_set 不应为 null" % layer_name)
-			assert_eq(layer.tile_set.resource_path, TILESET_PATH, "%s 应挂共享 TileSet" % layer_name)
+			assert_not_null(layer.tile_set, "%s 的 tile_set 不应为 null" % layer_path)
+			assert_eq(layer.tile_set.resource_path, TILESET_PATH, "%s 应挂共享 TileSet" % layer_path)
 
 
 ## 用例3：3 个敌人实体导出量正确（uid/group/waypoints，对表战斗 GDD B1/B2）

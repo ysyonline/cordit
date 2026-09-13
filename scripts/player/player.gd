@@ -3,7 +3,8 @@ extends CharacterBody2D
 ##
 ## 【需求依据】架构 A6 + EPIC-1.md E1-S4：
 ##   CharacterBody2D + move_and_slide()；原点在脚底；移速 4-5 tile/s（本实现
-##   4.5 tile/s = 72px/s，16px tile 基准）；0.15s 转向缓冲；Camera2D 跟随。
+##   4.5 tile/s = 72px/s，16px tile 基准）；松键后保持末次朝向（M8-A② rev3 改）；
+##   Camera2D 跟随。
 ##
 ## 【R2-CHARSPRITE 增量（2026-09-06）】占位矩形 → 正式行走图（Antifarea
 ##   十六像 M1，帧网实测 assets/characters/charset_frames.md）：
@@ -47,9 +48,13 @@ extends CharacterBody2D
 ## 移动速度：4.5 tile/s = 72 px/s（E1-S4 钉定；手感人工验收，改这里即可调）
 @export var move_speed: float = 72.0
 
-## 转向缓冲时长（秒）：松开方向后按此时间保持原朝向——规避"按两下方向
-## 原地抖"（A6）。期间无新输入则朝向复位。
-const INPUT_BUFFER_TIME: float = 0.15
+## 【M8-A② rev3 朝向语义变更】松开方向键后 facing **保持末次朝向、不再复位**。
+##   原 A6"0.15s 转向缓冲（超时复位 DOWN）"已退役：复位令交互射线在松键 0.15s 后
+##   折返正南，使 NPC 交互提示出现"亮一下又灭 / 正前方常亮"（用户实机命中，
+##   详见 interaction_controller.gd 头注）。现语义 = facing 恒为最近一次非零输入
+##   方向——既满足 A6 原意（规避"按两下方向原地抖"：保持远比 0.15s 久），又消除
+##   松键后的朝向漂移。故原 INPUT_BUFFER_TIME 常量与 _facing_buffer 计时一并删除
+##   （已核全项目无其他引用）。
 
 ## 交互射线长度（px）：面前 1 格余量，E1-S6 交互用（本 Story 只装配不消费）
 const INTERACT_RAY_LENGTH: float = 20.0
@@ -66,11 +71,8 @@ const FRAME_HEIGHT: int = 18
 # 运行时状态
 # ------------------------------------------------------------------
 
-## 面朝方向（八向之一；移动时更新，松键后缓冲期内保持）
+## 面朝方向（八向之一；移动时更新，松键后保持末次朝向、不复位）
 var facing: Vector2 = Vector2.DOWN
-
-## 转向缓冲累计计时（秒）
-var _facing_buffer: float = 0.0
 
 ## 遮挡自检节流计时（秒）
 var _occlusion_timer: float = 0.0
@@ -114,7 +116,7 @@ func _ready() -> void:
 	var cam: Camera2D = get_node_or_null("Camera2D") as Camera2D
 	if cam != null:
 		cam.make_current()
-	print("[Player] 就绪：脚底原点 / 72px/s / 0.15s 转向缓冲 / FLOATING 运动模式 / 输入锁就位 / 行走图 M1")
+	print("[Player] 就绪：脚底原点 / 72px/s / 朝向保持（松键不复位） / FLOATING 运动模式 / 输入锁就位 / 行走图 M1")
 
 
 func _physics_process(delta: float) -> void:
@@ -122,7 +124,7 @@ func _physics_process(delta: float) -> void:
 	if encounter_immunity > 0.0:
 		encounter_immunity = maxf(encounter_immunity - delta, 0.0)
 	var dir: Vector2 = _get_move_vector()
-	_update_facing(dir, delta)
+	_update_facing(dir)
 	velocity = dir * move_speed
 	move_and_slide()
 	_last_frame_displacement = velocity * delta
@@ -145,18 +147,15 @@ func _get_move_vector() -> Vector2:
 	return v
 
 
-## 转向缓冲：有输入 → 立即转朝向并清缓冲；无输入 → 缓冲期内保持原朝向，
-## 超时复位。保证 E1-S6 交互"面前 1 格"判定不因松键抖动而漂移。
+## 朝向更新：有输入 → 立即转朝向（八向归一）；无输入 → **保持末次朝向**（不复位）。
+## 【M8-A② rev3】删除原"缓冲超时复位 DOWN"：该复位使松键 0.15s 后交互射线折返
+##   正南，令 NPC 交互提示误亮（"亮一下又灭 / 正前方常亮"，用户实机命中）。保持
+##   末次朝向即消除此漂移，且不破坏 E1-S6 交互"面前 1 格"判定（反而更稳定）。
 ## R2-CHARSPRITE：尾部接 facing→动画名映射（walk 播帧 / idle 定帧）；
 ## 斜向按主轴归一到四向（8 向移动，精灵只有 4 向帧，主轴优先级：|x|>|y| 取横向）。
-func _update_facing(dir: Vector2, delta: float) -> void:
+func _update_facing(dir: Vector2) -> void:
 	if dir != Vector2.ZERO:
 		facing = dir.normalized()
-		_facing_buffer = INPUT_BUFFER_TIME
-	else:
-		_facing_buffer = maxf(_facing_buffer - delta, 0.0)
-		if _facing_buffer == 0.0:
-			facing = Vector2.DOWN
 	_update_body_anim()
 
 

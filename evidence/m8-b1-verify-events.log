@@ -1,0 +1,28 @@
+== 事件一次性触发核验（data/json/events/*.json）==
+  PASS  ev_demo_heal_save（W1 demo 白名单：演示/测试用，非生产一次性）
+  PASS  ev_demo_loot（W1 demo 白名单：演示/测试用，非生产一次性）
+  PASS  ev_demo_battle（W1 demo 白名单：演示/测试用，非生产一次性）
+  PASS  ev_demo_full（W1 demo 白名单：演示/测试用，非生产一次性）
+  PASS  npc_fiona（W2 会话白名单：无常驻 phase 门、无状态改写动作——可重复）
+  PASS  npc_guard（W2 会话白名单：无常驻 phase 门、无状态改写动作——可重复）
+  PASS  npc_innkeeper（W2 会话白名单：无常驻 phase 门、无状态改写动作——可重复）
+  PASS  npc_peddler（W2 会话白名单：无常驻 phase 门、无状态改写动作——可重复）
+  PASS  npc_priest（W2 会话白名单：无常驻 phase 门、无状态改写动作——可重复）
+  PASS  npc_prayer_woman（W2 会话白名单：无常驻 phase 门、无状态改写动作——可重复）
+  PASS  npc_shepherd（W2 会话白名单：无常驻 phase 门、无状态改写动作——可重复）
+  PASS  npc_housewife（W2 会话白名单：无常驻 phase 门、无状态改写动作——可重复）
+  PASS  npc_porter（W2 会话白名单：无常驻 phase 门、无状态改写动作——可重复）
+  PASS  npc_elder（W2 会话白名单：无常驻 phase 门、无状态改写动作——可重复）
+  PASS  npc_chase_kid（W2 会话白名单：无常驻 phase 门、无状态改写动作——可重复）
+  PASS  npc_smith（W2 会话白名单：无常驻 phase 门、无状态改写动作——可重复）
+  PASS  npc_traveler（W2 会话白名单：无常驻 phase 门、无状态改写动作——可重复）
+  PASS  party_chat_road_01（一次性保护区在位：not_flag=chat_road_01_seen）
+  PASS  party_chat_f2_01（一次性保护区在位：not_flag=chat_f2_01_seen）
+  PASS  story_ruin_enter（一次性保护区在位：not_flag=story_ruin_enter_seen）
+  PASS  story_boss_pre（一次性保护区在位：not_flag=story_boss_pre_seen）
+  PASS  story_p0_intro（一次性保护区在位：not_flag=story_p0_seen）
+  PASS  story_quest_accept（== 0 门且自身推进 phase → 一次性，正解）
+
+扫描事件表 10 份 / 事件 23 条
+PASS 23 / FAIL 0
+全部通过 ✅
