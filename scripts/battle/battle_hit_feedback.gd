@@ -3,7 +3,10 @@ extends Control
 ## 受击打击反馈（E3-S5 · GDD §4.6 克制橙字 + §3.3 跨战斗弱点记忆写入）
 ##
 ## 【定位】纯视图层。监听 BattleCommand 的 damage / weakness 事件，在浮层上：
-##   ① 受击闪白（全屏白幕，0.1s 淡出）——“被打到了”的体感锚点；
+##   ① 受击闪白（全屏白幕，0.1s 淡出）——"被打到了"的体感锚点；
+##     【M8-B4-A3】触发闸门在 battle_ui._on_battle_event：仅 damage 事件
+##     side=party（我方受击）才调 trigger_flash——打敌人不闪（D5：分不清
+##     谁挨打）。本组件保持无脑响应，归属判断不在此。
 ##   ② 克制：橙字放大 1.3 倍 + 弹字"弱点！"——§3.3 首见弱点三步呈现之弹字；
 ##   ③ 弱点命中时把 element 写入 GameData.discovered_weakness_set——跨战斗记忆。
 ##
@@ -14,6 +17,10 @@ const VIEW_H := 360.0
 
 # 闪白时长（秒）
 const FLASH_TIME := 0.1
+
+# M8-B4-A2 弱点弹字生命周期（D4 同病同治）：驻留 + 淡出 + 回收（秒）
+const WEAK_DWELL_TIME := 0.35
+const WEAK_FADE_TIME := 0.25
 
 # 受击闪白层
 var _flash: ColorRect = null
@@ -79,6 +86,8 @@ func get_flash_alpha() -> float:
 # =============== 克制弹字（§3.3 首见弱点） ===============
 
 ## 橙字放大 1.3 倍弹"弱点！"；pos 为屏幕坐标（由 BattleUI 计算目标位置传入）
+## 【M8-B4-A2】同病同治（D4）：0.35s 驻留（与结算揭示普通行 dwell 同档，保留
+##   放大 1.3 倍既有呈现不推倒）→ 0.25s 淡出 → 自动回收，弹字层零残影
 func spawn_weak_popup(pos: Vector2) -> void:
 	var lbl := Label.new()
 	lbl.name = "WeakPopup"
@@ -89,6 +98,10 @@ func spawn_weak_popup(pos: Vector2) -> void:
 	lbl.position = pos
 	lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_popup_layer.add_child(lbl)
+	var tw := lbl.create_tween()
+	tw.tween_interval(WEAK_DWELL_TIME)
+	tw.tween_property(lbl, "modulate:a", 0.0, WEAK_FADE_TIME)
+	tw.tween_callback(lbl.queue_free)
 
 
 func get_popup_count() -> int:

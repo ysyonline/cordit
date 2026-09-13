@@ -138,6 +138,14 @@ func is_party_turn() -> bool:
 	return String(e["side"]) == BattleLogic.SIDE_PARTY
 
 
+## 蓄力状态只读查询（§5 telegraph；M8-B4-A1 供 UI 角标/横幅跟随模型刷新，
+## 避免 UI 自持蓄力状态与模型漂移）。_charging 生命周期见 _new_round 注释：
+## 跨轮保留，由 enemy_action ② 释放时置 false；蓄力者死亡不主动清（UI 侧
+## 以 hp>0 守卫呈现，模型层不为此加状态迁移——死亡清理属视图呈现职责）。
+func is_charging(slot: int) -> bool:
+	return bool(_charging.get(slot, false))
+
+
 # ==================================================================
 # 可用指令 / 技能 / 道具 / 目标（供 UI 菜单与 GUT 断言）
 # ==================================================================
@@ -273,7 +281,12 @@ func submit_command(actor: Dictionary, command: Dictionary,
 	if int(poison.get("damage", 0)) > 0:
 		events.append(_ev("poison", actor, {"amount": int(poison["damage"])}))
 		if not BattleLogic.is_alive(actor):
-			events.append(_ev("death", actor, {}))
+			# 【M8-B4-A4】death 事件过信号边界（A1 同款最小侵入：产生处 emit，
+			# 返回数组契约不变）。此前只进返回数组（_emit_all 空钩子），中毒致死
+			# 路径 UI 永远收不到通知，死亡呈现无触发点。
+			var dv: Dictionary = _ev("death", actor, {})
+			events.append(dv)
+			event_emitted.emit(dv)
 			if _check_wipe():
 				_emit_all(events)
 				return events
@@ -430,7 +443,12 @@ func _do_escape(actor: Dictionary, roll: float) -> Array[Dictionary]:
 		outcome = OUTCOME_ESCAPE
 		battle_over.emit(_build_result())
 		return [_ev("escape_success", actor, {})]
-	return [_ev("escape_fail", actor, {})]
+	# 【M8-B4-A5】escape_fail 事件过信号边界（A1 同款最小侵入）——此前只进
+	# 返回数组，UI 收不到"逃跑失败"，点了像没点（D7）。检定接缝
+	# forced_escape_roll（#15）原样保留，未触碰。
+	var fv: Dictionary = _ev("escape_fail", actor, {})
+	event_emitted.emit(fv)
+	return [fv]
 
 
 # ==================================================================
@@ -452,7 +470,12 @@ func enemy_action(actor: Dictionary, roll_action: float = -1.0,
 	if int(poison.get("damage", 0)) > 0:
 		events.append(_ev("poison", actor, {"amount": int(poison["damage"])}))
 		if not BattleLogic.is_alive(actor):
-			events.append(_ev("death", actor, {}))
+			# 【M8-B4-A4】death 事件过信号边界（A1 同款最小侵入：产生处 emit，
+			# 返回数组契约不变）。此前只进返回数组（_emit_all 空钩子），中毒致死
+			# 路径 UI 永远收不到通知，死亡呈现无触发点。
+			var dv: Dictionary = _ev("death", actor, {})
+			events.append(dv)
+			event_emitted.emit(dv)
 			if _check_wipe():
 				_emit_all(events)
 				return events
@@ -493,7 +516,12 @@ func enemy_action(actor: Dictionary, roll_action: float = -1.0,
 			events.append_array(_enemy_hit(actor, entry, variance, false))
 		"charge":
 			_charging[slot] = true
-			events.append(_ev("charge", actor, {}))
+			# 【M8-B4-A1】charge 事件必须过 event_emitted 信号边界——此前只 append
+			# 进返回数组（_emit_all 是空钩子），生产场景弃用返回值，UI 订阅信号
+			# 永远收不到，telegraph 回合无任何警示（D1 根因，GUT RED 实证）。
+			var cv: Dictionary = _ev("charge", actor, {})
+			events.append(cv)
+			event_emitted.emit(cv)
 
 	if _check_wipe():
 		_emit_all(events)

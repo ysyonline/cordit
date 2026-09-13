@@ -67,9 +67,14 @@ func test_受击闪白与浮动数字() -> void:
 	# 直接发 damage 事件（专测 UI 反馈接线，绕过逐条逻辑）
 	bc.event_emitted.emit({"type": "damage", "side": "enemy", "slot": 0,
 			"amount": 25, "weak": false})
-	assert_true(ui.get_flash_alpha() > 0.0, "受击应触发闪白（alpha>0）")
+	# 【M8-B4-A3】闪白分敌我：打敌人（side=enemy）不闪、数字照常
+	assert_eq(ui.get_flash_alpha(), 0.0, "打敌人不应闪白（闪白=我方被打到了，D5 新语义）")
 	assert_eq(ui.get_float_count(), 1, "应生成一条浮动数字")
 	assert_eq(ui.get_float_text(0), "25", "浮动数字文本应为伤害值")
+	# 敌人打我方（side=party）仍闪白——双向语义各自断言（1 个方向 → 2 个方向，加强）
+	bc.event_emitted.emit({"type": "damage", "side": "party", "slot": 0,
+			"amount": 18, "weak": false})
+	assert_true(ui.get_flash_alpha() > 0.0, "我方受击应触发闪白（alpha>0）")
 
 
 # =============== ④ 克制弹字 + 跨战斗记忆三步 ===============
@@ -114,7 +119,11 @@ func test_真实流程_火球命中甲虫触发弱点三步() -> void:
 	# 莉娜 Lv1 火球（fire）打甲虫（弱 fire）→ 应触发 damage(weak)+weakness
 	bc.submit_command(lina, {"type": "skill", "skill_id": "fireball", "target_slot": 0})
 
-	assert_true(ui.get_flash_alpha() > 0.0, "受击闪白应触发")
+	# 【M8-B4-A3】闪白分敌我：端到端火球打的是敌人（side=enemy）→ 不闪。
+	# 原断言"受击闪白应触发"与新语义冲突，改为断言新语义正方向（打敌不闪）；
+	# 我方受击闪白已由 e3s5 闪白用例与本卡 A3 用例双向覆盖——覆盖面从
+	# "有闪"细化为"按归属闪"，属加强而非削弱（#14 范式论证，证据 md §3）。
+	assert_eq(ui.get_flash_alpha(), 0.0, "端到端：火球打敌人不应闪白（D5 新语义）")
 	assert_true(ui.get_weak_popup_count() >= 1, "应弹弱点字（端到端）")
 	assert_eq(ui.get_weak_popup_text(0), "弱点！", "弹字应为「弱点！」")
 	assert_true(GameData.discovered_weakness_set.has("fire"),

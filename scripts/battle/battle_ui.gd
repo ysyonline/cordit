@@ -40,6 +40,10 @@ const C_POISON := Color(0.55, 0.95, 0.30) # 绿泡：中毒角标
 const C_PARTY := Color(0.18, 0.28, 0.50)
 const C_ENEMY := Color(0.50, 0.18, 0.18)
 
+# M8-B4-A4 死亡呈现：阵亡灰（与 scripts/ui/menu_panel.gd C_GRAY 8E7F98 同值——
+# 探索侧菜单"hp<=0 置灰"语义同源，战斗/探索死亡观感一致不漂移）
+const C_DOWN := Color(0.556863, 0.498039, 0.596078)
+
 # 布局坐标（整数像素）
 const PRED_Y := 6.0
 const PRED_X := 8.0
@@ -68,6 +72,11 @@ const DMG_LABEL_Y := 96.0
 
 const RES_W := 360.0
 const RES_H := 200.0
+
+# M8-B4-A1 蓄力警示横幅（D1）：屏幕中带居中，避开敌方条（y46）与指令菜单（y248）
+const CHARGE_BANNER_W := 300.0
+const CHARGE_BANNER_H := 28.0
+const CHARGE_BANNER_Y := 208.0
 
 # E6-S2 T2.2 揭示节奏（§4.7"EXP 逐条弹出"两档停顿）：
 #   经验/掉落行快出，升级/习得行是里程碑、多停一拍强化仪式感
@@ -99,7 +108,7 @@ var _status_bar: Control = null
 var _status_cards: Array[Dictionary] = []  # slot -> {root, hp_fill, mp_fill, poison_icon, name_lbl}
 
 var _enemy_layer: Control = null
-var _enemy_bars: Array[Dictionary] = []    # idx -> {root, hp_fill, name_lbl, weak_icon, timer, shown}
+var _enemy_bars: Array[Dictionary] = []    # idx -> {root, hp_fill, name_lbl, weak_icon, charge_badge, timer, shown}
 var _enemy_bar_pos: Array[Vector2] = []
 
 var _target_cursor: Panel = null
@@ -108,6 +117,13 @@ var _float_layer: Control = null
 
 var _result_panel: Control = null
 var _result_label: Label = null
+# M8-B4-A5（D10）结算文本滚动宿主——长结算溢出防御（提案 §四"可滚动到达"）
+var _result_scroll: ScrollContainer = null
+
+# M8-B4-A1 蓄力警示横幅（D1）：charge 事件点亮、释放/蓄力者死亡熄灭；
+# 可见性由事件驱动 + refresh 模型同步双保险（详见 _on_battle_event 注释）
+var _charge_banner: Control = null
+var _charge_label: Label = null
 
 # E6-S2 T2.2 揭示引擎状态：show_result 立即出表头（结局+party_state），
 # 结算三区（exp/level_up/skill/drops）行入队，_process 按停顿逐条弹出
@@ -216,6 +232,21 @@ func _build() -> void:
 	_status_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE   # O-9 非交互面板
 	_build_status_cards()
 
+	# M8-B4-A1 蓄力警示横幅（D1）：NineSlicePanel 与既有 HUD 面板同款风格，
+	# 文字用高亮黄 C_HI（当前行动者描边同色），非交互面板 O-9 放行鼠标
+	_charge_banner = _make_panel("ChargeBanner", (VIEW_W - CHARGE_BANNER_W) / 2.0,
+			CHARGE_BANNER_Y, CHARGE_BANNER_W, CHARGE_BANNER_H)
+	_charge_banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_charge_label = Label.new()
+	_charge_label.name = "ChargeLabel"
+	_charge_label.position = Vector2(8, 4)
+	_charge_label.size = Vector2(CHARGE_BANNER_W - 16, CHARGE_BANNER_H - 8)
+	_charge_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_charge_label.add_theme_font_size_override("font_size", 12)
+	_charge_label.add_theme_color_override("font_color", C_HI)
+	_charge_banner.add_child(_charge_label)
+	_charge_banner.visible = false
+
 	# §4.5 目标光标 + 预估伤害
 	_target_cursor = Panel.new()
 	_target_cursor.name = "TargetCursor"
@@ -248,12 +279,22 @@ func _build() -> void:
 	_result_panel = _make_panel("ResultPanel", (VIEW_W - RES_W) / 2.0,
 			(VIEW_H - RES_H) / 2.0, RES_W, RES_H)
 	_result_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE   # O-9 结算无按钮不挡点击
+	# 【M8-B4-A5·D10 溢出防御】文本区改 ScrollContainer（代码内完成，零 .tscn）：
+	# B3 三敌结算 8-10 行超出 168px 文本区（RED 实证），长结算可滚动到达、
+	# 短结算无滚动条。本容器保留 STOP：非全屏（328×168 居中）且为交互面板
+	# （滚轮读长结算），与 O-9"置顶全屏容器必须 IGNORE"不冲突（Transition/
+	# HitFeedback 等全屏层已 IGNORE）。横向禁用（行宽 < 328px，禁横向防抖动）。
+	_result_scroll = ScrollContainer.new()
+	_result_scroll.name = "ResultScroll"
+	_result_scroll.position = Vector2(16, 16)
+	_result_scroll.size = Vector2(RES_W - 32, RES_H - 32)
+	_result_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_result_panel.add_child(_result_scroll)
 	_result_label = Label.new()
 	_result_label.name = "ResultLabel"
-	_result_label.position = Vector2(16, 16)
-	_result_label.size = Vector2(RES_W - 32, RES_H - 32)
+	_result_label.custom_minimum_size = Vector2(RES_W - 32, 0)
 	_result_label.add_theme_font_size_override("font_size", 13)
-	_result_panel.add_child(_result_label)
+	_result_scroll.add_child(_result_label)
 	_result_panel.visible = false
 
 	# E3-S5 进战转场层（黑屏淡入淡出）：置于最顶，遮挡全部 HUD 与战斗内容
@@ -400,7 +441,12 @@ func refresh_status_bar() -> void:
 			continue
 		var u: Dictionary = cmd.party[i] as Dictionary
 		card["root"].visible = true
-		card["name_lbl"].text = "%s Lv%d" % [String(u.get("name", "")), int(u.get("level", 1))]
+		# M8-B4-A4 死亡呈现：hp=0 灰化 + 名称"（倒下）"后缀（切片内无复活，
+		# 死亡即终局呈现；灰值与探索侧 menu_panel.gd 同源）
+		var dead: bool = int(u.get("hp", 0)) <= 0
+		(card["root"] as Control).modulate = C_DOWN if dead else Color.WHITE
+		card["name_lbl"].text = "%s Lv%d%s" % [String(u.get("name", "")),
+				int(u.get("level", 1)), "（倒下）" if dead else ""]
 		var hp_ratio: float = float(u.get("hp", 0)) / maxf(1.0, float(u.get("max_hp", 1)))
 		var mp_ratio: float = float(u.get("mp", 0)) / maxf(1.0, float(u.get("max_mp", 1)))
 		var full_w: float = STATUS_W - 16.0
@@ -460,6 +506,16 @@ func refresh_enemy_bars() -> void:
 			wk.position = Vector2(ENEMY_BAR_W - 14, 0)
 			wk.visible = false
 			root.add_child(wk)
+			# M8-B4-A1 蓄力角标：与"弱"图标同排（其左一格），高亮黄单字，
+			# 蓄力期间持续可见（不像 HP 条那样淡出）——玩家扫一眼即知谁在蓄力
+			var cb := Label.new()
+			cb.name = "ChargeBadge"
+			cb.text = "蓄"
+			cb.add_theme_font_size_override("font_size", 9)
+			cb.add_theme_color_override("font_color", C_HI)
+			cb.position = Vector2(ENEMY_BAR_W - 26, 0)
+			cb.visible = false
+			root.add_child(cb)
 			var tm := Timer.new()
 			tm.name = "FadeTimer"
 			tm.one_shot = true
@@ -467,17 +523,37 @@ func refresh_enemy_bars() -> void:
 			tm.timeout.connect(_on_enemy_fade.bind(i))
 			root.add_child(tm)
 			_enemy_bars.append({"root": root, "hp_fill": hp_fill,
-					"name_lbl": nm, "weak_icon": wk, "timer": tm, "shown": false})
+					"name_lbl": nm, "weak_icon": wk, "charge_badge": cb,
+					"timer": tm, "shown": false})
 	# 更新数值
 	for i in _enemy_bars.size():
 		var e: Dictionary = cmd.enemies[i] as Dictionary
 		var bar: Dictionary = _enemy_bars[i]
+		# M8-B4-A4 死亡呈现：hp=0 血条隐藏（切片无复活，死人从战场消失零误读；
+		# B 段 S10 死亡淡出动画直接吃此语义——只加动画不换语义）
+		(bar["root"] as Control).visible = int(e.get("hp", 0)) > 0
 		(bar["name_lbl"] as Label).text = String(e.get("name", ""))
 		var ratio: float = float(e.get("hp", 0)) / maxf(1.0, float(e.get("max_hp", 1)))
 		(bar["hp_fill"] as ColorRect).size.x = ENEMY_BAR_W * clampf(ratio, 0.0, 1.0)
 		# 弱点图标：敌人有弱点且该弱点已在跨战斗记忆中（§3.3 / §4.4）
 		var wk: String = String(e.get("weakness", ""))
 		(bar["weak_icon"] as Label).visible = (not wk.is_empty()) and cmd.discovered_weakness.has(wk)
+		# 蓄力角标跟随模型（M8-B4-A1）：is_charging 由 enemy_action 释放时置 false，
+		# 天然覆盖"释放后清除"；hp>0 守卫覆盖"蓄力者死亡后清除"（模型不清死者态）
+		var charging: bool = int(e.get("hp", 0)) > 0 and cmd.is_charging(int(e.get("slot", i)))
+		(bar["charge_badge"] as Label).visible = charging
+	# 蓄力横幅模型同步兜底：无存活蓄力者时强制熄灭（蓄力者被击杀且死亡
+	# 事件未触发刷新的路径防残留——事件侧主清除见 _on_battle_event）
+	if _charge_banner != null and _charge_banner.visible and not _any_alive_charging():
+		_charge_banner.visible = false
+
+
+## 是否存在存活的蓄力中敌人（横幅模型同步判据；M8-B4-A1）
+func _any_alive_charging() -> bool:
+	for e: Dictionary in cmd.enemies:
+		if int(e.get("hp", 0)) > 0 and cmd.is_charging(int(e.get("slot", -1))):
+			return true
+	return false
 
 
 func _enemy_bar_pos_for(idx: int) -> Vector2:
@@ -658,6 +734,13 @@ func format_damage_range(r: Vector2i) -> String:
 # ==============================================================
 # 浮动数字（§4.6 五色）
 # ==============================================================
+# M8-B4-A2 生命周期（D4）：上飘 + 淡出 + 自动回收。上飘 0.35s 与结算揭示
+# 普通行 dwell 同档节奏（提案 §三 D4 授权自定口径）；淡出随后 0.30s；
+# 生命周期总长 0.65s，结束 queue_free——多轮战斗零残影（§四成功标准 3）
+const FLOAT_RISE_TIME := 0.35
+const FLOAT_FADE_TIME := 0.30
+const FLOAT_RISE_PX := 18.0
+
 func spawn_damage_number(pos: Vector2, amount: int, kind: String) -> void:
 	var color: Color = C_DMG
 	match kind:
@@ -672,6 +755,36 @@ func spawn_damage_number(pos: Vector2, amount: int, kind: String) -> void:
 	lbl.add_theme_color_override("font_color", color)
 	lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_float_layer.add_child(lbl)
+	# M8-B4-A2：上飘（EASE_OUT 收尾）+ 延迟淡出，全程结束自动回收。
+	# 终点 y 取整值（pos.y − 18）保持 640×360 下观感干净（ADR-4 精神）；
+	# 纯 Label 位移无新纹理，无整像素硬约束。
+	var tw := lbl.create_tween()
+	tw.set_parallel(true)
+	tw.tween_property(lbl, "position", Vector2(pos.x, pos.y - FLOAT_RISE_PX),
+			FLOAT_RISE_TIME).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	tw.tween_property(lbl, "modulate:a", 0.0, FLOAT_FADE_TIME).set_delay(FLOAT_RISE_TIME)
+	tw.chain().tween_callback(lbl.queue_free)
+
+
+## M8-B4-A5（D7）逃跑失败提示：居中弹字，与浮动数字同款上飘+淡出+自动回收
+## （风格与既有浮层元素同源、自动消退不残留；橙字=警示语义与克制/弱点同族）
+func _spawn_escape_hint() -> void:
+	var lbl := Label.new()
+	lbl.name = "EscapeHint"
+	lbl.text = "逃跑失败！"
+	lbl.position = Vector2((VIEW_W - 160.0) / 2.0, 120.0)
+	lbl.size = Vector2(160.0, 20.0)
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.add_theme_font_size_override("font_size", 14)
+	lbl.add_theme_color_override("font_color", C_WEAK)
+	lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_float_layer.add_child(lbl)
+	var tw := lbl.create_tween()
+	tw.set_parallel(true)
+	tw.tween_property(lbl, "position", Vector2((VIEW_W - 160.0) / 2.0, 108.0),
+			FLOAT_RISE_TIME).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	tw.tween_property(lbl, "modulate:a", 0.0, FLOAT_FADE_TIME).set_delay(FLOAT_RISE_TIME)
+	tw.chain().tween_callback(lbl.queue_free)
 
 
 # ==============================================================
@@ -918,6 +1031,71 @@ func get_result_text() -> String:
 	return _result_label.text
 
 
+# M8-B4-A1 蓄力警示查询接口（供 GUT 断言状态；横幅/角标可见性为观察量）
+func is_charge_banner_visible() -> bool:
+	return _charge_banner != null and _charge_banner.visible
+
+
+func get_charge_banner_text() -> String:
+	if _charge_label == null:
+		return ""
+	return _charge_label.text
+
+
+## 敌方 HP 条区蓄力角标是否点亮（idx = 敌方数组下标）
+func is_enemy_charging(idx: int) -> bool:
+	if idx < 0 or idx >= _enemy_bars.size():
+		return false
+	return (_enemy_bars[idx]["charge_badge"] as Label).visible
+
+
+# M8-B4-A4 死亡呈现查询接口（供 GUT 断言状态；灰化态/条隐藏为观察量）
+## 我方状态卡是否呈灰化倒下态（idx = 队伍数组下标）
+func is_party_down(idx: int) -> bool:
+	if idx < 0 or idx >= _status_cards.size():
+		return false
+	return (_status_cards[idx]["root"] as Control).modulate.is_equal_approx(C_DOWN)
+
+
+## 敌方 HP 条是否已因死亡隐藏（idx = 敌方数组下标）
+func is_enemy_bar_hidden(idx: int) -> bool:
+	if idx < 0 or idx >= _enemy_bars.size():
+		return false
+	return not (_enemy_bars[idx]["root"] as Control).visible
+
+
+# M8-B4-A5 查询接口（D7 逃跑提示状态 / D10 结算滚动域，供 GUT 断言状态）
+## 逃跑失败提示是否在场（含淡出动画中；自动回收后为 false）
+func has_escape_hint() -> bool:
+	if _float_layer == null:
+		return false
+	for c in _float_layer.get_children():
+		if c is Node and (c as Node).name == "EscapeHint":
+			return true
+	return false
+
+
+## 结算内容高度（Label 最小高 = 全部行文本高度；D10 溢出判定基准）
+func get_result_content_height() -> float:
+	if _result_label == null:
+		return 0.0
+	return float(_result_label.get_combined_minimum_size().y)
+
+
+## 结算滚动域上限（内容总高；>= 内容高即全部行可滚动到达）
+func get_result_scroll_max() -> float:
+	if _result_scroll == null:
+		return 0.0
+	return float(_result_scroll.get_v_scroll_bar().max_value)
+
+
+## 结算可视区高（文本区 168px；溢出判定基准的另一端）
+func get_result_scroll_page() -> float:
+	if _result_scroll == null:
+		return 0.0
+	return float(_result_scroll.get_v_scroll_bar().page)
+
+
 func cmd_menu_patch_count() -> int:
 	return _cmd_menu.get_child_count()
 
@@ -943,14 +1121,34 @@ func _on_battle_event(e: Dictionary) -> void:
 			if bool(e.get("weak", false)):
 				kind = "weak"
 			spawn_damage_number(pos, int(e.get("amount", 0)), kind)
-			# 受击闪白（E3-S5）
-			if _hit_fx != null:
+			# 受击闪白（E3-S5）——【M8-B4-A3】仅我方受击触发（D5：闪白语义是
+			# "被打到了"，打敌人也全屏闪则分不清谁挨打）。判据 = 事件 side
+			# （events_append_damage 构造时写【受击目标】归属，掩护转移后随
+			# 新目标走），payload 已含字段，闸门收在视图层、零模型改动。
+			if String(e.get("side", "")) == BattleLogic.SIDE_PARTY and _hit_fx != null:
 				_hit_fx.trigger_flash()
+			# M8-B4-A1：释放兑现（生产链形态 = damage + release:true，见
+			# battle_command._enemy_release）→ 蓄力横幅熄灭
+			if bool(e.get("release", false)):
+				_charge_banner.visible = false
 		elif t == "weakness":
 			# 首见弱点：弹"弱点！" + 写入跨战斗记忆（§3.3）
 			if _hit_fx != null:
 				_hit_fx.spawn_weak_popup(pos)
 				_hit_fx.record_weakness(String(e.get("element", "")))
+	elif t == "charge":
+		# M8-B4-A1：蓄力 telegraph——横幅点名预警（角标由本函数末尾的
+		# refresh_enemy_bars 随模型 is_charging 点亮）
+		_charge_label.text = "%s 正在蓄力！" % String(e.get("name", "???"))
+		_charge_banner.visible = true
+	elif t == "charge_release":
+		# M8-B4-A1：事件声明表预留类型（现状生产链以 damage+release:true 抵达，
+		# 见上）；一并消费防将来改口径时横幅漏清
+		_charge_banner.visible = false
+	elif t == "escape_fail":
+		# M8-B4-A5（D7）：逃跑失败显式提示——浮层弹字与 A2 数字同层同生命
+		# 周期纪律（自动消退不残留）；逃跑成功走 battle_over → 结算面板既有文本
+		_spawn_escape_hint()
 	refresh_prediction_bar()
 	refresh_status_bar()
 	refresh_enemy_bars()
