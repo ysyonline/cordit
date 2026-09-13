@@ -1,0 +1,119 @@
+===================================================================
+ M8-B1-O7 修复证据：o7 逃跑 RNG flaky（确定性 roll 注入）RED→GREEN 对照
+ 仓库 HEAD=ef4eb82 ｜ Godot 4.7.2 ｜ GUT 9.7.1 ｜ 无 commit（工作区改动）
+===================================================================
+
+【根因】tests/gut/test_o7_ui_bridge.gd::test_逃跑经信号驱动转发 走 UI 信号路径
+  （command_selected.emit → battle_scene._on_command_selected → submit_command），
+  该路径不透传 roll 参数 → _do_escape 落回 randf()。逃跑成功率钳 30%~95%，
+  用例假定"首拍必成功" → 约 5%~30% 概率偶发红。
+
+【修法】battle_command.gd 增测试接缝 var forced_escape_roll:float = -1.0
+  （生产恒 -1.0 不生效；仅当显式 roll 参数未透传且接缝 >=0 时采用）。
+  用例注入 0.0（必成功）/ 1.0（必失败）双方向确定性断言。
+
+----------------- F1 RED（旧 battle_command.gd，无接缝） -----------------
+ 命令：Godot_v4.7.2-stable_win64_console.exe --path D://code//cordit -s addons/gut/gut_cmdln.gd
+       -gdir=res://tests/gut -ginclude_subdirs -gselect=test_o7_ui_bridge -gexit
+ （APPDATA 重定向 .godot_user_tmp/gut-sandbox，跑前清空沙盒）
+
+* test_逃跑经信号驱动转发
+[BattleScene] 就绪：编组=b1_moth 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人（真实战斗 O-6 接线）
+[31m    [Failed]:  [0m确定性 roll 注入接缝应存在（旧实现无此字段 → 本用例 RED）
+      at line 222
+SCRIPT ERROR: Invalid assignment of property or key 'forced_escape_roll' with value of type 'float' on a base object of type 'RefCounted (battle_command.gd)'.
+   at: test_逃跑经信号驱动转发 (res://tests/gut/test_o7_ui_bridge.gd:224)
+   GDScript backtrace (most recent call first):
+       [0] test_逃跑经信号驱动转发 (res://tests/gut/test_o7_ui_bridge.gd:224)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid assignment of property or key 'forced_escape_roll' with value of type 'float' on a base object of type 'RefCounted (battle_command.gd)'.
+      at line -1
+* test_逃跑_roll注入1_0_必败不结束战斗
+[BattleScene] 就绪：编组=b1_moth 回图=res://tests/smoke/fixtures/map_e2s2.tscn 队伍=3 人（真实战斗 O-6 接线）
+SCRIPT ERROR: Invalid assignment of property or key 'forced_escape_roll' with value of type 'float' on a base object of type 'RefCounted (battle_command.gd)'.
+   at: test_逃跑_roll注入1_0_必败不结束战斗 (res://tests/gut/test_o7_ui_bridge.gd:240)
+   GDScript backtrace (most recent call first):
+       [0] test_逃跑_roll注入1_0_必败不结束战斗 (res://tests/gut/test_o7_ui_bridge.gd:240)
+       [1] _run_test (res://addons/gut/gut.gd:622)
+       [2] _test_the_scripts (res://addons/gut/gut.gd:835)
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid assignment of property or key 'forced_escape_roll' with value of type 'float' on a base object of type 'RefCounted (battle_command.gd)'.
+      at line -1
+[1m7/9 passed.
+[0m
+
+
+
+[33m==============================================
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m[4m
+res://tests/gut/test_o7_ui_bridge.gd
+[0m- test_逃跑经信号驱动转发
+[31m    [Failed]:  [0m确定性 roll 注入接缝应存在（旧实现无此字段 → 本用例 RED）
+          at line 222
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid assignment of property or key 'forced_escape_roll' with value of type 'float' on a base object of type 'RefCounted (battle_command.gd)'.
+          at line -1
+- test_逃跑_roll注入1_0_必败不结束战斗
+[31m    [Failed]:  [0mUnexpected Errors:
+    [1] <engine-2>Invalid assignment of property or key 'forced_escape_roll' with value of type 'float' on a base object of type 'RefCounted (battle_command.gd)'.
+          at line -1
+
+Totals
+------
+Scripts               1
+Tests                 9
+Passing Tests         7
+Failing Tests         2
+Asserts           26/29
+Time              5.86s
+
+
+Ran Scripts matching "test_o7_ui_bridge"
+[31m---- 2 failing tests ----
+[0m
+
+----------------- F1 GREEN（加接缝后，同一用例集） -----------------
+
+[0m[33m= Run Summary
+[0m[33m==============================================
+[0m
+Totals
+------
+Scripts               1
+Tests                 9
+Passing Tests         9
+Asserts              33
+Time              6.259s
+
+
+Ran Scripts matching "test_o7_ui_bridge"
+[32m---- All tests passed! ----
+[0m
+
+----------------- F2 文案改写（test_e5s4.gd:130） -----------------
+ - 旧: "门闸 >=1（防重复触发回跳）"
+ + 新: "story_phase 门闸 >=1（仅阶段前置；门本身随阶段单调真，防重播由 not_flag story_ruin_enter_seen 承担）"
+ （断言体 assert_eq(int(...), 1, ...) 未动；not_flag 正本=data/json/events/story_anchor.json）
+
+----------------- 全量 GUT 回归（零回归对照） -----------------
+Totals
+------
+Warnings              2
+
+Scripts              39
+Tests               575
+Passing Tests       575
+Asserts            8684
+Orphans           10016
+Time              90.601s
+
+
+[32m---- All tests passed! ----
+ 基线: 39 脚本 / 574 tests / 574 passing / 8681 asserts / Warnings 2 / Orphans 10016
+ 本卡: 39 脚本 / 575 tests / 575 passing / 8684 asserts / Warnings 2 / Orphans 10016
+ 差异: +1 用例（对偶必败用例 test_逃跑_roll注入1_0_必败不结束战斗）+3 断言
+       （接缝存在断言 1 + 必败用例 2），warnings/orphans 与基线持平 → 零回归。

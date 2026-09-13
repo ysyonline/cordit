@@ -127,7 +127,7 @@ func test_b2_切换点2_ruin_enter带条件置phase2() -> void:
 	var ev: Dictionary = _loader.get_event("story_ruin_enter")
 	var conds: Dictionary = ev.get("conditions", {})
 	assert_true(conds.has("story_phase"), "切换点2应有 story_phase 门闸")
-	assert_eq(int((conds["story_phase"] as Array)[1]), 1, "门闸 >=1（防重复触发回跳）")
+	assert_eq(int((conds["story_phase"] as Array)[1]), 1, "story_phase 门闸 >=1（仅阶段前置；门本身随阶段单调真，防重播由 not_flag story_ruin_enter_seen 承担）")
 	var actions: Array = ev.get("actions", [])
 	var types: Array[String] = []
 	for a: Variant in actions:

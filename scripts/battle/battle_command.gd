@@ -54,6 +54,9 @@ var discovered_weakness: Array[String] = []   # 跨战斗弱点记忆（外部�
 var _charging: Dictionary = {}                 # 敌方 slot -> true（蓄力待发）
 var _cover_map: Dictionary = {}                 # 被掩护者 slot -> 掩护者 slot（我方）
 var _inventory: Array[Dictionary] = []          # [{"item_id":String,"count":int}] 外部注入
+## 测试接缝（M8-B1-O7）：逃跑检定确定性注入。生产恒为 -1.0（不生效，落回 randf）；
+## 仅当 submit_command 未显式透传 roll（如 UI 信号路径）且本字段 >=0 时采用注入值。
+var forced_escape_roll: float = -1.0
 
 # ==================================================================
 # 初始化 / 开局
@@ -415,7 +418,13 @@ func _do_defend(actor: Dictionary) -> Array[Dictionary]:
 
 
 func _do_escape(actor: Dictionary, roll: float) -> Array[Dictionary]:
-	var r: float = roll if roll >= 0.0 else randf()
+	# roll 来源优先级：显式参数 > 测试接缝 forced_escape_roll（<0 视为未注入）> randf()
+	# （M8-B1-O7：UI 信号路径不透传 roll，接缝让单测可注入确定性检定值）
+	var r: float = roll
+	if r < 0.0:
+		r = forced_escape_roll
+	if r < 0.0:
+		r = randf()
 	if BattleLogic.escape_success(party, enemies, r):
 		over = true
 		outcome = OUTCOME_ESCAPE

@@ -215,14 +215,32 @@ func test_逃跑经信号驱动转发() -> void:
 	_prep_real_battle()
 	EventBus.battle_finished.connect(_on_battle_finished)
 	var battle := _spawn_battle(VALID_PAYLOAD)
+	var cmd: RefCounted = battle.get("cmd")
+	# 【M8-B1-O7 flaky 修复】信号路径（_on_command_selected）不透传 roll 参数，
+	# 原实现落回 randf()：逃跑成功率钳 30%~95%，"首拍必成功"假设偶发红。
+	# 注入确定性 roll=0.0（< escape_chance 任意钳值，必成功）。
+	assert_true("forced_escape_roll" in cmd,
+			"确定性 roll 注入接缝应存在（旧实现无此字段 → 本用例 RED）")
+	cmd.forced_escape_roll = 0.0
 	# 玩家路径：菜单点逃跑（UI 侧真实形态就是 command_selected.emit）
 	battle.ui.command_selected.emit({"type": "escape"})
 	await _wait_forwarded(battle)
-	var cmd: RefCounted = battle.get("cmd")
 	assert_true(cmd.over, "逃跑应立即结束战斗")
-	assert_eq(cmd.outcome, "ESCAPE", "outcome 应为 ESCAPE（roll 随机但 80% 成功率下首拍即检定）")
+	assert_eq(cmd.outcome, "ESCAPE", "outcome 应为 ESCAPE（注入 roll=0.0 必成功，非 randf 概率）")
 	assert_not_null(_recv_result, "battle_finished 应已转发")
 	EventBus.battle_finished.disconnect(_on_battle_finished)
+
+
+func test_逃跑_roll注入1_0_必败不结束战斗() -> void:
+	_prep_real_battle()
+	var battle := _spawn_battle(VALID_PAYLOAD)
+	var cmd: RefCounted = battle.get("cmd")
+	# 注入 roll=1.0（>= escape_chance 钳上限 95%，必失败）→ 战斗应继续。
+	# 与上一用例对偶：验证接缝的两个方向都被检定消费，而非恒成功。
+	cmd.forced_escape_roll = 1.0
+	battle.ui.command_selected.emit({"type": "escape"})
+	assert_false(cmd.over, "roll=1.0 必败：战斗不应结束")
+	assert_eq(cmd.outcome, "", "roll=1.0 必败：outcome 不应置 ESCAPE")
 
 
 func test_O8_键盘目标选择_确认后信号带槽位() -> void:
